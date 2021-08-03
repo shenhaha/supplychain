@@ -1,0 +1,125 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5 ">
+                <label for="name" class="col-sm-4 control-label">分公司名称:</label>
+                <div class="col-sm-6">
+                    <textarea class="form-control" rows="1"id="name" name="name" placeholder="分公司名称" ></textarea>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="sort" class="col-sm-4 control-label">分类:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="sort" name="sort" placeholder="分类" maxlength="30">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="abbreviation" class="col-sm-4 control-label">分公司简称:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="abbreviation" name="abbreviation" placeholder="分公司简称" maxlength="30">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="property" class="col-sm-4 control-label">分公司性质:</label>
+                <div class="col-sm-6">
+                    <textarea type="text" rows="1" class="form-control" id="property" name="property" placeholder="分公司性质" maxlength="30"></textarea>
+                </div>
+            </div>
+            <div class="form-group col-md-5 ">
+                <label for="institutionNum" class="col-sm-4 control-label">机构编号:</label>
+                <div class="col-sm-6">
+                    <textarea type="text" rows="1" class="form-control" id="institutionNum" name="institutionNum" placeholder="机构编号" maxlength="50"></textarea>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="institution" class="col-sm-4 control-label">所属机构:</label>
+                <div class="col-sm-6">
+                    <textarea  class="form-control" rows="1"id="institution" name="institution" placeholder="所属机构"></textarea>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="leader" class="col-sm-4 control-label">负责人:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="leader" name="leader" required placeholder="负责人" maxlength="30">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="established" class="col-sm-4 control-label">成立时间:</label>
+                <div style="padding-left: 7.5px;padding-right: 25.0px" class="input-group date form_datetime col-sm-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+                    <input class="form-control" size="16" type="text" value="" name="established" id="established" placeholder="成立时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="tell" class="col-sm-4 control-label">电话:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="tell"
+                           name="tell">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="email" class="col-sm-4 control-label">邮箱:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="email" name="email">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="address" class="col-sm-4 control-label">地址:</label>
+                <div class="col-sm-6">
+                    <textarea class="form-control" id="address" maxlength="100"
+                              name="address"rows="1"></textarea>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="bankname" class="col-sm-4 control-label">开户行:</label>
+                <div class="col-sm-6">
+                    <textarea class="form-control" id="bankname" maxlength="100"
+                              name="bankname"rows="1"></textarea>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="accountNumber" class="col-sm-4 control-label">银行账户:</label>
+                <div class="col-sm-6">
+                    <textarea type="text" class="form-control" id="accountNumber" maxlength="30"
+                              name="accountNumber"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

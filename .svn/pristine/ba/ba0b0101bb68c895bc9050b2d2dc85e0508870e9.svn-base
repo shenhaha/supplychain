@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.stockandsales.dao.StockMapper">
+    <resultMap id="BaseResultMap" type="com.luer.stockandsales.bean.Stock">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="supplier_id" property="supplierId" jdbcType="VARCHAR"/>
+        <result column="stock_num" property="stockNum" jdbcType="DOUBLE"/>
+        <result column="stock_warn" property="stockWarn" jdbcType="DOUBLE"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="goodsName" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="serialnum" property="serialnum" jdbcType="VARCHAR"/>
+        <result column="purchase_num" property="purchaseNum" jdbcType="DOUBLE"/>
+        <result column="shipments_num" property="shipmentsNum" jdbcType="DOUBLE"/>
+        <result column="inventory_loss" property="inventoryLoss" jdbcType="DOUBLE"/>
+        <result column="last_stock_num" property="lastStockNum" jdbcType="DOUBLE"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="purchase_time" property="purchaseTime" jdbcType="TIMESTAMP"/>
+        <result column="shipments_time" property="shipmentsTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, goods_id, store_id, supplier_id, stock_num, stock_warn, remark, purchase_num,
+        shipments_num, last_stock_num, inventory_loss, update_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.stockandsales.bean.StockExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from stock
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from stock
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from stock
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.stockandsales.bean.StockExample">
+        delete from stock
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.stockandsales.bean.Stock">
+        insert into stock (id, goods_id, store_id,
+        supplier_id, stock_num, stock_warn,
+        remark, purchase_num, shipments_num,
+        last_stock_num, inventory_loss, update_time
+        )
+        values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR},
+        #{supplierId,jdbcType=VARCHAR}, #{stockNum,jdbcType=DOUBLE}, #{stockWarn,jdbcType=DOUBLE},
+        #{remark,jdbcType=VARCHAR}, #{purchaseNum,jdbcType=DOUBLE}, #{shipmentsNum,jdbcType=DOUBLE},
+        #{lastStockNum,jdbcType=DOUBLE}, #{inventoryLoss,jdbcType=DOUBLE}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.stockandsales.bean.Stock">
+        insert into stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
+            </if>
+            <if test="stockNum != null">
+                stock_num,
+            </if>
+            <if test="stockWarn != null">
+                stock_warn,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="purchaseNum != null">
+                purchase_num,
+            </if>
+            <if test="shipmentsNum != null">
+                shipments_num,
+            </if>
+            <if test="lastStockNum != null">
+                last_stock_num,
+            </if>
+            <if test="inventoryLoss != null">
+                inventory_loss,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=VARCHAR},
+            </if>
+            <if test="stockNum != null">
+                #{stockNum,jdbcType=DOUBLE},
+            </if>
+            <if test="stockWarn != null">
+                #{stockWarn,jdbcType=DOUBLE},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="purchaseNum != null">
+                #{purchaseNum,jdbcType=DOUBLE},
+            </if>
+            <if test="shipmentsNum != null">
+                #{shipmentsNum,jdbcType=DOUBLE},
+            </if>
+            <if test="lastStockNum != null">
+                #{lastStockNum,jdbcType=DOUBLE},
+            </if>
+            <if test="inventoryLoss != null">
+                #{inventoryLoss,jdbcType=DOUBLE},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.stockandsales.bean.StockExample" resultType="java.lang.Integer">
+        select count(*) from stock
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update stock
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goodsId != null">
+                goods_id = #{record.goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeId != null">
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.supplierId != null">
+                supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stockNum != null">
+                stock_num = #{record.stockNum,jdbcType=DOUBLE},
+            </if>
+            <if test="record.stockWarn != null">
+                stock_warn = #{record.stockWarn,jdbcType=DOUBLE},
+            </if>
+            <if test="record.remark != null">
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.purchaseNum != null">
+                purchase_num = #{record.purchaseNum,jdbcType=DOUBLE},
+            </if>
+            <if test="record.shipmentsNum != null">
+                shipments_num = #{record.shipmentsNum,jdbcType=DOUBLE},
+            </if>
+            <if test="record.lastStockNum != null">
+                last_stock_num = #{record.lastStockNum,jdbcType=DOUBLE},
+            </if>
+            <if test="record.inventoryLoss != null">
+                inventory_loss = #{record.inventoryLoss,jdbcType=DOUBLE},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update stock
+        set id = #{record.id,jdbcType=VARCHAR},
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+        supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+        stock_num = #{record.stockNum,jdbcType=DOUBLE},
+        stock_warn = #{record.stockWarn,jdbcType=DOUBLE},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        purchase_num = #{record.purchaseNum,jdbcType=DOUBLE},
+        shipments_num = #{record.shipmentsNum,jdbcType=DOUBLE},
+        last_stock_num = #{record.lastStockNum,jdbcType=DOUBLE},
+        inventory_loss = #{record.inventoryLoss,jdbcType=DOUBLE},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.stockandsales.bean.Stock">
+        update stock
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=VARCHAR},
+            </if>
+            <if test="stockNum != null">
+                stock_num = #{stockNum,jdbcType=DOUBLE},
+            </if>
+            <if test="stockWarn != null">
+                stock_warn = #{stockWarn,jdbcType=DOUBLE},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="purchaseNum != null">
+                purchase_num = #{purchaseNum,jdbcType=DOUBLE},
+            </if>
+            <if test="shipmentsNum != null">
+                shipments_num = #{shipmentsNum,jdbcType=DOUBLE},
+            </if>
+            <if test="lastStockNum != null">
+                last_stock_num = #{lastStockNum,jdbcType=DOUBLE},
+            </if>
+            <if test="inventoryLoss != null">
+                inventory_loss = #{inventoryLoss,jdbcType=DOUBLE},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.stockandsales.bean.Stock">
+    update stock
+    set goods_id = #{goodsId,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=VARCHAR},
+      stock_num = #{stockNum,jdbcType=DOUBLE},
+      stock_warn = #{stockWarn,jdbcType=DOUBLE},
+      remark = #{remark,jdbcType=VARCHAR},
+      purchase_num = #{purchaseNum,jdbcType=DOUBLE},
+      shipments_num = #{shipmentsNum,jdbcType=DOUBLE},
+      last_stock_num = #{lastStockNum,jdbcType=DOUBLE},
+      inventory_loss = #{inventoryLoss,jdbcType=DOUBLE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!--查询所有的库存信息-->
+    <select id="selectAll" resultMap="BaseResultMap">
+    select * from stock
+  </select>
+    <!--查询门店的库存信息-->
+    <select id="selectByStoreId" resultMap="BaseResultMap">
+select s.id as id,s.store_id as storeId,
+s.purchase_num as purchaseNum,
+s.shipments_num as shipmentsNum,
+s.stock_num as stockNum,
+s.stock_warn as stockWarn,
+s.remark as remark,
+g.goods_name as goodsName,
+g.serialnum as serialnum,
+s.goods_id as goodsId,
+s.supplier_id as supplierId,
+s.update_time,
+s.purchase_time,
+s.shipments_time,
+s.last_stock_num,
+s.inventory_loss
+from stock s
+left join goods g on  s.goods_id=g.id
+ where g.classify_id=#{classifyId} and s.store_id=#{storeId} order by s.update_time desc
+
+  </select>
+    <select id="selectOnlyByStoreId" resultMap="BaseResultMap">
+        select s.id as id,s.store_id as storeId,
+        s.purchase_num as purchaseNum,
+        s.shipments_num as shipmentsNum,
+        s.stock_num as stockNum,
+        s.stock_warn as stockWarn,
+        s.remark as remark,
+        g.goods_name as goodsName,
+        g.serialnum as serialnum,
+        s.goods_id as goodsId,
+        s.supplier_id as supplierId,
+        s.update_time,
+        s.purchase_time,
+        s.shipments_time,
+        s.last_stock_num,
+        s.inventory_loss
+        from stock s
+        left join goods g on  s.goods_id=g.id
+        where  s.store_id=#{storeId} order by s.update_time desc
+
+    </select>
+    <update id="updateStockNum" parameterType="com.luer.stockandsales.bean.Stock">
+    update stock set stock_num=#{stockNum} where goods_id=#{goodsId} and store_id=#{storeId}
+  </update>
+    <select id="selectByStoreIdAndGoodsId" resultMap="BaseResultMap">
+    select * from stock where store_id=#{storeId} and goods_id=#{goodsId}
+  </select>
+
+</mapper>

@@ -1,0 +1,108 @@
+package com.luer.storemanager.bean;
+
+import com.luer.servicecenter.bean.CustomerBasic;
+
+import java.util.Date;
+
+public class ItemsUse {
+    private String id;
+
+    private String customerId;
+
+    private String itemsId;
+
+    private String number;
+
+    private String remarks;
+
+    private Date beginTime;
+
+    private Date endTime;
+
+    private String createrId;
+
+    private CustomerBasic customerBasic;
+
+    private Items items;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId == null ? null : customerId.trim();
+    }
+
+    public String getItemsId() {
+        return itemsId;
+    }
+
+    public void setItemsId(String itemsId) {
+        this.itemsId = itemsId == null ? null : itemsId.trim();
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number == null ? null : number.trim();
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
+    }
+
+    public Date getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getCreaterId() {
+        return createrId;
+    }
+
+    public void setCreaterId(String createrId) {
+        this.createrId = createrId == null ? null : createrId.trim();
+    }
+
+    public CustomerBasic getCustomerBasic() {
+        return customerBasic;
+    }
+
+    public void setCustomerBasic(CustomerBasic customerBasic) {
+        this.customerBasic = customerBasic;
+    }
+
+    public Items getItems() {
+        return items;
+    }
+
+    public void setItems(Items items) {
+        this.items = items;
+    }
+}

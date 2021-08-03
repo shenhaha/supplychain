@@ -1,0 +1,35 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.SatisfactionSurvey;
+import com.luer.storemanager.bean.SatisfactionSurveyExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface SatisfactionSurveyMapper {
+    int countByExample(SatisfactionSurveyExample example);
+
+    int deleteByExample(SatisfactionSurveyExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(SatisfactionSurvey record);
+
+    int insertSelective(SatisfactionSurvey record);
+
+    List<SatisfactionSurvey> selectByExample(SatisfactionSurveyExample example);
+
+    SatisfactionSurvey selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") SatisfactionSurvey record, @Param("example") SatisfactionSurveyExample example);
+
+    int updateByExample(@Param("record") SatisfactionSurvey record, @Param("example") SatisfactionSurveyExample example);
+
+    int updateByPrimaryKeySelective(SatisfactionSurvey record);
+
+    int updateByPrimaryKey(SatisfactionSurvey record);
+    List<SatisfactionSurvey> selectByStoreFileId(@Param("survey_type")int survey_type);
+}

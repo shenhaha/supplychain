@@ -1,0 +1,54 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="container">
+        <div style="margin-left: 20px;margin-top: 10px">
+            <div class="row">
+                <div class="row col-sm-offset-2" >
+                    <h3 style="">权限修改</h3>
+                    <div class="form-group" style="margin-bottom: 0px">
+                        <label class="control-label col-sm-2" for="userselect">用户选择:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" style="width: 200px" id="userselect">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row col-sm-offset-3">
+                    <div id="treeview-checkable" class="col-sm-3 col-sm-offset-4 form-group" style="margin-top: 50px">
+                    </div>
+                    <div class="form-group" style="margin-top: 50px">
+                        <button id="btn1" class="btn btn-primary">确定修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

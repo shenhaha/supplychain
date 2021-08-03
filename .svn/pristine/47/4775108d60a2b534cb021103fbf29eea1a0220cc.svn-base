@@ -1,0 +1,45 @@
+package com.luer.storemanager.controller;
+
+import com.luer.storemanager.bean.Announce;
+import com.luer.storemanager.service.AnnounceService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/9/3.
+ */
+@Controller
+@RequestMapping("/accessAnnounce")
+public class AnnounceController {
+    @Autowired
+    private AnnounceService announceService;
+
+    @ResponseBody
+    @RequestMapping("/getAnnounce")
+    public List<Announce> getAnnounce(){
+        return announceService.getAnnounce();
+    }
+    @ResponseBody
+    @RequestMapping("/getOneAnnounce")
+    public Announce getOneAnnounce(@NonNull String id){
+        return announceService.getOneAnnounce(id);
+    }
+    @RequestMapping("/addAnnounce")
+    public void addAnnounce(@NonNull Announce announce){
+        announceService.addAnnounce(announce);
+    }
+    @RequestMapping("/deleteAnnounce")
+    public void deleteAnnounce(@NonNull String id){
+        announceService.deleteAnnounce(id);
+    }
+    @RequestMapping("/updateAnnounce")
+    public void updateAnnounce(@NonNull Announce announce){
+        announceService.updateAnnounce(announce);
+    }
+
+}

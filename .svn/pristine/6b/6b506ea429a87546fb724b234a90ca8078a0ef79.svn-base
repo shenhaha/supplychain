@@ -1,0 +1,110 @@
+package com.luer.stockandsales.bean;
+
+import lombok.Data;
+
+@Data
+public class Supplier {
+    private String id;
+
+    private String supplierName;
+
+    private String brand;
+
+    private String nature;
+
+    private String address;
+
+    private String tell;
+
+    private String remark;
+
+    private String storeId;
+
+    private String type;
+
+
+    private String leadName;
+
+    private Integer supplierNum;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName == null ? null : supplierName.trim();
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand == null ? null : brand.trim();
+    }
+
+    public String getNature() {
+        return nature;
+    }
+
+    public void setNature(String nature) {
+        this.nature = nature == null ? null : nature.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    public String getTell() {
+        return tell;
+    }
+
+    public void setTell(String tell) {
+        this.tell = tell == null ? null : tell.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+    public String getLeadName() {
+        return leadName;
+    }
+
+    public void setLeadName(String leadName) {
+        this.leadName = leadName == null ? null : leadName.trim();
+    }
+
+    public Integer getSupplierNum() {
+        return supplierNum;
+    }
+
+    public void setSupplierNum(Integer supplierNum) {
+        this.supplierNum = supplierNum;
+    }
+
+
+}

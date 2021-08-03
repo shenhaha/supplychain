@@ -1,0 +1,24 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.Classify;
+import com.luer.stockandsales.bean.ClassifyTree;
+
+import java.util.List;
+
+public interface ClassifyService {
+
+
+    List<ClassifyTree> getHeadGoodsClassifyTree();
+
+    List<ClassifyTree> getStoreGoodsClassifyTree();
+
+    List<ClassifyTree> getStockGoodsClassifyTree();
+
+    void saveClassify(Classify classify);
+
+    void updateClassify(Classify classify);
+
+    void updateClassifyName(Classify classify);
+
+    void deleteClassifyName(String classifyId);
+}

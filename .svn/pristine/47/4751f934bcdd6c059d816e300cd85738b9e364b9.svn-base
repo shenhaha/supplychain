@@ -1,0 +1,18 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.MemberManager;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/20.
+ */
+public interface MemberManagerService {
+
+    List<MemberManager> getMembers();
+
+    void updateMembers(MemberManager memberManager);
+
+    void deleteMembers(String id);
+    void addMembers(MemberManager memberManager);
+}

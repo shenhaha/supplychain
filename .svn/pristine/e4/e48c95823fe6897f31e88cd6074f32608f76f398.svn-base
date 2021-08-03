@@ -1,0 +1,18 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.SatisfactionSurvey;
+
+import java.util.List;
+
+public interface SatisfactionSurveyService {
+
+    //添加信息
+    void saveSatisfactionSurvey(SatisfactionSurvey satisfactionSurvey,int surveyType);
+    //删除信息
+    void deleteSatisfactionSurveyById(String satisfactionSurveyId);
+    //修改信息
+    void updateSatisfactionSurvey(SatisfactionSurvey satisfactionSurvey);
+
+    //查询信息
+    List<SatisfactionSurvey> selectSatisfactionSurveys(int type,String storeId);
+}

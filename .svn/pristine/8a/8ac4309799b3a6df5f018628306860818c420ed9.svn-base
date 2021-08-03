@@ -1,0 +1,39 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="branchLeader">门店负责人</label>
+            <input type="text" class="form-control" id="branchLeader" placeholder="门店负责人">
+        </div>
+        <div class="form-group">
+            <label for="branchLeader">管理员账号</label>
+            <input type="text" class="form-control" id="branchAdmin" placeholder="管理员账号">
+        </div>
+        <div class="form-group">
+            <label for="Password">管理员密码</label>
+            <input type="password" class="form-control" id="Password" placeholder="管理员密码">
+        </div>
+        <button type="button" class="btn btn-default" id="btn">增加</button>
+    </form>
+</div>
+<script>
+    $(function () {
+        $("#btn").click(function () {
+            $.post('${ctx}/addStore',{'leader':$('#branchLeader').val(),'username':$("#branchAdmin").val()
+            ,'password':$('#Password').val()},function (data) {
+                if(data.code==200){
+                    swal('新增成功');
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

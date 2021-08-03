@@ -1,0 +1,20 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.MotherEvaluate;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/14.
+ */
+public interface MotherEvaluateService {
+    void addMotherEvaluate(MotherEvaluate motherEvaluate);
+
+    void updateMotherEvaluate(MotherEvaluate motherEvaluate);
+
+    void deleteMot(String id);
+
+    List<MotherEvaluate> getList(MotherEvaluate motherEvaluate);
+
+    List<MotherEvaluate> getEvaluateByMotherId(String customerBasicId);
+}

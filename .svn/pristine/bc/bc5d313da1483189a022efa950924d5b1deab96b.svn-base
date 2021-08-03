@@ -1,0 +1,48 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.storemanager.bean.Coupons;
+import com.luer.storemanager.dao.CouponsMapper;
+import com.luer.storemanager.service.CouponsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * 优惠券信息服务实现类
+ * @ClassName CouponsServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/21 12:00.
+ */
+@Service
+@Transactional
+public class CouponsServiceImpl implements CouponsService {
+    @Autowired
+    private CouponsMapper couponsMapper;
+
+    @Override
+    public List<Coupons> selectCoupons(String storeId) {
+        return couponsMapper.selectCoupons(storeId);
+    }
+
+    @Override
+    public int insert(Coupons record) {
+        return couponsMapper.insert(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Coupons record) {
+        return couponsMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return couponsMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Coupons> selectCouponsByMotherId(String motherId) {
+        return couponsMapper.selectCouponsByMotherId(motherId);
+    }
+}

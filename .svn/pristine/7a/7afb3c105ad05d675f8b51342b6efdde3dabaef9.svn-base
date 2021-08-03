@@ -1,0 +1,108 @@
+package com.luer.businessmanager.service.impl;
+
+import com.luer.businessmanager.bean.Appointment;
+import com.luer.businessmanager.bean.AppointmentExample;
+import com.luer.businessmanager.bean.CountAppointment;
+import com.luer.businessmanager.dao.AppointmentMapper;
+import com.luer.businessmanager.service.AppointmentService;
+import com.luer.comm.utils.UUIDUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+/**
+ */
+@Service
+@Transactional
+public class AppointmentServiceImpl implements AppointmentService {
+
+    @Autowired
+    private AppointmentMapper appointmentMapper;
+    @Override
+    public int insert(Appointment record) {
+        record.setId(UUIDUtils.getUUID());
+        return appointmentMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return appointmentMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateById(String id, Appointment appointment) {
+        AppointmentExample appointmentExample = new AppointmentExample();
+        AppointmentExample.Criteria criteria = appointmentExample.createCriteria();
+        criteria.andIdEqualTo(id);
+
+        return appointmentMapper.updateByExampleSelective(appointment,appointmentExample);
+    }
+
+    @Override
+    public boolean deleteListById(String id) {
+        String[] ids = id.split(",");
+        if (appointmentMapper.deleteListById(ids)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<Appointment> selectListByStoreId(String storeId) {
+        AppointmentExample appointmentExample = new AppointmentExample();
+        AppointmentExample.Criteria criteria = appointmentExample.createCriteria();
+        criteria.andStoreIdEqualTo(storeId);
+        return appointmentMapper.selectByExample(appointmentExample);
+    }
+    @Override
+    public List<Appointment> selectListAppointmentToday(String storeId) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+
+        return appointmentMapper.selectListAppointmentToday(storeId,simpleDateFormat.format(new Date()));
+    }
+    @Override
+    public List<Appointment> selectAllList() {
+        AppointmentExample appointmentExample = new AppointmentExample();
+        AppointmentExample.Criteria criteria = appointmentExample.createCriteria();
+        return appointmentMapper.selectByExample(appointmentExample);
+    }
+
+    @Override
+    public List<CountAppointment> getCountAppointments(String time) {
+        return appointmentMapper.getCountAppointments(time);
+    }
+
+    public List<Appointment> getAppointment() {
+        AppointmentExample appointmentExample = new AppointmentExample();
+        List<Appointment> appointments = appointmentMapper.selectByExample(appointmentExample);
+        return appointments;
+    }
+
+    @Override
+    public  List<CountAppointment> getSignatureNumberDay(String time) {
+        return appointmentMapper.getSignatureNumberDay(time);
+    }
+
+    @Override
+    public  List<CountAppointment> getSignatureNumberMonth(String time) {
+        return appointmentMapper.getSignatureNumberMonth(time);
+    }
+
+    @Override
+    public  List<CountAppointment> getTotalSalesAmount(String time) {
+        return appointmentMapper.getTotalSalesAmount(time);
+    }
+
+    @Override
+    public  List<CountAppointment> getBillofMoney(String time) {
+        return appointmentMapper.getBillofMoney(time);
+    }
+
+
+
+}

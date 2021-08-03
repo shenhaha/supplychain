@@ -1,0 +1,71 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.CheckIn;
+import com.luer.storemanager.bean.CheckInExample;
+import com.luer.storemanager.bean.MotherCheckIn;
+import com.luer.storemanager.dao.CheckInMapper;
+import com.luer.storemanager.service.CheckInService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * 入住服务实现类
+ *
+ * @ClassName CheckInServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/15 15:52.
+ */
+@Service
+@Transactional
+public class CheckInServiceImpl implements CheckInService {
+    @Autowired
+    private CheckInMapper checkInMapper;
+
+    @Override
+    public CheckIn selectBymotherid(String motherid) {
+        return checkInMapper.selectBymotherid(motherid);
+    }
+
+    @Override
+    public List<MotherCheckIn> selectMotherCheckIn(String storeId) {
+        return checkInMapper.selectMotherCheckIn(storeId);
+    }
+
+    @Override
+    //查询所有
+    public List<CheckIn> selectAllByStoreid(String storeid) {
+        return checkInMapper.selectAllByStoreid(storeid);
+    }
+
+
+    @Override
+    //添加
+    public int insert(CheckIn record) {
+        if(checkInMapper.selectBymotherid(record.getCustomerId())==null){
+            record.setId(UUIDUtils.getUUID());
+            checkInMapper.insert(record);
+        }else {record.setId(checkInMapper.selectBymotherid(record.getCustomerId()).getId());
+            CheckInExample checkInExample = new CheckInExample();
+            CheckInExample.Criteria criteria = checkInExample.createCriteria();
+            criteria.andCustomerIdEqualTo(record.getCustomerId());
+            checkInMapper.updateByExample(record,checkInExample);
+        }
+        return 1;
+    }
+
+    @Override
+    //修改
+    public int updateByPrimaryKeySelective(CheckIn record) {
+        return checkInMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    //删除
+    public int deleteByPrimaryKey(String id) {
+        return checkInMapper.deleteByPrimaryKey(id);
+    }
+}

@@ -1,0 +1,258 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>供应商的商品详情</title>
+</head>
+<body>
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <%--<div class="panel-heading">
+                    <div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li class="active">供应商的商品详情</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>--%>
+                <div>
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <table id="goodsLists" class="table" data-paging="true" data-filtering="true"
+                                   data-sorting="true">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script>
+    $(function () {
+        var goodsTitle = [
+            {
+                "name": "id",
+                "title": "ID",
+                visible: false
+            },
+            {"name": "goodsName", "title": "商品名称"},
+            {"name": "serialnum", "title": "商品编号"},
+            {"name":"classifyId","title":"商品分类id",visible: false},
+            {"name":"classifyName","title":"商品分类名称"},
+            {"name": "specifications", "title": "规格"},
+            {"name": "alliasname", "title": "别名"},
+            {"name": "unit", "title": "商品单位"},
+            {"name": "priceTwo", "title": "门店单价"},
+            {"name": "remark", "title": "备注"}
+        ];
+
+        //启动footable
+        var ft = FooTable.init('#goodsLists', {
+            "columns": goodsTitle,
+            "rows": $.get("${ctx}/goods/selectGoodsBySupplierId?supplierId=<%=request.getParameter("supplierId")%>"),
+
+
+            //功能操作
+
+
+            editing: {
+                enabled: true,
+                addRow: function () {
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog = BootstrapDialog.show({
+                        type: BootstrapDialog.TYPE_DEFAULT,
+                        title: "<span style=\"color:#ab8ce4\">新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message: $('<div></div>').load('${ctx}/template/storesandsales/supplierstoregoodslist.jsp'),//加载弹出页面
+                        size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onhide: function () {
+                            $that.removeAttr("disabled");
+                        },
+                        buttons: [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function () {
+                                var json = {
+
+                                    'goodsName': $('#goodsName').val(),
+                                    'serialnum': $('#serialnum').val(),
+                                    'specifications': $('#specifications').val(),
+                                    'alliasname': $('#alliasname').val(),
+                                    'remark': $('#remark').val(),
+                                    'unit': $('#unit').val(),
+                                    'classifyId': $('#classifyId').val(),
+                                    'priceTwo': $('#priceTwo').val(),
+                                    'supplierId': "<%=request.getParameter("supplierId")%>"
+                                };
+
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        goodsName: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '商品名不能为空'
+                                                },
+                                            }
+
+                                        },
+                                        serialnum: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '商品编号不能为空'
+                                                },
+                                            }
+
+                                        },
+
+                                        priceTwo: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '门店单价不能为空'
+                                                },
+                                            }
+
+                                        },
+                                        specifications: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '规格不能为空'
+                                                },
+                                            }
+
+                                        },
+                                        unit: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '单位不能为空！'
+                                                },
+                                            }
+                                        }
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if (bootstrapValidator.isValid()) {
+                                    $.post("${ctx}/goods/saveGoods", json).done(function (data) {
+                                        getCode(data)
+                                    }).fail(function (data) {
+                                        getCode(data)
+                                    });
+                                }
+                            }
+                        }, {
+                            label: '关闭',
+                            icon: 'fa fa-close',
+                            action: function (dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function (row) {
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled", "disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type: BootstrapDialog.TYPE_DEFAULT,
+                        title: "<span style=\"color:#ab8ce4\">修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message: $('<div></div>').load('${ctx}/template/storesandsales/supplierstoregoodslist.jsp'),//加载弹出页面
+                        size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown: function (dialogRef) {
+                            $('#id').val(values.id);
+                            $('#goodsName').val(values.goodsName);
+                            $('#serialnum').val(values.serialnum);
+                            $('#specifications').val(values.specifications);
+                            $('#alliasname').val(values.alliasname);
+                            $('#remark').val(values.remark);
+                            $('#classifyId').val(values.classifyId);
+                            $('#unit').val(values.unit);
+                            $('#priceTwo').val(values.priceTwo);
+                            $('#supplierId').val(values.supplierId);
+
+                            $.ajax({
+                                url:"${ctx}/classifyTree/getHeadClassify",
+                                type:"post",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+
+                                        $("#classifyId").append("<option  value='" + data[i].id + "'>" + data[i].name + "</option>");
+
+                                    }
+                                }
+                            });
+                        },
+                        buttons: [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function () {
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'goodsName': $('#goodsName').val(),
+                                    'serialnum': $('#serialnum').val(),
+                                    'specifications': $('#specifications').val(),
+                                    'alliasname': $('#alliasname').val(),
+                                    'remark': $('#remark').val(),
+                                    'classifyId': $('#classifyId').val(),
+                                    'unit': $('#unit').val(),
+                                    'priceTwo': $('#priceTwo').val(),
+                                    'supplierId': "<%=request.getParameter("supplierId")%>"
+                                };
+                                $.post("${ctx}/goods/updateGoods", json).done(function (data) {
+                                    getCode(data)
+                                }).fail(function (data) {
+                                    getCode(data)
+                                });
+                            }
+                        }, {
+                            label: '关闭',
+                            icon: 'fa fa-close',
+                            action: function (dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //删除操作
+                deleteRow: function (row) {
+                    myConfirm("${ctx}/goods/deleteGoodsById", row);
+                }
+            }
+        });
+        uid = 10;
+    });
+
+
+</script>
+</body>
+</html>

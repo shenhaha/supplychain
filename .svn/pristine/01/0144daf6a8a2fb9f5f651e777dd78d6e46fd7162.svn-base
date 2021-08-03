@@ -1,0 +1,121 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+        <div class="form-group required" hidden="hidden">
+            <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id" placeholder="ID" >
+            </div>
+        </div>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="customerId" class="col-sm-5 control-label">用户编号：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="customerId" name="customerId" placeholder="用户编号">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="roomId" class="col-sm-5 control-label">房间编号：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="roomId" name="roomId" placeholder="房间编号">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="allCost" class="col-sm-5 control-label">总费用：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="allCost" name="allCost" placeholder="总费用">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="balance" class="col-sm-5 control-label">余额：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="balance" name="balance" placeholder="余额">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="outTime" class="col-md-5 control-label">退房时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-5 "
+                     data-date="" data-date-format="yyyy-mm-dd hh:mm:ss">
+                    <input class="form-control" size="16" type="text" value="" name="outTime" id="outTime"
+                           readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="createrId" class="col-sm-5 control-label">创建用户：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="createrId" name="createrId" placeholder="创建用户">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="mealFee" class="col-sm-5 control-label">用餐费用：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="mealFee" name="mealFee" placeholder="用餐费用">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="addServiceFee" class="col-sm-5 control-label">加值服务费用：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="addServiceFee" name="addServiceFee" placeholder="加值服务费用">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="shoppingFee" class="col-sm-5 control-label">购物费用：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="shoppingFee" name="shoppingFee" placeholder="购物费用">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="coupons" class="col-sm-5 control-label">优惠费用：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="coupons" name="coupons" placeholder="优惠费用">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>
+

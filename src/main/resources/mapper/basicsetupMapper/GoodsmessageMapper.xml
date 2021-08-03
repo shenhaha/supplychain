@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.basicsetup.dao.GoodsmessageMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.basicsetup.bean.Goodsmessage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="merchant_code" property="merchantCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="item_code" property="itemCode" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="process" property="process" jdbcType="VARCHAR" />
+    <result column="season" property="season" jdbcType="VARCHAR" />
+    <result column="cost_price" property="costPrice" jdbcType="DOUBLE" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="packag" property="packag" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="VARCHAR" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="ingredients" property="ingredients" jdbcType="VARCHAR" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
+    <result column="data_state" property="dataState" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="other" property="other" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="DOUBLE" />
+    <result column="tax_price" property="taxPrice" jdbcType="DOUBLE" />
+    <result column="total_price" property="totalPrice" jdbcType="DOUBLE" />
+    <result column="tax_total_price" property="taxTotalPrice" jdbcType="DOUBLE" />
+    <result column="warehouse_time" property="warehouseTime" jdbcType="VARCHAR" />
+    <result column="amount_money" property="amountMoney" jdbcType="DOUBLE" />
+    <result column="warehouse_number" property="warehouseNumber" jdbcType="INTEGER" />
+    <result column="purchase_number" property="purchaseNumber" jdbcType="VARCHAR" />
+    <result column="spare04" property="spare04" jdbcType="VARCHAR" />
+    <result column="spare05" property="spare05" jdbcType="VARCHAR" />
+    <result column="spare06" property="spare06" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, merchant_code, name, item_code, type, sku, brand, process,
+    season, cost_price, unit, packag, weight, bar_code, ingredients, standard, data_state,
+    number, other, unit_price, tax_price, total_price, tax_total_price, warehouse_time,
+    amount_money, warehouse_number, purchase_number, spare04, spare05, spare06, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.basicsetup.bean.GoodsmessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goodsmessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goodsmessage
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from goodsmessage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.basicsetup.bean.GoodsmessageExample" >
+    delete from goodsmessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.basicsetup.bean.Goodsmessage" >
+    insert into goodsmessage (id, create_time, update_time,
+      merchant_code, name, item_code,
+      type, sku, brand, process,
+      season, cost_price, unit,
+      packag, weight, bar_code,
+      ingredients, standard, data_state,
+      number, other, unit_price,
+      tax_price, total_price, tax_total_price,
+      warehouse_time, amount_money, warehouse_number,
+      purchase_number, spare04, spare05,
+      spare06, remark)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{merchantCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{itemCode,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{process,jdbcType=VARCHAR},
+      #{season,jdbcType=VARCHAR}, #{costPrice,jdbcType=DOUBLE}, #{unit,jdbcType=VARCHAR},
+      #{packag,jdbcType=VARCHAR}, #{weight,jdbcType=VARCHAR}, #{barCode,jdbcType=VARCHAR},
+      #{ingredients,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, #{dataState,jdbcType=VARCHAR},
+      #{number,jdbcType=INTEGER}, #{other,jdbcType=VARCHAR}, #{unitPrice,jdbcType=DOUBLE},
+      #{taxPrice,jdbcType=DOUBLE}, #{totalPrice,jdbcType=DOUBLE}, #{taxTotalPrice,jdbcType=DOUBLE},
+      #{warehouseTime,jdbcType=VARCHAR}, #{amountMoney,jdbcType=DOUBLE}, #{warehouseNumber,jdbcType=INTEGER},
+      #{purchaseNumber,jdbcType=VARCHAR}, #{spare04,jdbcType=VARCHAR}, #{spare05,jdbcType=VARCHAR},
+      #{spare06,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.basicsetup.bean.Goodsmessage" >
+    insert into goodsmessage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="merchantCode != null" >
+        merchant_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="itemCode != null" >
+        item_code,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="process != null" >
+        process,
+      </if>
+      <if test="season != null" >
+        season,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="packag != null" >
+        packag,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="ingredients != null" >
+        ingredients,
+      </if>
+      <if test="standard != null" >
+        standard,
+      </if>
+      <if test="dataState != null" >
+        data_state,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="other != null" >
+        other,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+      <if test="taxPrice != null" >
+        tax_price,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="taxTotalPrice != null" >
+        tax_total_price,
+      </if>
+      <if test="warehouseTime != null" >
+        warehouse_time,
+      </if>
+      <if test="amountMoney != null" >
+        amount_money,
+      </if>
+      <if test="warehouseNumber != null" >
+        warehouse_number,
+      </if>
+      <if test="purchaseNumber != null" >
+        purchase_number,
+      </if>
+      <if test="spare04 != null" >
+        spare04,
+      </if>
+      <if test="spare05 != null" >
+        spare05,
+      </if>
+      <if test="spare06 != null" >
+        spare06,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantCode != null" >
+        #{merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null" >
+        #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="process != null" >
+        #{process,jdbcType=VARCHAR},
+      </if>
+      <if test="season != null" >
+        #{season,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="packag != null" >
+        #{packag,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ingredients != null" >
+        #{ingredients,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null" >
+        #{dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="other != null" >
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxPrice != null" >
+        #{taxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxTotalPrice != null" >
+        #{taxTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="warehouseTime != null" >
+        #{warehouseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="amountMoney != null" >
+        #{amountMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="warehouseNumber != null" >
+        #{warehouseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseNumber != null" >
+        #{purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="spare04 != null" >
+        #{spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="spare05 != null" >
+        #{spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        #{spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.basicsetup.bean.GoodsmessageExample" resultType="java.lang.Integer" >
+    select count(*) from goodsmessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goodsmessage
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.merchantCode != null" >
+        merchant_code = #{record.merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemCode != null" >
+        item_code = #{record.itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sku != null" >
+        sku = #{record.sku,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.process != null" >
+        process = #{record.process,jdbcType=VARCHAR},
+      </if>
+      <if test="record.season != null" >
+        season = #{record.season,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costPrice != null" >
+        cost_price = #{record.costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.packag != null" >
+        packag = #{record.packag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.barCode != null" >
+        bar_code = #{record.barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ingredients != null" >
+        ingredients = #{record.ingredients,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standard != null" >
+        standard = #{record.standard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataState != null" >
+        data_state = #{record.dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.other != null" >
+        other = #{record.other,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitPrice != null" >
+        unit_price = #{record.unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taxPrice != null" >
+        tax_price = #{record.taxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalPrice != null" >
+        total_price = #{record.totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taxTotalPrice != null" >
+        tax_total_price = #{record.taxTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.warehouseTime != null" >
+        warehouse_time = #{record.warehouseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amountMoney != null" >
+        amount_money = #{record.amountMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.warehouseNumber != null" >
+        warehouse_number = #{record.warehouseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseNumber != null" >
+        purchase_number = #{record.purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare04 != null" >
+        spare04 = #{record.spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare05 != null" >
+        spare05 = #{record.spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare06 != null" >
+        spare06 = #{record.spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goodsmessage
+    set id = #{record.id,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    merchant_code = #{record.merchantCode,jdbcType=VARCHAR},
+    name = #{record.name,jdbcType=VARCHAR},
+    item_code = #{record.itemCode,jdbcType=VARCHAR},
+    type = #{record.type,jdbcType=VARCHAR},
+    sku = #{record.sku,jdbcType=VARCHAR},
+    brand = #{record.brand,jdbcType=VARCHAR},
+    process = #{record.process,jdbcType=VARCHAR},
+    season = #{record.season,jdbcType=VARCHAR},
+    cost_price = #{record.costPrice,jdbcType=DOUBLE},
+    unit = #{record.unit,jdbcType=VARCHAR},
+    packag = #{record.packag,jdbcType=VARCHAR},
+    weight = #{record.weight,jdbcType=VARCHAR},
+    bar_code = #{record.barCode,jdbcType=VARCHAR},
+    ingredients = #{record.ingredients,jdbcType=VARCHAR},
+    standard = #{record.standard,jdbcType=VARCHAR},
+    data_state = #{record.dataState,jdbcType=VARCHAR},
+    number = #{record.number,jdbcType=INTEGER},
+    other = #{record.other,jdbcType=VARCHAR},
+    unit_price = #{record.unitPrice,jdbcType=DOUBLE},
+    tax_price = #{record.taxPrice,jdbcType=DOUBLE},
+    total_price = #{record.totalPrice,jdbcType=DOUBLE},
+    tax_total_price = #{record.taxTotalPrice,jdbcType=DOUBLE},
+    warehouse_time = #{record.warehouseTime,jdbcType=VARCHAR},
+    amount_money = #{record.amountMoney,jdbcType=DOUBLE},
+    warehouse_number = #{record.warehouseNumber,jdbcType=INTEGER},
+    purchase_number = #{record.purchaseNumber,jdbcType=VARCHAR},
+    spare04 = #{record.spare04,jdbcType=VARCHAR},
+    spare05 = #{record.spare05,jdbcType=VARCHAR},
+    spare06 = #{record.spare06,jdbcType=VARCHAR},
+    remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.basicsetup.bean.Goodsmessage" >
+    update goodsmessage
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="merchantCode != null" >
+        merchant_code = #{merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null" >
+        item_code = #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="process != null" >
+        process = #{process,jdbcType=VARCHAR},
+      </if>
+      <if test="season != null" >
+        season = #{season,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="packag != null" >
+        packag = #{packag,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ingredients != null" >
+        ingredients = #{ingredients,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null" >
+        data_state = #{dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="other != null" >
+        other = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxPrice != null" >
+        tax_price = #{taxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxTotalPrice != null" >
+        tax_total_price = #{taxTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="warehouseTime != null" >
+        warehouse_time = #{warehouseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="amountMoney != null" >
+        amount_money = #{amountMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="warehouseNumber != null" >
+        warehouse_number = #{warehouseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseNumber != null" >
+        purchase_number = #{purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="spare04 != null" >
+        spare04 = #{spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="spare05 != null" >
+        spare05 = #{spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        spare06 = #{spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.basicsetup.bean.Goodsmessage" >
+    update goodsmessage
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      merchant_code = #{merchantCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      item_code = #{itemCode,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      sku = #{sku,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      process = #{process,jdbcType=VARCHAR},
+      season = #{season,jdbcType=VARCHAR},
+      cost_price = #{costPrice,jdbcType=DOUBLE},
+      unit = #{unit,jdbcType=VARCHAR},
+      packag = #{packag,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      ingredients = #{ingredients,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      data_state = #{dataState,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      other = #{other,jdbcType=VARCHAR},
+      unit_price = #{unitPrice,jdbcType=DOUBLE},
+      tax_price = #{taxPrice,jdbcType=DOUBLE},
+      total_price = #{totalPrice,jdbcType=DOUBLE},
+      tax_total_price = #{taxTotalPrice,jdbcType=DOUBLE},
+      warehouse_time = #{warehouseTime,jdbcType=VARCHAR},
+      amount_money = #{amountMoney,jdbcType=DOUBLE},
+      warehouse_number = #{warehouseNumber,jdbcType=INTEGER},
+      purchase_number = #{purchaseNumber,jdbcType=VARCHAR},
+      spare04 = #{spare04,jdbcType=VARCHAR},
+      spare05 = #{spare05,jdbcType=VARCHAR},
+      spare06 = #{spare06,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+    delete from goodsmessage where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="selectById" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from goodsmessage where id = #{id,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from goodsmessage where data_state = '001'
+  </select>
+
+  <select id="selectRecycle" resultMap="BaseResultMap" >
+     /**查询全部回收站信息*/
+    select * from goodsmessage where data_state = '002'
+  </select>
+
+
+  <update id="updateBySpare01Open" parameterType="java.lang.String" >
+    update  goodsmessage set data_state = '001' where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <update id="updateBySpare01Out" parameterType="java.lang.String" >
+    update  goodsmessage set data_state = '002' where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+
+  <select id="selectByMaterialCode" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="merchantCode != null">
+      AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+    </if>
+  </select>
+
+  <select id="selectByMaterialCodeAndName" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="merchantCode != null">
+      AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectByMaterialCodeAndNameAndItemCode" resultMap="BaseResultMap">
+  select * from goodsmessage A where data_state = '001'
+  <if test="merchantCode != null">
+    AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+  </if>
+  <if test="name != null">
+    AND A.name like CONCAT('%',#{name},'%')
+  </if>
+  <if test="itemCode != null">
+    AND A.itemCode like CONCAT('%',#{itemCode},'%')
+  </if>
+  </select>
+
+
+  <select id="selectByMaterialCodeAndNameAndSku" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="merchantCode != null">
+      AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+    <if test="sku != null">
+      AND A.sku like CONCAT('%',#{sku},'%')
+    </if>
+  </select>
+
+
+  <select id="selectByMaterialCodeAndItemcode" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="merchantCode != null">
+      AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+    </if>
+    <if test="itemCode != null">
+      AND A.itemCode like CONCAT('%',#{itemCode},'%')
+    </if>
+  </select>
+
+
+  <select id="selectByMaterialCodeAndItemCodeAndSku" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="merchantCode != null">
+      AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+    </if>
+    <if test="itemCode != null">
+      AND A.itemCode like CONCAT('%',#{itemCode},'%')
+    </if>
+    <if test="sku != null">
+      AND A.sku like CONCAT('%',#{sku},'%')
+    </if>
+  </select>
+
+
+  <select id="selectByMaterialCodeAndSku" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="merchantCode != null">
+      AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+    </if>
+    <if test="sku != null">
+      AND A.sku like CONCAT('%',#{sku},'%')
+    </if>
+  </select>
+
+
+  <select id="selectByMaterialCodeAndNameAndItemCodeAndSku" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="merchantCode != null">
+      AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+    <if test="itemCode != null">
+      AND A.itemCode like CONCAT('%',#{itemCode},'%')
+    </if>
+    <if test="sku != null">
+      AND A.sku like CONCAT('%',#{sku},'%')
+    </if>
+  </select>
+
+
+   <select id="selectByName" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+  <select id="selectByNameAndItemCode" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+    <if test="itemCode != null">
+      AND A.itemCode like CONCAT('%',#{itemCode},'%')
+    </if>
+  </select>
+
+
+  <select id="selectByNameAndSku" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+    <if test="sku != null">
+      AND A.sku like CONCAT('%',#{sku},'%')
+    </if>
+  </select>
+
+  <select id="selectByNameAndItemCodeAndSku" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+    <if test="itemCode != null">
+      AND A.itemCode like CONCAT('%',#{itemCode},'%')
+    </if>
+    <if test="sku != null">
+      AND A.sku like CONCAT('%',#{sku},'%')
+    </if>
+  </select>
+
+  <select id="selectByItemCode" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="itemCode != null">
+      AND A.itemCode like CONCAT('%',#{itemCode},'%')
+    </if>
+  </select>
+
+  <select id="selectByItemCodeAndSku" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="itemCode != null">
+      AND A.itemCode like CONCAT('%',#{itemCode},'%')
+    </if>
+    <if test="sku != null">
+      AND A.sku like CONCAT('%',#{sku},'%')
+    </if>
+  </select>
+
+  <select id="selectBySku" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="sku != null">
+      AND A.sku like CONCAT('%',#{sku},'%')
+    </if>
+  </select>
+
+
+  <select id="selectByOther" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '001'
+    <if test="other != null">
+      AND A.type like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.brand like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.process like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.season like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.cost_price like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.unit like CONCAT('%',#{other},'%')
+    </if>
+
+    <if test="other != null">
+      or A.packag like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.weight like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.bar_code like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.ingredients like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.standard like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.remark like CONCAT('%',#{other},'%')
+    </if>
+  </select>
+
+  <select id="selectByMerchantCodeR" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '002'
+    <if test="merchantCode != null">
+      AND A.merchant_code like CONCAT('%',#{merchantCode},'%')
+    </if>
+  </select>
+
+  <select id="selectByNameR" resultMap="BaseResultMap">
+    select * from goodsmessage A where data_state = '002'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectByMerchantCode" resultMap="BaseResultMap">
+  select * from goodsmessage  where data_state = '001' and merchant_code = #{merchantCode,jdbcType=VARCHAR}
+ </select>
+
+  <select id="selectByBarCode" resultMap="BaseResultMap">
+  select * from goodsmessage  where data_state = '001' and bar_code = #{barCode,jdbcType=VARCHAR}
+ </select>
+
+
+  <select id="selectByOtherR" resultMap="BaseResultMap">
+    select * from  goodsmessage A where data_state = '002'
+    <if test="other != null">
+      AND A.item_code like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.type like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.brand like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.process like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.season like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.cost_price like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.unit like CONCAT('%',#{other},'%')
+    </if>
+
+    <if test="other != null">
+      or A.packag like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.weight like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.bar_code like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.ingredients like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.standard like CONCAT('%',#{other},'%')
+    </if>
+    <if test="other != null">
+      or A.remark like CONCAT('%',#{other},'%')
+    </if>
+  </select>
+
+
+
+</mapper>

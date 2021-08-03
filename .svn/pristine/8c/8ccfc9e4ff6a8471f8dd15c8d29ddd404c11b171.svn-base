@@ -1,0 +1,65 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.CountFamilyFunction;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.FamilyFunction;
+import com.luer.servicecenter.bean.FamilyFunctionExample;
+import com.luer.servicecenter.dao.FamilyFunctionMapper;
+import com.luer.servicecenter.service.FamilyFunctionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class FamilyFunctionServiceImpl implements FamilyFunctionService {
+
+
+    @Autowired
+    FamilyFunctionMapper familyFunctionMapper;
+
+    /**
+     * 查找
+    * @author 张路明
+    */
+    @Override
+    public List<FamilyFunction> selectBymotherId(String motherid) {
+        FamilyFunctionExample familyFunctionExample = new FamilyFunctionExample();
+        FamilyFunctionExample.Criteria criteria = familyFunctionExample.createCriteria();
+        criteria.andMotheridEqualTo(motherid);
+        List<FamilyFunction> familyFunctions = familyFunctionMapper.selectByExample(familyFunctionExample);
+        return familyFunctions;
+    }
+
+    @Override
+    public int delete(String id) {
+        familyFunctionMapper.deleteByPrimaryKey(id);
+        return 0;
+    }
+
+    /**更新 用到工具类
+    * @author 张路明
+    */
+    @Override
+    public int update(FamilyFunction familyFunction) {
+        FamilyFunctionExample familyFunctionExample = new FamilyFunctionExample();
+        FamilyFunctionExample.Criteria criteria = familyFunctionExample.createCriteria();
+        criteria.andIdEqualTo(familyFunction.getId());
+        familyFunction.setScore(CountFamilyFunction.getScore(familyFunction));
+        familyFunctionMapper.updateByExample(familyFunction,familyFunctionExample);
+        return 0;
+    }
+
+    /**新增
+    * @author 张路明
+    */
+    @Override
+    public int insert(FamilyFunction familyFunction) {
+        familyFunction.setId(UUIDUtils.getUUID());
+        familyFunction.setScore(CountFamilyFunction.getScore(familyFunction));
+        familyFunctionMapper.insert(familyFunction);
+        return 0;
+    }
+}

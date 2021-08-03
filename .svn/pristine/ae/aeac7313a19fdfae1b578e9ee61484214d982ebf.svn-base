@@ -1,0 +1,79 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="ID" >
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="itemId" class="col-sm-5 control-label">项id：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="itemId" name="itemId" placeholder="项id">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="shoppingTime" class="col-md-5 control-label">购物时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-5 "
+                     data-date="" data-date-format="yyyy-mm-dd hh:mm:ss">
+                    <input class="form-control" size="16" type="text" name="shoppingTime" id="shoppingTime"
+                           readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+
+            <div class="form-group col-md-5">
+                <label for="price" class="col-sm-5 control-label">价格：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="price" name="price" placeholder="价格">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="payStyle" class="col-sm-5 control-label">支付方式 :</label>
+                <div class="col-sm-5">
+                    <select  type="text" class="form-control col-sm-5" id="payStyle" name="payStyle" placeholder="支付方式" tabindex="1">
+                        <option value="现金支付">现金支付</option>
+                        <option value="微信支付">微信支付</option>
+                        <option value="支付宝支付">支付宝支付</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>
+

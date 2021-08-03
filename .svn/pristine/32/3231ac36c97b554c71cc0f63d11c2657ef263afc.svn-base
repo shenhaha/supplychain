@@ -1,0 +1,48 @@
+package com.luer.stockandsales.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.stockandsales.bean.Classify;
+import com.luer.stockandsales.service.ClassifyService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+//商品分类
+@Controller
+@RequestMapping(value = "/classify")
+public class ClassifyController {
+    @Autowired
+    private ClassifyService classifyService;
+
+    @ResponseBody
+    @RequestMapping("/saveClassify")
+    public ResultSet saveClassify(@NonNull Classify classify) {
+        classifyService.saveClassify(classify);
+        return ResultSet.getSuccess();
+    }
+    @ResponseBody
+    @RequestMapping("/updateClassifyName")
+    public ResultSet updateClassifyName(@NonNull Classify classify) {
+        classifyService.updateClassifyName(classify);
+        return ResultSet.getSuccess();
+    }
+    @ResponseBody
+    @RequestMapping("/deleteClassifyName")
+    public ResultSet deleteClassifyName(@NonNull String id) {
+
+        classifyService.deleteClassifyName(id);
+        return ResultSet.getSuccess();
+    }
+
+
+
+
+
+
+}

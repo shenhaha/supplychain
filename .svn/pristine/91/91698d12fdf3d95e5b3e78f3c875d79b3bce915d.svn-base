@@ -1,0 +1,33 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Swimming;
+import com.luer.servicecenter.bean.SwimmingExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface SwimmingMapper {
+    int countByExample(SwimmingExample example);
+
+    int deleteByExample(SwimmingExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Swimming record);
+
+    int insertSelective(Swimming record);
+
+    List<Swimming> selectByExample(SwimmingExample example);
+
+    Swimming selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Swimming record, @Param("example") SwimmingExample example);
+
+    int updateByExample(@Param("record") Swimming record, @Param("example") SwimmingExample example);
+
+    int updateByPrimaryKeySelective(Swimming record);
+
+    int updateByPrimaryKey(Swimming record);
+
+    List<Swimming> getSwimmingByMotherId(@Param("motherId") String motherid);
+}

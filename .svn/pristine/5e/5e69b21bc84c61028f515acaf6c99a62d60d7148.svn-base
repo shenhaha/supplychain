@@ -1,0 +1,25 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.Stock;
+
+import java.util.List;
+
+public interface StockService {
+    List<Stock> selectAllStock();
+
+    void saveStock(Stock stock);
+
+    void deleteStock(String stockId);
+
+    void updateStock(Stock stock);
+
+    List<Stock> selectByStoreId(String classifyId);
+
+    void updateStock(String orderId, String goodsId, int detailstype);
+
+    void updateStockInventory(Stock stock);
+
+    void updateStockWarn(Stock stock);
+
+    List<Stock> selectOnlyByStoreId();
+}

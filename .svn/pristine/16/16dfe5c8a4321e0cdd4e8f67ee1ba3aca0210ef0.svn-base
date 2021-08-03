@@ -1,0 +1,93 @@
+package com.luer.servicecenter.bean;
+
+public class WorryProblem {
+    private String id;
+
+    private String storeId;
+
+    private String problem;
+
+    private String answerone;
+
+    private String answertwo;
+
+    private String answerthree;
+
+    private String answerfour;
+
+    private String answerChoose;
+
+    private String evaluation;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getProblem() {
+        return problem;
+    }
+
+    public void setProblem(String problem) {
+        this.problem = problem == null ? null : problem.trim();
+    }
+
+    public String getAnswerone() {
+        return answerone;
+    }
+
+    public void setAnswerone(String answerone) {
+        this.answerone = answerone == null ? null : answerone.trim();
+    }
+
+    public String getAnswertwo() {
+        return answertwo;
+    }
+
+    public void setAnswertwo(String answertwo) {
+        this.answertwo = answertwo == null ? null : answertwo.trim();
+    }
+
+    public String getAnswerthree() {
+        return answerthree;
+    }
+
+    public void setAnswerthree(String answerthree) {
+        this.answerthree = answerthree == null ? null : answerthree.trim();
+    }
+
+    public String getAnswerfour() {
+        return answerfour;
+    }
+
+    public void setAnswerfour(String answerfour) {
+        this.answerfour = answerfour == null ? null : answerfour.trim();
+    }
+
+    public String getAnswerChoose() {
+        return answerChoose;
+    }
+
+    public void setAnswerChoose(String answerChoose) {
+        this.answerChoose = answerChoose == null ? null : answerChoose.trim();
+    }
+
+    public String getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(String evaluation) {
+        this.evaluation = evaluation == null ? null : evaluation.trim();
+    }
+}

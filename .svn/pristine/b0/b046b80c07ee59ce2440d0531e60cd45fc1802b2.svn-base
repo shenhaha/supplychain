@@ -1,0 +1,17 @@
+package com.luer.businessmanager.service;
+
+import com.luer.businessmanager.bean.SendCar;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+public interface SendCarService {
+    int insert(SendCar sendCar);
+    List<SendCar> selectAllLIst();
+    int updateSendCar(SendCar sendCar);
+    int deleteSendCar(String id);
+
+    List<SendCar> getAllList(String storeId);
+}

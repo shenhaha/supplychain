@@ -1,0 +1,86 @@
+package com.luer.storesdata.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storesdata.bean.Credentials;
+import com.luer.storesdata.service.CredentialsService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.util.List;
+
+import com.luer.comm.utils.FileLoadHelper;
+
+@Controller
+@RequestMapping(value = "/credentials")
+public class CredentialsController {
+
+    @Autowired
+    private CredentialsService credentialsService;
+
+
+    //上传证书
+    @ResponseBody
+    @RequestMapping(value = "/uploadCredentials")
+    public ResultSet uploadCredentials(@NonNull @RequestParam("file") MultipartFile file, Credentials credentials) throws IOException {
+        System.out.println("===============================================");
+
+        System.out.println("otherId=="+credentials.getOtherId());
+        System.out.println("name=="+credentials.getName());
+        System.out.println("cardId=="+credentials.getCardid());
+        System.out.println("===============================================");
+
+        credentialsService.uploadCredentials(file, credentials);
+        return ResultSet.getSuccess();
+    }
+
+    //删除证书
+    @RequestMapping(value = "/deleteCredentialsById")
+    @ResponseBody
+    public ResultSet deleteCredentialsById(@NonNull String id) throws IOException {
+
+        credentialsService.deleteCredentialsById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改证书
+    @ResponseBody
+    @RequestMapping(value = "/updateCredentials")
+    public ResultSet updateCredentials(@NonNull @RequestParam("file") MultipartFile file,Credentials credentials) {
+        credentialsService.updateCredentials(credentials,file);
+        return ResultSet.getSuccess();
+    }
+
+    //查询证书
+    @ResponseBody
+    @RequestMapping(value = "/selectByOtherId")
+    public List<Credentials> selectByOtherId(@NonNull String otherId) throws IOException {
+        System.out.println("====================================");
+        System.out.println(otherId);
+        List<Credentials> credentialsList = credentialsService.selectCredentialsbyOtherId(otherId);
+        for (Credentials credentials:credentialsList) {
+            System.out.println("====================================");
+            System.out.println(credentials);
+        }
+        return credentialsList;
+    }
+
+    @RequestMapping(value = "/testDownloadFile")
+    public void testDownloadFile(HttpServletResponse response, String fileUrl) throws Exception {
+        if (fileUrl != null && !"".equals(fileUrl)) {
+            byte[] data = FileLoadHelper.getInstance().getFileBytesByUrl(fileUrl);
+            response.setContentType("image/*"); // 设置返回的文件类型
+            OutputStream toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
+            toClient.write(data); // 输出数据
+            toClient.close();
+        }
+    }
+
+}

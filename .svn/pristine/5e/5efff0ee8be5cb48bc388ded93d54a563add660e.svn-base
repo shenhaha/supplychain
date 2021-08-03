@@ -1,0 +1,172 @@
+package com.luer.businessmanager.service.impl;
+
+import com.luer.businessmanager.bean.OrderCustomer;
+import com.luer.businessmanager.bean.OrderCustomerExample;
+import com.luer.businessmanager.dao.OrderCustomerMapper;
+import com.luer.businessmanager.service.OrderCustomerService;
+import com.luer.comm.utils.CustomerNum;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.dao.CustomerBasicMapper;
+import com.luer.storemanager.bean.Preview;
+import com.luer.storemanager.dao.PreviewMapper;
+import com.luer.storemanager.service.PreviewService;
+import com.luer.storesdata.bean.Room;
+import com.luer.storesdata.dao.RoomMapper;
+import com.luer.storesdata.dao.RoomStylesMapper;
+import com.luer.storesdata.service.RoomService;
+import com.luer.systemmanager.service.ParameterSetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+@Service
+@Transactional
+public class OrderCustomerServiceImpl implements OrderCustomerService {
+
+    @Autowired
+    private OrderCustomerMapper orderCustomerMapper;
+    @Autowired
+    private PreviewService previewService;
+    @Autowired
+    private PreviewMapper previewMapper;
+    @Autowired
+    private RoomStylesMapper roomStylesMapper;
+    @Autowired
+    private RoomMapper roomMapper;
+    @Autowired
+    private CustomerBasicMapper customerBasicMapper;
+    @Autowired
+    ParameterSetService parameterSetService;
+
+    @Override
+    public void insert(OrderCustomer record) {
+
+        //设置房间类型
+        record.setRoomType(roomStylesMapper.selectByPrimaryKey(record.getRoomType()).getRoomStyle());
+        //初始化产妇基本信息
+        record.setTimeone(new Date());
+        CustomerBasic customerBasic=new CustomerBasic();
+        customerBasic.setId(CustomerNum.getCustomerNum(record.getStoreId()));
+        customerBasic.setStoreId(record.getStoreId());
+        customerBasic.setName(record.getFirstParty());
+        customerBasic.setCheckStatus("0");
+        customerBasic.setContact(record.getTell());
+        customerBasic.setBornHospital(record.getAddress());
+        customerBasic.setType("0");
+        //设置妈妈ID
+        record.setCustomerId(customerBasic.getId());
+        record.setId(UUIDUtils.getUUID());
+        record.setFinalPayment(1.0);
+        //根据房间类型与房间号查询房间id
+
+        //Room room=new Room();
+        Room room =roomMapper.selectByPrimaryKey(record.getRoomNumber());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(record.getIntime());
+        calendar.add(Calendar.DAY_OF_YEAR,+record.getDays());
+        Preview preview=new Preview();
+        preview.setId(UUIDUtils.getUUID());
+        preview.setStoreId(record.getStoreId());
+        preview.setOrderCustomerId(customerBasic.getId());
+        preview.setRoomStyle(record.getRoomType());
+        preview.setRoomId(room.getId());
+        preview.setStatus("0");
+        preview.setMotherName(record.getFirstParty());
+        preview.setBeginTime(record.getIntime());
+        preview.setEndTime(calendar.getTime());
+        previewService.insert(preview);
+
+        record.setRoomNumber(room.getNum());
+        customerBasicMapper.insert(customerBasic);
+        orderCustomerMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        OrderCustomer orderCustomer=orderCustomerMapper.selectByPrimaryKey(id);
+        CustomerBasic customerBasic=customerBasicMapper.selectByPrimaryKey(orderCustomer.getCustomerId());
+        List<Preview> preview=previewMapper.getPreviewByMotherId(orderCustomer.getCustomerId());
+        if(customerBasic!=null){
+            customerBasicMapper.deleteByPrimaryKey(orderCustomer.getCustomerId());
+        }
+        if(preview.size()!=0){
+            previewMapper.deleteByMotherId(orderCustomer.getCustomerId());
+
+        }
+            return  orderCustomerMapper.deleteByPrimaryKey(id);
+
+
+    }
+
+    @Override
+    public OrderCustomer selectByPrimaryKey(String id) {
+        return orderCustomerMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateById(OrderCustomer orderCustomer) {
+        if(orderCustomer.getBorndate()!=null){
+            //设置房间类型
+            orderCustomer.setRoomType(orderCustomerMapper.selectByPrimaryKey(orderCustomer.getId()).getRoomType());
+            Room room =roomMapper.selectByPrimaryKey(orderCustomer.getRoomNumber());
+            orderCustomer.setRoomNumber(room.getNum());
+            OrderCustomer customer=orderCustomerMapper.selectByPrimaryKey(orderCustomer.getId());
+            List<Preview> preview =previewMapper.getBymotherId(customer.getCustomerId());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(orderCustomer.getBorndate());
+            calendar.add(Calendar.DAY_OF_YEAR,+orderCustomer.getDays());
+            Preview previews=preview.get(0);
+            previews.setBeginTime(orderCustomer.getBorndate());
+            previews.setEndTime(calendar.getTime());
+            System.out.println("------------------------------------------------------------------");
+            System.out.println(previews.getBeginTime());
+            System.out.println(previews.getEndTime());
+            System.out.println(previews.getId());
+            previewMapper.updateByPrimaryKey(previews);
+
+
+            return orderCustomerMapper.updateByPrimaryKeySelective(orderCustomer);
+
+        }else{
+            //设置房间类型
+            orderCustomer.setRoomType(orderCustomerMapper.selectByPrimaryKey(orderCustomer.getId()).getRoomType());
+            Room room =roomMapper.selectByPrimaryKey(orderCustomer.getRoomNumber());
+            orderCustomer.setRoomNumber(room.getNum());
+
+            return orderCustomerMapper.updateByPrimaryKeySelective(orderCustomer);
+        }
+
+    }
+
+    @Override
+    public List<OrderCustomer> selectAllOrderCustomer() {
+        return orderCustomerMapper.selectAllOrderCustomer();
+    }
+
+    @Override
+    public List<OrderCustomer> selectNotice(OrderCustomer orderCustomer){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int day = parameterSetService.getParameterSet2(orderCustomer.getStoreId(),"noticesday").getIntParameter();
+        calendar.add(Calendar.DAY_OF_MONTH, day);
+        OrderCustomerExample orderCustomerExample = new OrderCustomerExample();
+        OrderCustomerExample.Criteria criteria = orderCustomerExample.createCriteria();
+        criteria.andIntimeGreaterThan(new Date());
+        criteria.andIntimeLessThan(calendar.getTime());
+        return orderCustomerMapper.selectNotice(orderCustomer,new Date(),calendar.getTime());
+    }
+
+    @Override
+    public List<OrderCustomer> getOrderCustomers(String storeId) {
+        return orderCustomerMapper.getOrderCustomers(storeId);
+    }
+}

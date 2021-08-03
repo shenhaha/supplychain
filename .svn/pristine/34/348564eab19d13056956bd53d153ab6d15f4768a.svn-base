@@ -1,0 +1,56 @@
+package com.luer.stockandsales.controller;
+
+
+import com.luer.stockandsales.bean.ClassifyTree;
+import com.luer.stockandsales.service.ClassifyService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+//商品分类
+@Controller
+@RequestMapping(value = "/classifyTree")
+public class ClassifyTreeController {
+
+
+
+
+
+    @Autowired
+    private ClassifyService classifyService;
+    //获取总部商品树
+    @ResponseBody
+    @RequestMapping("/getHeadClassify")
+    public List<ClassifyTree> getHeadClassify() {
+
+        List<ClassifyTree> classifyList=classifyService.getHeadGoodsClassifyTree();
+
+        return classifyList;
+    }
+
+    //获取门店商品树
+    @ResponseBody
+    @RequestMapping("/getStoreClassify")
+    public List<ClassifyTree> getStoreClassify() {
+
+        List<ClassifyTree> classifyList=classifyService.getStoreGoodsClassifyTree();
+
+        return classifyList;
+    }
+    //获取库存树
+    @ResponseBody
+    @RequestMapping("/getStockClassify")
+    public List<ClassifyTree> getStockClassify() {
+
+        List<ClassifyTree> classifyList=classifyService.getStockGoodsClassifyTree();
+
+        return classifyList;
+    }
+
+
+
+}

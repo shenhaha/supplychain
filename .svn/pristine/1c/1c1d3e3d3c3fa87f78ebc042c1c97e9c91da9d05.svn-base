@@ -1,0 +1,13 @@
+package com.luer.springsecurity.service;
+
+import com.luer.springsecurity.bean.Role;
+
+/**
+ * Created by 小强 on 2018/9/12.
+ */
+public interface RoleService {
+
+    int deleteByRoleId(String roleId);
+
+    int insert(Role role);
+}

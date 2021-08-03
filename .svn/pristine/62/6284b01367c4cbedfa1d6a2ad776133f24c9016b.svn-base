@@ -1,0 +1,16 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.VitalSign;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+public interface VitalSignService {
+
+    int addVitalSign(VitalSign vitalSign);
+
+    List<VitalSign> getVitalSign(String motherid);
+    int updateVitalSign(VitalSign vitalSign);
+    int deleteVitalSign(String id);
+}

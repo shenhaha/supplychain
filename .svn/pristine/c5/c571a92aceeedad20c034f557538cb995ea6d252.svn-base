@@ -1,0 +1,57 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="${ctx}/static/js/echarts.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '8月一般销售金额',
+            x:'center',
+        },
+        tooltip: {},
+   //     legend: {
+   //         data:['销量']
+   //     },
+        xAxis: {
+            data: ["博雅","上海","浙联","吴江","海宁","上虞","桐乡","平湖"]
+        },
+        yAxis: {},
+        series: [{
+     //       name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20, 10, 20],
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: true, //开启显示
+                        position: 'top', //在上方显示
+                        textStyle: { //数值样式
+                            color: 'black',
+                            fontSize: 16
+
+                        }
+                    }
+                }
+            },
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

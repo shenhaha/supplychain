@@ -1,0 +1,136 @@
+package com.luer.stockandsales.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.Goods;
+import com.luer.stockandsales.dao.GoodsMapper;
+import com.luer.stockandsales.dao.SupplierMapper;
+import com.luer.stockandsales.service.GoodsService;
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
+import java.util.List;
+
+
+@Service
+@Transactional
+public class GoodsServiceImpl implements GoodsService {
+
+    @Autowired
+    private GoodsMapper goodsMapper;
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+    @Autowired
+    private SupplierMapper supplierMapper;
+    @Autowired
+    StoreFileService storeFileService;
+
+    @Override
+    public void saveGoods(Goods goods) {
+
+        goods.setId(UUIDUtils.getUUID());
+        if (goodsMapper.selectBySerialnum(goods.getSerialnum()) != null) {
+            goods.setSerialnum(null);
+        }
+        goodsMapper.insert(goods);
+    }
+
+    @Override
+    public void deleteGoodsById(String goodsId) {
+
+        goodsMapper.deleteByPrimaryKey(goodsId);
+    }
+
+    @Override
+    public void updateGoods(Goods goods) {
+        goodsMapper.updateByPrimaryKey(goods);
+    }
+
+
+    //根据供应商id批量插入商品信息
+    @Override
+    public void saveGoods(List<Goods> goodss, String supplierId) {
+        for (Goods goods : goodss) {
+            goods.setId(UUIDUtils.getUUID());
+            goods.setSupplierId(supplierId);
+            goodsMapper.insert(goods);
+        }
+    }
+
+    //查询供应商对应商品
+    @Override
+    public List<Goods> selectSupplierGoods(String supplierId) {
+        List<Goods> goodsList=goodsMapper.selectBySupplierId(supplierId);
+
+        return goodsList;
+    }
+
+    //查询总部对应的商品
+    @Override
+    public List<Goods> selectHeadOfficGoods() {
+        String storeId = storeFileMapper.selectIdBySort();
+        List<String> supplierIdList = supplierMapper.selectSupplierIdByStoreId(storeId);
+        if (supplierIdList.size() == 0) {
+            return null;
+        }
+        List<Goods> goodsList=goodsMapper.selectBySupplierIdList(supplierIdList);
+
+
+
+        return goodsList;
+    }
+
+    //查询门店供应商提供的商品
+    @Override
+    public List<Goods> selectStoreGoods() {
+        String storeId = storeFileService.getStoreFileId();
+        //查询门店对应供应商的id
+        List<String> supplierIdList = supplierMapper.selectSupplierIdByStoreId(storeId);
+        //查询总部对应的供应商信息
+        String headStoreId = storeFileMapper.selectIdBySort();
+        List<String> headSupplierIdList = supplierMapper.selectSupplierIdByStoreId(headStoreId);
+        supplierIdList.addAll(headSupplierIdList);
+        List<Goods> goodsList = null;
+        if (supplierIdList.size() != 0) {
+            goodsList = goodsMapper.selectBySupplierIdList(supplierIdList);
+        }
+
+        return goodsList;
+
+    }
+
+    //查询门店对应的供应商的所有商品信息
+    @Override
+    public List<Goods> selectStoreGoodsBysupplier(String classifyId) {
+        //获取当前门店id
+        String storeId = storeFileService.getStoreFileId();
+        //查询门店对应供应商的id
+        List<String> supplierIdList = supplierMapper.selectSupplierIdByStoreId(storeId);
+        List<Goods> goodsList = null;
+        if (supplierIdList.size() != 0) {
+            goodsList = goodsMapper.selectBySupplierIdListAndClassifyId(supplierIdList,classifyId);
+        }
+
+        return goodsList;
+
+    }
+
+    @Override
+    public List<Goods> selectHeadOfficeGoodsByClassifyId(String classifyId) {
+        //获取总部id
+        String storeId = storeFileMapper.selectIdBySort();
+        List<String> supplierIdList = supplierMapper.selectSupplierIdByStoreId(storeId);
+        if (supplierIdList.size() == 0) {
+            return null;
+        }
+        List<Goods> goodsList=goodsMapper.selectHeadOfficeGoodsByClassifyId(supplierIdList,classifyId);
+
+
+        return goodsList;
+    }
+
+
+}

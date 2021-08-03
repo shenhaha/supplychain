@@ -1,0 +1,57 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.Coupons;
+
+import java.util.List;
+
+/**
+ * 优惠券信息服务类
+ *
+ * @ClassName CouponsService
+ * @Author GavinJiang
+ * @Date 2018/8/21 11:58:08
+ */
+public interface CouponsService {
+    /**
+     * 查询所有的优惠券信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.Shopping>
+     * @author GavinJiang
+     * @date
+     * @params
+     */
+    List<Coupons> selectCoupons(String storeId);
+
+    /**
+     * 修改所有的优惠券信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @params
+     */
+    int insert(Coupons record);
+
+    /**
+     * 修改所有的优惠券信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @params
+     */
+    int updateByPrimaryKeySelective(Coupons record);
+
+    /**
+     * 删除所有的优惠券信息
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/21 9:59
+     * @params
+     */
+    int deleteByPrimaryKey(String id);
+
+    List<Coupons> selectCouponsByMotherId(String motherId);
+}

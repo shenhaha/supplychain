@@ -1,0 +1,56 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Motherworryquestion;
+import com.luer.servicecenter.dao.MotherworryquestionMapper;
+import com.luer.servicecenter.service.WorryEvaluateService;
+import com.luer.servicecenter.service.WorryQuestionService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**妈妈忧虑问题测试
+* @author 张路明
+*/
+@RestController
+@RequestMapping("/worryQuestion")
+public class WorryQuestionController {
+
+    @Autowired
+    WorryQuestionService worryQuestionService;
+
+
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getByMotherId")
+    @ResponseBody
+    public List<Motherworryquestion> getByMotherId(@NonNull String motherid){
+        List<Motherworryquestion> list = worryQuestionService.getByMotherId(motherid);
+        return  list;
+    }
+
+
+    @GetMapping("/select")
+    public List select(@NonNull Motherworryquestion motherworryquestion){
+        List<Motherworryquestion> list = worryQuestionService.select(motherworryquestion);
+        return  list;
+    }
+
+    @PostMapping("/add")
+    public ResultSet add(@NonNull Motherworryquestion motherworryquestion){
+        worryQuestionService.add(motherworryquestion);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/delete")
+    public ResultSet delete(@NonNull Motherworryquestion motherworryquestion){
+        worryQuestionService.delete(motherworryquestion);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/update")
+    public ResultSet update(@NonNull Motherworryquestion motherworryquestion){
+        worryQuestionService.update(motherworryquestion);
+        return ResultSet.getSuccess();
+    }
+}

@@ -1,0 +1,129 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<html>
+<head>
+    <title>月子餐统计</title>
+</head>
+<body>
+<!--Main Content-->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+                    <li id="mealdetail"><a href="${ctx}/storemanager/mealdetails?motherid=${motherid}">用餐统计</a></li>
+                    <li id="shopdetail"><a href="${ctx}/storemanager/shopdetails?motherid=${motherid}">购物统计</a></li>
+                    <li id="extraservicedetail"><a href="${ctx}/storemanager/extraservicedetails?motherid=${motherid}">加值服务统计</a></li>
+                    <li id="couponsdetail"><a href="${ctx}/storemanager/couponsdetails?motherid=${motherid}">优惠卷统计</a></li>
+
+                </ul>
+                <!--妈妈护理详细信息登记表-->
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <table id="meallist" class="table" data-paging="true" data-filtering="true"
+                               data-sorting="true">
+                        </table>
+                    </div>
+                </div>
+                <!--妈妈护理详细信息登记表-->
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<script >
+    $(function () {
+        $('#mealdetail').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'mealdetail':
+                $('#mealdetail').addClass("active");
+                break;
+            case 'shopdetail':
+                $('#shopdetail').addClass("active");
+                break;
+            case 'extraservicedetail':
+                $('#extraservicedetail').addClass("active");
+                break;
+            case 'couponsdetail':
+                $('#couponsdetail').addClass("active");
+                break;
+
+        }
+
+        var appointmentTitle = [
+            /*{"name":"motherid","title":"ID"},*/
+            {"name":"mothername","title":"姓名"},
+            {"name":"roomnum","title":"房号"},
+            {"name":"breakfastSum","title":"早餐"},
+            {"name":"lunchSum","title":"午餐"},
+            {"name":"dinner","title":"晚餐"},
+            {"name":"familymealcount","title":"家属餐"},
+            {"name":"reveille","title":"早点"},
+            {"name":"snack","title":"午点"},
+            {"name":"midnight_snack","title":"夜宵"},
+            {"name":"avoid","title":"禁忌"},
+            {"name":"details","title":"查看详情"},
+            {"name":"options","title":"操作"}
+        ];
+        function addoptions(values) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title : "<span class='text-success'><i class='fa fa-plus'></i>新增或修改禁忌</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'api-blacklist-form-add',
+                message:$('<div></div>').load('${ctx}/template/servicecenter/orderstatistics.jsp'),//加载弹出页面
+                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                onhide:function(){
+                },
+                onshown:function () {
+                    $('#avoid').val(values.avoid);
+                },
+                buttons : [{
+                    id: 'btn-form-submit',
+                    label: '提交',
+                    icon: 'fa fa-check-circle',
+                    cssClass: 'btn-primary',
+                    action: function(){
+                        var json = {
+                            avoid:$('#avoid').val(),
+                            motherid: values.motherid,
+                        };
+                        $.post("${ctx}/customerBasic/updateAvoid",json).
+                        done(function(data){
+                            getCode(data)}).
+                        fail(function(data){
+                            getCode(data)});
+                    }
+                },{
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        }
+        window.addoptions = addoptions;
+        var ft = FooTable.init('#meallist',{
+            "columns": appointmentTitle,
+            "rows": $.get("${ctx}/mealmanager/getmealAccountByMotherId?motherId="+'${motherid}',function(data){
+                $(data).each(function(){//用这个类样式写css就行了 detailsBtn
+                    this.options = "<button class='btn btn-primary btn-sm' onclick='addoptions("+JSON.stringify(this)+")'>修改禁忌</button>";
+                    this.details = "<button id='cx' class='btn btn-primary btn-sm' onclick='findDetails("+'"'+this.motherid+'"'+")'>点击查看</button>";
+                });
+            }),
+        });
+    });
+    //查看详情
+    function findDetails(id){
+        window.location.href="${ctx}/mealmanager/showqueryAllMealByMotherid?motherid="+id;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Nursingeducation;
+
+import java.util.List;
+
+public interface NursingEducationService {
+
+    List<Nursingeducation> getNursingEducation(Nursingeducation nursingeducation);
+
+    int updateNursingEducation(Nursingeducation nursingeducation);
+
+    int deleteNursingEducation(String id);
+
+    int insertNursingEducation(Nursingeducation nursingeducation);
+
+    List<Nursingeducation> getEducationByMotherId(String customerBasicId);
+
+
+    void initNursingEducation(String customerBasicId);
+}

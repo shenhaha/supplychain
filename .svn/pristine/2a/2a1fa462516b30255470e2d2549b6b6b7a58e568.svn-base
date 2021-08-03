@@ -1,0 +1,25 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.Shipments;
+
+import java.util.List;
+
+public interface ShipmentsService {
+    void saveShipments(Shipments shipments);
+
+    void deleteShipmentsById(String shipmentsId);
+
+    void updateShipments(Shipments shipments);
+
+    List<Shipments> selectShipmentss();
+
+    List<Shipments> selectByStoreId();
+
+    List<Shipments> selectCollar();
+
+    List<Shipments> selectSales();
+
+    List<Shipments> selectHeadCollar();
+
+    List<Shipments> selectSalesByMotherId(String motherId);
+}

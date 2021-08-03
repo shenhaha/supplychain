@@ -1,0 +1,180 @@
+package com.luer.stockandsales.bean;
+
+import lombok.Data;
+
+@Data
+public class Goods {
+    private String id;
+
+    private String goodsName;
+
+    private String unit;
+
+    private Double priceOne;
+
+    private Double priceTwo;
+
+    private String goodsOneId;
+
+    private String goodsTwoId;
+
+    private String supplierId;
+
+    private String supplierName;
+
+    private String remark;
+
+    private Integer serialnum;
+
+    private String alliasname;
+
+    private String specifications;
+
+    private Double minpurchaseQuantityone;
+
+    private Double minpurchaseQuantitytwo;
+
+    private Double supplierPrice;
+//分类id
+    private String classifyId;
+
+    private String classifyName;
+
+    /*private  double num;
+
+    public double getNum() {
+        return num;
+    }
+
+    public void setNum(double num) {
+        this.num = num;
+    }*/
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName == null ? null : goodsName.trim();
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit == null ? null : unit.trim();
+    }
+
+    public Double getPriceOne() {
+        return priceOne;
+    }
+
+    public void setPriceOne(Double priceOne) {
+        this.priceOne = priceOne;
+    }
+
+    public String getGoodsOneId() {
+        return goodsOneId;
+    }
+
+    public void setGoodsOneId(String goodsOneId) {
+        this.goodsOneId = goodsOneId == null ? null : goodsOneId.trim();
+    }
+
+    public String getGoodsTwoId() {
+        return goodsTwoId;
+    }
+
+    public void setGoodsTwoId(String goodsTwoId) {
+        this.goodsTwoId = goodsTwoId == null ? null : goodsTwoId.trim();
+    }
+
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId == null ? null : supplierId.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getSerialnum() {
+        return serialnum;
+    }
+
+    public void setSerialnum(Integer serialnum) {
+        this.serialnum = serialnum;
+    }
+
+    public Double getPriceTwo() {
+        return priceTwo;
+    }
+
+    public void setPriceTwo(Double priceTwo) {
+        this.priceTwo = priceTwo;
+    }
+
+    public String getAlliasname() {
+        return alliasname;
+    }
+
+    public void setAlliasname(String alliasname) {
+        this.alliasname = alliasname == null ? null : alliasname.trim();
+    }
+
+    public String getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(String specifications) {
+        this.specifications = specifications == null ? null : specifications.trim();
+    }
+
+    public Double getMinpurchaseQuantityone() {
+        return minpurchaseQuantityone;
+    }
+
+    public void setMinpurchaseQuantityone(Double minpurchaseQuantityone) {
+        this.minpurchaseQuantityone = minpurchaseQuantityone;
+    }
+
+    public Double getMinpurchaseQuantitytwo() {
+        return minpurchaseQuantitytwo;
+    }
+
+    public void setMinpurchaseQuantitytwo(Double minpurchaseQuantitytwo) {
+        this.minpurchaseQuantitytwo = minpurchaseQuantitytwo;
+    }
+
+    public Double getSupplierPrice() {
+        return supplierPrice;
+    }
+
+    public void setSupplierPrice(Double supplierPrice) {
+        this.supplierPrice = supplierPrice;
+    }
+}

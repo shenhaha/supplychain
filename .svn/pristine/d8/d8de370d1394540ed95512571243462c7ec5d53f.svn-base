@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.stockandsales.dao.ShipmentsMapper">
+    <resultMap id="BaseResultMap" type="com.luer.stockandsales.bean.Shipments">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="shipping_time" property="shippingTime" jdbcType="TIMESTAMP"/>
+        <result column="employer_id" property="employerId" jdbcType="VARCHAR"/>
+        <result column="receivable" property="receivable" jdbcType="DOUBLE"/>
+        <result column="mother_id" property="motherId" jdbcType="VARCHAR"/>
+        <result column="room_id" property="roomId" jdbcType="VARCHAR"/>
+        <result column="matherName" property="matherName" jdbcType="VARCHAR"/>
+        <result column="roomNum" property="roomNum" jdbcType="VARCHAR"/>
+        <result column="employerName" property="employerName" jdbcType="VARCHAR"/>
+        <result column="goods_order_id" property="goodsOrderId" jdbcType="VARCHAR"/>
+        <result column="storeFileId" property="storeFileId" jdbcType="VARCHAR"/>
+        <result column="storeFileName" property="storeFileName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, store_id, status, shipping_time, employer_id, receivable, mother_id, room_id,
+    mather_name, goods_order_id
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.stockandsales.bean.ShipmentsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from shipments
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from shipments
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from shipments
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.luer.stockandsales.bean.ShipmentsExample">
+        delete from shipments
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.stockandsales.bean.Shipments">
+    insert into shipments (id, store_id, status,
+    shipping_time, employer_id, receivable,
+    mother_id, room_id, mather_name,
+    goods_order_id)
+    values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+    #{shippingTime,jdbcType=TIMESTAMP}, #{employerId,jdbcType=VARCHAR}, #{receivable,jdbcType=DOUBLE},
+    #{motherId,jdbcType=VARCHAR}, #{roomId,jdbcType=VARCHAR}, #{matherName,jdbcType=VARCHAR},
+    #{goodsOrderId,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.luer.stockandsales.bean.Shipments">
+        insert into shipments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="shippingTime != null">
+                shipping_time,
+            </if>
+            <if test="employerId != null">
+                employer_id,
+            </if>
+            <if test="receivable != null">
+                receivable,
+            </if>
+            <if test="motherId != null">
+                mother_id,
+            </if>
+            <if test="roomId != null">
+                room_id,
+            </if>
+            <if test="matherName != null">
+                mather_name,
+            </if>
+            <if test="goodsOrderId != null">
+                goods_order_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="shippingTime != null">
+                #{shippingTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="employerId != null">
+                #{employerId,jdbcType=VARCHAR},
+            </if>
+            <if test="receivable != null">
+                #{receivable,jdbcType=DOUBLE},
+            </if>
+            <if test="motherId != null">
+                #{motherId,jdbcType=VARCHAR},
+            </if>
+            <if test="roomId != null">
+                #{roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="matherName != null">
+                #{matherName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsOrderId != null">
+                #{goodsOrderId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.stockandsales.bean.ShipmentsExample"
+            resultType="java.lang.Integer">
+        select count(*) from shipments
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update shipments
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeId != null">
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=INTEGER},
+            </if>
+            <if test="record.shippingTime != null">
+                shipping_time = #{record.shippingTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.employerId != null">
+                employer_id = #{record.employerId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.receivable != null">
+                receivable = #{record.receivable,jdbcType=DOUBLE},
+            </if>
+            <if test="record.motherId != null">
+                mother_id = #{record.motherId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roomId != null">
+                room_id = #{record.roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.matherName != null">
+                mather_name = #{record.matherName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goodsOrderId != null">
+                goods_order_id = #{record.goodsOrderId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update shipments
+        set id = #{record.id,jdbcType=VARCHAR},
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=INTEGER},
+        shipping_time = #{record.shippingTime,jdbcType=TIMESTAMP},
+        employer_id = #{record.employerId,jdbcType=VARCHAR},
+        receivable = #{record.receivable,jdbcType=DOUBLE},
+        mother_id = #{record.motherId,jdbcType=VARCHAR},
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+        mather_name = #{record.matherName,jdbcType=VARCHAR},
+        goods_order_id = #{record.goodsOrderId,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.stockandsales.bean.Shipments">
+        update shipments
+        <set>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="shippingTime != null">
+                shipping_time = #{shippingTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="employerId != null">
+                employer_id = #{employerId,jdbcType=VARCHAR},
+            </if>
+            <if test="receivable != null">
+                receivable = #{receivable,jdbcType=DOUBLE},
+            </if>
+            <if test="motherId != null">
+                mother_id = #{motherId,jdbcType=VARCHAR},
+            </if>
+            <if test="roomId != null">
+                room_id = #{roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="matherName != null">
+                mather_name = #{matherName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsOrderId != null">
+                goods_order_id = #{goodsOrderId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.stockandsales.bean.Shipments">
+    update shipments
+    set store_id = #{storeId,jdbcType=VARCHAR},
+    status = #{status,jdbcType=INTEGER},
+    shipping_time = #{shippingTime,jdbcType=TIMESTAMP},
+    employer_id = #{employerId,jdbcType=VARCHAR},
+    receivable = #{receivable,jdbcType=DOUBLE},
+    mother_id = #{motherId,jdbcType=VARCHAR},
+    room_id = #{roomId,jdbcType=VARCHAR},
+    mather_name = #{matherName,jdbcType=VARCHAR},
+    goods_order_id = #{goodsOrderId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select * from shipments
+  </select>
+    <select id="selectByStoreId" resultMap="BaseResultMap">
+    select * from shipments where store_id=#{storeId}
+  </select>
+    <!--门店查询员工的领用信息-->
+    <select id="selectCollar" resultMap="BaseResultMap">
+select s.id,
+s.employer_id,
+s.mother_id,
+s.receivable,
+s.room_id,
+s.shipping_time,
+s.`status`,
+s.store_id,
+e.`name` as employerName,
+r.num as roomNum,
+c.`name` as matherName
+ from shipments s
+ left join employer e on s.employer_id=e.id
+ left join room r on s.room_id=r.id
+ left join customer_basic c  on s.mother_id=c.id
+  where s.status=0
+  and s.store_id=#{storeId}
+
+</select>
+    <select id="selectSales" resultMap="BaseResultMap">
+select s.id,s.employer_id,s.mother_id,s.receivable,s.room_id,s.shipping_time,s.`status`,s.store_id,e.`name` as employerName,r.num as roomNum,c.`name` as matherName
+ from shipments s
+ left join employer e on s.employer_id=e.id
+ left join room r on s.room_id=r.id
+ left join customer_basic c  on s.mother_id=c.id where s.status=1
+and s.store_id=#{storeId}
+  </select>
+    <select id="selectHeadCollar" resultMap="BaseResultMap">
+select s.id,
+    s.receivable,
+    s.shipping_time,
+    s.`status`,
+    s.store_id,
+    s.goods_order_id,
+    g.store_id as storeFileId,
+    sf.name as storeFileName
+    from shipments s,
+     goods_order g ,
+     store_file sf
+    where s.status=0 and s.goods_order_id=g.id and g.store_id=sf.id
+    and s.store_id=#{storeId}
+
+  </select>
+  <select id="selectSumPrice" resultType="java.lang.Double">
+    select
+    COALESCE(sum(goods_num*price),0)
+
+    from order_details
+    where order_id in
+    (select id from shipments
+     where status=1 and mother_id=#{customerBasicId})
+
+  </select>
+    <select id="selectByMotherId" resultMap="BaseResultMap" >
+ select s.id,s.employer_id,s.mother_id,s.receivable,s.room_id,s.shipping_time,s.`status`,s.store_id,e.`name` as employerName,r.num as roomNum,c.`name` as matherName
+ from shipments s
+ left join employer e on s.employer_id=e.id
+ left join room r on s.room_id=r.id
+ left join customer_basic c  on s.mother_id=c.id where s.status=1
+and s.mother_id=#{motherId}
+
+    </select>
+</mapper>

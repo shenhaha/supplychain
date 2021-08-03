@@ -1,0 +1,146 @@
+package com.luer.servicecenter.bean;
+
+import java.util.Date;
+
+/**
+ * @author：EVEA
+ * @date：2018/8/20 14:32
+ * 宝宝护理标题和详情
+ **/
+public class BabyNurseTable {
+    private String babyRecordId;
+    private String customerBasicId;
+    private String room;
+    private String mother;
+    private String babyRecordDetailId;
+    private String babynursingrecordId;
+    private String temperature;
+    private String pulse;
+    private String breathing;
+    private String weight;
+    private String jaundice;
+    private String nursingrecord;
+    private Date updatetime;
+    private String motherid;
+    private String storeId;
+
+    public String getBabyRecordId() {
+        return babyRecordId;
+    }
+
+    public void setBabyRecordId(String babyRecordId) {
+        this.babyRecordId = babyRecordId;
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getMother() {
+        return mother;
+    }
+
+    public void setMother(String mother) {
+        this.mother = mother;
+    }
+
+    public String getBabyRecordDetailId() {
+        return babyRecordDetailId;
+    }
+
+    public void setBabyRecordDetailId(String babyRecordDetailId) {
+        this.babyRecordDetailId = babyRecordDetailId;
+    }
+
+    public String getBabynursingrecordId() {
+        return babynursingrecordId;
+    }
+
+    public void setBabynursingrecordId(String babynursingrecordId) {
+        this.babynursingrecordId = babynursingrecordId;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public String getPulse() {
+        return pulse;
+    }
+
+    public void setPulse(String pulse) {
+        this.pulse = pulse;
+    }
+
+    public String getBreathing() {
+        return breathing;
+    }
+
+    public void setBreathing(String breathing) {
+        this.breathing = breathing;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getJaundice() {
+        return jaundice;
+    }
+
+    public void setJaundice(String jaundice) {
+        this.jaundice = jaundice;
+    }
+
+    public String getNursingrecord() {
+        return nursingrecord;
+    }
+
+    public void setNursingrecord(String nursingrecord) {
+        this.nursingrecord = nursingrecord;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
+}

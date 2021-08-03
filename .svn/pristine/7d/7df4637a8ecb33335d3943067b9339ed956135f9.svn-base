@@ -1,0 +1,18 @@
+package com.luer.businessmanager.service;
+
+import com.luer.businessmanager.bean.Visit;
+
+import java.util.List;
+
+public interface VisitService {
+
+     int insert(Visit visit);
+
+     List<Visit> getVisitors(String storeId, String classification);
+
+     int deleteVisitor(String id);
+
+     void updateVisitor(Visit visit);
+
+     List<Visit> getVisitors3(String storeId, String classification, String level);
+}

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.SatisfactionSurveyMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.SatisfactionSurvey" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="roomnum" property="roomnum" jdbcType="VARCHAR" />
+    <result column="mamname" property="mamname" jdbcType="VARCHAR" />
+    <result column="survey_type" property="surveyType" jdbcType="INTEGER" />
+    <result column="skills" property="skills" jdbcType="VARCHAR" />
+    <result column="attitude" property="attitude" jdbcType="VARCHAR" />
+    <result column="communication" property="communication" jdbcType="VARCHAR" />
+    <result column="progess" property="progess" jdbcType="VARCHAR" />
+    <result column="solution" property="solution" jdbcType="VARCHAR" />
+    <result column="costumes" property="costumes" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="extraservice" property="extraservice" jdbcType="VARCHAR" />
+    <result column="consumption" property="consumption" jdbcType="VARCHAR" />
+    <result column="feedback" property="feedback" jdbcType="VARCHAR" />
+    <result column="store_file_id" property="storeFileId" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByStoreFileId" resultMap="BaseResultMap">
+     select * from satisfaction_survey where survey_type = #{survey_type}
+  </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, roomnum, mamname, survey_type, skills, attitude, communication, progess, solution,
+    costumes, time, extraservice, consumption, feedback, store_file_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.SatisfactionSurveyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from satisfaction_survey
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from satisfaction_survey
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from satisfaction_survey
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.SatisfactionSurveyExample" >
+    delete from satisfaction_survey
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.storemanager.bean.SatisfactionSurvey" >
+    insert into satisfaction_survey (id, roomnum, mamname,
+    survey_type, skills, attitude,
+    communication, progess, solution,
+    costumes, time, extraservice,
+    consumption, feedback, store_file_id
+    )
+    values (#{id,jdbcType=VARCHAR}, #{roomnum,jdbcType=VARCHAR}, #{mamname,jdbcType=VARCHAR},
+    #{surveyType,jdbcType=INTEGER}, #{skills,jdbcType=VARCHAR}, #{attitude,jdbcType=VARCHAR},
+    #{communication,jdbcType=VARCHAR}, #{progess,jdbcType=VARCHAR}, #{solution,jdbcType=VARCHAR},
+    #{costumes,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, #{extraservice,jdbcType=VARCHAR},
+    #{consumption,jdbcType=VARCHAR}, #{feedback,jdbcType=VARCHAR}, #{storeFileId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.storemanager.bean.SatisfactionSurvey" >
+    insert into satisfaction_survey
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roomnum != null" >
+        roomnum,
+      </if>
+      <if test="mamname != null" >
+        mamname,
+      </if>
+      <if test="surveyType != null" >
+        survey_type,
+      </if>
+      <if test="skills != null" >
+        skills,
+      </if>
+      <if test="attitude != null" >
+        attitude,
+      </if>
+      <if test="communication != null" >
+        communication,
+      </if>
+      <if test="progess != null" >
+        progess,
+      </if>
+      <if test="solution != null" >
+        solution,
+      </if>
+      <if test="costumes != null" >
+        costumes,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="extraservice != null" >
+        extraservice,
+      </if>
+      <if test="consumption != null" >
+        consumption,
+      </if>
+      <if test="feedback != null" >
+        feedback,
+      </if>
+      <if test="storeFileId != null" >
+        store_file_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="roomnum != null" >
+        #{roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="mamname != null" >
+        #{mamname,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyType != null" >
+        #{surveyType,jdbcType=INTEGER},
+      </if>
+      <if test="skills != null" >
+        #{skills,jdbcType=VARCHAR},
+      </if>
+      <if test="attitude != null" >
+        #{attitude,jdbcType=VARCHAR},
+      </if>
+      <if test="communication != null" >
+        #{communication,jdbcType=VARCHAR},
+      </if>
+      <if test="progess != null" >
+        #{progess,jdbcType=VARCHAR},
+      </if>
+      <if test="solution != null" >
+        #{solution,jdbcType=VARCHAR},
+      </if>
+      <if test="costumes != null" >
+        #{costumes,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="extraservice != null" >
+        #{extraservice,jdbcType=VARCHAR},
+      </if>
+      <if test="consumption != null" >
+        #{consumption,jdbcType=VARCHAR},
+      </if>
+      <if test="feedback != null" >
+        #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="storeFileId != null" >
+        #{storeFileId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.storemanager.bean.SatisfactionSurveyExample" resultType="java.lang.Integer" >
+    select count(*) from satisfaction_survey
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update satisfaction_survey
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomnum != null" >
+        roomnum = #{record.roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mamname != null" >
+        mamname = #{record.mamname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.surveyType != null" >
+        survey_type = #{record.surveyType,jdbcType=INTEGER},
+      </if>
+      <if test="record.skills != null" >
+        skills = #{record.skills,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attitude != null" >
+        attitude = #{record.attitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communication != null" >
+        communication = #{record.communication,jdbcType=VARCHAR},
+      </if>
+      <if test="record.progess != null" >
+        progess = #{record.progess,jdbcType=VARCHAR},
+      </if>
+      <if test="record.solution != null" >
+        solution = #{record.solution,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costumes != null" >
+        costumes = #{record.costumes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extraservice != null" >
+        extraservice = #{record.extraservice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumption != null" >
+        consumption = #{record.consumption,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedback != null" >
+        feedback = #{record.feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeFileId != null" >
+        store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update satisfaction_survey
+    set id = #{record.id,jdbcType=VARCHAR},
+    roomnum = #{record.roomnum,jdbcType=VARCHAR},
+    mamname = #{record.mamname,jdbcType=VARCHAR},
+    survey_type = #{record.surveyType,jdbcType=INTEGER},
+    skills = #{record.skills,jdbcType=VARCHAR},
+    attitude = #{record.attitude,jdbcType=VARCHAR},
+    communication = #{record.communication,jdbcType=VARCHAR},
+    progess = #{record.progess,jdbcType=VARCHAR},
+    solution = #{record.solution,jdbcType=VARCHAR},
+    costumes = #{record.costumes,jdbcType=VARCHAR},
+    time = #{record.time,jdbcType=VARCHAR},
+    extraservice = #{record.extraservice,jdbcType=VARCHAR},
+    consumption = #{record.consumption,jdbcType=VARCHAR},
+    feedback = #{record.feedback,jdbcType=VARCHAR},
+    store_file_id = #{record.storeFileId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.SatisfactionSurvey" >
+    update satisfaction_survey
+    <set >
+      <if test="roomnum != null" >
+        roomnum = #{roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="mamname != null" >
+        mamname = #{mamname,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyType != null" >
+        survey_type = #{surveyType,jdbcType=INTEGER},
+      </if>
+      <if test="skills != null" >
+        skills = #{skills,jdbcType=VARCHAR},
+      </if>
+      <if test="attitude != null" >
+        attitude = #{attitude,jdbcType=VARCHAR},
+      </if>
+      <if test="communication != null" >
+        communication = #{communication,jdbcType=VARCHAR},
+      </if>
+      <if test="progess != null" >
+        progess = #{progess,jdbcType=VARCHAR},
+      </if>
+      <if test="solution != null" >
+        solution = #{solution,jdbcType=VARCHAR},
+      </if>
+      <if test="costumes != null" >
+        costumes = #{costumes,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="extraservice != null" >
+        extraservice = #{extraservice,jdbcType=VARCHAR},
+      </if>
+      <if test="consumption != null" >
+        consumption = #{consumption,jdbcType=VARCHAR},
+      </if>
+      <if test="feedback != null" >
+        feedback = #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="storeFileId != null" >
+        store_file_id = #{storeFileId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.SatisfactionSurvey" >
+    update satisfaction_survey
+    set roomnum = #{roomnum,jdbcType=VARCHAR},
+      mamname = #{mamname,jdbcType=VARCHAR},
+      survey_type = #{surveyType,jdbcType=INTEGER},
+      skills = #{skills,jdbcType=VARCHAR},
+      attitude = #{attitude,jdbcType=VARCHAR},
+      communication = #{communication,jdbcType=VARCHAR},
+      progess = #{progess,jdbcType=VARCHAR},
+      solution = #{solution,jdbcType=VARCHAR},
+      costumes = #{costumes,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR},
+      extraservice = #{extraservice,jdbcType=VARCHAR},
+      consumption = #{consumption,jdbcType=VARCHAR},
+      feedback = #{feedback,jdbcType=VARCHAR},
+      store_file_id = #{storeFileId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,53 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.Meetingrecord;
+
+import java.util.List;
+
+/**
+ * 会议记录服务类
+ *
+ * @ClassName MeetingrecordService
+ * @Author GavinJiang
+ * @Date 2018/8/13 19:16.
+ */
+public interface MeetingrecordService {
+    /**
+     * @return java.util.List<Meetingrecord>
+     * @description 查询所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/13 19:19
+     * @params []
+     */
+    List<Meetingrecord> selectMeetingrecord();
+
+    /**
+     * @return int
+     * @description 新增所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/13 19:20
+     * @params [record]
+     */
+    int insert(Meetingrecord record);
+
+    /**
+     * @return int
+     * @description 修改所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/13 19:21
+     * @params [record]
+     */
+    int updateByPrimaryKeySelective(Meetingrecord record);
+
+    /**
+     * @return int
+     * @description 删除所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/13 19:21
+     * @params [id]
+     */
+    int deleteByPrimaryKey(String id);
+
+    //根据门店id查询
+    List<Meetingrecord> selectMeetingrecordAllBystoreId(String storeId);
+}

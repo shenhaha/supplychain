@@ -1,0 +1,57 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.GuestCount;
+import com.luer.storemanager.bean.GuestRecord;
+import com.luer.storemanager.bean.GuestRecordTable;
+import com.luer.storemanager.dao.GuestRecordMapper;
+import com.luer.storemanager.service.GuestRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class GuestRecordServiceImpl implements GuestRecordService {
+    @Autowired
+    private GuestRecordMapper guestRecordMapper;
+
+    @Override
+    public void saveGuestRecord(GuestRecord guestRecord) {
+        guestRecord.setId(UUIDUtils.getUUID());
+        guestRecordMapper.insert(guestRecord);
+    }
+
+    @Override
+    public void deleteGuestRecordById(String guestRecordId) {
+       guestRecordMapper.deleteByPrimaryKey(guestRecordId);
+    }
+
+    @Override
+    public void updateGuestRecord(GuestRecord guestRecord) {
+       guestRecordMapper.updateByPrimaryKey(guestRecord);
+    }
+
+
+
+    @Override
+    public List<GuestRecord> selectGuestRecords(String storeFileId) {
+        List<GuestRecord> guestRecordList=guestRecordMapper.selectByStoreFileId(storeFileId);
+
+        return guestRecordList;
+
+    }
+
+    @Override
+    public List<GuestRecord> selectAll() {
+        List<GuestRecord> guestRecordList2=guestRecordMapper.selectAll();
+        return guestRecordList2;
+    }
+
+    @Override
+    public List<GuestCount> selectGuestCount(String storeId) {
+        return guestRecordMapper.selectGuestCount(storeId);
+    }
+}

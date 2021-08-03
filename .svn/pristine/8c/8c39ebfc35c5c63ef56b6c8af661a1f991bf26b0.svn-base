@@ -1,0 +1,62 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.HeadSumOrder;
+import com.luer.stockandsales.bean.OrderDetails;
+import com.luer.stockandsales.bean.OrderDetailsExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface OrderDetailsMapper {
+    int countByExample(OrderDetailsExample example);
+
+    int deleteByExample(OrderDetailsExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(OrderDetails record);
+
+    int insertSelective(OrderDetails record);
+
+    List<OrderDetails> selectByExample(OrderDetailsExample example);
+
+    OrderDetails selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") OrderDetails record, @Param("example") OrderDetailsExample example);
+
+    int updateByExample(@Param("record") OrderDetails record, @Param("example") OrderDetailsExample example);
+
+    int updateByPrimaryKeySelective(OrderDetails record);
+
+    int updateByPrimaryKey(OrderDetails record);
+
+    //通过订单id查询订单详情
+    List<OrderDetails> selectByOrderId(String orderId);
+
+    //查询订单总金额
+    Double countMoney(String orderId);
+
+    //查询本月门店的商品的入库数量
+    Double countPurchaseNum(@Param("storeId") String storeId, @Param("goodsId") String goodsId);
+
+    //查询本月门店的商品的出库数量
+    Double countShipmentsNum(@Param("storeId") String storeId, @Param("goodsId") String goodsId);
+
+    //通过订单id查询对应的订单详情
+    void deleteByOrderId(String orderId);
+
+    //查询订单对应的订单详情，得到商品id及对应的数量
+    List<HeadSumOrder> selectByOrderIds(@Param("orderIds") List<String> orderIds);
+
+
+    //查询某订单对应的商品详情
+    OrderDetails selectByOrderIdAndGoodsId(@Param("orderId") String orderId, @Param("goodsId") String goodsId);
+
+    //分公司查询门店订单详情
+    List<OrderDetails> selectByStoreOrderId(String orderId);
+}

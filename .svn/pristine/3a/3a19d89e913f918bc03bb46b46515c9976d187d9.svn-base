@@ -1,0 +1,43 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.CheckOut;
+import com.luer.storemanager.bean.CheckOutExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface CheckOutMapper {
+    int countByExample(CheckOutExample example);
+
+    int deleteByExample(CheckOutExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(CheckOut record);
+
+    int insertSelective(CheckOut record);
+
+    List<CheckOut> selectByExample(CheckOutExample example);
+
+    CheckOut selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") CheckOut record, @Param("example") CheckOutExample example);
+
+    int updateByExample(@Param("record") CheckOut record, @Param("example") CheckOutExample example);
+
+    int updateByPrimaryKeySelective(CheckOut record);
+
+    int updateByPrimaryKey(CheckOut record);
+    
+    /**
+     * 查询所有的退房记录
+     * @author GavinJiang
+     * @date 2018/8/17 11:47
+     * @params
+     * @return java.util.List<com.luer.storemanager.bean.CheckOut>
+     */
+    List<CheckOut> selectCheckOut(@Param("storeId") String storeId);
+
+
+    List<CheckOut> selectStoreCheckOut(@Param("customerBasicIdList") List<String> customerBasicIdList);
+
+}

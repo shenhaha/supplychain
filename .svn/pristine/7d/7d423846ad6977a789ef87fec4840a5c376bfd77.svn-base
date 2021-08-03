@@ -1,0 +1,34 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.WorryEvaluate;
+import com.luer.servicecenter.bean.WorryEvaluateExample;
+import com.luer.servicecenter.bean.WorryProblem;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface WorryEvaluateMapper {
+    int countByExample(WorryEvaluateExample example);
+
+    int deleteByExample(WorryEvaluateExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(WorryEvaluate record);
+
+    int insertSelective(WorryEvaluate record);
+
+    List<WorryEvaluate> selectByExample(WorryEvaluateExample example);
+
+    WorryEvaluate selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") WorryEvaluate record, @Param("example") WorryEvaluateExample example);
+
+    int updateByExample(@Param("record") WorryEvaluate record, @Param("example") WorryEvaluateExample example);
+
+    int updateByPrimaryKeySelective(WorryEvaluate record);
+
+    int updateByPrimaryKey(WorryEvaluate record);
+
+    List<WorryProblem> getWorryProblemByMotherId(@Param("customer_basic_id") String customerBasicId);
+}

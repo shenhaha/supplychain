@@ -1,0 +1,66 @@
+package com.luer.businessmanager.bean;
+
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+@Setter
+@Getter
+@ToString
+public class OrderCustomer {
+    private String id;
+
+    private String storeId;
+
+    private String customerId;
+
+    private String firstParty;
+
+    private String cardId;
+
+    private String address;
+
+    private String tell;
+
+    private String medicalHistory;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date intime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date borndate;
+
+    private Integer days;
+
+    private String bornTimes;
+
+    private String roomType;
+
+    private String roomNumber;
+
+    private Double price;
+
+    private Double bargainMoney;
+
+    private String payWay;
+
+    private Double finalPayment;
+
+    private String finalPaymentStatus;
+
+    private String operator;
+
+    private String remark;
+
+    private String fathername;
+
+    private String fathertell;
+
+    private Date timeone;
+
+    private String strone;
+
+
+}

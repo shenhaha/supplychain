@@ -1,0 +1,207 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+	<link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css"/>
+	<link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="${ctx}/static/template/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+	<%--日期时间插件--%>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="conform" >
+	<div class="form-group required" hidden="hidden">
+		<label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" id="id" name="id" placeholder="id" >
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<!--前缀-->
+			<div class="form-group col-md-5 ">
+				<label for="name" class="col-sm-4 control-label">宝妈姓名：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="name" name="name" placeholder="宝妈姓名">
+				</div>
+			</div>
+			<div class="form-group col-md-5 ">
+				<label for="tell" class="col-sm-4 control-label">电话：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="tell" name="tell" placeholder="电话">
+				</div>
+			</div>
+		</div>
+
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="liaison" class="col-sm-4 control-label">联络人：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="liaison" name="liaison" placeholder="联络人">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="liaisontell" class="col-sm-4 control-label">联络人电话：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="liaisontell" name="liaisontell" placeholder="联络人电话">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--后缀-->
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="relation" class="col-sm-4 control-label">关系：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="relation" name="relation" placeholder="关系">
+                </div>
+            </div>
+            <div class="form-group col-md-5 ">
+                <label for="intime" class="col-sm-4 control-label">生产时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+                    <input class="form-control" size="16" type="text" value="" name="babybirth" id="babybirth"placeholder="生产时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+
+
+            </div>
+        </div>
+
+		<div class="row">
+			<div class="form-group col-md-5 ">
+				<label for="height" class="col-sm-4 control-label">宝宝体重：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="height" name="height" placeholder="宝宝体重（克）">
+				</div>
+			</div>
+			<div class="form-group col-md-5">
+			<label for="sex" class="col-sm-4 control-label">宝宝性别：</label>
+			<div class="col-sm-5">
+				<select  type="text" class="form-control" id="sex" name="sex" placeholder="请输入性别"  tabindex="1">
+
+					<option value="男">男</option>
+					<option value="女">女</option>
+				</select>
+			</div>
+		</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-md-5 ">
+				<label for="birthindex" class="col-sm-4 control-label">胎数：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="birthindex" name="birthindex" placeholder="胎数">
+				</div>
+			</div>
+			<div class="form-group col-md-5">
+				<label for="method" class="col-sm-4 control-label">生产方式：</label>
+				<div class="col-sm-5">
+
+                    <select  type="text" class="form-control" id="method" name="method" placeholder="生产方式"  tabindex="1">
+
+                        <option value="顺产">顺产</option>
+                        <option value="剖腹产">剖腹产</option>
+                    </select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-md-5 ">
+				<label for="intime" class="col-sm-4 control-label">预计入馆时间：</label>
+				<div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+					<input class="form-control" size="16" type="text" value="" name="intime" id="intime"placeholder="预计入馆时间" readonly>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				</div>
+
+
+			</div>
+            <div class="form-group col-md-5 ">
+                <label for="callintime" class="col-sm-4 control-label">接获通知时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+                    <input class="form-control" size="16" type="text" value="" name="callintime" id="callintime"placeholder="接获通知时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-md-5">
+				<label for="sickroom" class="col-sm-4 control-label">生产医院：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="hospital" name="hospital" placeholder="生产医院">
+				</div>
+			</div>
+			<div class="form-group col-md-5">
+				<label for="sickroom" class="col-sm-4 control-label">在院病房：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="sickroom" name="sickroom" placeholder="在院病房">
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="form-group col-md-5 ">
+				<label for="roomNum" class="col-sm-4 control-label">预定房间号：</label>
+				<div class="col-sm-5">
+                    <select class="form-control" id="roomNum" name="roomNum" placeholder="预定房间号">
+
+                    </select>
+				</div>
+			</div>
+			<div class="form-group col-md-5">
+				<label for="days" class="col-sm-4 control-label">订房天数：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="days" name="days" placeholder="订房天数">
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+            <div class="form-group col-md-5">
+                <label for="doctor" class="col-sm-4 control-label">派遣月嫂：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="doctor" name="doctor" placeholder="派遣月嫂">
+                </div>
+            </div>
+
+			<div class="form-group col-md-5">
+				<label for="remark" class="col-sm-4 control-label">备注：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="remark" name="remark" placeholder="备注">
+				</div>
+			</div>
+		</div>
+
+	</div>
+</form>
+<script>
+    $(function () {
+        $.get("${ctx}/room/getRooms?storeId="+'<%=session.getAttribute("storeId")%>').done(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                $("#roomNum").append("<option value='" + data[i].num + "'>" + data[i].classify + data[i].num + "</option>");
+            }
+
+        });
+    });
+	$('.form_datetime').datetimepicker({
+		language: 'zh-CN',
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+	});
+</script>
+</body>
+</html>

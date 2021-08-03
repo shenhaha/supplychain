@@ -1,0 +1,18 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Mothernursingrecorddetail;
+
+import java.util.List;
+
+public interface MothernursingrecorddetailService {
+
+    int deleteMothernursingrecorddetail(String id);
+
+    List<Mothernursingrecorddetail> getMothernursingrecorddetailby(Mothernursingrecorddetail mothernursingrecorddetail);
+
+    int insertMothernursingrecorddetail(Mothernursingrecorddetail mothernursingrecorddetail);
+
+    int updateMothernursingrecorddetail(Mothernursingrecorddetail mothernursingrecorddetail);
+
+    List<Mothernursingrecorddetail> getNursingByMotherId(String motherId);
+}

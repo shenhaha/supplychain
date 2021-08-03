@@ -1,0 +1,148 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Babynursingrecorddetail {
+    private String id;
+
+    private String storeId;
+
+    private String motherId;
+
+    private String temperature;
+
+    private String pulse;
+
+    private String breathing;
+
+    private String weight;
+
+    private String jaundice;
+
+    private String nursingrecord;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private Date updatetime;
+
+    private String bobyname;
+
+    private String mothername;
+
+    private String room;
+
+    private String status;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(String motherId) {
+        this.motherId = motherId == null ? null : motherId.trim();
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature == null ? null : temperature.trim();
+    }
+
+    public String getPulse() {
+        return pulse;
+    }
+
+    public void setPulse(String pulse) {
+        this.pulse = pulse == null ? null : pulse.trim();
+    }
+
+    public String getBreathing() {
+        return breathing;
+    }
+
+    public void setBreathing(String breathing) {
+        this.breathing = breathing == null ? null : breathing.trim();
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight == null ? null : weight.trim();
+    }
+
+    public String getJaundice() {
+        return jaundice;
+    }
+
+    public void setJaundice(String jaundice) {
+        this.jaundice = jaundice == null ? null : jaundice.trim();
+    }
+
+    public String getNursingrecord() {
+        return nursingrecord;
+    }
+
+    public void setNursingrecord(String nursingrecord) {
+        this.nursingrecord = nursingrecord == null ? null : nursingrecord.trim();
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getBobyname() {
+        return bobyname;
+    }
+
+    public void setBobyname(String bobyname) {
+        this.bobyname = bobyname == null ? null : bobyname.trim();
+    }
+
+    public String getMothername() {
+        return mothername;
+    }
+
+    public void setMothername(String mothername) {
+        this.mothername = mothername == null ? null : mothername.trim();
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room == null ? null : room.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+}

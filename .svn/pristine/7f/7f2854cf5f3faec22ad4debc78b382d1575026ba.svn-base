@@ -1,0 +1,69 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.GoodsOrder;
+import com.luer.stockandsales.bean.GoodsOrderExample;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface GoodsOrderMapper {
+    int countByExample(GoodsOrderExample example);
+
+    int deleteByExample(GoodsOrderExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(GoodsOrder record);
+
+    int insertSelective(GoodsOrder record);
+
+    List<GoodsOrder> selectByExample(GoodsOrderExample example);
+
+    GoodsOrder selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") GoodsOrder record, @Param("example") GoodsOrderExample example);
+
+    int updateByExample(@Param("record") GoodsOrder record, @Param("example") GoodsOrderExample example);
+
+    int updateByPrimaryKeySelective(GoodsOrder record);
+
+    int updateByPrimaryKey(GoodsOrder record);
+
+    //获取门店订单显示信息
+    List<GoodsOrder> selectOrderByStoreId(String storeId);
+
+    //查询门店的总采/自采订单信息
+    List<GoodsOrder> selectHeadByType(@Param("storeId") String storeId, @Param("type") Integer type);
+
+    List<GoodsOrder> selectStoreByType(@Param("storeId") String storeId, @Param("type") Integer type);
+    //查询门店的总采/自采订单id
+    List<String> selectIdsByType(@Param("storeId") String storeId, @Param("type") Integer type);
+    //总部查询所有门店从总部采购的订单
+    List<GoodsOrder> selectOrdersbyType(Integer type);
+
+    //查询总部向某供应商下的订单
+    GoodsOrder selectHeadOrder(@Param("storeId") String storeId, @Param("supplierId") String supplierId);
+
+    //查询所有订单
+    List<GoodsOrder> selectAll();
+
+    //获取总部本月订单信息
+    List<GoodsOrder> selectOrderByHeadId(String storeId);
+
+    //总部查询所有门店从总部采购的订单id
+    List<String> selectOrderIdsByType(@Param("type")Integer type, @Param("beginTime")Date beginTime, @Param("endTime")Date endTime);
+    //通过门店id集合查询门店向总部下达的订单
+    List<GoodsOrder> selectOrderByStoreIds(@Param("storeIdList") List<String> storeIdList,@Param("type") Integer type);
+
+
+    List<GoodsOrder> selectHeadByDeadline(@Param("storeId")String storeId, @Param("type")Integer type, @Param("beginTime")Date beginTime, @Param("endTime")Date endTime);
+
+    List<GoodsOrder> selectStoreOrdersbyDeadline(@Param("type")int type, @Param("beginTime")Date beginTime, @Param("endTime")Date endTime);
+
+    List<GoodsOrder> selectOrderByHeadIdAndDeadline(@Param("storeId")String storeId,@Param("beginTime") Date beginTime,@Param("endTime") Date endTime);
+}

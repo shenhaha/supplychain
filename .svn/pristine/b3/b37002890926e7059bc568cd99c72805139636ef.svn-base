@@ -1,0 +1,48 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.Stock;
+import com.luer.stockandsales.bean.StockExample;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface StockMapper {
+    int countByExample(StockExample example);
+
+    int deleteByExample(StockExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Stock record);
+
+    int insertSelective(Stock record);
+
+    List<Stock> selectByExample(StockExample example);
+
+    Stock selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Stock record, @Param("example") StockExample example);
+
+    int updateByExample(@Param("record") Stock record, @Param("example") StockExample example);
+
+    int updateByPrimaryKeySelective(Stock record);
+
+    int updateByPrimaryKey(Stock record);
+
+    List<Stock> selectAll();
+
+    //查询门店的库存信息
+    List<Stock> selectByStoreId( @Param("storeId")String storeId,@Param("classifyId")String classifyId);
+
+    //修改门店对应商品的库存数量
+    int updateStockNum(@Param("stockNum") String stockNum, @Param("goodsId")String goodsId, @Param("storeId")String storeId);
+
+    //通过门店id和商品id查询对应库存信息
+    Stock selectByStoreIdAndGoodsId(@Param("storeId")String storeId, @Param("goodsId")String goodsId);
+
+    List<Stock> selectOnlyByStoreId(String storeId);
+}

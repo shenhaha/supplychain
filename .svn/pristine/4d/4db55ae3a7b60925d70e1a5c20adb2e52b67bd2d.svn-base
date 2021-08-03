@@ -1,0 +1,37 @@
+package com.luer.storesdata.dao;
+
+import com.luer.storesdata.bean.Credentials;
+import com.luer.storesdata.bean.CredentialsExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface CredentialsMapper {
+    int countByExample(CredentialsExample example);
+
+    int deleteByExample(CredentialsExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Credentials record);
+
+    int insertSelective(Credentials record);
+
+    List<Credentials> selectByExample(CredentialsExample example);
+
+    Credentials selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Credentials record, @Param("example") CredentialsExample example);
+
+    int updateByExample(@Param("record") Credentials record, @Param("example") CredentialsExample example);
+
+    int updateByPrimaryKeySelective(Credentials record);
+
+    int updateByPrimaryKey(Credentials record);
+
+    //通过otherid查询证书信息
+    List<Credentials> selectByOtherId(String otherId);
+}

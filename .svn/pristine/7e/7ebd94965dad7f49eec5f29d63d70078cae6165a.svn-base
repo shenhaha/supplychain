@@ -1,0 +1,162 @@
+package com.luer.users.service.impl;
+
+import com.luer.comm.utils.CustomerNum;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.springsecurity.bean.Role;
+import com.luer.springsecurity.bean.RolePermission;
+import com.luer.springsecurity.bean.UserRole;
+import com.luer.springsecurity.dao.RolePermissionMapper;
+import com.luer.springsecurity.service.RoleService;
+import com.luer.springsecurity.service.UserRoleService;
+import com.luer.storesdata.bean.Department;
+import com.luer.storesdata.bean.StoreFile;
+import com.luer.storesdata.dao.DepartmentMapper;
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.storesdata.service.StoreFileService;
+import com.luer.systemmanager.bean.ParameterSet;
+import com.luer.systemmanager.dao.ParameterSetMapper;
+import com.luer.users.bean.Users;
+import com.luer.users.service.BranchService;
+import com.luer.users.service.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Service
+@Transactional
+public class BranchServiceImpl implements BranchService{
+    @Autowired
+    private StoreFileService storeFileService;
+    @Autowired
+    UsersService usersService;
+    @Autowired
+    UserRoleService userRoleService;
+    @Autowired
+    RoleService roleService;
+    @Autowired
+    private RolePermissionMapper permissionMapper;
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+    @Autowired
+    private ParameterSetMapper parameterSetMapper;
+    @Autowired
+    private DepartmentMapper departmentMapper;
+    @Override
+    public int addAdmin(StoreFile storeFile, String username, String password, HttpServletRequest request) {
+        //在门店资料中插入一条数据
+        String storeid = (String) request.getSession().getAttribute("storeId");
+        List<StoreFile> storeFiles = storeFileService.selectStoreFileBySortIdAndName(storeid);
+        List<String> a = null;
+        if(storeFile.getSort().equals("总公司")){
+            storeFile.setSort("分公司");
+             a = this.getBranchAuth();
+        }else if(storeFile.getSort().equals("门店")){
+            storeFile.setSort("门店");
+            a= this.getStoreAuth();
+        }else if(storeFile.getSort().equals("总公司加盟")){
+            storeFile.setSort("总公司加盟");
+            a = this.getBranchAuth();
+        }else {
+            storeFile.setSort("区域加盟");
+            a = this.getBranchAuth();
+        }
+        String[] s = storeFile.getInstitution().split(",");
+        storeFile.setInstitution(s[1]);
+        storeFile.setStoreId(s[0]);//为商店或者分公司设置上级id
+        ParameterSet p=parameterSetMapper.selectByPrimaryKey("qingfunum");
+        storeFile.setId(CustomerNum.getStoreNum(p.getIntParameter()));
+        p.setIntParameter(p.getIntParameter()+1);
+        parameterSetMapper.updateByPrimaryKeySelective(p);
+        //初始化部门
+        List<Department>departments =departmentMapper.getDepartments("departmentstart");
+        if(departments!=null){
+            for(Department department:departments){
+                Department depart=new Department();
+                depart.setId(UUIDUtils.getUUID());
+                depart.setName(department.getName());
+                depart.setStoreId(storeFile.getId());
+                departmentMapper.insert(depart);
+            }
+        }
+
+
+
+        //初始化系统参数
+        List<ParameterSet>parameterSets =parameterSetMapper.selectByPrimaryId("parameterstart");
+        for (ParameterSet parameterSet:parameterSets){
+            ParameterSet parameter=new ParameterSet();
+            parameter.setLastDate(new Date());
+            parameter.setId(UUIDUtils.getUUID());
+            parameter.setParameterDescripte(parameterSet.getParameterDescripte());
+            parameter.setParameterName(parameterSet.getParameterName());
+            parameter.setIntParameter(parameterSet.getIntParameter());
+            parameter.setStoreId(storeFile.getId());
+            parameterSetMapper.insert(parameter);
+        }
+
+
+
+
+        storeFileMapper.insert(storeFile);
+
+        //新建个分公司管理员
+        Users users = new Users();
+        users.setUsername(username);
+        users.setStoreId(storeFile.getId());
+        users.setPassword(password);
+        users.setId(UUIDUtils.getUUID());
+        usersService.insert(users);
+
+        //新建个用户role 和关联
+        Role role = new Role();
+        role.setId(UUIDUtils.getUUID());
+        role.setRolename("ROLE_ADMIND");
+        role.setRoledesc("管理员");
+        roleService.insert(role);
+
+        //新建用户角色关系 并设置插入
+        UserRole userRole = new UserRole();
+        userRole.setUserssId(users.getId());
+        userRole.setRoleId(role.getId());
+        userRoleService.insert(userRole);
+        //为其设置权限
+        a.forEach(auth->{
+            RolePermission rolePermission = new RolePermission();
+            rolePermission.setRoleId(role.getId());
+            rolePermission.setPermissionId(auth);
+            permissionMapper.insert(rolePermission);
+        });
+        return 0;
+    }
+
+    //分公司权限设置
+    public List<String> getBranchAuth(){
+        List<String> auths = new ArrayList<>(120);
+        String[] hasauths   = {"0","5","57","66","70","90","91","92","93","94","95","96","98","100"};
+        for(int i=0;i<11;i++){
+                auths.add(hasauths[i]);
+        }
+        String.join(",",auths);
+        return auths;
+    }
+    //门店权限设置
+    public List<String> getStoreAuth(){
+        List<String> auths = new ArrayList<>(120);
+        for(int i=0;i<=100;i++){
+            if (i != 1 && i != 2 && i != 3&& i != 4&& i != 5 && i != 63 && i != 69 && i != 70&& i != 74
+                    && i != 78&& i != 67&& i != 68&& i != 82&& i != 83&& i != 84&& i != 85
+                    && i != 86&&  i !=  87&& i != 88&& i != 97&&i!=99) {
+                auths.add(Integer.toString(i));
+            }
+        }
+
+
+        String.join(",",auths);
+        return auths;
+    }
+}

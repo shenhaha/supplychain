@@ -1,0 +1,95 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal"role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+       <%-- <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5">
+                <label for="mothername" class="col-sm-4 control-label">宝妈姓名：</label>
+                <div class="col-sm-5">
+                    <input type="text" id="mothername"class="form-control"  name="mothername" placeholder="宝妈姓名" >
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="babyname" class="col-sm-4 control-label">宝宝姓名：</label>
+                <div class="col-sm-5">
+                    <input type="text" id="babyname" class="form-control" name="babyname" placeholder="宝宝姓名">
+                </div>
+            </div>
+        </div>--%>
+        <div class="row">
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="swimTime" class="col-md-4 control-label">游泳时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-7 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+                    <input class="form-control" size="16" type="text" value="" name="swimTime" id="swimTime"placeholder="游泳时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="weekday" class="col-sm-4 control-label">周几：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="weekday" name="weekday" placeholder="周几">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="swimWay" class="col-sm-4 control-label">宝宝来源：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="swimWay" name="swimWay" placeholder="宝宝来源">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="identify" class="col-sm-4 control-label">确认：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="identify" name="identify" placeholder="确认">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="babyname" class="col-sm-4 control-label">宝宝选择：</label>
+                <div class="col-sm-5">
+                    <select id="babyname" class="form-control">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

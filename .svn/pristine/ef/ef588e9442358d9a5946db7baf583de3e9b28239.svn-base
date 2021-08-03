@@ -1,0 +1,39 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.GoodsOrder;
+
+import java.util.List;
+
+public interface GoodsOrderService {
+
+    void saveOrder(GoodsOrder order);
+
+    void deleteOrderById(String orderId);
+
+    void updateOrder(GoodsOrder order);
+
+    //根据门店id查询订单
+    List<GoodsOrder> selectOrderByStoreId();
+
+    //查询门店的总采/自采订单信息
+    List<GoodsOrder> selectByType(Integer type);
+
+    List<GoodsOrder> selectAll();
+
+    //总部查询各门店的订单信息
+    List<GoodsOrder> selectAllStoreOrder();
+
+    //根据门店id和商品id生成订单
+    void createOrder(String headSumNums,Integer type);
+
+    //生成或者修改总采的总订单
+    void createOrUpdateHeadOrder(GoodsOrder goodsorder);
+
+    //分公司查询旗下门店的订单信息
+    List<GoodsOrder> selectByBranchOfficeId();
+
+    //总部查询门店订单的汇总信息
+    List<GoodsOrder> selectOrderByHeadOfficeId();
+
+    List<GoodsOrder> selectByStoreAndType(String storeId, int i);
+}

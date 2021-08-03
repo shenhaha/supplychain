@@ -1,0 +1,16 @@
+package com.luer.servicecenter.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ServiceDetail {
+
+    private String id;
+    private String project;
+    private  String motherid;
+    private  String name;
+    private  String time;
+    private  String price;
+}

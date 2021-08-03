@@ -1,0 +1,16 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Pavilioneducation;
+import com.luer.servicecenter.bean.PavilioneducationExample;
+
+import java.util.List;
+
+public interface PavilioneducationService {
+    int insert(Pavilioneducation record);
+    int deleteByPrimaryKey(String id);
+    int updateByPrimaryKey(Pavilioneducation record);
+    List<Pavilioneducation> selectByExample(Pavilioneducation example);
+    Pavilioneducation selectByPrimaryKey(String id);
+
+    List<Pavilioneducation> getPavilioneducationByMotherId(String motherid);
+}

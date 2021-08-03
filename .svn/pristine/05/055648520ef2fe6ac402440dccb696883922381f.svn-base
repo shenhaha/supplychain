@@ -1,0 +1,63 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.CheckIn;
+import com.luer.storemanager.bean.MotherCheckIn;
+
+import java.util.List;
+
+/**
+ * 入住服务类接口
+ *
+ * @description
+ * @ClassName CheckInService
+ * @Author GavinJiang
+ * @Date 2018/8/15 15:51.
+ */
+public interface CheckInService {
+
+    CheckIn selectBymotherid(String motherid);
+
+    List<MotherCheckIn> selectMotherCheckIn(String storeId);
+    /**
+     * 查询所有的入住信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.CheckIn>
+     * @author GavinJiang
+     * @date 2018/8/15 16:28
+     * @params
+     */
+    List<CheckIn> selectAllByStoreid(String storeid);
+
+    /**
+     * 添加入住信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 16:28
+     * @params
+     */
+    int insert(CheckIn record);
+
+    /**
+     * 修改入住信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 16:31
+     * @params
+     */
+    int updateByPrimaryKeySelective(CheckIn record);
+
+    /**
+     * 根据id删除入住信息
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 16:32
+     * @params
+     */
+    int deleteByPrimaryKey(String id);
+}

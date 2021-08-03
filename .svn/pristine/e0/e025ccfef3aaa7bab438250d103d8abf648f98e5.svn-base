@@ -1,0 +1,46 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.VitalSign;
+import com.luer.servicecenter.bean.VitalSignExample;
+import com.luer.servicecenter.dao.VitalSignMapper;
+import com.luer.servicecenter.service.VitalSignService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class VitalSignServiceImpl implements VitalSignService {
+    @Autowired
+    VitalSignMapper vitalSignMapper;
+    @Override
+    public int addVitalSign(VitalSign vitalSign) {
+        vitalSign.setId(UUIDUtils.getUUID());
+        vitalSignMapper.insert(vitalSign);
+        return 0;
+    }
+
+    @Override
+    public List<VitalSign> getVitalSign(String motherid) {
+        List<VitalSign> vitalSigns = vitalSignMapper.selectByMotherId(motherid);
+        return vitalSigns;
+    }
+
+    @Override
+    public int updateVitalSign(VitalSign vitalSign) {
+        VitalSignExample vitalSignExample = new VitalSignExample();
+        VitalSignExample.Criteria criteria = vitalSignExample.createCriteria();
+        criteria.andIdEqualTo(vitalSign.getId());
+        vitalSignMapper.updateByExampleSelective(vitalSign,vitalSignExample);
+        return 0;
+    }
+
+    @Override
+    public int deleteVitalSign(String id) {
+        vitalSignMapper.deleteByPrimaryKey(id);
+        return 0;
+    }
+}

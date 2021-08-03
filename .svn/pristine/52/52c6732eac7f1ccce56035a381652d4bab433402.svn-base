@@ -1,0 +1,58 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.Items;
+
+import java.util.List;
+
+/**
+ * 商品信息服务类
+ *
+ * @ClassName ItemsService
+ * @Author GavinJiang
+ * @Date 2018/8/15 19:37.
+ */
+public interface ItemsService {
+
+    /**
+     * 查询所有的商品信息
+     *
+     * @return java.util.List<Items>
+     * @author GavinJiang
+     * @date 2018/8/15 19:40
+     * @params
+     */
+    List<Items> selectItems();
+
+    /**
+     * 添加商品信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 19:41
+     * @params
+     */
+    int insert(Items record);
+
+    /**
+     * 修改商品信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 19:42
+     * @params
+     */
+    int updateByPrimaryKeySelective(Items record);
+
+    /**
+     * 删除商品信息
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 19:42
+     * @params
+     */
+    int deleteByPrimaryKey(String id);
+}

@@ -1,0 +1,76 @@
+package com.luer.businessmanager.controller;
+
+import com.luer.businessmanager.bean.Contact;
+import com.luer.businessmanager.service.ContactService;
+import com.luer.comm.utils.ResultSet;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * Created by  2018/8/13.
+ * 订单入住管理
+ * *生产联络单
+ */
+
+@RequestMapping("/businessmanager")
+@Controller
+public class ContactController {
+
+    @Autowired
+    private ContactService contactService;
+
+    //添加信息
+    @ResponseBody
+    @RequestMapping(value = "/addContact")
+    public ResultSet addContact(@NonNull Contact contact) {
+        contactService.insert(contact);
+        return ResultSet.getSuccess();
+    }
+
+    //单个删除
+    @ResponseBody
+    @RequestMapping(value = "/deleteContact")
+    public ResultSet deleteContact(@NonNull String id) {
+        contactService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    //查询单个信息
+    @ResponseBody
+    @RequestMapping(value = "/selectContact")
+    public ResultSet selectContact(@NonNull String id) {
+        Contact contact = contactService.selectByPrimaryKey(id);
+        return ResultSet.getSuccess(contact);
+
+    }
+
+    //修改信息
+    @ResponseBody
+    @RequestMapping(value = "/updateContact")
+    public ResultSet updateContact(@NonNull Contact contact) {
+        contactService.updateById(contact.getId(),contact);
+        return ResultSet.getSuccess();
+    }
+
+    //查询所有信息
+    @ResponseBody
+    @RequestMapping(value = "/selectListContact")
+    public List<Contact> selectListContact() {
+        List<Contact> contactList = contactService.selectAllContact();
+        return contactList;
+
+    }
+    //查询所有信息
+    @ResponseBody
+    @RequestMapping(value = "/selectAllContact")
+    public List<Contact> selectContacts(String storeId) {
+        List<Contact> contactList = contactService.selectContacts(storeId);
+        return contactList;
+
+    }
+}

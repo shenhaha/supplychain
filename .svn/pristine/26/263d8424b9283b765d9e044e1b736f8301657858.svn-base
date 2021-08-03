@@ -1,0 +1,25 @@
+package com.luer.comm.utils;
+
+import com.luer.comm.utils.ResultSet;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@ControllerAdvice
+public class MyServiceExceptionHandler {
+
+    @ExceptionHandler(value = {Exception.class})
+    public ResultSet solveException(Exception e) {
+        e.printStackTrace();
+         return ResultSet.getFail();
+    }
+    @ExceptionHandler(value = {CustomerException.class})
+    public ResultSet customerException(Exception e) {
+        e.printStackTrace();
+        return ResultSet.getFail(e.getMessage());
+    }
+}
+

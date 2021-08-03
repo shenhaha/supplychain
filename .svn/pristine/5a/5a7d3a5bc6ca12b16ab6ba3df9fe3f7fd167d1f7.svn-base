@@ -1,0 +1,58 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.MotherEvaluate;
+import com.luer.servicecenter.bean.MotherEvaluateExample;
+import com.luer.servicecenter.dao.MotherEvaluateMapper;
+import com.luer.servicecenter.service.MotherEvaluateService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/14.
+ */
+@Service
+@Transactional
+public class MotherEvaluateServiceImpl implements MotherEvaluateService {
+    @Autowired
+    private MotherEvaluateMapper motherEvaluateMapper;
+
+    public  void addMotherEvaluate(MotherEvaluate motherEvaluate) {
+            motherEvaluate.setId(UUIDUtils.getUUID());
+        motherEvaluateMapper.insertSelective(motherEvaluate);
+
+    }
+
+
+    public void updateMotherEvaluate(MotherEvaluate motherEvaluate) {
+
+       motherEvaluateMapper.updateByPrimaryKeySelective(motherEvaluate);
+
+
+    }
+
+    @Override
+    public void deleteMot(String id) {
+        motherEvaluateMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<MotherEvaluate> getList(MotherEvaluate motherEvaluate) {
+        MotherEvaluateExample motherEvaluateExample = new MotherEvaluateExample();
+        MotherEvaluateExample.Criteria criteria = motherEvaluateExample.createCriteria();
+        if(motherEvaluate.getStoreId()!=null){
+            criteria.andStoreIdEqualTo(motherEvaluate.getStoreId());
+        }
+        return motherEvaluateMapper.selectByExample(motherEvaluateExample);
+    }
+
+    @Override
+    public List<MotherEvaluate> getEvaluateByMotherId(String customerBasicId) {
+        return motherEvaluateMapper.getEvaluateByMotherId(customerBasicId);
+    }
+
+
+}

@@ -1,0 +1,72 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.BabyNurseTable;
+import com.luer.servicecenter.bean.Babynursingrecord;
+import com.luer.servicecenter.bean.Babynursingrecorddetail;
+import com.luer.servicecenter.bean.BabynursingrecorddetailExample;
+import com.luer.servicecenter.service.BabyNursingService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author EVEA
+ * 宝宝护理
+ */
+@Controller
+@RequestMapping("/babynursing")
+public class BabyNursingController {
+    @Autowired
+    private BabyNursingService babyNursingService;
+
+   //根据妈妈ID获取信息
+    @RequestMapping("/getBabyNursingRecord")
+    @ResponseBody
+    public List<Babynursingrecorddetail> getBabyNursingRecord(@NonNull String motherId) {
+
+        return  babyNursingService.getBabyNursingRecord(motherId);
+    }
+
+    @RequestMapping("/addnuringdetail")
+    @ResponseBody
+    public ResultSet addBabyNursingRecord(@NonNull Babynursingrecorddetail babynursingrecorddetail) {
+        babyNursingService.insert(babynursingrecorddetail);
+        return ResultSet.getSuccess();
+    }
+    @RequestMapping("/updateBabyNursingRecord")
+    @ResponseBody
+    public ResultSet updateBabyNursingRecord(@NonNull Babynursingrecorddetail babynursingrecorddetail) {
+        babyNursingService.updateBabyNursingRecord(babynursingrecorddetail);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/deleteBabyNursingRecord")
+    @ResponseBody
+    public ResultSet deleteBabyNursingRecord(@NonNull String id) {
+        babyNursingService.deleteByPrimaryKeyDetail(id);
+        return  ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/selectBabyNursingRecord")
+    @ResponseBody
+    public List<Babynursingrecorddetail> selectBabyNursingRecord(@NonNull String storeId) {
+
+        return  babyNursingService.selectBabyNursingRecord(storeId);
+    }
+    @RequestMapping("/selectOneBabyNursingRecord")
+    @ResponseBody
+    public Babynursingrecorddetail selectOneBabyNursingRecord(@NonNull String storeId) {
+
+        return  babyNursingService.selectOneBabyNursingRecord(storeId);
+    }
+
+
+}

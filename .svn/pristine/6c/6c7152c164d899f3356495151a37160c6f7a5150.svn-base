@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.stockandsales.dao.OrderDetailsMapper">
+    <resultMap id="BaseResultMap" type="com.luer.stockandsales.bean.OrderDetails">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="goodsName" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_num" property="goodsNum" jdbcType="DOUBLE"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="detailstype" property="detailstype" jdbcType="INTEGER"/>
+        <result column="serialnum" property="serialnum" jdbcType="INTEGER"/>
+        <result column="price1" property="price1" jdbcType="DOUBLE"/>
+        <result column="price2" property="price2" jdbcType="DOUBLE"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, goods_id, goods_num, price, order_id, detailstype, serialnum
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.luer.stockandsales.bean.OrderDetailsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from order_details
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from order_details
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from order_details
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.stockandsales.bean.OrderDetailsExample">
+        delete from order_details
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.stockandsales.bean.OrderDetails">
+        insert into order_details (id, goods_id, goods_num,
+        price, order_id, detailstype,
+        serialnum)
+        values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{goodsNum,jdbcType=DOUBLE},
+        #{price,jdbcType=DOUBLE}, #{orderId,jdbcType=VARCHAR}, #{detailstype,jdbcType=INTEGER},
+        #{serialnum,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.stockandsales.bean.OrderDetails">
+        insert into order_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="goodsNum != null">
+                goods_num,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="detailstype != null">
+                detailstype,
+            </if>
+            <if test="serialnum != null">
+                serialnum,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsNum != null">
+                #{goodsNum,jdbcType=DOUBLE},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="detailstype != null">
+                #{detailstype,jdbcType=INTEGER},
+            </if>
+            <if test="serialnum != null">
+                #{serialnum,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.stockandsales.bean.OrderDetailsExample"
+            resultType="java.lang.Integer">
+        select count(*) from order_details
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update order_details
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goodsId != null">
+                goods_id = #{record.goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goodsNum != null">
+                goods_num = #{record.goodsNum,jdbcType=DOUBLE},
+            </if>
+            <if test="record.price != null">
+                price = #{record.price,jdbcType=DOUBLE},
+            </if>
+            <if test="record.orderId != null">
+                order_id = #{record.orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.detailstype != null">
+                detailstype = #{record.detailstype,jdbcType=INTEGER},
+            </if>
+            <if test="record.serialnum != null">
+                serialnum = #{record.serialnum,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update order_details
+        set id = #{record.id,jdbcType=VARCHAR},
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+        goods_num = #{record.goodsNum,jdbcType=DOUBLE},
+        price = #{record.price,jdbcType=DOUBLE},
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+        detailstype = #{record.detailstype,jdbcType=INTEGER},
+        serialnum = #{record.serialnum,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.stockandsales.bean.OrderDetails">
+        update order_details
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsNum != null">
+                goods_num = #{goodsNum,jdbcType=DOUBLE},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="detailstype != null">
+                detailstype = #{detailstype,jdbcType=INTEGER},
+            </if>
+            <if test="serialnum != null">
+                serialnum = #{serialnum,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.stockandsales.bean.OrderDetails">
+        update order_details
+        set goods_id = #{goodsId,jdbcType=VARCHAR},
+        goods_num = #{goodsNum,jdbcType=DOUBLE},
+        price = #{price,jdbcType=DOUBLE},
+        order_id = #{orderId,jdbcType=VARCHAR},
+        detailstype = #{detailstype,jdbcType=INTEGER},
+        serialnum = #{serialnum,jdbcType=INTEGER}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <!--查询订单对应的订单详情信息-->
+    <select id="selectByOrderId" resultMap="BaseResultMap">
+    select od.id,od.goods_id,od.goods_num,od.price,od.order_id,od.detailstype,od.serialnum,g.goods_name as goodsName,g.supplier_price as price1,g.price_one as price2
+     from order_details od left join goods g on od.goods_id=g.id
+     where order_id=#{orderId}
+  </select>
+
+    <select id="countMoney" resultType="java.lang.Double">
+  select COALESCE(sum(goods_num*price),0) FROM order_details WHERE order_id=#{orderId}
+</select>
+
+    <select id="countPurchaseNum" resultType="java.lang.Double">
+select COALESCE(sum(goods_num),0) from order_details where order_id in (select id from purchase where store_id=#{storeId} and DATE_FORMAT(purchase_time,'%Y%m') = DATE_FORMAT(CURDATE( ),'%Y%m' )) and goods_id=#{goodsId}
+  </select>
+
+    <select id="countShipmentsNum" resultType="java.lang.Double">
+select COALESCE(sum(goods_num),0) from order_details where order_id in (select id from shipments where store_id=#{storeId} and DATE_FORMAT(shipping_time,'%Y%m') = DATE_FORMAT(CURDATE( ),'%Y%m' )) and goods_id=#{goodsId}
+  </select>
+
+    <delete id="deleteByOrderId">
+        delete FROM  order_details where order_id=#{orderId}
+    </delete>
+
+    <select id="selectByOrderIds" resultType="com.luer.stockandsales.bean.HeadSumOrder" parameterType="java.util.List">
+        select goods_id as goodsId,COALESCE(sum(goods_num),0) as sumNum from order_details
+        where order_id in
+        <foreach collection="orderIds" open="(" separator="," close=")" item="orderId">
+            #{orderId}
+        </foreach>
+        group by goods_id
+    </select>
+
+    <!--查询本月的总部的供应商订单中是否有该商品的详情-->
+    <select id="selectByOrderIdAndGoodsId" resultMap="BaseResultMap">
+    select * from order_details where order_id=#{orderId} and goods_id=#{goodsId}
+    </select>
+    <!--分公司查询门店订单详情-->
+    <select id="selectByStoreOrderId" resultMap="BaseResultMap">
+
+select od.id,od.goods_id,od.goods_num,od.price,od.order_id,od.detailstype,od.serialnum,g.goods_name as goodsName ,
+(g.price_two-g.price_one)*od.goods_num as price2,
+g.price_one as price1
+from order_details od left join goods  g on od.goods_id=g.id
+    where od.order_id=#{orderId}
+
+    </select>
+
+</mapper>

@@ -1,0 +1,465 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <style>
+        div{padding: 0 0 0 0;margin: 0 0 0 0}
+    </style>
+</head>
+<body>
+<form class="form-horizontal"role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="babyname" class="col-sm-4 control-label">宝宝姓名：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="babyname" name="babyname">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="hospitalsummary" class="col-sm-5 control-label">出院小结：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="hospitalsummary" name="hospitalsummary"tabindex="1">
+                        <option value="有">有</option>
+                        <option value="无">无</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4 col-lg-offset-1">
+                <label for="updatetime" class="col-sm-4 control-label">出生日期：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime1 col-sm-7" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+                    <input class="form-control"  type="text" value="" name="updatetime" id="updatetime"placeholder="出生日期" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="childBirthWay" class="col-sm-5 control-label">出生方式：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="childBirthWay" name="childBirthWay"tabindex="1">
+                        <option value="自然生产">自然生产</option>
+                        <option value="剖腹产">剖腹产</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="weight" class="col-sm-5 control-label">体重(g)：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="weight" name="weight" placeholder="体重">
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="height" class="col-sm-5 control-label">身高(cm)：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="height" name="height" placeholder="身高">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="temperature" class="col-sm-4 control-label">体温(℃)：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="temperature" name="temperature" placeholder="温度">
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="heartbeat" class="col-sm-5 control-label">心跳(次/min)：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="heartbeat" name="heartbeat" placeholder="心跳">
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="breathing" class="col-sm-5 control-label">呼吸(次/min)：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="breathing" name="breathing" placeholder="呼吸">
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="scalp" class="col-sm-5 control-label">头皮：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="scalp" name="scalp"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="破皮">破皮</option>
+                        <option value="产瘤">产瘤</option>
+                        <option value="头血肿">头血肿</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="eye" class="col-sm-4 control-label">眼：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="eye" name="eye"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="日落眼">日落眼</option>
+                        <option value="分泌物">分泌物</option>
+                        <option value="眼盖肿胀">眼盖肿胀</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="ear" class="col-sm-5 control-label">耳：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="ear" name="ear"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="红">红</option>
+                        <option value="肿">肿</option>
+                        <option value="分泌物">分泌物</option>
+                        <option value="低于外眼訾联机">低于外眼訾联机</option>
+                        <option value="畸形">畸形</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="oral" class="col-sm-5 control-label">口腔：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="oral" name="oral"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="腭裂">腭裂</option>
+                        <option value="唇裂">唇裂</option>
+                        <option value="歪嘴">歪嘴</option>
+                        <option value="大舌头">大舌头</option>
+                        <option value="舌苔">舌苔</option>
+                        <option value="鹅口疮">鹅口疮</option>
+                        <option value="溃疡">溃疡</option>
+                        <option value="舌系带段">舌系带段</option>
+                        <option value="马牙">马牙</option>
+                        <option value="珍珠瘤">珍珠瘤</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="nose" class="col-sm-5 control-label">鼻子：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="nose" name="nose"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="肿胀">肿胀</option>
+                        <option value="鼻塞">鼻塞</option>
+                        <option value="鼻分泌物">鼻分泌物</option>
+                        <option value="出血">出血</option>
+                        <option value="鼻道畸形">鼻道畸形</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label  class="col-sm-1 control-label" style="margin-left: 23px">颈部：</label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="正常" name="neck"> 正常
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="畸形" id="inlineCheckbox1"> 畸形
+                </label>
+                <div class="col-sm-3" id="neckid" hidden="hidden">
+                <input type="text" class="form-control"  name="neck" placeholder="畸形">
+                </div>
+                <%--<div class="col-sm-7">
+                    <select  type="text" class="form-control" id="neck" name="neck"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="畸形">畸形</option>
+                    </select>
+                </div>--%>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="jaundice" class="col-sm-4 control-label">黄疸：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="jaundice" name="jaundice" placeholder="黄疸">
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="plantarBlood" class="col-sm-5 control-label">足底血：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="plantarBlood" name="plantarBlood"tabindex="1">
+                        <option value="未采">未采</option>
+                        <option value="已采">已采</option>
+
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="chest" class="col-sm-4 control-label">胸部：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="chest" name="chest"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="胸骨凹陷">胸骨凹陷</option>
+                        <option value="水桶胸">水桶胸</option>
+                        <option value="鸡胸">鸡胸</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="abdomen" class="col-sm-5 control-label">腹部：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="abdomen" name="abdomen"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="腹胀">腹胀</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="back" class="col-sm-5 control-label">背部：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="back" name="back"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="异常">异常</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label  class="col-sm-1 control-label" style="margin-left: 25px">脐带：</label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="脱落"  name="umbilicalCord"> 脱落
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="未脱落"  name="umbilicalCord"> 未脱落
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox" value="干燥"  name="umbilicalCord"> 干燥
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="分泌物"  name="umbilicalCord"> 分泌物
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="红肿"  name="umbilicalCord"> 红肿
+                </label>
+                <label class="col-sm-2 checkbox-inline">
+                    <input type="checkbox"  value="交付妈妈" id="fornote" name="umbilicalCord"> 交付妈妈
+                </label>
+                <div class="col-sm-3" hidden="hidden" id="umbilicalCordnote">
+                    <input type="text" class="form-control" name="umbilicalCord" placeholder="日期，签名">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="upperLimb" class="col-sm-4 control-label">上肢：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="upperLimb" name="upperLimb"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="无力">无力</option>
+                        <option value="僵硬">僵硬</option>
+                        <option value="缺损">缺损</option>
+                        <option value="畸形">畸形</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="lowerLimbs" class="col-sm-5 control-label">下肢：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="lowerLimbs" name="lowerLimbs"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="无力">无力</option>
+                        <option value="内翻">内翻</option>
+                        <option value="外翻">外翻</option>
+                        <option value="僵硬">僵硬</option>
+                        <option value="缺损">缺损</option>
+                        <option value="畸形">畸形</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label  class="col-sm-1 control-label" style="margin-left: 23px">皮肤：</label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="红润" name="skin"> 红润
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox" value="黄" name="skin"> 黄
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="苍白" name="skin"> 苍白
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="青铜" name="skin"> 青铜
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="发钳" name="skin"> 发钳
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="红臀" name="skin"> 红臀
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="红疹" name="skin"> 红疹
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-xs-1 checkbox-inline col-xs-offset-1">
+                    <input type="checkbox"  value="毒性红斑" name="skin"> 毒性红斑
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="粟粒疹" name="skin"> 粟粒疹
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="血管瘤" name="skin"> 血管瘤
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="蒙古斑" name="skin"> 蒙古斑
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="皮下淤血" name="skin"> 皮下淤血
+                </label>
+                <label class="col-xs-1 checkbox-inline">
+                    <input type="checkbox"  value="干燥脱皮" name="skin"> 干燥脱皮
+                </label>
+                <label  class="col-sm-1 control-label">备注：</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="umbilicalCord" id="skinnote" placeholder="皮肤其他信息">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="sex" class="col-sm-4 control-label">性别：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="sex" name="sex"tabindex="1">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-8" id="nv"  hidden="hidden">
+                <%--<label for="heartbeat" class="col-sm-5 control-label">心跳(次/min)：</label>
+                --%>
+                <label  class="col-sm-3 control-label">生殖器分泌物：</label>
+                <div class="col-sm-4">
+                    <select  type="text" class="form-control" id="secretions" name="secretions"tabindex="1">
+                        <option value="无">无</option>
+                        <option value="有">有</option>
+                    </select>
+                </div>
+                <label  class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-3" hidden="hidden" id="secretionsnote">
+                    <input type="text" class="form-control" name="umbilicalCord" placeholder="分泌物备注">
+                </div>
+            </div>
+            <div class="form-group col-md-4" id="nan">
+                <label for="appearance" class="col-sm-5 control-label">生殖器外观：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="appearance" name="appearance"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="睾丸已下降">睾丸已下降</option>
+                        <option value="睾丸未下降">睾丸未下降</option>
+                        <option value="尿道下裂">尿道下裂</option>
+                        <option value="阴囊水肿">阴囊水肿</option>
+                        <option value="疝气">疝气</option>
+                        <option value="包皮过长">包皮过长</option>
+                        <option value="阴茎无法外露包皮紧">阴茎无法外露包皮紧</option>
+                        <option value="已行包皮环割术">已行包皮环割术</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="urinate" class="col-sm-4 control-label">大便：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="urinate" name="urinate"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="腹泻">腹泻</option>
+                        <option value="未解">未解</option>
+                        <option value="血便">血便</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="moveBowels" class="col-sm-5 control-label">小便：</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="moveBowels" name="moveBowels"tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="血尿">血尿</option>
+                        <option value="少尿">少尿</option>
+                        <option value="结晶尿">结晶尿</option>
+                        <option value="未解">未解</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+            <%--<div class="form-group col-md-3">
+                <label for="note" class="col-sm-5 control-label">备注：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="note" name="note" placeholder="备注">
+                </div>
+            </div>--%>
+        <div class="row">
+            <div class="row">
+                <div class="form-group col-md-4" style="margin-bottom: 10px">
+                    <label for="assessmentTime" class="col-sm-4 control-label">评估时间:</label>
+                    <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-sm-7"
+                         data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                        <input class="form-control" size="16" type="text" value="" name="assessmentTime" id="assessmentTime"
+                               readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                    <input type="hidden" id="dtp_input1" value=""/><br/>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="assessment" class="col-sm-5 control-label">评估人：</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="assessment" name="assessment" placeholder="评估人">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+ </form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        pickerPosition:'top-right',
+        showMeridian: 1
+    });
+    $('.form_datetime1').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

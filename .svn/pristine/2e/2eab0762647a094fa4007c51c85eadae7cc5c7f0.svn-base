@@ -1,0 +1,62 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.bean.CustomerBasicExample;
+import java.util.List;
+
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@MapperScan
+@Component
+public interface CustomerBasicMapper {
+    int countByExample(CustomerBasicExample example);
+
+    int deleteByExample(CustomerBasicExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(CustomerBasic record);
+
+    int insertSelective(CustomerBasic record);
+
+    List<CustomerBasic> selectByExample(CustomerBasicExample example);
+
+    CustomerBasic selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") CustomerBasic record, @Param("example") CustomerBasicExample example);
+
+    int updateByExample(@Param("record") CustomerBasic record, @Param("example") CustomerBasicExample example);
+
+    int updateByPrimaryKeySelective(CustomerBasic record);
+
+    int updateByPrimaryKey(CustomerBasic record);
+    //获取门店客户列表
+    List<CustomerBasic> getList(@Param("storeId") String storeId);
+
+    //获取门店妈妈列表
+    List<CustomerBasic> getMotherList(@Param("storeId") String storeId);
+
+    int updateAvoid(@Param("avoid") String avoid, @Param("motherid") String motherid);
+
+
+
+    List<CustomerBasic> selectCustomerBasicByStoreId(@Param("storeId") String storeId,@Param("type") String type);
+
+    List<CustomerBasic> getOneCustomerBasics(@Param("storeId")String storeId,@Param("type")String type);
+
+    List<CustomerBasic> getTwoCustomerBasics(@Param("storeId")String storeId, @Param("type")String type, @Param("checkStatus")String checkStatus, @Param("motherType")String motherType);
+
+
+    List<String> selectCustomerBasicIds(@Param("storeId") String storeId,@Param("type") String type);
+    List<CustomerBasic> getBabyBasics(@Param("mother_id") String motherId);
+
+    List<CustomerBasic> getMothers(@Param("storeId")String storeId);
+
+    List<CustomerBasic> getCustomerBasic(@Param("storeId")String storeId);
+
+
+}

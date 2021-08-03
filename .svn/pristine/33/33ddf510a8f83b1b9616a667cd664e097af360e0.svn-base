@@ -1,0 +1,61 @@
+package com.luer.storemanager.controller;
+
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.SatisfactionRecord;
+import com.luer.storemanager.service.SatisfactionRecordService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value="/satisfactionRecord")
+public class SatisfactionRecordController {
+    @Autowired
+    private SatisfactionRecordService satisfactionRecordService;
+
+
+    //添加满意度信息
+    @RequestMapping(value = "/saveSatisfactionRecord")
+    @ResponseBody
+    public ResultSet saveSatisfactionRecord(@NonNull SatisfactionRecord satisfactionRecord) {
+        satisfactionRecord.setId(UUIDUtils.getUUID());
+
+        satisfactionRecordService.saveSatisfactionRecord(satisfactionRecord);
+        return ResultSet.getSuccess();
+    }
+    //删除满意度信息
+    @RequestMapping("/deleteSatisfactionRecord")
+    @ResponseBody
+    public ResultSet deleteSatisfactionRecordById(@NonNull String id) {
+      satisfactionRecordService.deleteSatisfactionRecordById(id);
+        return ResultSet.getSuccess();
+    }
+    //修改满意度资料
+    @RequestMapping("/updateSatisfactionRecord")
+    @ResponseBody
+    public ResultSet updateSatisfactionRecordDetail(@NonNull SatisfactionRecord satisfactionRecord) {
+        System.out.println("====================================");
+        System.out.println("====================================");
+        System.out.println("satisfactionRecord=="+satisfactionRecord);
+        System.out.println("====================================");
+        System.out.println("====================================");
+      satisfactionRecordService.updateSatisfactionRecord(satisfactionRecord);
+        return ResultSet.getSuccess();
+    }
+    //通过门店id查询满意度调查表
+    @ResponseBody
+    @RequestMapping("/selectSatisfactionRecords")
+    public List<SatisfactionRecord> selectSatisfactionRecords(@NonNull String storeFileId) {
+
+        List<SatisfactionRecord> satisfactionRecordList = satisfactionRecordService.selectSatisfactionRecords(storeFileId);
+
+        return satisfactionRecordList;
+
+    }
+
+}

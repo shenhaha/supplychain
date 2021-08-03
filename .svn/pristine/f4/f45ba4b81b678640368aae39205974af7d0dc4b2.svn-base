@@ -1,0 +1,745 @@
+package com.luer.comm.utils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import sun.misc.BASE64Decoder;
+import com.luer.storesdata.bean.CutImageOb;
+import com.luer.storesdata.bean.FileOb;
+import com.luer.storesdata.bean.FilesOb;
+
+public class FileLoadHelper {
+	private static Logger logger=LoggerFactory.getLogger(FileLoadHelper.class);
+	private static FileLoadHelper instance = null;
+  //private static FTPClient ftpClient = null;
+	 //ftp服务器地址
+   // public String hostnameFtp = "192.168.3.5";
+    //ftp服务器端口号默认为21
+   // public Integer portFtp = 211 ;
+    //ftp登录账号
+  //  public String usernameFtp = "ftp";
+    //ftp登录密码
+   // public String passwordFtp = "ftp";
+  //  private static String localCharset = "GBK";
+    /** UTF-8字符编码 **/
+   // private static final String CHARSET_UTF8 = "UTF-8";
+    /** FTP协议里面，规定文件名编码为iso-8859-1 **/
+  //  private static String serverCharset = "ISO-8859-1";
+    /** OPTS UTF8字符串常量 **/
+  //  private static final String OPTS_UTF8 = "OPTS UTF8";
+
+    public static FileLoadHelper getInstance()
+    {
+        if(instance == null){
+  		   instance = new FileLoadHelper();
+  	    }
+  	   
+  	  // ftpClient = new FTPClient();
+  	   return instance;
+     }
+    
+    //上传剪切过图片
+    public String uploadCutImage(CutImageOb cutImageOb)
+    {
+		//对字节数组字符串进行Base64解码并生成图片  
+        if (StringUtils.isBlank(cutImageOb.getBaseImgStr()) || StringUtils.isBlank(cutImageOb.getName())) //图像数据为空  
+            return "";  
+    	// data:image/png;base64,
+        String Str1=cutImageOb.getBaseImgStr().substring(0,11);
+        int index=cutImageOb.getBaseImgStr().indexOf(';');
+        String Str2=cutImageOb.getBaseImgStr().substring(index+1,index+7);
+        if(!Str1.equals("data:image/") || !Str2.equals("base64"))
+        {
+        	return ""; 
+        }
+        String extName=cutImageOb.getBaseImgStr().substring(cutImageOb.getBaseImgStr().indexOf('/')+1, cutImageOb.getBaseImgStr().indexOf(';'));
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS_");
+ 	    String fileName=fmt.format(new Date()) + cutImageOb.getName()+"."+extName;
+		
+        String fileUrl = "";
+        String Base64imgStr=cutImageOb.getBaseImgStr().substring(cutImageOb.getBaseImgStr().indexOf("base64,")+7);
+        BASE64Decoder decoder = new BASE64Decoder();  
+        try
+        {
+         
+         Properties pro = PropertiesLoaderUtils.loadAllProperties("application.properties");
+   		 String targetPath = (String) pro.get("CXWLoadFilesPath");
+   		 fileUrl=cutImageOb.getDBName()+"\\"+cutImageOb.getTableName()+"\\"+fileName;
+   		 String Folder=targetPath+cutImageOb.getDBName()+"\\"+cutImageOb.getTableName()+"\\";
+   		 File targetFolder = new File(Folder);
+   		
+   	     if (!targetFolder.exists()) {
+   	    	 targetFolder.mkdirs();
+   			}
+   	     //Base64解码  
+          byte[] b = decoder.decodeBuffer(Base64imgStr);  
+          for(int i=0;i<b.length;++i)  
+	              {  
+	                  if(b[i]<0)  
+	                  {
+	                  	//调整异常数据  
+	                      b[i]+=256;  
+	                  }  
+	              }  
+	           //生成jpeg图片  
+	           String imgFilePath =targetPath+fileUrl;
+	           OutputStream out = new FileOutputStream(imgFilePath);      
+	           out.write(b);  
+	           out.flush();  
+	           out.close();  
+	   		   return fileUrl;
+           }
+   		   catch(Exception e)
+           {
+   			  return "";
+           }
+  }
+    
+    
+   //----------------------------------------------------------------------------------
+    /**
+    * 上传文件
+     * @throws IOException 
+     * @return返回除了根目录下的全路径
+    */
+    public String uploadFileFtp(FileOb fileOb) throws IOException{
+       if(StringUtils.isBlank(fileOb.getDBName()) || fileOb.getUploadFile()==null)  
+ 			return "";
+ 	    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS_");
+ 	    String fileName=fmt.format(new Date()) + fileOb.getUploadFile().getOriginalFilename();
+		
+        String fileUrl = "";
+        try
+        {
+         Properties pro = PropertiesLoaderUtils.loadAllProperties("application.properties");
+		 String targetPath = (String) pro.get("CXWLoadFilesPath");
+		 fileUrl=fileOb.getDBName()+"\\"+fileOb.getTableName()+"\\"+fileName;
+		 String Folder=targetPath+fileOb.getDBName()+"\\"+fileOb.getTableName()+"\\";
+		 File targetFolder = new File(Folder);
+	     if (!targetFolder.exists()) {
+	    	 targetFolder.mkdirs();
+			}
+	      File targetFile = new File(targetPath+fileUrl);
+		  fileOb.getUploadFile().transferTo(targetFile);
+		  return fileUrl;
+        }
+		catch(Exception e)
+        {
+			return "";
+        }
+			
+//        InputStream inputStream = null;
+//        try{
+//            System.out.println("开始上传文件");
+//            inputStream =fileOb.getUploadFile().getInputStream();
+//            initFtpClientFtp();
+//            ftpClient.setFileType(ftpClient.BINARY_FILE_TYPE);
+//            CreateDirecrotyFtp(fileOb.getDBCode());
+//            ftpClient.makeDirectory(fileOb.getFileFolder());
+//            ftpClient.changeWorkingDirectory(fileOb.getFileFolder());
+//           
+//            ftpClient.storeFile(fileName, inputStream);
+//            inputStream.close();
+//            ftpClient.logout();
+//            fileUrl = fileOb.getDBCode()+"/"+fileOb.getFileFolder()+"/"+fileName;
+//            System.out.println("上传文件成功");
+//        }catch (Exception e) {
+//            System.out.println("上传文件失败");
+//            e.printStackTrace();
+//        }finally{
+//            if(ftpClient.isConnected()){ 
+//                try{
+//                    ftpClient.disconnect();
+//                }catch(IOException e){
+//                    e.printStackTrace();
+//                }
+//            } 
+//            if(null != inputStream){
+//                try {
+//                    inputStream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } 
+//            } 
+//        }
+ //     return fileUrl;
+    }
+    
+    // 下载一个文件
+    public byte[] getFileBytesByUrl(final String fileUrl) throws IOException {
+
+		 File targetFile = new File(fileUrl);
+ 		 if (!targetFile.exists()) {
+ 			return null;
+ 		 }
+ 		 
+ 		InputStream fis = null;
+ 		byte[] b = new byte[1];
+ 		try {
+			fis = new FileInputStream(targetFile);
+			b = new byte[fis.available()];
+			fis.read(b);
+			} 
+ 		catch (Exception e) {
+			 return null;
+		} 
+ 		finally {
+			IOUtils.closeQuietly(fis);
+		}
+ 		return b;
+ 		 
+ 		/*  ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+    	  if(StringUtils.isBlank(fileUrl)) 
+    	  {
+  			  return byteStream.toByteArray();
+    	  }
+    	
+    	 initFtpClientFtp();
+         if (ftpClient.isConnected()) {
+            try {
+               // String path = changeEncoding(fileUrl.substring(0, fileUrl.lastIndexOf("/")));
+            	String path =fileUrl.substring(0, fileUrl.lastIndexOf("/"));
+                // 判断是否存在该目录
+                if (!ftpClient.changeWorkingDirectory(path)) 
+                {
+                	logger.error(path+ "该目录不存在");
+                	return getFileBytesByUrl(fileUrl);
+                }
+                ftpClient.enterLocalActiveMode();
+               // ftpClient.enterLocalPassiveMode();  // 设置被动模式，开通一个端口来传输数据
+                String[] fs = ftpClient.listNames();
+                // 判断该目录下是否有文件
+                if (fs == null || fs.length == 0) {
+                	logger.error(path + "该目录下没有文件");
+                    return byteStream.toByteArray();
+                }
+                String fileName=fileUrl.substring(fileUrl.lastIndexOf("/")+1);
+                for (String ff : fs) {
+                    String ftpName = new String(ff.getBytes(serverCharset), localCharset);
+                    if (ftpName.equals(fileName)) 
+                    {
+                       try (InputStream is = ftpClient.retrieveFileStream(ff);)
+                        {
+                        	   
+                                byte[] buffer = new byte[4096];
+                                int len = -1;
+                                while ((len = is.read(buffer, 0, 4096)) != -1) {
+                                    byteStream.write(buffer, 0, len);
+                                }
+                              
+                        } 
+                        catch (Exception e) {
+                        	
+                        	logger.error("读取数据失败");
+                        }
+                        
+                        break;
+                    }
+                }
+            } 
+           catch (Exception e) {
+            	logger.error("获取文件失败", e);
+            } 
+            finally{ 
+                if(ftpClient.isConnected()){ 
+                    try{
+                        ftpClient.disconnect();
+                    }catch(IOException e){
+                    	logger.error("关闭FTP服务器连接失败");
+                    }
+                } 
+                
+            } 
+        }
+         else
+         {
+        	 return getFileBytesByUrl(fileUrl);
+        	 
+         }*/
+     //   return byteStream.toByteArray();
+    }
+ 
+    //上传一组文件，保存在同一文件夹下,返回文件保存地址数组
+    public String[] uploadFiles(FilesOb filesOb) throws IOException{
+        if(StringUtils.isBlank(filesOb.getDBName()) || filesOb.getUploadFiles().size()==0)  
+  			return null;
+  	    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS_");
+  	    String fmtStr=fmt.format(new Date());
+  	
+         String fileUrl = "";
+         String fileName="";
+         String[] fileUrls=new  String[filesOb.getUploadFiles().size()];
+         try
+         {
+             Properties pro = PropertiesLoaderUtils.loadAllProperties("application.properties");
+ 		     String targetPath = (String) pro.get("CXWLoadFilesPath");
+ 		     String Folder=targetPath+filesOb.getDBName()+"\\"+filesOb.getTableName()+"\\";
+	 		 File targetFolder = new File(Folder);
+	 	     if (!targetFolder.exists()) {
+	 	    	 targetFolder.mkdirs();
+	 			}
+	 	    int i=-1;
+ 			for (MultipartFile file : filesOb.getUploadFiles()) 
+ 			{     i++;
+ 				  fileName=fmtStr+file.getOriginalFilename();
+ 				  fileUrl=filesOb.getDBName()+"\\"+filesOb.getTableName()+"\\"+fileName;
+ 		 		  File targetFile = new File(targetPath+fileUrl);
+ 		 	      file.transferTo(targetFile);
+ 		 	      fileUrls[i]=fileUrl;
+             }
+ 		
+         }
+ 		catch(Exception e)
+         {
+ 			return null;
+         }
+         return fileUrls;
+    }
+ 	
+    /** * 下载多个文件 * 
+     * @param //pathname FTP服务器文件目录 *
+     * @param //filename 文件名称 *
+     * @param //localpath 下载后的文件路径 *
+     * @return 
+     * @throws IOException */
+    /* public  boolean downloadFilesFtp(String pathname, String filename, String localpath){ 
+         boolean flag = false; 
+         OutputStream os=null;
+         try { 
+             System.out.println("开始下载文件");
+             initFtpClientFtp();
+             //切换FTP目录 
+             ftpClient.changeWorkingDirectory(pathname); 
+             FTPFile[] ftpFiles = ftpClient.listFiles(); 
+             for(FTPFile file : ftpFiles){ 
+                 if(filename.equalsIgnoreCase(file.getName())){ 
+                     File localFile = new File(localpath + "/" + file.getName()); 
+                     os = new FileOutputStream(localFile); 
+                     ftpClient.retrieveFile(file.getName(), os); 
+                     os.close(); 
+                 } 
+             } 
+             ftpClient.logout(); 
+             flag = true; 
+             System.out.println("下载文件成功");
+         } catch (Exception e) { 
+             System.out.println("下载文件失败");
+             e.printStackTrace(); 
+         } finally{ 
+             if(ftpClient.isConnected()){ 
+                 try{
+                     ftpClient.disconnect();
+                 }catch(IOException e){
+                     e.printStackTrace();
+                 }
+             } 
+             if(null != os){
+                 try {
+                     os.close();
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 } 
+             } 
+         } 
+         return flag; 
+     }*/
+     
+     //删除文件 
+     //FileUrl不为空即可
+     public boolean deleteFileFtp(FileOb fileOb) throws IOException{ 
+    	 
+    	boolean flag = false; 
+    	if(StringUtils.isBlank(fileOb.getFileUrl()))  
+		     return false;
+    	try
+    	{
+    	 Properties pro = PropertiesLoaderUtils.loadAllProperties("application.properties");
+		 String targetPath = (String) pro.get("CXWLoadFilesPath");
+		 File targetFile = new File(targetPath+fileOb.getFileUrl());
+   	  
+		 if (!targetFile.exists()) {
+			return false;
+		 }
+		 flag=targetFile.delete();
+		 
+    	}
+    	catch(Exception e)
+    	{
+    		return false; 
+    	}
+    	return flag;
+    	
+    	
+    	 /* boolean flag = false; 
+         try { 
+             System.out.println("开始删除文件");
+             initFtpClientFtp();
+             //切换FTP目录 
+             ftpClient.changeWorkingDirectory(fileOb.getFileUrl().substring(fileOb.getFileUrl().lastIndexOf("/"))); 
+             ftpClient.dele(fileOb.getFileUrl().substring(fileOb.getFileUrl().lastIndexOf("/"),fileOb.getFileUrl().length())); 
+             ftpClient.logout();
+             flag = true; 
+             System.out.println("删除文件成功");
+         } catch (Exception e) { 
+             System.out.println("删除文件失败");
+             e.printStackTrace(); 
+         } finally {
+             if(ftpClient.isConnected()){ 
+                 try{
+                     ftpClient.disconnect();
+                 }catch(IOException e){
+                     e.printStackTrace();
+                 }
+             } 
+         }*/
+      //   return flag; 
+     }
+   
+     /**
+      * 上传文件
+      * @param pathname ftp服务保存地址
+      * @param fileName 上传到ftp的文件名
+      * @param inputStream 输入文件流 
+      * @return
+      */
+    /* public boolean uploadFileFtp(String pathname, String fileName,InputStream inputStream){
+         boolean flag = false;
+         try{
+             System.out.println("开始上传文件");
+             initFtpClientFtp();
+             ftpClient.setFileType(ftpClient.BINARY_FILE_TYPE);
+             CreateDirecrotyFtp(pathname);
+             ftpClient.makeDirectory(pathname);
+             ftpClient.changeWorkingDirectory(pathname);
+             ftpClient.storeFile(fileName, inputStream);
+             inputStream.close();
+             ftpClient.logout();
+             flag = true;
+             System.out.println("上传文件成功");
+         }catch (Exception e) {
+             System.out.println("上传文件失败");
+             e.printStackTrace();
+         }finally{
+             if(ftpClient.isConnected()){ 
+                 try{
+                     ftpClient.disconnect();
+                 }catch(IOException e){
+                     e.printStackTrace();
+                 }
+             } 
+             if(null != inputStream){
+                 try {
+                     inputStream.close();
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 } 
+             } 
+         }
+         return true;
+     }*/
+  //----------------------------------------------------------------------------------- 
+    //改变目录路径
+  /*   private boolean changeWorkingDirectoryFtp(String directory) {
+            boolean flag = true;
+            try {
+                flag = ftpClient.changeWorkingDirectory(directory);
+                if (flag) {
+                  System.out.println("进入文件夹" + directory + " 成功！");
+
+                } else {
+                    System.out.println("进入文件夹" + directory + " 失败！开始创建文件夹");
+                }
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            return flag;
+        }*/
+
+    //创建多层目录文件，如果有ftp服务器已存在该文件，则不创建，如果无，则创建
+   /* private boolean CreateDirecrotyFtp(String remote) throws IOException {
+        boolean success = true;
+        String directory = remote + "/";
+        // 如果远程目录不存在，则递归创建远程服务器目录
+        if (!directory.equalsIgnoreCase("/") && !changeWorkingDirectoryFtp(new String(directory))) {
+            int start = 0;
+            int end = 0;
+            if (directory.startsWith("/")) {
+                start = 1;
+            } else {
+                start = 0;
+            }
+            end = directory.indexOf("/", start);
+            String path = "";
+            String paths = "";
+            while (true) {
+                String subDirectory = new String(remote.substring(start, end).getBytes("GBK"), "iso-8859-1");
+                path = path + "/" + subDirectory;
+                if (!existFileFtp(path)) {
+                    if (makeDirectoryFtp(subDirectory)) {
+                        changeWorkingDirectoryFtp(subDirectory);
+                    } else {
+                        System.out.println("创建目录[" + subDirectory + "]失败");
+                        changeWorkingDirectoryFtp(subDirectory);
+                    }
+                } else {
+                    changeWorkingDirectoryFtp(subDirectory);
+                }
+
+                paths = paths + "/" + subDirectory;
+                start = end + 1;
+                end = directory.indexOf("/", start);
+                // 检查所有目录是否创建完毕
+                if (end <= start) {
+                    break;
+                }
+            }
+        }
+        return success;
+    }*/
+
+    //判断ftp服务器文件是否存在    
+   /* private boolean existFileFtp(String path) throws IOException {
+            boolean flag = false;
+            FTPFile[] ftpFileArr = ftpClient.listFiles(path);
+            if (ftpFileArr.length > 0) {
+                flag = true;
+            }
+            return flag;
+        }
+    //创建目录
+    private boolean makeDirectoryFtp(String dir) {
+        boolean flag = true;
+        try {
+            flag = ftpClient.makeDirectory(dir);
+            if (flag) {
+                System.out.println("创建文件夹" + dir + " 成功！");
+
+            } else {
+                System.out.println("创建文件夹" + dir + " 失败！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+    */
+   
+    /**
+     * 初始化ftp服务器
+     */
+ /*   private void initFtpClientFtp() {
+    	
+        ftpClient.setControlEncoding("utf-8");
+        try {
+            System.out.println("connecting...ftp服务器:"+this.hostnameFtp+":"+this.portFtp); 
+            ftpClient.connect(hostnameFtp, portFtp); //连接ftp服务器
+            ftpClient.login(usernameFtp, passwordFtp); //登录ftp服务器
+            int replyCode = ftpClient.getReplyCode(); //是否成功登录服务器
+            if(!FTPReply.isPositiveCompletion(replyCode)){
+                System.out.println("connect failed...ftp服务器:"+this.hostnameFtp+":"+this.portFtp); 
+            }
+            else
+            {
+                System.out.println("connect successfull...ftp服务器:"+this.hostnameFtp+":"+this.portFtp); 
+            }
+        }
+        catch (Exception e) 
+        { 
+        	System.out.println("ftp服务器连接失败");
+        }
+        
+    }
+    private static String changeEncoding(String ftpPath) {
+        String directory = null;
+        try {
+            if (FTPReply.isPositiveCompletion(ftpClient.sendCommand(OPTS_UTF8, "ON"))) {
+                localCharset = CHARSET_UTF8;
+            }
+            directory = new String(ftpPath.getBytes(localCharset), serverCharset);
+        } catch (Exception e) {
+        	logger.error("路径编码转换失败", e);
+        }
+        return directory;
+    }*/
+
+    /* public static void main(String[] args) {
+    	FileLoadHelper ftp =new FileLoadHelper(); 
+        //ftp.uploadFile("ftpFile/data", "123.docx", "E://123.docx");
+        //ftp.downloadFile("ftpFile/data", "123.docx", "F://");
+        ftp.deleteFile("", "123.txt");
+        System.out.println("ok");
+    }
+	
+	 @Value("${FileServer.Ip}")
+    private static String FileServerIp;
+
+    public static String getFileServerIp() {
+		return FileServerIp;
+	}
+
+	public static void setFileServerIp(String fileServerIp) {
+		FileServerIp = fileServerIp;
+	}
+
+	public static String getUsername() {
+		return Username;
+	}
+
+	public static void setUsername(String username) {
+		Username = username;
+	}
+
+	public static String getPassword() {
+		return Password;
+	}
+
+	public static void setPassword(String password) {
+		Password = password;
+	}
+
+	@Value("${FileServer.Username}")
+    private static String Username;
+
+    @Value("${FileServer.Password}")
+    private static String  Password;
+   //上传文件 到共享文件夹
+	public static String  upload(FileOb fileOb) {
+	
+	   if(StringUtils.isBlank(fileOb.getFileFolder()) || fileOb.getUploadFile()==null)  
+			return "";
+	   if(StringUtils.isBlank(fileOb.getDBCode())) 
+		   fileOb.setDBCode(Constants.defaultDB);
+		String FileUrl="";
+		String SaveFileUrl="";
+		InputStream in = null;
+		OutputStream out = null;
+		try { 
+			// 获取文件共享文件夹路径
+		    String remotePhotoUrl = "smb://weichiUer:weichi@192.168.3.13/FileFolder";
+			//String remotePhotoUrl = "smb://192.168.3.13/FileFolder";
+			//String remotePhotoUrl = "smb://192.168.3.19/shareFolder";
+			//String remotePhotoUrl = "smb://weichiFileUser:weichi@192.168.3.19/shareFolder";
+			
+		    NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication("192.168.3.13","weichiUer","weichi");
+			// 存放图片的共享目录下路径
+			SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS_");
+		    FileUrl="/"+fileOb.getDBCode()+"/"+fileOb.getFileFolder()+"/" + fmt.format(new Date()) + fileOb.getUploadFile().getOriginalFilename();
+			//FileUrl="/"+fmt.format(new Date()) + fileOb.getUploadFile().getOriginalFilename();
+			
+			SmbFile remoteFile = new SmbFile(remotePhotoUrl,auth);
+		  	//if(!remoteFile.exists())
+			//  {
+			//	   remoteFile.createNewFile();
+			//	}
+			remoteFile.connect(); // 尝试连接
+			in = new BufferedInputStream(fileOb.getUploadFile().getInputStream());
+			out = new BufferedOutputStream(new SmbFileOutputStream(remoteFile));
+			byte[] buffer = new byte[4096];
+			int len = 0;
+			// 读取长度
+			while ((len = in.read(buffer, 0, buffer.length)) != -1) {
+				out.write(buffer, 0, len);
+			}
+			out.flush(); // 刷新缓冲的输出流
+			SaveFileUrl=FileUrl;
+		} 
+		catch (Exception e) {
+			String msg = "发生错误：" + e.getLocalizedMessage();
+			System.out.println(msg);
+		} 
+		finally {
+				try {
+					if (out != null) {
+						out.close();
+					}
+					if (in != null) {
+						in.close();
+					}
+				} 
+				catch (Exception e) {
+				}
+		      }
+		
+		return SaveFileUrl;
+	}
+   
+	//下载文件
+	public static byte[] downloadFile(FileOb fileOb)
+	{
+		InputStream in = null;
+		ByteArrayOutputStream out = null;
+		try {
+					// 创建远程文件对象
+					String remotePhotoUrl = "smb://"+Username+":"+Password+"@"+FileServerIp+fileOb.getFileUrl();
+					SmbFile remoteFile = new SmbFile(remotePhotoUrl);
+//					 if(remoteFile.exists()){
+//				            SmbFile[] files = remoteFile.listFiles();
+//				            for(SmbFile f : files){
+//				                System.out.println(f.getName());
+//				            }
+					remoteFile.connect(); // 尝试连接
+					// 创建文件流
+					in = new BufferedInputStream(new SmbFileInputStream(remoteFile));
+					out = new ByteArrayOutputStream((int) remoteFile.length());
+					// 读取文件内容
+					byte[] buffer = new byte[4096];
+					int len = 0; // 读取长度
+					while ((len = in.read(buffer, 0, buffer.length)) != -1) {
+						out.write(buffer, 0, len);
+					}
+					out.flush(); // 刷新缓冲的输出流
+					return out.toByteArray();
+		    } 
+		    catch (Exception e) {
+			       String msg = "下载远程文件出错：" + e.getLocalizedMessage();
+			       System.out.println(msg);
+		    } 
+		    finally {
+					try {
+								if (out != null) {
+									out.close();
+								}
+								if (in != null) {
+									in.close();
+								}
+					    }
+					    catch (Exception e) {
+					    }
+	     	}
+		
+		   return null;
+	}
+	
+	//将SmbFile文件读取到byte数组
+	private byte[] readFile(SmbFile file) throws IOException
+	{
+		InputStream in = new BufferedInputStream(new SmbFileInputStream(file));
+		ByteArrayOutputStream out = new ByteArrayOutputStream((int) file.length());
+		// 读取文件内容
+		byte[] buffer = new byte[4096];
+		int len = 0; // 读取长度
+		while ((len = in.read(buffer, 0, buffer.length)) != -1) {
+			out.write(buffer, 0, len);
+		}
+		out.flush(); // 刷新缓冲的输出流
+		return out.toByteArray();
+		
+	}*/
+
+}

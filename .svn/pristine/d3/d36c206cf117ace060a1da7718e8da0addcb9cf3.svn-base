@@ -1,0 +1,42 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.storemanager.bean.OrderRoom;
+import com.luer.storemanager.dao.OrderRoomMapper;
+import com.luer.storemanager.service.OrderRoomService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * @ClassName OrderRoomServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/20 19:31.
+ */
+@Service
+@Transactional
+public class OrderRoomServiceImpl implements OrderRoomService {
+    @Autowired
+    private OrderRoomMapper orderRoomMapper;
+
+    @Override
+    public List<OrderRoom> selectOrderRoom() {
+        return orderRoomMapper.selectOrderRoom();
+    }
+
+    @Override
+    public int insert(OrderRoom record) {
+        return orderRoomMapper.insert(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OrderRoom record) {
+        return orderRoomMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return orderRoomMapper.deleteByPrimaryKey(id);
+    }
+}

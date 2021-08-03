@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.GuestRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.GuestRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="employer_id" property="employerId" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="reporter" property="reporter" jdbcType="VARCHAR" />
+    <result column="reporttile" property="reporttile" jdbcType="VARCHAR" />
+    <result column="eventtime" property="eventtime" jdbcType="TIMESTAMP" />
+    <result column="reporttime" property="reporttime" jdbcType="TIMESTAMP" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="leaderidea" property="leaderidea" jdbcType="VARCHAR" />
+    <result column="store_file_id" property="storeFileId" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
+    <result column="cause" property="cause" jdbcType="LONGVARCHAR" />
+    <result column="solution" property="solution" jdbcType="LONGVARCHAR" />
+    <result column="customer_reback" property="customerReback" jdbcType="LONGVARCHAR" />
+    <result column="employerName" property="employerName" jdbcType="VARCHAR" />
+      <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.luer.storemanager.bean.GuestRecordWithBLOBs" extends="BaseResultMap" >
+    <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
+    <result column="cause" property="cause" jdbcType="LONGVARCHAR" />
+    <result column="solution" property="solution" jdbcType="LONGVARCHAR" />
+    <result column="customer_reback" property="customerReback" jdbcType="LONGVARCHAR" />
+  </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        id, employer_id, department, reporter, reporttile, eventtime, reporttime, result,
+        leaderidea, store_file_id, remark
+    </sql>
+    <sql id="Blob_Column_List" >
+        detail, cause, solution, customer_reback
+    </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.luer.storemanager.bean.GuestRecordExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from guest_record
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.GuestRecordExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from guest_record
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from guest_record
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from guest_record
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.GuestRecordExample" >
+        delete from guest_record
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.storemanager.bean.GuestRecordWithBLOBs" >
+        insert into guest_record (id, employer_id, department,
+        reporter, reporttile, eventtime,
+        reporttime, result, leaderidea,
+        store_file_id, remark, detail,
+        cause, solution, customer_reback
+        )
+        values (#{id,jdbcType=VARCHAR}, #{employerId,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
+        #{reporter,jdbcType=VARCHAR}, #{reporttile,jdbcType=VARCHAR}, #{eventtime,jdbcType=TIMESTAMP},
+        #{reporttime,jdbcType=TIMESTAMP}, #{result,jdbcType=VARCHAR}, #{leaderidea,jdbcType=VARCHAR},
+        #{storeFileId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{detail,jdbcType=LONGVARCHAR},
+        #{cause,jdbcType=LONGVARCHAR}, #{solution,jdbcType=LONGVARCHAR}, #{customerReback,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.storemanager.bean.GuestRecordWithBLOBs" >
+        insert into guest_record
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="employerId != null" >
+                employer_id,
+            </if>
+            <if test="department != null" >
+                department,
+            </if>
+            <if test="reporter != null" >
+                reporter,
+            </if>
+            <if test="reporttile != null" >
+                reporttile,
+            </if>
+            <if test="eventtime != null" >
+                eventtime,
+            </if>
+            <if test="reporttime != null" >
+                reporttime,
+            </if>
+            <if test="result != null" >
+                result,
+            </if>
+            <if test="leaderidea != null" >
+                leaderidea,
+            </if>
+            <if test="storeFileId != null" >
+                store_file_id,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="detail != null" >
+                detail,
+            </if>
+            <if test="cause != null" >
+                cause,
+            </if>
+            <if test="solution != null" >
+                solution,
+            </if>
+            <if test="customerReback != null" >
+                customer_reback,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="employerId != null" >
+                #{employerId,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="reporter != null" >
+                #{reporter,jdbcType=VARCHAR},
+            </if>
+            <if test="reporttile != null" >
+                #{reporttile,jdbcType=VARCHAR},
+            </if>
+            <if test="eventtime != null" >
+                #{eventtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reporttime != null" >
+                #{reporttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="result != null" >
+                #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="leaderidea != null" >
+                #{leaderidea,jdbcType=VARCHAR},
+            </if>
+            <if test="storeFileId != null" >
+                #{storeFileId,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null" >
+                #{detail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cause != null" >
+                #{cause,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="solution != null" >
+                #{solution,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="customerReback != null" >
+                #{customerReback,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.storemanager.bean.GuestRecordExample" resultType="java.lang.Integer" >
+        select count(*) from guest_record
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update guest_record
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.employerId != null" >
+                employer_id = #{record.employerId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.department != null" >
+                department = #{record.department,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reporter != null" >
+                reporter = #{record.reporter,jdbcType=VARCHAR},
+            </if>
+            <if test="record.reporttile != null" >
+                reporttile = #{record.reporttile,jdbcType=VARCHAR},
+            </if>
+            <if test="record.eventtime != null" >
+                eventtime = #{record.eventtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.reporttime != null" >
+                reporttime = #{record.reporttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.result != null" >
+                result = #{record.result,jdbcType=VARCHAR},
+            </if>
+            <if test="record.leaderidea != null" >
+                leaderidea = #{record.leaderidea,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeFileId != null" >
+                store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remark != null" >
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.detail != null" >
+                detail = #{record.detail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.cause != null" >
+                cause = #{record.cause,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.solution != null" >
+                solution = #{record.solution,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.customerReback != null" >
+                customer_reback = #{record.customerReback,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map" >
+        update guest_record
+        set id = #{record.id,jdbcType=VARCHAR},
+        employer_id = #{record.employerId,jdbcType=VARCHAR},
+        department = #{record.department,jdbcType=VARCHAR},
+        reporter = #{record.reporter,jdbcType=VARCHAR},
+        reporttile = #{record.reporttile,jdbcType=VARCHAR},
+        eventtime = #{record.eventtime,jdbcType=TIMESTAMP},
+        reporttime = #{record.reporttime,jdbcType=TIMESTAMP},
+        result = #{record.result,jdbcType=VARCHAR},
+        leaderidea = #{record.leaderidea,jdbcType=VARCHAR},
+        store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        detail = #{record.detail,jdbcType=LONGVARCHAR},
+        cause = #{record.cause,jdbcType=LONGVARCHAR},
+        solution = #{record.solution,jdbcType=LONGVARCHAR},
+        customer_reback = #{record.customerReback,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update guest_record
+        set id = #{record.id,jdbcType=VARCHAR},
+        employer_id = #{record.employerId,jdbcType=VARCHAR},
+        department = #{record.department,jdbcType=VARCHAR},
+        reporter = #{record.reporter,jdbcType=VARCHAR},
+        reporttile = #{record.reporttile,jdbcType=VARCHAR},
+        eventtime = #{record.eventtime,jdbcType=TIMESTAMP},
+        reporttime = #{record.reporttime,jdbcType=TIMESTAMP},
+        result = #{record.result,jdbcType=VARCHAR},
+        leaderidea = #{record.leaderidea,jdbcType=VARCHAR},
+        store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+        remark = #{record.remark,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.GuestRecordWithBLOBs" >
+        update guest_record
+        <set >
+            <if test="employerId != null" >
+                employer_id = #{employerId,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="reporter != null" >
+                reporter = #{reporter,jdbcType=VARCHAR},
+            </if>
+            <if test="reporttile != null" >
+                reporttile = #{reporttile,jdbcType=VARCHAR},
+            </if>
+            <if test="eventtime != null" >
+                eventtime = #{eventtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reporttime != null" >
+                reporttime = #{reporttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="result != null" >
+                result = #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="leaderidea != null" >
+                leaderidea = #{leaderidea,jdbcType=VARCHAR},
+            </if>
+            <if test="storeFileId != null" >
+                store_file_id = #{storeFileId,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null" >
+                detail = #{detail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cause != null" >
+                cause = #{cause,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="solution != null" >
+                solution = #{solution,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="customerReback != null" >
+                customer_reback = #{customerReback,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.luer.storemanager.bean.GuestRecordWithBLOBs" >
+        update guest_record
+        set employer_id = #{employerId,jdbcType=VARCHAR},
+        department = #{department,jdbcType=VARCHAR},
+        reporter = #{reporter,jdbcType=VARCHAR},
+        reporttile = #{reporttile,jdbcType=VARCHAR},
+        eventtime = #{eventtime,jdbcType=TIMESTAMP},
+        reporttime = #{reporttime,jdbcType=TIMESTAMP},
+        result = #{result,jdbcType=VARCHAR},
+        leaderidea = #{leaderidea,jdbcType=VARCHAR},
+        store_file_id = #{storeFileId,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR},
+        detail = #{detail,jdbcType=LONGVARCHAR},
+        cause = #{cause,jdbcType=LONGVARCHAR},
+        solution = #{solution,jdbcType=LONGVARCHAR},
+        customer_reback = #{customerReback,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.GuestRecord" >
+        update guest_record
+        set employer_id = #{employerId,jdbcType=VARCHAR},
+        department = #{department,jdbcType=VARCHAR},
+        reporter = #{reporter,jdbcType=VARCHAR},
+        reporttile = #{reporttile,jdbcType=VARCHAR},
+        eventtime = #{eventtime,jdbcType=TIMESTAMP},
+        reporttime = #{reporttime,jdbcType=TIMESTAMP},
+        result = #{result,jdbcType=VARCHAR},
+        leaderidea = #{leaderidea,jdbcType=VARCHAR},
+        store_file_id = #{storeFileId,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <!--查询所有-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from guest_record
+    </select>
+    <!--通过门店id查询增值服务基本资料-->
+    <select id="selectByStoreFileId" resultMap="BaseResultMap">
+        select gr.* , e.`name` AS employerName from guest_record gr LEFT JOIN employer e
+        ON e.id = gr.employer_id where  gr.store_file_id = #{storeFileId} AND e.id is not null
+    </select>
+    <resultMap id="count" type="com.luer.storemanager.bean.GuestCount">
+        <result column="employerName" property="name"></result>
+        <result column="counts" property="counts"></result>
+    </resultMap>
+    <select id="selectGuestCount" resultMap="count">
+        SELECT COUNT(gr.employer_id) as counts , e.`name` employerName FROM guest_record gr
+        LEFT JOIN employer e ON e.id = gr.employer_id
+        WHERE e.id is not null AND gr.store_file_id = #{storeId}
+        GROUP BY gr.employer_id
+    </select>
+</mapper>

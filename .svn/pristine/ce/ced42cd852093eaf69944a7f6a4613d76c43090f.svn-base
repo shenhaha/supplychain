@@ -1,0 +1,48 @@
+package com.luer.storemanager.dao;
+
+
+import com.luer.storemanager.bean.ItemsUse;
+import com.luer.storemanager.bean.ItemsUseExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface ItemsUseMapper {
+    int countByExample(ItemsUseExample example);
+
+    int deleteByExample(ItemsUseExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(ItemsUse record);
+
+    int insertSelective(ItemsUse record);
+
+    List<ItemsUse> selectByExample(ItemsUseExample example);
+
+    ItemsUse selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") ItemsUse record, @Param("example") ItemsUseExample example);
+
+    int updateByExample(@Param("record") ItemsUse record, @Param("example") ItemsUseExample example);
+
+    int updateByPrimaryKeySelective(ItemsUse record);
+
+    int updateByPrimaryKey(ItemsUse record);
+
+    /**
+     * 查询所有的物品使用信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.ItemsUse>
+     * @author GavinJiang
+     * @date 2018/8/17 11:06
+     * @params
+     */
+    List<ItemsUse> selectItemsUse();
+
+}

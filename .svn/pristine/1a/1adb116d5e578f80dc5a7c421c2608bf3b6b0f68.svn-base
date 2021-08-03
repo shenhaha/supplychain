@@ -1,0 +1,46 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.OrderRoom;
+import com.luer.storemanager.bean.OrderRoomExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface OrderRoomMapper {
+    int countByExample(OrderRoomExample example);
+
+    int deleteByExample(OrderRoomExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(OrderRoom record);
+
+    int insertSelective(OrderRoom record);
+
+    List<OrderRoom> selectByExample(OrderRoomExample example);
+
+    OrderRoom selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") OrderRoom record, @Param("example") OrderRoomExample example);
+
+    int updateByExample(@Param("record") OrderRoom record, @Param("example") OrderRoomExample example);
+
+    int updateByPrimaryKeySelective(OrderRoom record);
+
+    int updateByPrimaryKey(OrderRoom record);
+
+    /**
+     * 查询所有的订房信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.OrderRoom>
+     * @author GavinJiang
+     * @date 2018/8/20 19:32
+     * @params
+     */
+    List<OrderRoom> selectOrderRoom();
+}

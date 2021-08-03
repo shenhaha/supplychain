@@ -1,0 +1,69 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Swimming;
+import com.luer.servicecenter.bean.SwimmingExample;
+import com.luer.servicecenter.service.SwimmingService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * @author EVEA
+ * 宝宝游泳
+ */
+@RestController
+@RequestMapping("/swimming")
+public class SwimmingController {
+    @Autowired
+    private SwimmingService swimmingService;
+
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getSwimmingByMotherId")
+    @ResponseBody
+    public List<Swimming> getSwimmingByMotherId(String motherid){
+        List<Swimming> swimmings = swimmingService.getSwimmingByMotherId(motherid);
+        return swimmings;
+    }
+
+
+    @RequestMapping("/addSwimming")
+    public ResultSet addSwimming(Swimming swimming){
+        swimmingService.insert(swimming);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/delSwimming")
+    public ResultSet delSwimming(@NonNull String id){
+        swimmingService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/updateSwimming")
+    public ResultSet updateSwimming(Swimming swimming){
+        swimmingService.updateByPrimaryKey(swimming);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/queryOneSwimming")
+    @ResponseBody
+    public Swimming queryOneSwimming(@NonNull String id){
+        Swimming swimming = swimmingService.selectByPrimaryKey(id);
+        return swimming;
+    }
+
+    @RequestMapping("/queryAllSwimming")
+    @ResponseBody
+    public List<Swimming> queryAllSwimming(Swimming swimming){
+        List<Swimming> swimmings = swimmingService.selectByExample(swimming);
+        return swimmings;
+    }
+
+}

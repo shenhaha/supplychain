@@ -1,0 +1,136 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>参数设置</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <%--<ol class="breadcrumb">
+                        <li><a href="${ctx}/index">首页</a></li>
+                        <li class="active">换房管理</li>
+                    </ol>--%>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <!--会员管理记录开始-->
+            <div id="repairdiv">
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <table id="parameterSet" class="table" data-paging="true"
+                               data-sorting="true">
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--会员管理记录结束-->
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<script>
+    $(function () {
+        var parameterTitle = [
+            {"name": "id", "visible": false},
+            {"name": "storeId", "visible": false},
+            {"name": "parameterName", "title": "参数名称"},
+            {"name": "intParameter", "title": "参数数值"},
+            {"name": "parameterDescripte", "title": "参数描述"},
+            /*{"name": "status", "title": "状态"}*/
+            {"name": "lastDate", "title": "最近修改时间"},
+
+        ];
+        //启动模态框
+        //启动footable
+        var ft = FooTable.init('#parameterSet', {
+            "columns": parameterTitle,
+            "rows": $.get("${ctx}/parameterSet/getParameterSet?storeId="+'<%=session.getAttribute("storeId")%>'), //查询  服务器路径
+            //功能操作
+            editing: {
+                enabled: true,
+
+                //这里是修改时绑定数据
+                editRow: function (row) {
+                    var values = row.val();
+                    var dialog = BootstrapDialog.show({
+                        type: BootstrapDialog.TYPE_DEFAULT,
+                        title: "<span style=\"color: #ab8ce4\"><i></i>修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message: $('<div></div>').load('${ctx}/template/systemmanager/parameterset.jsp'),//加载弹出页面
+                        size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown: function () {
+                            $('#id').val(values.id);
+                            $('#intParameter').val(values.intParameter);
+                            $('#parameterName').val(values.parameterName);
+                            $('#parameterDescripte').val(values.parameterDescripte);
+                        },
+                        buttons: [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function () {
+                                var json = {
+                                    id: $('#id').val(),
+                                    storeId: '<%=session.getAttribute("storeId")%>',
+                                    intParameter: $('#intParameter').val(),
+                                    parameterName: $('#parameterName').val(),
+                                    parameterDescripte: $('#parameterDescripte').val(),
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+
+                                           intParameter: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '参数不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if (bootstrapValidator.isValid()) {
+                                    $.post("${ctx}/parameterSet/updateParameterSet", json).done(function (data) {
+                                        getCode(data);
+                                    }).fail(function (data) {
+                                        getCode(data)
+                                    });
+                                }
+                            }
+                        }, {
+                            label: '关闭',
+                            icon: 'fa fa-close',
+                            action: function (dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+            }
+        });
+    });
+</script>
+</body>
+</html>
+

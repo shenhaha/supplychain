@@ -1,0 +1,68 @@
+package com.luer.stockandsales.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.Deadline;
+import com.luer.stockandsales.dao.DeadlineMapper;
+import com.luer.stockandsales.service.DeadlineService;
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.systemmanager.dao.ParameterSetMapper;
+import com.luer.systemmanager.service.ParameterSetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Transactional
+@Service
+public class DeadlineServiceImpl implements DeadlineService {
+    @Autowired
+    private DeadlineMapper deadlineMapper;
+    @Autowired
+    private ParameterSetMapper parameterSetMapper;
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+
+    @Override
+    public void saveDeadline(Deadline deadline) {
+        deadline.setId(UUIDUtils.getUUID());
+        deadlineMapper.insert(deadline);
+    }
+
+    @Override
+    public void deleteDeadlineById(String id) {
+        deadlineMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void updateDeadline(Deadline deadline) {
+        deadlineMapper.updateByPrimaryKey(deadline);
+    }
+
+    @Override
+    public List<Deadline> selectDeadlineList() {
+        Deadline deadline = null;
+
+        List<Deadline> deadlineList = deadlineMapper.selectDeadlines();
+        deadline = deadlineList.get(0);
+        List<Deadline> deadlineList1 =new ArrayList<Deadline>();
+        deadlineList1.add(deadline);
+
+        return deadlineList1;
+
+    }
+
+    @Override
+    public List<Date> selectEndTime() {
+
+        return deadlineMapper.selectEndTime();
+    }
+
+    @Override
+    public Deadline selectDeadline() {
+        List<Deadline> deadlineList = deadlineMapper.selectDeadlines();
+        return deadlineList.get(0);
+    }
+}

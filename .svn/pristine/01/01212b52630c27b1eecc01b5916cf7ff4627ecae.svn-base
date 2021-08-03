@@ -1,0 +1,223 @@
+package com.luer.users.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.springsecurity.bean.Role;
+import com.luer.springsecurity.bean.RolePermission;
+import com.luer.springsecurity.bean.RolePermissionExample;
+import com.luer.springsecurity.bean.UserRole;
+import com.luer.springsecurity.dao.RolePermissionMapper;
+import com.luer.springsecurity.service.RoleService;
+import com.luer.springsecurity.service.UserRoleService;
+import com.luer.users.bean.Users;
+import com.luer.users.bean.UsersExample;
+import com.luer.users.dao.UsersMapper;
+import com.luer.users.service.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 用户管理服务实现类
+ * @ClassName UserServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/16 14:18.
+ */
+@Service
+@Transactional
+public class UsersServiceImpl implements UsersService {
+    @Autowired
+    private UsersMapper usersMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private UserRoleService userRoleService;
+    @Autowired
+    private RolePermissionMapper permissionMapper;
+/**
+* @author 张路明
+*/
+    @Override
+    public List<Users> selectUsers(String pass, String username) {
+        UsersExample usersExample = new UsersExample();
+        UsersExample.Criteria criteria = usersExample.createCriteria();
+        criteria.andPasswordEqualTo(pass);
+        criteria.andUsernameEqualTo(username);
+        List<Users> users = usersMapper.selectByExample(usersExample);
+        return users;
+    }
+/**修改密码
+* @author 张路明
+*/
+    @Override
+    public int updatepass(String pass, String id) {
+        Users users = new Users();
+        users.setPassword(passwordEncoder.encode(pass));
+        users.setId(id);
+        usersMapper.updateByPrimaryKeySelective(users);
+        return 0;
+    }
+/**删除用户
+* @author 张路明
+*/
+    @Override
+    public int deleteUser(String username) {
+        Users users = usersMapper.getByName(username);//根据用户名获取用户
+        String roleId = userRoleService.getByUserId(users.getId());//根据用户名获取roleId
+        //删除role和permission关联
+        RolePermissionExample rolePermissionExample = new RolePermissionExample();
+        RolePermissionExample.Criteria criteria = rolePermissionExample.createCriteria();
+        criteria.andRoleIdEqualTo(roleId);
+        permissionMapper.deleteByExample(rolePermissionExample);
+        //删除role和user关联
+        userRoleService.deleteByRolrId(roleId);
+        //删除role
+        roleService.deleteByRoleId(roleId);
+        //删除user
+        usersMapper.deleteByPrimaryKey(users.getId());
+        return 0;
+    }
+
+    /**
+     * //插入前判断是否有权限，有的话就删除
+     * 根据用户名插入权限
+     * 现根据用户名获取id,根据用户id获取role id
+     * 根据roleid和所有权限插入
+    * @author 张路明
+    */
+    @Override
+    public int insertPerssion(String username, String auths) {
+        List<String> authlist = Arrays.asList(auths.split(","));//权限
+        Users users = usersMapper.getByName(username);//获取用户
+        String roleId = userRoleService.getByUserId(users.getId());//roleId
+
+        RolePermissionExample rolePermissionExample = new RolePermissionExample();
+        RolePermissionExample.Criteria criteria = rolePermissionExample.createCriteria();
+        criteria.andRoleIdEqualTo(roleId);
+        permissionMapper.deleteByExample(rolePermissionExample);
+        authlist.forEach(auth->{
+            RolePermission rolePermission = new RolePermission();
+            rolePermission.setRoleId(roleId);
+            rolePermission.setPermissionId(auth);
+            permissionMapper.insert(rolePermission);
+        });
+        return 0;
+    }
+
+    /**
+     * 管理员不能也不要修改自己权限
+    * @author 张路明
+    */
+    @Override
+    public List<Users> getUserByStoreId(String storeId) {
+        List<Users> users = usersMapper.getByStoreId(storeId);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();//获取当前用户
+        int s =0;
+        for(int i=0;i<users.size();i++){
+            if(userDetails.getUsername().equals(users.get(i).getUsername())){
+                s = i;
+            }
+        }
+        users.remove(s);
+        return users;
+    }
+/**获取用户权限
+* @author 张路明
+*/
+    @Override
+    public List<String> getAuthByUser(String username) {
+        Users users = usersMapper.getByName(username);//根据用户名获取用户
+        String roleId = userRoleService.getByUserId(users.getId());//根据用户名获取roleId
+        List<String> auths = permissionMapper.getAuthsByRoleId(roleId);//根据roleId获取auths
+        return auths;
+    }
+/**
+ * 获取用户roleid
+* @author 张路明
+*/
+    @Override
+    public String getUserroleId(String username, String roledesc) {
+        return usersMapper.getUserroleId(username,roledesc);
+    }
+/**获取所有用户
+* @author 张路明
+*/
+    @Override
+    public List<Users> selectUsers() {
+        return usersMapper.selectUsers();
+    }
+/**给新用户增加role
+* @author 张路明
+*/
+    @Override
+    public int addAll(Users users, HttpServletRequest request) {
+        users.setId(UUIDUtils.getUUID());
+        HttpSession session = request.getSession();
+        String storeid = (String) session.getAttribute("storeId");
+        users.setStoreId(storeid);
+        users.setCreatedate(new Date());
+        this.insert(users);
+        /*users.setRoles("用户");
+        String[] rolesName = users.getRoles().split(",");
+        List<String> names = Arrays.asList(rolesName);
+        names.forEach(name->{*/
+            //新建角色，并设置 ，并插入
+        Role role = new Role();
+        role.setId(UUIDUtils.getUUID());
+        role.setRolename("ROLE_USER");
+        role.setRoledesc("普通用户");
+        roleService.insert(role);
+
+        //新建用户角色关系 并设置插入
+        UserRole userRole = new UserRole();
+        userRole.setUserssId(users.getId());
+        userRole.setRoleId(role.getId());
+        userRoleService.insert(userRole);
+        //});
+        return 0;
+    }
+/**新增用户
+* @author 张路明
+*/
+    @Override
+    public int insert(Users record) {
+
+        record.setPassword(passwordEncoder.encode(record.getPassword()));
+        record.setCreatedate(new Date());
+        record.setLastlogintime(new Date());
+       /* record.setAccountnonexpired(1);
+        record.setEnabled(1);
+        record.setAccountnonlocked(1);
+        record.setCredentialsnonexpired(1);*/
+        return usersMapper.insert(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Users record) {
+        return usersMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return usersMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Users selectUsersByName(String name) {
+        return usersMapper.selectUsersByName(name);
+    }
+
+
+}

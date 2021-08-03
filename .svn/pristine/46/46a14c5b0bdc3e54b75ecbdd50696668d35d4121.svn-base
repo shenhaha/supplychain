@@ -1,0 +1,47 @@
+package com.luer.comm.utils;
+
+import com.luer.systemmanager.bean.ParameterSet;
+import com.luer.systemmanager.dao.ParameterSetMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * Created by 87961 on 2018/10/8.
+ */
+public class CustomerNum {
+    @Autowired
+    private static ParameterSetMapper parameterSetMapper;
+    public static String  getCustomerNum(String storeId){
+        Date d=new Date();
+        DateFormat f=new SimpleDateFormat("yyyyMMddhhmmss");
+        String s=storeId+f.format(d);
+          return s;
+    }
+    public static String  getBabyNum(String motherId,int size){
+        if(size==0){
+
+            String s=motherId+"babyone";
+            return s;
+        }else if (size==1){
+            String s=motherId+"babytwo";
+            return s;
+        } else if (size==2){
+            String s=motherId+"babythree";
+            return s;
+        }else {
+            Date d=new Date();
+            DateFormat f=new SimpleDateFormat("yyyyMMddhhmmss");
+            String s=f.format(d);
+            return s;
+        }
+
+    }
+    public static  String  getStoreNum(int num){
+
+        String s="qingfu"+num+"store";
+          return s;
+    }
+}

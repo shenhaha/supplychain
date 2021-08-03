@@ -1,0 +1,149 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.CustomerException;
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.BabyEvaluate;
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.service.CustomerBasicService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/13.
+ */
+@Controller
+@RequestMapping("/customerBasic")
+public class CustomerBasicController {
+    @Autowired
+    private CustomerBasicService customerBasicService;
+    //获取签单尚未入住客户信息
+    @RequestMapping(value = "/getOneCustomerBasics")
+    @ResponseBody
+    public List<CustomerBasic> getOneCustomerBasics(@NonNull String storeId,String type) throws CustomerException {
+
+        return customerBasicService.getOneCustomerBasics(storeId,type);
+
+    }
+    //根据妈妈入住状态和妈妈类型（正常，小产）来获取妈妈
+    @RequestMapping(value = "/getTwoCustomerBasics")
+    @ResponseBody
+    public List<CustomerBasic> getTwoCustomerBasics(@NonNull String storeId,String type,String checkStatus,String motherType) throws CustomerException {
+
+        return customerBasicService.getTwoCustomerBasics(storeId,type,checkStatus,motherType);
+
+    }
+    //获取本店未入住和入住的妈妈
+    @RequestMapping(value = "/getTwoTypeCustomerBasics")
+    @ResponseBody
+    public List<CustomerBasic> getTwoTypeCustomerBasics(@NonNull String storeId) throws CustomerException {
+
+        return customerBasicService.getTwoTypeCustomerBasics(storeId);
+
+    }
+    @RequestMapping(value = "/getBabyBasics")
+    @ResponseBody
+    public List<CustomerBasic> getBabyBasics(@NonNull String motherId) throws CustomerException {
+
+        return customerBasicService.getBabyBasics(motherId);
+    }
+
+
+
+
+
+
+
+
+    //---------------------------------------------------------------------------------------------------
+
+    //添加客户资料
+    @RequestMapping(value = "/addCustomerBasic")
+    @ResponseBody
+    public ResultSet  addCustomerBasic(@NonNull CustomerBasic customerBasic) throws CustomerException {
+
+        customerBasicService.addCustomerBasic(customerBasic);
+       return ResultSet.getSuccess();
+
+    }
+    //添加客户资料
+    @RequestMapping(value = "/addBabyBasic")
+    @ResponseBody
+    public ResultSet  addBabyBasic(@NonNull CustomerBasic customerBasic) throws CustomerException {
+
+        customerBasicService.addBabyBasic(customerBasic);
+       return ResultSet.getSuccess();
+
+    }
+    //删除客户资料
+    @RequestMapping(value = "/deleteCustomerBasic")
+    @ResponseBody
+    public ResultSet deleteCustomerBasic(@NonNull String  id){
+
+        customerBasicService.deleteCustomerBasic(id);
+        return ResultSet.getSuccess();
+    }
+    //查询客户资料列表
+    @RequestMapping(value = "/getCustomerBasic")
+    @ResponseBody
+    public List<CustomerBasic> getList(CustomerBasic customerBasic){
+
+        List<CustomerBasic> customer = customerBasicService.getList(customerBasic);
+        return customer;
+
+    }
+    //修改客户资料
+    @RequestMapping(value = "/updateCustomer")
+    @ResponseBody
+    public ResultSet  updateCustomer(@NonNull CustomerBasic customerBasic) {
+
+        customerBasicService.updateCustomer(customerBasic);
+
+        return ResultSet.getSuccess();
+    }
+    @RequestMapping(value = "/updateAvoid" ,method = RequestMethod.POST)
+    @ResponseBody
+    public ResultSet  updateAvoid(@NonNull String avoid,@NonNull String motherid) {
+        customerBasicService.updateAvoid(avoid, motherid);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 根据门店id和客户类型查询客户资料列表
+     * @author GavinJiang
+     * @date 2018/9/14 13:29
+     * @params
+     * @param storeId
+     * @param type
+     * @return java.util.List<com.luer.servicecenter.bean.CustomerBasic>
+     */
+    @RequestMapping(value = "/selectCustomerBasicByStoreId")
+    @ResponseBody
+    public List<CustomerBasic> selectCustomerBasicByStoreId(String type,String storeId){
+        List<CustomerBasic> customer = customerBasicService.selectCustomerBasicByStoreId(storeId,type);
+        return customer;
+
+    }
+    @ResponseBody
+    @RequestMapping(value="/selectByStoreId")
+    public List<CustomerBasic> selectByStoreId(){
+        List<CustomerBasic> customerBasicList=customerBasicService.selectByStoreId();
+
+        return  customerBasicList;
+    }
+
+
+    @RequestMapping(value = "/selectCustomerBasic")
+    @ResponseBody
+    public List selectCustomerBasic(@NonNull String storeId){
+
+        List<CustomerBasic> customerBasic= customerBasicService.selectCustomerBasic(storeId);
+
+        return customerBasic;
+
+    }
+}

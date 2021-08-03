@@ -1,0 +1,96 @@
+package com.luer.storesdata.bean;
+
+import lombok.Data;
+
+@Data
+public class Room {
+    private String id;
+
+    private String roomStylesId;
+
+    private String roomStylesName;
+
+    private String storeId;
+
+    private String classify;
+
+    private String position;
+
+    private String num;
+
+    private String area;
+
+    private Integer charge;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getRoomStylesId() {
+        return roomStylesId;
+    }
+
+    public void setRoomStylesId(String roomStylesId) {
+        this.roomStylesId = roomStylesId == null ? null : roomStylesId.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getClassify() {
+        return classify;
+    }
+
+    public void setClassify(String classify) {
+        this.classify = classify == null ? null : classify.trim();
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position == null ? null : position.trim();
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num == null ? null : num.trim();
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area == null ? null : area.trim();
+    }
+
+    public Integer getCharge() {
+        return charge;
+    }
+
+    public void setCharge(Integer charge) {
+        this.charge = charge;
+    }
+
+    public String getRoomStylesName() {
+        return roomStylesName;
+    }
+
+    public void setRoomStylesName(String roomStylesName) {
+        this.roomStylesName = roomStylesName;
+    }
+}

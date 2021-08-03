@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.businessmanager.dao.ContactMapper" >
+    <resultMap id="BaseResultMap" type="com.luer.businessmanager.bean.Contact" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="tell" property="tell" jdbcType="VARCHAR" />
+        <result column="height" property="height" jdbcType="INTEGER" />
+        <result column="babybirth" property="babybirth" jdbcType="TIMESTAMP" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="birthindex" property="birthindex" jdbcType="INTEGER" />
+        <result column="method" property="method" jdbcType="VARCHAR" />
+        <result column="hospital" property="hospital" jdbcType="VARCHAR" />
+        <result column="doctor" property="doctor" jdbcType="VARCHAR" />
+        <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+        <result column="outtime" property="outtime" jdbcType="TIMESTAMP" />
+        <result column="sickroom" property="sickroom" jdbcType="VARCHAR" />
+        <result column="room_num" property="roomNum" jdbcType="VARCHAR" />
+        <result column="days" property="days" jdbcType="INTEGER" />
+        <result column="liaison" property="liaison" jdbcType="VARCHAR" />
+        <result column="liaisontell" property="liaisontell" jdbcType="VARCHAR" />
+        <result column="Relation" property="relation" jdbcType="VARCHAR" />
+        <result column="Callintime" property="callintime" jdbcType="TIMESTAMP" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectAllContact" resultMap="BaseResultMap" >
+        select *
+        from contact
+
+    </select>
+    <select id="selectContacts" resultMap="BaseResultMap" >
+        select *
+        from contact where store_id =#{store_id}
+
+    </select>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        id, store_id, name, tell, height, babybirth, sex, birthindex, method, hospital, doctor,
+        intime, outtime, sickroom, room_num, days, liaison, liaisontell, Relation, Callintime,
+        remark
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.businessmanager.bean.ContactExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from contact
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from contact
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from contact
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.businessmanager.bean.ContactExample" >
+        delete from contact
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.businessmanager.bean.Contact" >
+        insert into contact (id, store_id, name,
+        tell, height, babybirth,
+        sex, birthindex, method,
+        hospital, doctor, intime,
+        outtime, sickroom, room_num,
+        days, liaison, liaisontell,
+        Relation, Callintime, remark
+        )
+        values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{tell,jdbcType=VARCHAR}, #{height,jdbcType=INTEGER}, #{babybirth,jdbcType=TIMESTAMP},
+        #{sex,jdbcType=VARCHAR}, #{birthindex,jdbcType=INTEGER}, #{method,jdbcType=VARCHAR},
+        #{hospital,jdbcType=VARCHAR}, #{doctor,jdbcType=VARCHAR}, #{intime,jdbcType=TIMESTAMP},
+        #{outtime,jdbcType=TIMESTAMP}, #{sickroom,jdbcType=VARCHAR}, #{roomNum,jdbcType=VARCHAR},
+        #{days,jdbcType=INTEGER}, #{liaison,jdbcType=VARCHAR}, #{liaisontell,jdbcType=VARCHAR},
+        #{relation,jdbcType=VARCHAR}, #{callintime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.businessmanager.bean.Contact" >
+        insert into contact
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="storeId != null" >
+                store_id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="tell != null" >
+                tell,
+            </if>
+            <if test="height != null" >
+                height,
+            </if>
+            <if test="babybirth != null" >
+                babybirth,
+            </if>
+            <if test="sex != null" >
+                sex,
+            </if>
+            <if test="birthindex != null" >
+                birthindex,
+            </if>
+            <if test="method != null" >
+                method,
+            </if>
+            <if test="hospital != null" >
+                hospital,
+            </if>
+            <if test="doctor != null" >
+                doctor,
+            </if>
+            <if test="intime != null" >
+                intime,
+            </if>
+            <if test="outtime != null" >
+                outtime,
+            </if>
+            <if test="sickroom != null" >
+                sickroom,
+            </if>
+            <if test="roomNum != null" >
+                room_num,
+            </if>
+            <if test="days != null" >
+                days,
+            </if>
+            <if test="liaison != null" >
+                liaison,
+            </if>
+            <if test="liaisontell != null" >
+                liaisontell,
+            </if>
+            <if test="relation != null" >
+                Relation,
+            </if>
+            <if test="callintime != null" >
+                Callintime,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null" >
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null" >
+                #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null" >
+                #{height,jdbcType=INTEGER},
+            </if>
+            <if test="babybirth != null" >
+                #{babybirth,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sex != null" >
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthindex != null" >
+                #{birthindex,jdbcType=INTEGER},
+            </if>
+            <if test="method != null" >
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="hospital != null" >
+                #{hospital,jdbcType=VARCHAR},
+            </if>
+            <if test="doctor != null" >
+                #{doctor,jdbcType=VARCHAR},
+            </if>
+            <if test="intime != null" >
+                #{intime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="outtime != null" >
+                #{outtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sickroom != null" >
+                #{sickroom,jdbcType=VARCHAR},
+            </if>
+            <if test="roomNum != null" >
+                #{roomNum,jdbcType=VARCHAR},
+            </if>
+            <if test="days != null" >
+                #{days,jdbcType=INTEGER},
+            </if>
+            <if test="liaison != null" >
+                #{liaison,jdbcType=VARCHAR},
+            </if>
+            <if test="liaisontell != null" >
+                #{liaisontell,jdbcType=VARCHAR},
+            </if>
+            <if test="relation != null" >
+                #{relation,jdbcType=VARCHAR},
+            </if>
+            <if test="callintime != null" >
+                #{callintime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.businessmanager.bean.ContactExample" resultType="java.lang.Integer" >
+        select count(*) from contact
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update contact
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeId != null" >
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null" >
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tell != null" >
+                tell = #{record.tell,jdbcType=VARCHAR},
+            </if>
+            <if test="record.height != null" >
+                height = #{record.height,jdbcType=INTEGER},
+            </if>
+            <if test="record.babybirth != null" >
+                babybirth = #{record.babybirth,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.sex != null" >
+                sex = #{record.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birthindex != null" >
+                birthindex = #{record.birthindex,jdbcType=INTEGER},
+            </if>
+            <if test="record.method != null" >
+                method = #{record.method,jdbcType=VARCHAR},
+            </if>
+            <if test="record.hospital != null" >
+                hospital = #{record.hospital,jdbcType=VARCHAR},
+            </if>
+            <if test="record.doctor != null" >
+                doctor = #{record.doctor,jdbcType=VARCHAR},
+            </if>
+            <if test="record.intime != null" >
+                intime = #{record.intime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.outtime != null" >
+                outtime = #{record.outtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.sickroom != null" >
+                sickroom = #{record.sickroom,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roomNum != null" >
+                room_num = #{record.roomNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.days != null" >
+                days = #{record.days,jdbcType=INTEGER},
+            </if>
+            <if test="record.liaison != null" >
+                liaison = #{record.liaison,jdbcType=VARCHAR},
+            </if>
+            <if test="record.liaisontell != null" >
+                liaisontell = #{record.liaisontell,jdbcType=VARCHAR},
+            </if>
+            <if test="record.relation != null" >
+                Relation = #{record.relation,jdbcType=VARCHAR},
+            </if>
+            <if test="record.callintime != null" >
+                Callintime = #{record.callintime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.remark != null" >
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update contact
+        set id = #{record.id,jdbcType=VARCHAR},
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
+        tell = #{record.tell,jdbcType=VARCHAR},
+        height = #{record.height,jdbcType=INTEGER},
+        babybirth = #{record.babybirth,jdbcType=TIMESTAMP},
+        sex = #{record.sex,jdbcType=VARCHAR},
+        birthindex = #{record.birthindex,jdbcType=INTEGER},
+        method = #{record.method,jdbcType=VARCHAR},
+        hospital = #{record.hospital,jdbcType=VARCHAR},
+        doctor = #{record.doctor,jdbcType=VARCHAR},
+        intime = #{record.intime,jdbcType=TIMESTAMP},
+        outtime = #{record.outtime,jdbcType=TIMESTAMP},
+        sickroom = #{record.sickroom,jdbcType=VARCHAR},
+        room_num = #{record.roomNum,jdbcType=VARCHAR},
+        days = #{record.days,jdbcType=INTEGER},
+        liaison = #{record.liaison,jdbcType=VARCHAR},
+        liaisontell = #{record.liaisontell,jdbcType=VARCHAR},
+        Relation = #{record.relation,jdbcType=VARCHAR},
+        Callintime = #{record.callintime,jdbcType=TIMESTAMP},
+        remark = #{record.remark,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.businessmanager.bean.Contact" >
+        update contact
+        <set >
+            <if test="storeId != null" >
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null" >
+                tell = #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null" >
+                height = #{height,jdbcType=INTEGER},
+            </if>
+            <if test="babybirth != null" >
+                babybirth = #{babybirth,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sex != null" >
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthindex != null" >
+                birthindex = #{birthindex,jdbcType=INTEGER},
+            </if>
+            <if test="method != null" >
+                method = #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="hospital != null" >
+                hospital = #{hospital,jdbcType=VARCHAR},
+            </if>
+            <if test="doctor != null" >
+                doctor = #{doctor,jdbcType=VARCHAR},
+            </if>
+            <if test="intime != null" >
+                intime = #{intime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="outtime != null" >
+                outtime = #{outtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sickroom != null" >
+                sickroom = #{sickroom,jdbcType=VARCHAR},
+            </if>
+            <if test="roomNum != null" >
+                room_num = #{roomNum,jdbcType=VARCHAR},
+            </if>
+            <if test="days != null" >
+                days = #{days,jdbcType=INTEGER},
+            </if>
+            <if test="liaison != null" >
+                liaison = #{liaison,jdbcType=VARCHAR},
+            </if>
+            <if test="liaisontell != null" >
+                liaisontell = #{liaisontell,jdbcType=VARCHAR},
+            </if>
+            <if test="relation != null" >
+                Relation = #{relation,jdbcType=VARCHAR},
+            </if>
+            <if test="callintime != null" >
+                Callintime = #{callintime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.businessmanager.bean.Contact" >
+    update contact
+    set store_id = #{storeId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      tell = #{tell,jdbcType=VARCHAR},
+      height = #{height,jdbcType=INTEGER},
+      babybirth = #{babybirth,jdbcType=TIMESTAMP},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthindex = #{birthindex,jdbcType=INTEGER},
+      method = #{method,jdbcType=VARCHAR},
+      hospital = #{hospital,jdbcType=VARCHAR},
+      doctor = #{doctor,jdbcType=VARCHAR},
+      intime = #{intime,jdbcType=TIMESTAMP},
+      outtime = #{outtime,jdbcType=TIMESTAMP},
+      sickroom = #{sickroom,jdbcType=VARCHAR},
+      room_num = #{roomNum,jdbcType=VARCHAR},
+      days = #{days,jdbcType=INTEGER},
+      liaison = #{liaison,jdbcType=VARCHAR},
+      liaisontell = #{liaisontell,jdbcType=VARCHAR},
+      Relation = #{relation,jdbcType=VARCHAR},
+      Callintime = #{callintime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

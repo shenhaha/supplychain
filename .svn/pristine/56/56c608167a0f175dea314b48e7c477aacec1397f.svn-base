@@ -1,0 +1,63 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<body>
+<h1 align="center" id="a">排房预览</h1>
+<div id="calendar" class="fc fc-unthemed fc-ltr"></div>
+<script>
+    $(function () {
+        function changeDate(){
+            $('#calendar').fullCalendar( 'gotoDate',$("#mydate").val());
+        }
+        //入住表json数据
+        $('#calendar').fullCalendar({
+            //日历表左部列表   查询妈妈姓名
+            resources:"${ctx}/preview/getAllMother?storeId="+'<%=session.getAttribute("storeId")%>',
+            //具体日程事件   查询房间类型
+            events:"${ctx}/preview/getMother?storeId="+'<%=session.getAttribute("storeId")%>',
+            now: new Date(),
+            editable: false,
+            selectable:true,
+            eventLimit:true,
+            aspectRatio: 1.8,
+            buttonText:{
+                timelineThreeMonth:'三月',
+            },
+            monthNames:['1月','2月', '3月', '4月', '5月', '6月', '7月',
+                '8月', '9月', '10月', '11月', '12月'],
+            dayNames:['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            scrollTime: '00:00',
+            buttonText:{
+                today:'今天',
+                gotoDate: '指定日期',
+                timelineThreeMonth:'三月',
+            },
+            header: {
+                //right: 'timelineThreeMonth,listWeek,listMonth'
+                left: 'today gotoDate prev,next',
+                center: 'title',
+                right: 'timelineThreeMonth'
+            },
+            defaultView: 'timelineThreeMonth',
+            views: {
+                timelineThreeMonth:{
+                    type: 'timeline',
+                    duration: {Month: 3},
+                    titleFormat:'YYYY年MMMM'
+                },
+                /*listWeek:{buttonText:'list week'},
+                listMonth:{buttonText:'list month'},*/
+            },
+            navLinks: false,
+            resourceAreaWidth: '10%',
+            resourceLabelText: '妈妈姓名',
+        });
+        var htmlInput = "<input id='mydate' type='date' style='margin-right:10px;'>";
+        $("div[class^='fc-toolbar']").before(htmlInput);
+        $("#mydate").after($("button[class^='fc-gotoDate-button']"));
+        $("button[class^='fc-gotoDate-button']").click(function(){changeDate();});
+    });
+</script>
+</body>
+</html>

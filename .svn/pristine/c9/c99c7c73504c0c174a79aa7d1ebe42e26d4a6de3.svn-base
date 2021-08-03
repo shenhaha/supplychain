@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.systemmanager.dao.ParameterSetMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.systemmanager.bean.ParameterSet" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="int_parameter" property="intParameter" jdbcType="INTEGER" />
+    <result column="str_parameter" property="strParameter" jdbcType="VARCHAR" />
+    <result column="date_parameter" property="dateParameter" jdbcType="TIMESTAMP" />
+    <result column="parameter_name" property="parameterName" jdbcType="VARCHAR" />
+    <result column="parameter_descripte" property="parameterDescripte" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="last_date" property="lastDate" jdbcType="TIMESTAMP" />
+    <result column="first_date" property="firstDate" jdbcType="TIMESTAMP" />
+    <result column="second_date" property="secondDate" jdbcType="TIMESTAMP" />
+    <result column="one" property="one" jdbcType="VARCHAR" />
+    <result column="two" property="two" jdbcType="VARCHAR" />
+    <result column="three" property="three" jdbcType="VARCHAR" />
+  </resultMap>
+    <update id="updateEndDays" >
+        UPDATE parameter_set set int_parameter=#{intParameter},last_date=#{last_date} where parameter_name="endday"
+    </update>
+    <select id="getParameterSet" resultMap="BaseResultMap" >
+        SELECT * from parameter_set WHERE store_id=#{store_id}
+    </select>
+  <select id="getEndday" resultType="java.lang.Integer" >
+    SELECT int_parameter from parameter_set WHERE store_id=#{store_id} and parameter_name = 'endday'
+  </select>
+  <select id="getParameterSet2" resultMap="BaseResultMap">
+    SELECT * from parameter_set WHERE store_id=#{storeId} and parameter_name = #{name}
+  </select>
+    <select id="selectByPrimaryId" resultMap="BaseResultMap">
+        SELECT * FROM parameter_set WHERE store_id=#{store_id}
+    </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, store_id, int_parameter, str_parameter, date_parameter, parameter_name, parameter_descripte, 
+    status, last_date, first_date, second_date, one, two, three
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.systemmanager.bean.ParameterSetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from parameter_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from parameter_set
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parameter_set
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.systemmanager.bean.ParameterSetExample" >
+    delete from parameter_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.systemmanager.bean.ParameterSet" >
+    insert into parameter_set (id, store_id, int_parameter, 
+      str_parameter, date_parameter, parameter_name, 
+      parameter_descripte, status, last_date, 
+      first_date, second_date, one, 
+      two, three)
+    values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{intParameter,jdbcType=INTEGER}, 
+      #{strParameter,jdbcType=VARCHAR}, #{dateParameter,jdbcType=TIMESTAMP}, #{parameterName,jdbcType=VARCHAR}, 
+      #{parameterDescripte,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{lastDate,jdbcType=TIMESTAMP}, 
+      #{firstDate,jdbcType=TIMESTAMP}, #{secondDate,jdbcType=TIMESTAMP}, #{one,jdbcType=VARCHAR}, 
+      #{two,jdbcType=VARCHAR}, #{three,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.systemmanager.bean.ParameterSet" >
+    insert into parameter_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="intParameter != null" >
+        int_parameter,
+      </if>
+      <if test="strParameter != null" >
+        str_parameter,
+      </if>
+      <if test="dateParameter != null" >
+        date_parameter,
+      </if>
+      <if test="parameterName != null" >
+        parameter_name,
+      </if>
+      <if test="parameterDescripte != null" >
+        parameter_descripte,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastDate != null" >
+        last_date,
+      </if>
+      <if test="firstDate != null" >
+        first_date,
+      </if>
+      <if test="secondDate != null" >
+        second_date,
+      </if>
+      <if test="one != null" >
+        one,
+      </if>
+      <if test="two != null" >
+        two,
+      </if>
+      <if test="three != null" >
+        three,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="intParameter != null" >
+        #{intParameter,jdbcType=INTEGER},
+      </if>
+      <if test="strParameter != null" >
+        #{strParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="dateParameter != null" >
+        #{dateParameter,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parameterName != null" >
+        #{parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterDescripte != null" >
+        #{parameterDescripte,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="lastDate != null" >
+        #{lastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstDate != null" >
+        #{firstDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secondDate != null" >
+        #{secondDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="one != null" >
+        #{one,jdbcType=VARCHAR},
+      </if>
+      <if test="two != null" >
+        #{two,jdbcType=VARCHAR},
+      </if>
+      <if test="three != null" >
+        #{three,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.systemmanager.bean.ParameterSetExample" resultType="java.lang.Integer" >
+    select count(*) from parameter_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update parameter_set
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intParameter != null" >
+        int_parameter = #{record.intParameter,jdbcType=INTEGER},
+      </if>
+      <if test="record.strParameter != null" >
+        str_parameter = #{record.strParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateParameter != null" >
+        date_parameter = #{record.dateParameter,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.parameterName != null" >
+        parameter_name = #{record.parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parameterDescripte != null" >
+        parameter_descripte = #{record.parameterDescripte,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastDate != null" >
+        last_date = #{record.lastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.firstDate != null" >
+        first_date = #{record.firstDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.secondDate != null" >
+        second_date = #{record.secondDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.one != null" >
+        one = #{record.one,jdbcType=VARCHAR},
+      </if>
+      <if test="record.two != null" >
+        two = #{record.two,jdbcType=VARCHAR},
+      </if>
+      <if test="record.three != null" >
+        three = #{record.three,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update parameter_set
+    set id = #{record.id,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      int_parameter = #{record.intParameter,jdbcType=INTEGER},
+      str_parameter = #{record.strParameter,jdbcType=VARCHAR},
+      date_parameter = #{record.dateParameter,jdbcType=TIMESTAMP},
+      parameter_name = #{record.parameterName,jdbcType=VARCHAR},
+      parameter_descripte = #{record.parameterDescripte,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      last_date = #{record.lastDate,jdbcType=TIMESTAMP},
+      first_date = #{record.firstDate,jdbcType=TIMESTAMP},
+      second_date = #{record.secondDate,jdbcType=TIMESTAMP},
+      one = #{record.one,jdbcType=VARCHAR},
+      two = #{record.two,jdbcType=VARCHAR},
+      three = #{record.three,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.systemmanager.bean.ParameterSet" >
+    update parameter_set
+    <set >
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="intParameter != null" >
+        int_parameter = #{intParameter,jdbcType=INTEGER},
+      </if>
+      <if test="strParameter != null" >
+        str_parameter = #{strParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="dateParameter != null" >
+        date_parameter = #{dateParameter,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parameterName != null" >
+        parameter_name = #{parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterDescripte != null" >
+        parameter_descripte = #{parameterDescripte,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="lastDate != null" >
+        last_date = #{lastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstDate != null" >
+        first_date = #{firstDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secondDate != null" >
+        second_date = #{secondDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="one != null" >
+        one = #{one,jdbcType=VARCHAR},
+      </if>
+      <if test="two != null" >
+        two = #{two,jdbcType=VARCHAR},
+      </if>
+      <if test="three != null" >
+        three = #{three,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.systemmanager.bean.ParameterSet" >
+    update parameter_set
+    set store_id = #{storeId,jdbcType=VARCHAR},
+      int_parameter = #{intParameter,jdbcType=INTEGER},
+      str_parameter = #{strParameter,jdbcType=VARCHAR},
+      date_parameter = #{dateParameter,jdbcType=TIMESTAMP},
+      parameter_name = #{parameterName,jdbcType=VARCHAR},
+      parameter_descripte = #{parameterDescripte,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      last_date = #{lastDate,jdbcType=TIMESTAMP},
+      first_date = #{firstDate,jdbcType=TIMESTAMP},
+      second_date = #{secondDate,jdbcType=TIMESTAMP},
+      one = #{one,jdbcType=VARCHAR},
+      two = #{two,jdbcType=VARCHAR},
+      three = #{three,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

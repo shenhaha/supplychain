@@ -1,0 +1,97 @@
+package com.luer.stockandsales.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.stockandsales.bean.Shipments;
+import com.luer.stockandsales.service.ShipmentsService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value="/shipments")
+public class ShipmentsController {
+    @Autowired
+    private ShipmentsService shipmentsService;
+
+
+    //新增出货信息
+    @ResponseBody
+    @RequestMapping(value = "/saveShipments")
+    public ResultSet saveInGoods(@NonNull Shipments shipments) {
+        shipmentsService.saveShipments(shipments);
+        return  ResultSet.getSuccess();
+    }
+    //删除出货信息
+    @ResponseBody
+    @RequestMapping(value = "/deleteShipmentsById")
+    public ResultSet deleteGoodsById(@NonNull String  id) {
+        shipmentsService.deleteShipmentsById(id);
+        return  ResultSet.getSuccess();
+    }
+
+    //修改出货信息
+    @ResponseBody
+    @RequestMapping(value = "/updateShipments")
+    public ResultSet updateGoods(@NonNull Shipments shipments) {
+        shipmentsService.updateShipments(shipments);
+        return  ResultSet.getSuccess();
+    }
+
+    //查询所有出货信息
+    @ResponseBody
+    @RequestMapping(value = "/selectShipments")
+    public List<Shipments> selectShipments() {
+        List<Shipments> shipmentsList= shipmentsService.selectShipmentss();
+        return  shipmentsList;
+    }
+    //查询门店的出货信息
+    @ResponseBody
+    @RequestMapping(value = "/selectByStoreId")
+    public List<Shipments> selectByStoreId() {
+
+        List<Shipments> shipmentsList= shipmentsService.selectByStoreId();
+        return  shipmentsList;
+    }
+    //查询门店领用的信息
+    @ResponseBody
+    @RequestMapping(value="/selectCollar")
+    public List<Shipments>  selectCollar(){
+
+        List<Shipments> shipmentsList= shipmentsService.selectCollar();
+
+        return  shipmentsList;
+
+    }
+    //查询总部的出库信息
+    @ResponseBody
+    @RequestMapping(value="/selectHeadCollar")
+    public List<Shipments>  selectHeadCollar(){
+
+        List<Shipments> shipmentsList= shipmentsService.selectHeadCollar();
+
+        return  shipmentsList;
+
+    }
+    //查询门店销售的信息
+    @ResponseBody
+    @RequestMapping(value="selectSales")
+    public List<Shipments>  selectSales(){
+        List<Shipments> shipmentsList= shipmentsService.selectSales();
+        return  shipmentsList;
+
+    }
+
+    //查询妈妈的购买记录
+    @ResponseBody
+    @RequestMapping(value="selectShipmentsdetails")
+    public List<Shipments>  selectShipmentsdetails(@NonNull String motherId){
+
+        List<Shipments> shipmentsList= shipmentsService.selectSalesByMotherId(motherId);
+        return  shipmentsList;
+
+    }
+}

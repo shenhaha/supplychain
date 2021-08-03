@@ -1,0 +1,147 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class VitalSign {
+    private String id;
+
+    private String t;
+
+    private String p;
+
+    private String r;
+
+    private String bp;
+
+    private String status;
+
+    private String motherid;
+
+    private String storeid;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date measureTime;
+
+    private String tenant;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updatetime;
+
+    private String createperson;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date deletetime;
+
+    private Integer isdelete;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getT() {
+        return t;
+    }
+
+    public void setT(String t) {
+        this.t = t == null ? null : t.trim();
+    }
+
+    public String getP() {
+        return p;
+    }
+
+    public void setP(String p) {
+        this.p = p == null ? null : p.trim();
+    }
+
+    public String getR() {
+        return r;
+    }
+
+    public void setR(String r) {
+        this.r = r == null ? null : r.trim();
+    }
+
+    public String getBp() {
+        return bp;
+    }
+
+    public void setBp(String bp) {
+        this.bp = bp == null ? null : bp.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public String getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(String storeid) {
+        this.storeid = storeid == null ? null : storeid.trim();
+    }
+
+    public Date getMeasureTime() {
+        return measureTime;
+    }
+
+    public void setMeasureTime(Date measureTime) {
+        this.measureTime = measureTime;
+    }
+
+    public String getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(String tenant) {
+        this.tenant = tenant == null ? null : tenant.trim();
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getCreateperson() {
+        return createperson;
+    }
+
+    public void setCreateperson(String createperson) {
+        this.createperson = createperson == null ? null : createperson.trim();
+    }
+
+    public Date getDeletetime() {
+        return deletetime;
+    }
+
+    public void setDeletetime(Date deletetime) {
+        this.deletetime = deletetime;
+    }
+
+    public Integer getIsdelete() {
+        return isdelete;
+    }
+
+    public void setIsdelete(Integer isdelete) {
+        this.isdelete = isdelete;
+    }
+}

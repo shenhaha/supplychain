@@ -1,0 +1,31 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.SocialSupport;
+import com.luer.servicecenter.bean.SocialSupportExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface SocialSupportMapper {
+    int countByExample(SocialSupportExample example);
+
+    int deleteByExample(SocialSupportExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(SocialSupport record);
+
+    int insertSelective(SocialSupport record);
+
+    List<SocialSupport> selectByExample(SocialSupportExample example);
+
+    SocialSupport selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") SocialSupport record, @Param("example") SocialSupportExample example);
+
+    int updateByExample(@Param("record") SocialSupport record, @Param("example") SocialSupportExample example);
+
+    int updateByPrimaryKeySelective(SocialSupport record);
+
+    int updateByPrimaryKey(SocialSupport record);
+}

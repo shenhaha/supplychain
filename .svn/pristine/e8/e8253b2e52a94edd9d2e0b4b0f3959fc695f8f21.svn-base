@@ -1,0 +1,53 @@
+package com.luer.servicecenter.bean;
+
+public class Babynursingrecord {
+    private String id;
+
+    private String customerBasicId;
+
+    private String room;
+
+    private String mother;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room == null ? null : room.trim();
+    }
+
+    public String getMother() {
+        return mother;
+    }
+
+    public void setMother(String mother) {
+        this.mother = mother == null ? null : mother.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Babynursingrecord{" +
+                "id='" + id + '\'' +
+                ", customerBasicId='" + customerBasicId + '\'' +
+                ", room='" + room + '\'' +
+                ", mother='" + mother + '\'' +
+                '}';
+    }
+}

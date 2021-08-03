@@ -1,0 +1,68 @@
+package com.luer.storesdata.bean;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+@Data
+public class Credentials {
+    private String id;
+
+    private String otherId;
+
+    private String name;
+
+    private String address;
+
+    private String cardid;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date uptime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getOtherId() {
+        return otherId;
+    }
+
+    public void setOtherId(String otherId) {
+        this.otherId = otherId == null ? null : otherId.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    public String getCardid() {
+        return cardid;
+    }
+
+    public void setCardid(String cardid) {
+        this.cardid = cardid == null ? null : cardid.trim();
+    }
+
+    public Date getUptime() {
+        return uptime;
+    }
+
+    public void setUptime(Date uptime) {
+        this.uptime = uptime;
+    }
+}

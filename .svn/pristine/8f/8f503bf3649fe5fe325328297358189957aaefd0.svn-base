@@ -1,0 +1,39 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.SatisfactionRecord;
+import com.luer.storemanager.bean.SatisfactionRecordExample;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+@MapperScan
+public interface SatisfactionRecordMapper {
+    int countByExample(SatisfactionRecordExample example);
+
+    int deleteByExample(SatisfactionRecordExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(SatisfactionRecord record);
+
+    int insertSelective(SatisfactionRecord record);
+
+    List<SatisfactionRecord> selectByExample(SatisfactionRecordExample example);
+
+    SatisfactionRecord selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") SatisfactionRecord record, @Param("example") SatisfactionRecordExample example);
+
+    int updateByExample(@Param("record") SatisfactionRecord record, @Param("example") SatisfactionRecordExample example);
+
+    int updateByPrimaryKeySelective(SatisfactionRecord record);
+
+    int updateByPrimaryKey(SatisfactionRecord record);
+
+    List<SatisfactionRecord> selectAll();
+    //通过门店id查询满意度调查表
+    List<SatisfactionRecord> selectByStoreFileId(String storeFileId);
+}

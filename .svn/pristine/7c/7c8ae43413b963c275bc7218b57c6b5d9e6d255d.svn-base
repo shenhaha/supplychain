@@ -1,0 +1,165 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+
+    <div class="container">
+       <%-- <div class="row">
+            <!--前缀-->
+            <!--前缀-->
+            <div class="form-group col-md-5">
+                <label for="babyname" class="col-sm-4 control-label">宝宝姓名：</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="babyname" name="babyname">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="mothername" class="col-sm-4 control-label">宝妈姓名：</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="mothername" name="mothername">
+                    </select>
+                </div>
+            </div>
+        </div>--%>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <%--<label for="stayweight" class="col-sm-4 control-label">入馆体重(g)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="stayweight" name="stayweight" placeholder="入馆体重">
+                </div>--%>
+
+                <label for="babyname" class="col-sm-4 control-label">宝宝姓名：</label>
+                <div class="col-sm-5">
+                    <select id="babyname" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="pavilionweight" class="col-sm-4 control-label">出馆体重(g)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="pavilionweight" name="pavilionweight" placeholder="入馆体重">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="bornweight" class="col-sm-4 control-label">出生体重(g)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="bornweight" name="bornweight" placeholder="出生体重">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="temperature" class="col-sm-4 control-label">体温(℃)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="temperature" name="temperature" placeholder="体温">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="milkinterval" class="col-sm-4 control-label">奶量(ml)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="milkinterval" name="milkinterval" placeholder="奶量">
+                </div>
+            </div>
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="onfeeding" class="col-md-4 control-label">上次喝奶时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+                    <input class="form-control" size="16" type="text" value="" name="onfeeding" id="onfeeding"placeholder="上次喝奶时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="howlong" class="col-sm-4 control-label">多久喝一次：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="howlong" name="howlong" placeholder="多久喝一次">
+                </div>
+            </div>
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="underfeeding" class="col-md-4 control-label">下次喝奶时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+                    <input class="form-control" size="16" type="text" value="" name="underfeeding" id="underfeeding"placeholder="下次喝奶时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="temperatures" class="col-sm-4 control-label">奶的温度(℃)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="temperatures" name="temperatures" placeholder="奶的温度">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="heartbeat" class="col-sm-4 control-label">心跳(次/min)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="heartbeat" name="heartbeat" placeholder="心跳">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="familymembers" class="col-sm-4 control-label">家属签名：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="familymembers" name="familymembers" placeholder="家属签名">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="nurse" class="col-sm-4 control-label">护士签名：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="nurse" name="nurse" placeholder="护士签名">
+                </div>
+            </div>
+       </div>
+           <div class="row">
+               <div class="form-group col-md-5">
+                  <%-- <label for="babyname" class="col-sm-4 control-label">宝宝选择：</label>
+                   <div class="col-sm-5">
+                       <select id="babyname" class="form-control"></select>
+                   </div>--%>
+
+
+                   <label for="stayweight" class="col-sm-4 control-label">入馆体重(g)：</label>
+                   <div class="col-sm-5">
+                       <input type="text" class="form-control" id="stayweight" name="stayweight" placeholder="入馆体重">
+                   </div>
+               </div>
+           </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

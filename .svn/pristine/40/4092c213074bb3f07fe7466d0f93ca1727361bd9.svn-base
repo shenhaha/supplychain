@@ -1,0 +1,24 @@
+package com.luer.businessmanager.service;
+
+
+import com.luer.businessmanager.bean.Question;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+public interface QuestionService {
+    int insert(Question question);
+
+    int deleteById(String id);
+
+    boolean deleteListById(String id);
+
+    int updateById(String id, Question question);
+
+    List<Question> selectByQuestionsortId(String id,String storeId);
+
+    List<Question> selectAllQuestion(String storeId);
+}

@@ -1,0 +1,136 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group col-md-5" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!--前缀-->
+
+            <div class="form-group col-md-5 " hidden="hidden">
+                <label for="status" class="col-sm-4 control-label">状态：</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="status"
+                            name="status" placeholder="status" tabindex="1">
+                        <option value="1" selected="selected">销售</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="employerId" class="col-sm-4 control-label">销售员工姓名</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="employerId"
+                            name="employerId" placeholder="employerId" >
+
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="roomId" class="col-md-4 control-label">房间号</label>
+                <div class="col-md-5">
+                    <select type="text" class="form-control" id="roomId"
+                            name="roomId" placeholder="roomId" >
+
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+
+            <div class="form-group col-md-5">
+                <label for="motherId" class="col-md-4 control-label">妈妈姓名</label>
+                <div class="col-md-5">
+                    <select type="text" class="form-control" id="motherId" name="motherId" placeholder="motherId">
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="shippingTime" class="col-md-4 control-label">销售时间</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px"
+                     class="input-group date form_datetime col-md-6" data-date=""  data-date-format="yyyy-mm-dd hh:ii:ss"                     >
+                    <input class="form-control" size="16" type="text" value="" name="shippingTime" id="shippingTime"placeholder="销售时间"readonly>
+                    <span class="input-group-addon"><span  class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5" hidden="hidden">
+                <label for="receivable" class="col-md-4 control-label">应收金额</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="receivable"
+                           name="receivable" placeholder="0" col-md-5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $(function () {
+        //动态查询员工信息
+        $.ajax({
+            url: "${ctx}/employer/selectEmployersByStoreId",
+            type: "post",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#employerId").append("<option  value='" + data[i].id + "'>" + data[i].name + "</option>");
+                }
+            }
+        });
+        $.ajax({
+            url: "${ctx}/room/selectByStoreId",
+            type: "post",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#roomId").append("<option  value='" + data[i].id + "'>" + data[i].num + "</option>");
+                }
+            }
+        });
+        $.ajax({
+            url: "${ctx}/customerBasic/selectByStoreId",
+            type: "post",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#motherId").append("<option  value='" + data[i].id + "'>" + data[i].name + "</option>");
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

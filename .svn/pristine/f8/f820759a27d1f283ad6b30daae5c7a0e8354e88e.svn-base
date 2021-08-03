@@ -1,0 +1,18 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.SatisfactionRecord;
+
+import java.util.List;
+
+public interface SatisfactionRecordService {
+
+    //添加信息
+    void saveSatisfactionRecord(SatisfactionRecord satisfactionRecord);
+    //删除信息
+    void deleteSatisfactionRecordById(String satisfactionRecordId);
+    //修改信息
+    void updateSatisfactionRecord(SatisfactionRecord satisfactionRecord);
+
+    //查询信息
+    List<SatisfactionRecord> selectSatisfactionRecords(String storeFileId);
+}

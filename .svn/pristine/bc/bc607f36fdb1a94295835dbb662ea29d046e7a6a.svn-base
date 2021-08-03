@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.TemperatureRegisterMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.TemperatureRegister" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="temperature" property="temperature" jdbcType="VARCHAR" />
+    <result column="cough" property="cough" jdbcType="VARCHAR" />
+    <result column="excepted" property="excepted" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+    <!-- 查询所有的门店人员体温信息 -->
+    <select id="selectTemperatureRegiste" resultMap="BaseResultMap">
+        select * from temperature_register WHERE  store_id=#{store_id}
+    </select>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+    id, store_id, department, name, sex, position, temperature, cough, excepted, time
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.TemperatureRegisterExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from temperature_register
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from temperature_register
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from temperature_register
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.TemperatureRegisterExample" >
+        delete from temperature_register
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.storemanager.bean.TemperatureRegister" >
+        insert into temperature_register (id, store_id, department,
+        name, sex, position,
+        temperature, cough, excepted,
+        time)
+        values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR},
+        #{temperature,jdbcType=VARCHAR}, #{cough,jdbcType=VARCHAR}, #{excepted,jdbcType=VARCHAR},
+        #{time,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.storemanager.bean.TemperatureRegister" >
+        insert into temperature_register
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="storeId != null" >
+                store_id,
+            </if>
+            <if test="department != null" >
+                department,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="sex != null" >
+                sex,
+            </if>
+            <if test="position != null" >
+                position,
+            </if>
+            <if test="temperature != null" >
+                temperature,
+            </if>
+            <if test="cough != null" >
+                cough,
+            </if>
+            <if test="excepted != null" >
+                excepted,
+            </if>
+            <if test="time != null" >
+                time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null" >
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="temperature != null" >
+                #{temperature,jdbcType=VARCHAR},
+            </if>
+            <if test="cough != null" >
+                #{cough,jdbcType=VARCHAR},
+            </if>
+            <if test="excepted != null" >
+                #{excepted,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null" >
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.storemanager.bean.TemperatureRegisterExample" resultType="java.lang.Integer" >
+        select count(*) from temperature_register
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update temperature_register
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeId != null" >
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.department != null" >
+                department = #{record.department,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null" >
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sex != null" >
+                sex = #{record.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="record.position != null" >
+                position = #{record.position,jdbcType=VARCHAR},
+            </if>
+            <if test="record.temperature != null" >
+                temperature = #{record.temperature,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cough != null" >
+                cough = #{record.cough,jdbcType=VARCHAR},
+            </if>
+            <if test="record.excepted != null" >
+                excepted = #{record.excepted,jdbcType=VARCHAR},
+            </if>
+            <if test="record.time != null" >
+                time = #{record.time,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update temperature_register
+        set id = #{record.id,jdbcType=VARCHAR},
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+        department = #{record.department,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
+        sex = #{record.sex,jdbcType=VARCHAR},
+        position = #{record.position,jdbcType=VARCHAR},
+        temperature = #{record.temperature,jdbcType=VARCHAR},
+        cough = #{record.cough,jdbcType=VARCHAR},
+        excepted = #{record.excepted,jdbcType=VARCHAR},
+        time = #{record.time,jdbcType=TIMESTAMP}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.TemperatureRegister" >
+        update temperature_register
+        <set >
+            <if test="storeId != null" >
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="temperature != null" >
+                temperature = #{temperature,jdbcType=VARCHAR},
+            </if>
+            <if test="cough != null" >
+                cough = #{cough,jdbcType=VARCHAR},
+            </if>
+            <if test="excepted != null" >
+                excepted = #{excepted,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null" >
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.TemperatureRegister" >
+        update temperature_register
+        set store_id = #{storeId,jdbcType=VARCHAR},
+        department = #{department,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=VARCHAR},
+        position = #{position,jdbcType=VARCHAR},
+        temperature = #{temperature,jdbcType=VARCHAR},
+        cough = #{cough,jdbcType=VARCHAR},
+        excepted = #{excepted,jdbcType=VARCHAR},
+        time = #{time,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,13 @@
+package com.luer.storesdata.service;
+
+import com.luer.storesdata.bean.Hotel;
+
+import java.util.List;
+
+public interface HotelService {
+    Hotel getByStoreId(String storeId);
+
+    int insert(Hotel hotel);
+
+    int update(Hotel hotel);
+}

@@ -1,0 +1,398 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class MotherEvaluate {
+    private String id;
+
+    private String storeId;
+
+    private String customerBasicId;
+
+    private String roomId;
+
+    private String badNo;
+
+    private String childTime;
+
+    private Integer weightIncrease;
+
+    private String pregnancy;
+
+    private String childBirthWay;
+
+    private String pph;
+
+    private String tear;
+
+    private String t;
+
+    private String p;
+
+    private String r;
+
+    private String bp;
+
+    private String uterusHeight;
+
+    private String uterusHardness;
+
+    private String lochia;
+
+    private String color;
+
+    private String character1;
+
+    private String taste;
+
+    private String perineumWound;
+
+    private String cesareanWound;
+
+    private String breast;
+
+    private String nipple;
+
+    private String mastitis;
+
+    private String secretion;
+
+    private String hemorrhoids;
+
+    private String defecation;
+
+    private String infectiousDiseases;
+
+    private String extraMedications;
+
+    private String mentalState;
+
+    private String edemaState;
+
+    private String emotionalState;
+
+    private String assessment;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date assessmentTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    private String note;
+
+    private String mothername;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId == null ? null : roomId.trim();
+    }
+
+    public String getBadNo() {
+        return badNo;
+    }
+
+    public void setBadNo(String badNo) {
+        this.badNo = badNo == null ? null : badNo.trim();
+    }
+
+    public String getChildTime() {
+        return childTime;
+    }
+
+    public void setChildTime(String childTime) {
+        this.childTime = childTime == null ? null : childTime.trim();
+    }
+
+    public Integer getWeightIncrease() {
+        return weightIncrease;
+    }
+
+    public void setWeightIncrease(Integer weightIncrease) {
+        this.weightIncrease = weightIncrease;
+    }
+
+    public String getPregnancy() {
+        return pregnancy;
+    }
+
+    public void setPregnancy(String pregnancy) {
+        this.pregnancy = pregnancy == null ? null : pregnancy.trim();
+    }
+
+    public String getChildBirthWay() {
+        return childBirthWay;
+    }
+
+    public void setChildBirthWay(String childBirthWay) {
+        this.childBirthWay = childBirthWay == null ? null : childBirthWay.trim();
+    }
+
+    public String getPph() {
+        return pph;
+    }
+
+    public void setPph(String pph) {
+        this.pph = pph == null ? null : pph.trim();
+    }
+
+    public String getTear() {
+        return tear;
+    }
+
+    public void setTear(String tear) {
+        this.tear = tear == null ? null : tear.trim();
+    }
+
+    public String getT() {
+        return t;
+    }
+
+    public void setT(String t) {
+        this.t = t == null ? null : t.trim();
+    }
+
+    public String getP() {
+        return p;
+    }
+
+    public void setP(String p) {
+        this.p = p == null ? null : p.trim();
+    }
+
+    public String getR() {
+        return r;
+    }
+
+    public void setR(String r) {
+        this.r = r == null ? null : r.trim();
+    }
+
+    public String getBp() {
+        return bp;
+    }
+
+    public void setBp(String bp) {
+        this.bp = bp == null ? null : bp.trim();
+    }
+
+    public String getUterusHeight() {
+        return uterusHeight;
+    }
+
+    public void setUterusHeight(String uterusHeight) {
+        this.uterusHeight = uterusHeight == null ? null : uterusHeight.trim();
+    }
+
+    public String getUterusHardness() {
+        return uterusHardness;
+    }
+
+    public void setUterusHardness(String uterusHardness) {
+        this.uterusHardness = uterusHardness == null ? null : uterusHardness.trim();
+    }
+
+    public String getLochia() {
+        return lochia;
+    }
+
+    public void setLochia(String lochia) {
+        this.lochia = lochia == null ? null : lochia.trim();
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color == null ? null : color.trim();
+    }
+
+    public String getCharacter1() {
+        return character1;
+    }
+
+    public void setCharacter1(String character1) {
+        this.character1 = character1 == null ? null : character1.trim();
+    }
+
+    public String getTaste() {
+        return taste;
+    }
+
+    public void setTaste(String taste) {
+        this.taste = taste == null ? null : taste.trim();
+    }
+
+    public String getPerineumWound() {
+        return perineumWound;
+    }
+
+    public void setPerineumWound(String perineumWound) {
+        this.perineumWound = perineumWound == null ? null : perineumWound.trim();
+    }
+
+    public String getCesareanWound() {
+        return cesareanWound;
+    }
+
+    public void setCesareanWound(String cesareanWound) {
+        this.cesareanWound = cesareanWound == null ? null : cesareanWound.trim();
+    }
+
+    public String getBreast() {
+        return breast;
+    }
+
+    public void setBreast(String breast) {
+        this.breast = breast == null ? null : breast.trim();
+    }
+
+    public String getNipple() {
+        return nipple;
+    }
+
+    public void setNipple(String nipple) {
+        this.nipple = nipple == null ? null : nipple.trim();
+    }
+
+    public String getMastitis() {
+        return mastitis;
+    }
+
+    public void setMastitis(String mastitis) {
+        this.mastitis = mastitis == null ? null : mastitis.trim();
+    }
+
+    public String getSecretion() {
+        return secretion;
+    }
+
+    public void setSecretion(String secretion) {
+        this.secretion = secretion == null ? null : secretion.trim();
+    }
+
+    public String getHemorrhoids() {
+        return hemorrhoids;
+    }
+
+    public void setHemorrhoids(String hemorrhoids) {
+        this.hemorrhoids = hemorrhoids == null ? null : hemorrhoids.trim();
+    }
+
+    public String getDefecation() {
+        return defecation;
+    }
+
+    public void setDefecation(String defecation) {
+        this.defecation = defecation == null ? null : defecation.trim();
+    }
+
+    public String getInfectiousDiseases() {
+        return infectiousDiseases;
+    }
+
+    public void setInfectiousDiseases(String infectiousDiseases) {
+        this.infectiousDiseases = infectiousDiseases == null ? null : infectiousDiseases.trim();
+    }
+
+    public String getExtraMedications() {
+        return extraMedications;
+    }
+
+    public void setExtraMedications(String extraMedications) {
+        this.extraMedications = extraMedications == null ? null : extraMedications.trim();
+    }
+
+    public String getMentalState() {
+        return mentalState;
+    }
+
+    public void setMentalState(String mentalState) {
+        this.mentalState = mentalState == null ? null : mentalState.trim();
+    }
+
+    public String getEdemaState() {
+        return edemaState;
+    }
+
+    public void setEdemaState(String edemaState) {
+        this.edemaState = edemaState == null ? null : edemaState.trim();
+    }
+
+    public String getEmotionalState() {
+        return emotionalState;
+    }
+
+    public void setEmotionalState(String emotionalState) {
+        this.emotionalState = emotionalState == null ? null : emotionalState.trim();
+    }
+
+    public String getAssessment() {
+        return assessment;
+    }
+
+    public void setAssessment(String assessment) {
+        this.assessment = assessment == null ? null : assessment.trim();
+    }
+
+    public Date getAssessmentTime() {
+        return assessmentTime;
+    }
+
+    public void setAssessmentTime(Date assessmentTime) {
+        this.assessmentTime = assessmentTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getMothername() {
+        return mothername;
+    }
+
+    public void setMothername(String mothername) {
+        this.mothername = mothername == null ? null : mothername.trim();
+    }
+}

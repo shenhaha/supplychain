@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.luer.businessmanager.dao.AppointmentMapper">
+    <resultMap id="BaseResultMap" type="com.luer.businessmanager.bean.Appointment">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="tell" property="tell" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="number" property="number" jdbcType="INTEGER"/>
+        <result column="cometime" property="cometime" jdbcType="TIMESTAMP"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CountAppoinment" type="com.luer.businessmanager.bean.CountAppointment">
+        <result column="count" property="count"></result>
+        <result column="mytime" property="time"></result>
+        <result column="abbreviation1" property="abbreviation1"></result>
+        <result column="storeid" property="storeid"></result>
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, name, tell, sex, number, cometime, store_id
+  </sql>
+
+    <select id="getTotalSalesAmount" resultMap="CountAppoinment">
+SELECT sf.id storeid,sf.`name` abbreviation1,COALESCE(s.count,0) count
+    FROM store_file sf
+left join
+(select COALESCE(sum(receivable),0) count,store_id,DATE_FORMAT(shipping_time,'%Y-%m') mytime
+from shipments where status=1 GROUP BY shipments.store_id HAVING mytime = #{mytime} ) s  on s.store_id=sf.id
+
+     where sf.sort='门店'
+GROUP BY mytime,sf.id
+  </select>
+    <select id="getCountAppointments" resultMap="CountAppoinment">
+    SELECT count(*) count,a.store_id storeid, DATE_FORMAT(a.cometime,'%Y-%m') mytime,s.abbreviation abbreviation1
+    FROM appointment a LEFT JOIN store_file s ON s.id = a.store_id
+    GROUP BY mytime,a.store_id
+    HAVING mytime = #{mytime}
+  </select>
+    <select id="getSignatureNumberDay" resultMap="CountAppoinment">
+    SELECT count(*) count,a.store_id storeid, DATE_FORMAT(a.timeone,'%Y-%m-%d') mytime,s.abbreviation abbreviation1
+    FROM order_customer a LEFT JOIN store_file s ON s.id = a.store_id
+    GROUP BY mytime,a.store_id
+    HAVING  mytime = #{mytime}
+  </select>
+    <select id="getSignatureNumberMonth" resultMap="CountAppoinment">
+    SELECT COUNT(*) count,DATE_FORMAT(oc.timeone,'%Y-%m') mytime,s.abbreviation abbreviation1,s.store_id FROM order_customer oc LEFT JOIN store_file s ON oc.store_id = s.id
+    GROUP BY s.id,mytime
+    HAVING  mytime = #{mytime}
+  </select>
+
+  <resultMap id="CountAppoinment1" type="com.luer.businessmanager.bean.CountAppointment">
+    <result column="sumprice" property="count"></result>
+    <result column="mytime" property="time"></result>
+    <result column="abbreviation1" property="abbreviation1"></result>
+    <result column="storeid" property="storeid"></result>
+  </resultMap>
+  <select id="getBillofMoney" resultMap="CountAppoinment1">
+    SELECT SUM(a.price) sumprice,a.store_id storeid, DATE_FORMAT(a.borndate,'%Y-%m') mytime,s.abbreviation abbreviation1
+    FROM order_customer a LEFT JOIN store_file s ON s.id = a.store_id
+    GROUP BY mytime,a.store_id
+    HAVING  mytime = #{mytime}
+  </select>
+
+
+    <select id="selectListAppointmentToday" resultMap="BaseResultMap">
+        SELECT a.id,a.`name`,a.number,a.sex,a.store_id,a.tell,DATE_FORMAT(a.cometime,'%Y-%m-%d') cometime FROM appointment a
+        WHERE  store_id = #{storeId}
+        having cometime = #{today}
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.luer.businessmanager.bean.AppointmentExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from appointment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from appointment
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <!-- 批量删除 -->
+    <delete id="deleteListById" parameterType="java.lang.String">
+        delete from appointment where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from appointment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.luer.businessmanager.bean.AppointmentExample">
+        delete from appointment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.businessmanager.bean.Appointment">
+    insert into appointment (id, name, tell, 
+      sex, number, cometime, 
+      store_id)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{tell,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{cometime,jdbcType=TIMESTAMP}, 
+      #{storeId,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.luer.businessmanager.bean.Appointment">
+        insert into appointment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="tell != null">
+                tell,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="cometime != null">
+                cometime,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null">
+                #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=INTEGER},
+            </if>
+            <if test="cometime != null">
+                #{cometime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.businessmanager.bean.AppointmentExample"
+            resultType="java.lang.Integer">
+        select count(*) from appointment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update appointment
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tell != null">
+                tell = #{record.tell,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sex != null">
+                sex = #{record.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="record.number != null">
+                number = #{record.number,jdbcType=INTEGER},
+            </if>
+            <if test="record.cometime != null">
+                cometime = #{record.cometime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.storeId != null">
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update appointment
+        set id = #{record.id,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
+        tell = #{record.tell,jdbcType=VARCHAR},
+        sex = #{record.sex,jdbcType=VARCHAR},
+        number = #{record.number,jdbcType=INTEGER},
+        cometime = #{record.cometime,jdbcType=TIMESTAMP},
+        store_id = #{record.storeId,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.businessmanager.bean.Appointment">
+        update appointment
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null">
+                tell = #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=INTEGER},
+            </if>
+            <if test="cometime != null">
+                cometime = #{cometime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.businessmanager.bean.Appointment">
+    update appointment
+    set name = #{name,jdbcType=VARCHAR},
+      tell = #{tell,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      cometime = #{cometime,jdbcType=TIMESTAMP},
+      store_id = #{storeId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

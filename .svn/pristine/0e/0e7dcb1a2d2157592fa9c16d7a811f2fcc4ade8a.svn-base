@@ -1,0 +1,218 @@
+package com.luer.businessmanager.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Contact {
+    private String id;
+
+    private String storeId;
+
+    private String name;
+
+    private String tell;
+
+    private Integer height;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date babybirth;
+
+    private String sex;
+
+    private Integer birthindex;
+
+    private String method;
+
+    private String hospital;
+
+    private String doctor;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date intime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date outtime;
+
+    private String sickroom;
+
+    private String roomNum;
+
+    private Integer days;
+
+    private String liaison;
+
+    private String liaisontell;
+
+    private String relation;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date callintime;
+
+    private String remark;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getTell() {
+        return tell;
+    }
+
+    public void setTell(String tell) {
+        this.tell = tell == null ? null : tell.trim();
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Date getBabybirth() {
+        return babybirth;
+    }
+
+    public void setBabybirth(Date babybirth) {
+        this.babybirth = babybirth;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public Integer getBirthindex() {
+        return birthindex;
+    }
+
+    public void setBirthindex(Integer birthindex) {
+        this.birthindex = birthindex;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method == null ? null : method.trim();
+    }
+
+    public String getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(String hospital) {
+        this.hospital = hospital == null ? null : hospital.trim();
+    }
+
+    public String getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(String doctor) {
+        this.doctor = doctor == null ? null : doctor.trim();
+    }
+
+    public Date getIntime() {
+        return intime;
+    }
+
+    public void setIntime(Date intime) {
+        this.intime = intime;
+    }
+
+    public Date getOuttime() {
+        return outtime;
+    }
+
+    public void setOuttime(Date outtime) {
+        this.outtime = outtime;
+    }
+
+    public String getSickroom() {
+        return sickroom;
+    }
+
+    public void setSickroom(String sickroom) {
+        this.sickroom = sickroom == null ? null : sickroom.trim();
+    }
+
+    public String getRoomNum() {
+        return roomNum;
+    }
+
+    public void setRoomNum(String roomNum) {
+        this.roomNum = roomNum == null ? null : roomNum.trim();
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
+    public String getLiaison() {
+        return liaison;
+    }
+
+    public void setLiaison(String liaison) {
+        this.liaison = liaison == null ? null : liaison.trim();
+    }
+
+    public String getLiaisontell() {
+        return liaisontell;
+    }
+
+    public void setLiaisontell(String liaisontell) {
+        this.liaisontell = liaisontell == null ? null : liaisontell.trim();
+    }
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation == null ? null : relation.trim();
+    }
+
+    public Date getCallintime() {
+        return callintime;
+    }
+
+    public void setCallintime(Date callintime) {
+        this.callintime = callintime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+}

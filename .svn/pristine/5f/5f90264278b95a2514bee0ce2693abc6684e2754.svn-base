@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.ExtraServiceMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.ExtraService" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="vendor" property="vendor" jdbcType="VARCHAR" />
+    <result column="charges" property="charges" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="profit" property="profit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, project, vendor, charges, phone, store_id, price, unit, profit
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.ExtraServiceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from extra_service
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from extra_service
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from extra_service
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.ExtraServiceExample" >
+    delete from extra_service
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.storemanager.bean.ExtraService" >
+    insert into extra_service (id, project, vendor, 
+      charges, phone, store_id, 
+      price, unit, profit
+      )
+    values (#{id,jdbcType=VARCHAR}, #{project,jdbcType=VARCHAR}, #{vendor,jdbcType=VARCHAR}, 
+      #{charges,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, 
+      #{price,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{profit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.storemanager.bean.ExtraService" >
+    insert into extra_service
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="vendor != null" >
+        vendor,
+      </if>
+      <if test="charges != null" >
+        charges,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="profit != null" >
+        profit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="vendor != null" >
+        #{vendor,jdbcType=VARCHAR},
+      </if>
+      <if test="charges != null" >
+        #{charges,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="profit != null" >
+        #{profit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.storemanager.bean.ExtraServiceExample" resultType="java.lang.Integer" >
+    select count(*) from extra_service
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update extra_service
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.project != null" >
+        project = #{record.project,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vendor != null" >
+        vendor = #{record.vendor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.charges != null" >
+        charges = #{record.charges,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profit != null" >
+        profit = #{record.profit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update extra_service
+    set id = #{record.id,jdbcType=VARCHAR},
+      project = #{record.project,jdbcType=VARCHAR},
+      vendor = #{record.vendor,jdbcType=VARCHAR},
+      charges = #{record.charges,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      profit = #{record.profit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.ExtraService" >
+    update extra_service
+    <set >
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="vendor != null" >
+        vendor = #{vendor,jdbcType=VARCHAR},
+      </if>
+      <if test="charges != null" >
+        charges = #{charges,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="profit != null" >
+        profit = #{profit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.ExtraService" >
+    update extra_service
+    set project = #{project,jdbcType=VARCHAR},
+      vendor = #{vendor,jdbcType=VARCHAR},
+      charges = #{charges,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      profit = #{profit,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,119 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="roomnum" class="col-sm-5 control-label">房间号</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="roomnum" name="roomnum" placeholder="Roomnum">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="mamname" class="col-sm-5 control-label">妈妈姓名</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="mamname" name="mamname" placeholder="Mamname">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="progess" class="col-sm-5 control-label">服务中进度的掌握</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="progess" name="progess" placeholder="Progress" tabindex="1">
+                        <option value="非常满意">非常满意</option>
+                        <option value="满意">满意</option>
+                        <option value="一般">一般</option>
+                        <option value="不满意">不满意</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="skills" class="col-sm-5 control-label">专业技能满意程度</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="skills" name="skills" placeholder="Skills" tabindex="1">
+                        <option value="非常满意">非常满意</option>
+                        <option value="满意">满意</option>
+                        <option value="一般">一般</option>
+                        <option value="不满意">不满意</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="attitude" class="col-sm-5 control-label">服务态度满意程度</label>
+                <div class="col-md-5">
+                    <select type="text" class="form-control" id="attitude" name="attitude" placeholder="Attitude" tabindex="1">
+                        <option value="非常满意">非常满意</option>
+                        <option value="满意">满意</option>
+                        <option value="一般">一般</option>
+                        <option value="不满意">不满意</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="solution" class="col-sm-5 control-label">解决问题的情况</label>
+                <div class="col-md-5">
+                    <select type="text" class="form-control" id="solution" name="solution" placeholder="Solution" tabindex="1">
+                        <option value="非常满意">非常满意</option>
+                        <option value="满意">满意</option>
+                        <option value="一般">一般</option>
+                        <option value="不满意">不满意</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="consumption" class="col-sm-5 control-label">强制消费的满意度</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="consumption" name="consumption" placeholder="Consumption" tabindex="1">
+                        <option value="非常满意">非常满意</option>
+                        <option value="满意">满意</option>
+                        <option value="一般">一般</option>
+                        <option value="不满意">不满意</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="feedback" class="col-sm-5 control-label">改进意见</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="feedback" name="feedback" placeholder="Feedback">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

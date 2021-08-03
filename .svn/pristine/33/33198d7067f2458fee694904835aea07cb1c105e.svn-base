@@ -1,0 +1,786 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>满意度表单页面</title>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <style>
+        body {
+            margin: 20px;
+            margin-bottom: 0px;
+        }
+
+        #jsPDF-control btn {
+            margin: 0px 5px;
+        }
+    </style>
+</head>
+<body>
+
+
+<style>
+    nav {
+        display: inline-block;
+    }
+
+    .btn-group-right a {
+        margin-right: 3px;
+    }
+
+    .btn-group-right a:last-child {
+        margin-right: 0;
+    }
+
+    #Satisfactorily h3 {
+        font-size: 18px;
+        /*color: #808080;*/
+        color: #000;
+        padding: 4px 0;
+    }
+
+    #Satisfactorily div.questionchange {
+        border: 1px solid #eee;
+        height: 50px;
+        position: relative;
+        padding-top: 10px;
+    }
+
+    #Satisfactorily div.question {
+        border: 1px solid #eee;
+        height: 80px;
+        position: relative;
+        padding-top: 10px;
+    }
+
+    #Satisfactorily div.questionOption input {
+        margin-left: 5px;
+        margin-right: 3px;
+        position: relative;
+        top: 1px;
+    }
+
+    #Satisfactorily div.questionOption label {
+        width: 150px;
+    }
+
+    div.tip {
+        margin-top: 20px;
+    }
+
+    div.tip p {
+        font-size: 15px;
+        color: rgb(11, 168, 187);
+        margin-bottom: 8px;
+    }
+
+    div.tip span {
+        display: inline-block;
+        padding: 10px 5px;
+    }
+
+    div.tip div.questionOption input {
+        margin-left: 16%;
+        position: relative;
+        top: -1px;
+    }
+
+    div.tip div.questionOption input:first-child {
+        margin-left: 15px;
+    }
+
+    .SatisfactorilyResult {
+        border: 1px solid #eee;
+        height: 80px;
+        position: relative;
+    }
+
+    .SatisfactorilyResult p {
+        padding: 10px 0;
+        margin-left: 5px;
+        font-size: 12px;
+    }
+
+    .SatisfactorilyResult p:first-child span {
+        font-size: 18px;
+    }
+
+    div.scoreTip h4 {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    div.scoreTip p {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    input[type=text]:disabled {
+        background: #fff;
+        opacity: 1;
+    }
+
+</style>
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel-heading">
+                    <div class="clearfix"></div>
+                </div>
+                <div>
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <form class="form-horizontal" role="form" id="myform">
+                                <div id="information">
+                                    <div class="form-group required" hidden="hidden">
+                                        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+                                        </div>
+                                    </div>
+                                    <table id="general" class="table table-bordered table-condensed yuangg-table">
+                                        <tr>
+                                            <td>
+                                                <label for="motherId" class="col-md-5 control-label">妈妈姓名</label>
+                                                <div class="col-md-7">
+                                                    <select type="text" class="form-control" id="motherId" name="motherId" placeholder="motherId" class="col-md-6">
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <label for="roomId" class="col-md-5 control-label">房间号</label>
+                                                <div class="col-md-7">
+                                                    <select type="text" class="form-control" id="roomId" name="roomId" placeholder="roomId" class="col-md-6">
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <label for="date" class="col-md-3 control-label">日期</label>
+                                                <div style="padding-left: 7.5px;padding-right: 7.5px"
+                                                     class="input-group date form_datetime col-md-8" data-date=""
+                                                     data-date-format="yyyy-mm-dd hh:ii:ss">
+                                                    <input class="form-control" size="16" type="text" value="" id="date" name="date" placeholder="date">
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div id="Satisfactorily">
+                                    <div class="question">
+                                        <div class="question">
+                                            <h4 id="titleId" class="questionContent">
+                                                评价说明：本调查表采用国际通用规则，即将“非常满意”为100分，“满意”为80分，“基本满意”为60分，“不太满意”为30分，“非常不满意”为0分</h4>
+                                        </div>
+                                    </div>
+                                    <div class="questionchange">
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input readonly type="button" id="Ir-AllShow" class="btn btn-default"
+                                               onClick="btn_AllShow()" value="全部"/>
+                                        <input readonly type="button" id="Ir-CounterServiceatisfaction"
+                                               class="btn btn-default" onClick="btn_CounterServiceatisfaction()"
+                                               value="柜台服务质量"/>
+                                        <input readonly type="button" id="Ir-PuereperaServiceSatisfaction"
+                                               class="btn btn-default"
+                                               onClick="btn_PuereperaServiceSatisfaction()" value="产妇护理照护质量"/>
+                                        <input readonly type="button" id="Ir-BabyMotherServiceSatisfaction"
+                                               class="btn btn-default"
+                                               onClick="btn_BabyMotherServiceSatisfaction()" value="宝宝护理照护质量"/>
+                                        <input readonly type="button" id="Ir-MealQualitySatisfaction"
+                                               class="btn btn-default" onClick="btn_MealQualitySatisfaction()"
+                                               value="膳食品质"/>
+                                        <input readonly type="button" id="Ir-CleanServiceSatisfaction"
+                                               class="btn btn-default" onClick="btn_CleanServiceSatisfaction()"
+                                               value="清洁质量"/>
+                                        <input readonly type="button" id="Ir-OverallQualitySatisfaction"
+                                               class="btn btn-default"
+                                               onClick="btn_OverallQualitySatisfaction()" value="整体质量"/>
+                                    </div>
+                                    <div id="AllCSSF">
+                                        <div id="CSSF" class="SFContent" data-id="CounterService"></div>
+                                        <div class="question">
+                                            <h4 id="questionTitle1" class="questionContent">1.住房联系接洽人态度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question1" value="100">A.非常满意
+                                                <input type="radio" name="question1" value="80">B.满意
+                                                <input type="radio" name="question1" value="60">C.普通
+                                                <input type="radio" name="question1" value="30">D.不满意
+                                                <input type="radio" name="question1" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle2" class="questionContent">2.交办事项处理的服务态度及效率</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question2" value="100">A.非常满意
+                                                <input type="radio" name="question2" value="80">B.满意
+                                                <input type="radio" name="question2" value="60">C.普通
+                                                <input type="radio" name="question2" value="30">D.不满意
+                                                <input type="radio" name="question2" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle3" class="questionContent">3.客服人员服务态度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question3" value="100">A.非常满意
+                                                <input type="radio" name="question3" value="80">B.满意
+                                                <input type="radio" name="question3" value="60">C.普通
+                                                <input type="radio" name="question3" value="30">D.不满意
+                                                <input type="radio" name="question3" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <table class="table table-bordered table-condensed yuangg-table">
+                                                <tr>
+                                                    <td rowspan="2" width="150px">优秀客服人员推荐</td>
+                                                    <td width="100px">姓名</td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" id="employerId1" name="employerId1" placeholder="employerId1"></input>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>推荐原因</td>
+                                                    <td>
+                                                        <input type="textarea" id="question4" value=""
+                                                               style="width:90%;border:none;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div id="AllPSSF">
+                                        <div id="PSSF" class="SFContent" data-id="PuereperaService"></div>
+                                        <div class="question">
+                                            <h4 id="questionTitle5" class="questionContent">1.产前后课程活动内容实用度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question5" value="100">A.非常满意
+                                                <input type="radio" name="question5" value="80">B.满意
+                                                <input type="radio" name="question5" value="60">C.普通
+                                                <input type="radio" name="question5" value="30">D.不满意
+                                                <input type="radio" name="question5" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle6" class="questionContent">2.护理人员产后照护（伤口、恶露。。）</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question6" value="100">A.非常满意
+                                                <input type="radio" name="question6" value="80">B.满意
+                                                <input type="radio" name="question6" value="60">C.普通
+                                                <input type="radio" name="question6" value="30">D.不满意
+                                                <input type="radio" name="question6" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle7" class="questionContent">3.护理人员母乳哺喂指导专业度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question7" value="100">A.非常满意
+                                                <input type="radio" name="question7" value="80">B.满意
+                                                <input type="radio" name="question7" value="60">C.普通
+                                                <input type="radio" name="question7" value="30">D.不满意
+                                                <input type="radio" name="question7" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle8" class="questionContent">4.育婴知识卫教指导</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question8" value="100">A.非常满意
+                                                <input type="radio" name="question8" value="80">B.满意
+                                                <input type="radio" name="question8" value="60">C.普通
+                                                <input type="radio" name="question8" value="30">D.不满意
+                                                <input type="radio" name="question8" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle9" class="questionContent">5.护理人员服务态度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question9" value="100">A.非常满意
+                                                <input type="radio" name="question9" value="80">B.满意
+                                                <input type="radio" name="question9" value="60">C.普通
+                                                <input type="radio" name="question9" value="30">D.不满意
+                                                <input type="radio" name="question9" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <table class="table table-bordered table-condensed yuangg-table">
+                                                <tr>
+                                                    <td rowspan="2" width="150px">优秀护理人员推荐</td>
+                                                    <td width="100px">姓名</td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" id="employerId2" name="employerId2" placeholder="employerId2"></input>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>推荐原因</td>
+                                                    <td><input type="textarea" id="question10" name="question10"
+                                                               style="width:90%;border:none;"/></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div id="AllBSSF">
+                                        <div id="BSSF" class="SFContent" data-id="BabyMotherService"></div>
+                                        <div class="question">
+                                            <h4 id="questionTitle11" class="questionContent">1.宝宝照顾专业度及技巧</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question11" value="100">A.非常满意
+                                                <input type="radio" name="question11" value="80">B.满意
+                                                <input type="radio" name="question11" value="60">C.普通
+                                                <input type="radio" name="question11" value="30">D.不满意
+                                                <input type="radio" name="question11" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle12" class="questionContent">2.宝宝照护服务态度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question12" value="100">A.非常满意
+                                                <input type="radio" name="question12" value="80">B.满意
+                                                <input type="radio" name="question12" value="60">C.普通
+                                                <input type="radio" name="question12" value="30">D.不满意
+                                                <input type="radio" name="question12" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle13" class="questionContent">3.宝宝婴儿抚触</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question13" value="100">A.非常满意
+                                                <input type="radio" name="question13" value="80">B.满意
+                                                <input type="radio" name="question13" value="60">C.普通
+                                                <input type="radio" name="question13" value="30">D.不满意
+                                                <input type="radio" name="question13" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div id="AllMQSF">
+                                        <div id="MQSF" class="SFContent" data-id="MealQuality"></div>
+                                        <div class="question">
+                                            <h4 id="questionTitle14" class="questionContent">1.餐点及饮品品质</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question14" value="100">A.非常满意
+                                                <input type="radio" name="question14" value="80">B.满意
+                                                <input type="radio" name="question14" value="60">C.普通
+                                                <input type="radio" name="question14" value="30">D.不满意
+                                                <input type="radio" name="question14" value="0">E.非常不满意
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle15" class="questionContent">2.餐点菜色变化</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question15" value="100">A.非常满意
+                                                <input type="radio" name="question15" value="80">B.满意
+                                                <input type="radio" name="question15" value="60">C.普通
+                                                <input type="radio" name="question15" value="30">D.不满意
+                                                <input type="radio" name="question15" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle16" class="questionContent">2.餐点口味（咸、淡）</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question16" value="100">A.非常满意
+                                                <input type="radio" name="question16" value="80">B.满意
+                                                <input type="radio" name="question16" value="60">C.普通
+                                                <input type="radio" name="question16" value="30">D.不满意
+                                                <input type="radio" name="question16" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle17" class="questionContent">4.送餐人员服务态度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question17" value="100">A.非常满意
+                                                <input type="radio" name="question17" value="80">B.满意
+                                                <input type="radio" name="question17" value="60">C.普通
+                                                <input type="radio" name="question17" value="30">D.不满意
+                                                <input type="radio" name="question17" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <table class="table table-bordered table-condensed yuangg-table">
+                                                <tr>
+                                                    <td rowspan="2" width="150px">优秀送餐人员推荐</td>
+                                                    <td width="100px">姓名</td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" id="employerId3" name="employerId3" placeholder="employerId3"></input>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>推荐原因</td>
+                                                    <td><input type="textarea" id="question18" name="question18"
+                                                               style="width:90%;border:none;"/></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div id="AllClean">
+                                        <div id="Clean" class="SFContent" data-id="CleanService"></div>
+                                        <div class="question">
+                                            <h4 id="questionTitle19" class="questionContent">1.清洁人员清洁工作确实度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question19" value="100">A.非常满意
+                                                <input type="radio" name="question19" value="80">B.满意
+                                                <input type="radio" name="question19" value="60">C.普通
+                                                <input type="radio" name="question19" value="30">D.不满意
+                                                <input type="radio" name="question19" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div class="question">
+                                            <h4 id="questionTitle20" class="questionContent">2.清洁人员服务态度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question20" value="100">A.非常满意
+                                                <input type="radio" name="question20" value="80">B.满意
+                                                <input type="radio" name="question20" value="60">C.普通
+                                                <input type="radio" name="question20" value="30">D.不满意
+                                                <input type="radio" name="question20" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <table class="table table-bordered table-condensed yuangg-table">
+                                                <tr>
+                                                    <td rowspan="2" width="150px">优秀清洁人员推荐</td>
+                                                    <td width="150px">姓名</td>
+                                                    <td>
+                                                        <div class="col-md-5">
+                                                            <input type="text" class="form-control" id="employerId4" name="employerId4" placeholder="employerId2"></input>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>推荐原因</td>
+                                                    <td><input type="textarea" id="question21" name="question21"
+                                                               style="width:90%;border:none;"/></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div id="AllOQSF">
+                                        <div id="OQSF" class="SFContent" data-id="OverallQuality"></div>
+                                        <div class="question">
+                                            <h4 id="questionTitle22" class="questionContent">此次坐月子的满意度</h4>
+                                            <div class="questionOption">
+                                                <input type="radio" name="question22" value="100">A.非常满意
+                                                <input type="radio" name="question22" value="80">B.满意
+                                                <input type="radio" name="question22" value="60">C.普通
+                                                <input type="radio" name="question22" value="30">D.不满意
+                                                <input type="radio" name="question22" value="0">E.非常不满意
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <table class="table table-bordered table-condensed yuangg-table">
+                                                <tr>
+                                                    <td rowspan="2" width="150px">建议事项</td>
+                                                    <td><input type="textarea" id="question23" name="question23"
+                                                               style="width:90%; border:none;"/></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    /* var keyValue = request('keyValue');
+     var organizeId = request('organizeId') || '207fa1a9-160c-4943-a89b-8fa4db0547ce';*/
+
+
+    $(function () {
+
+        $.ajax({
+            url: "${ctx}/room/selectByStoreId",
+            type: "post",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#roomId").append("<option  value='" + data[i].id + "'>" + data[i].num + "</option>");
+                }
+            }
+        });
+
+
+
+        $.ajax({
+            url: "${ctx}/customerBasic/selectByStoreId",
+            type: "post",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#motherId").append("<option  value='" + data[i].id + "'>" + data[i].name + "</option>");
+                }
+            }
+        });
+
+
+    });
+
+
+    //载入柜台服务质量题目
+    function getCSSFHtml(data) {
+        if (data == undefined) return;
+        var CSSFHtml = "";
+        var count = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].QuestionBankEntity.QuestionType == "CSSF") {
+                //
+                CSSFHtml += '<div class="question" >';
+                CSSFHtml += '<h4 id="' + data[i].QuestionBankEntity.QuestionBankId + '" class="questionContent">' + (count + 1) + '.' + data[i].QuestionBankEntity.QuestionContent + '</h4>';
+                CSSFHtml += '<div class="questionOption">'
+                var questionList = data[i].QuestionChooseList;
+                //选项内容
+                for (var j = 0; j < questionList.length; j++) {
+                    CSSFHtml += '<input id="' + questionList[j].QuestionChooseId + '" type="radio" name="' + i + '" value="' + questionList[j].Score + '" />';
+                    CSSFHtml += '<label for="' + questionList[j].QuestionChooseId + '">' + questionList[j].SelectValue + '.' + questionList[j].SelectContent + '</label>';
+                }
+                CSSFHtml += '</div></div>'
+                count++;
+            }
+        }
+        return CSSFHtml;
+    }
+
+    //载入膳食品质题目
+    function getMQSFHtml(data) {
+        if (data == undefined) return;
+        var MQSFHtml = "";
+        var count = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].QuestionBankEntity.QuestionType == "MQSF") {
+                //
+                MQSFHtml += '<div class="question" >';
+                MQSFHtml += '<h4 id="' + data[i].QuestionBankEntity.QuestionBankId + '" class="questionContent">' + (count + 1) + '.' + data[i].QuestionBankEntity.QuestionContent + '</h4>';
+                MQSFHtml += '<div class="questionOption">'
+                var questionList = data[i].QuestionChooseList;
+                //选项内容
+                for (var j = 0; j < questionList.length; j++) {
+                    MQSFHtml += '<input id="' + questionList[j].QuestionChooseId + '" type="radio" name="' + i + '" value="' + questionList[j].Score + '" />';
+                    MQSFHtml += '<label for="' + questionList[j].QuestionChooseId + '">' + questionList[j].SelectValue + '.' + questionList[j].SelectContent + '</label>';
+                }
+                MQSFHtml += '</div></div>'
+                count++;
+            }
+        }
+        return MQSFHtml;
+    }
+
+    //载入清洁质量题目
+    function getCleanHtml(data) {
+        if (data == undefined) return;
+        var CleanHtml = "";
+        var count = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].QuestionBankEntity.QuestionType == "Clean") {
+                //
+                CleanHtml += '<div class="question"  >';
+                CleanHtml += '<h4 id="' + data[i].QuestionBankEntity.QuestionBankId + '" class="questionContent">' + (count + 1) + '.' + data[i].QuestionBankEntity.QuestionContent + '</h4>';
+                CleanHtml += '<div class="questionOption">'
+                var questionList = data[i].QuestionChooseList;
+                //选项内容
+                for (var j = 0; j < questionList.length; j++) {
+                    CleanHtml += '<input id="' + questionList[j].QuestionChooseId + '" type="radio" name="' + i + '" value="' + questionList[j].Score + '" />';
+                    CleanHtml += '<label for="' + questionList[j].QuestionChooseId + '">' + questionList[j].SelectValue + '.' + questionList[j].SelectContent + '</label>';
+                }
+                CleanHtml += '</div></div>'
+                count++;
+            }
+        }
+        return CleanHtml;
+    }
+
+    //载入产妇护理照顾质量题目
+    function getPSSFHtml(data) {
+        if (data == undefined) return;
+        var PSSFHtml = "";
+        var count = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].QuestionBankEntity.QuestionType == "PSSF") {
+                //
+                PSSFHtml += '<div class="question" >';
+                PSSFHtml += '<h4 id="' + data[i].QuestionBankEntity.QuestionBankId + '" class="questionContent">' + (count + 1) + '.' + data[i].QuestionBankEntity.QuestionContent + '</h4>';
+                PSSFHtml += '<div class="questionOption">'
+                var questionList = data[i].QuestionChooseList;
+                //选项内容
+                for (var j = 0; j < questionList.length; j++) {
+                    PSSFHtml += '<input id="' + questionList[j].QuestionChooseId + '" type="radio" name="' + i + '" value="' + questionList[j].Score + '" />';
+                    PSSFHtml += '<label for="' + questionList[j].QuestionChooseId + '">' + questionList[j].SelectValue + '.' + questionList[j].SelectContent + '</label>';
+                }
+                PSSFHtml += '</div></div>'
+                count++;
+            }
+        }
+        return PSSFHtml;
+    }
+
+    //载入宝宝护理照顾质量题目
+    function getBSSFHtml(data) {
+        if (data == undefined) return;
+        var BSSFHtml = "";
+        var count = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].QuestionBankEntity.QuestionType == "BSSF") {
+                //
+                BSSFHtml += '<div class="question">';
+                BSSFHtml += '<h4 id="' + data[i].QuestionBankEntity.QuestionBankId + '" class="questionContent">' + (count + 1) + '.' + data[i].QuestionBankEntity.QuestionContent + '</h4>';
+                BSSFHtml += '<div class="questionOption">'
+                var questionList = data[i].QuestionChooseList;
+                //选项内容
+                for (var j = 0; j < questionList.length; j++) {
+                    BSSFHtml += '<input id="' + questionList[j].QuestionChooseId + '" type="radio" name="' + i + '" value="' + questionList[j].Score + '" />';
+                    BSSFHtml += '<label for="' + questionList[j].QuestionChooseId + '">' + questionList[j].SelectValue + '.' + questionList[j].SelectContent + '</label>';
+                }
+                BSSFHtml += '</div></div>'
+                count++;
+            }
+        }
+        return BSSFHtml;
+    }
+
+    //载入整体质量题目
+    function getOQSFHtml(data) {
+        if (data == undefined) return;
+        var OQSFHtml = "";
+        var count = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].QuestionBankEntity.QuestionType == "OQSF") {
+                //
+                OQSFHtml += '<div class="question"  >';
+                OQSFHtml += '<h4 id="' + data[i].QuestionBankEntity.QuestionBankId + '" class="questionContent">' + (count + 1) + '.' + data[i].QuestionBankEntity.QuestionContent + '</h4>';
+                OQSFHtml += '<div class="questionOption">'
+                var questionList = data[i].QuestionChooseList;
+                //选项内容
+                for (var j = 0; j < questionList.length; j++) {
+                    OQSFHtml += '<input id="' + questionList[j].QuestionChooseId + '" type="radio" name="' + i + '" value="' + questionList[j].Score + '" />';
+                    OQSFHtml += '<label for="' + questionList[j].QuestionChooseId + '">' + questionList[j].SelectValue + '.' + questionList[j].SelectContent + '</label>';
+                }
+                OQSFHtml += '</div></div>'
+                count++;
+            }
+        }
+        return OQSFHtml;
+    }
+
+
+    //筛选题目
+    function btn_CounterServiceatisfaction() {
+        $("#AllCSSF").show();
+        $("#AllPSSF").hide();
+        $("#AllBSSF").hide();
+        $("#AllMQSF").hide();
+        $("#AllClean").hide();
+        $("#AllOQSF").hide();
+    }
+
+    function btn_PuereperaServiceSatisfaction() {
+        $("#AllCSSF").hide();
+        $("#AllPSSF").show();
+        $("#AllBSSF").hide();
+        $("#AllMQSF").hide();
+        $("#AllClean").hide();
+        $("#AllOQSF").hide();
+    }
+
+    function btn_BabyMotherServiceSatisfaction() {
+        $("#AllCSSF").hide();
+        $("#AllPSSF").hide();
+        $("#AllBSSF").show();
+        $("#AllMQSF").hide();
+        $("#AllClean").hide();
+        $("#AllOQSF").hide();
+    }
+
+    function btn_MealQualitySatisfaction() {
+        $("#AllCSSF").hide();
+        $("#AllPSSF").hide();
+        $("#AllBSSF").hide();
+        $("#AllMQSF").show();
+        $("#AllClean").hide();
+        $("#AllOQSF").hide();
+    }
+
+    function btn_CleanServiceSatisfaction() {
+        $("#AllCSSF").hide();
+        $("#AllPSSF").hide();
+        $("#AllBSSF").hide();
+        $("#AllMQSF").hide();
+        $("#AllClean").show();
+        $("#AllOQSF").hide();
+    }
+
+    function btn_OverallQualitySatisfaction() {
+        $("#AllCSSF").hide();
+        $("#AllPSSF").hide();
+        $("#AllBSSF").hide();
+        $("#AllMQSF").hide();
+        $("#AllClean").hide();
+        $("#AllOQSF").show();
+    }
+
+    function btn_AllShow() {
+        $("#AllCSSF").show();
+        $("#AllPSSF").show();
+        $("#AllBSSF").show();
+        $("#AllMQSF").show();
+        $("#AllClean").show();
+        $("#AllOQSF").show();
+    }
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+
+
+</body>
+</html>

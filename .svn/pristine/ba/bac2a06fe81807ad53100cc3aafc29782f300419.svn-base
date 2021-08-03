@@ -1,0 +1,55 @@
+package com.luer.storemanager.bean;
+
+import java.util.Date;
+
+public class Announce {
+    private String id;
+
+    private String titlename;
+
+    private String detils;
+
+    private String createMan;
+
+    private Date publishTime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getTitlename() {
+        return titlename;
+    }
+
+    public void setTitlename(String titlename) {
+        this.titlename = titlename == null ? null : titlename.trim();
+    }
+
+    public String getDetils() {
+        return detils;
+    }
+
+    public void setDetils(String detils) {
+        this.detils = detils == null ? null : detils.trim();
+    }
+
+    public String getCreateMan() {
+        return createMan;
+    }
+
+    public void setCreateMan(String createMan) {
+        this.createMan = createMan == null ? null : createMan.trim();
+    }
+
+    public Date getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(Date publishTime) {
+        this.publishTime = publishTime;
+    }
+}

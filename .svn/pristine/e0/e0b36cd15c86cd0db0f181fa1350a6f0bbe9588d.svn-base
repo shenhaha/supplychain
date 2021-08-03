@@ -1,0 +1,36 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.NurseRecord;
+import com.luer.servicecenter.bean.NurseRecordExample;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+@MapperScan
+@Component
+public interface NurseRecordMapper {
+    int countByExample(NurseRecordExample example);
+
+    int deleteByExample(NurseRecordExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(NurseRecord record);
+
+    int insertSelective(NurseRecord record);
+
+    List<NurseRecord> selectByExample(NurseRecordExample example);
+
+    NurseRecord selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") NurseRecord record, @Param("example") NurseRecordExample example);
+
+    int updateByExample(@Param("record") NurseRecord record, @Param("example") NurseRecordExample example);
+
+    int updateByPrimaryKeySelective(NurseRecord record);
+
+    int updateByPrimaryKey(NurseRecord record);
+
+    public List selectNurseRecordsBystoreId(String storeId);
+}

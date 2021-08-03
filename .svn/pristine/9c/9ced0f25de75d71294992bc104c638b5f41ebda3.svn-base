@@ -1,0 +1,33 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.VitalSign;
+import com.luer.servicecenter.bean.VitalSignExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface VitalSignMapper {
+    int countByExample(VitalSignExample example);
+
+    int deleteByExample(VitalSignExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(VitalSign record);
+
+    int insertSelective(VitalSign record);
+
+    List<VitalSign> selectByExample(VitalSignExample example);
+
+    List<VitalSign> selectByMotherId(@Param("motherid") String motherid);
+
+    VitalSign selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") VitalSign record, @Param("example") VitalSignExample example);
+
+    int updateByExample(@Param("record") VitalSign record, @Param("example") VitalSignExample example);
+
+    int updateByPrimaryKeySelective(VitalSign record);
+
+    int updateByPrimaryKey(VitalSign record);
+}

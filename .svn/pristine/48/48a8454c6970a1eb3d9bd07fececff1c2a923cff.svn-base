@@ -1,0 +1,98 @@
+package com.luer.storesdata.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storesdata.bean.Room;
+import com.luer.storesdata.bean.RoomExample;
+import com.luer.storesdata.bean.RoomResources;
+import com.luer.storesdata.dao.RoomMapper;
+import com.luer.storesdata.dao.RoomStylesMapper;
+import com.luer.storesdata.service.RoomService;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 房间资本资料实现类
+ */
+@Transactional
+@Service
+public class RoomServiceImpl implements RoomService {
+    @Autowired
+    private RoomMapper roomMapper;
+    @Autowired
+    private StoreFileService storeFileService;
+    @Autowired
+    private RoomStylesMapper roomStylesMapper;
+
+    @Override
+    public int insert(Room record) {
+
+        record.setClassify(roomStylesMapper.selectByPrimaryKey(record.getRoomStylesId()).getRoomStyle());
+        record.setId(UUIDUtils.getUUID());
+        return roomMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return roomMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Room record) {
+        record.setClassify(roomStylesMapper.selectByPrimaryKey(record.getRoomStylesId()).getRoomStyle());
+        return roomMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Room> selectByExample(RoomExample example) {
+        return roomMapper.selectByExample(example);
+    }
+
+    @Override
+    public Room selectByPrimaryKey(String id) {
+        return roomMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<RoomResources> getAllRoom(String storeId) {
+        List<RoomResources> resources = new ArrayList<>();
+        List<Room> rooms = roomMapper.getAllRooms(storeId);
+        for (Room room : rooms) {
+            RoomResources rr = new RoomResources();
+            rr.setId(room.getId());
+            rr.setTitle(room.getClassify() + room.getNum());
+            resources.add(rr);
+        }
+
+        return resources;
+    }
+
+    @Override
+    public Room getOneRoom(String roomType, String roomNumber) {
+        return roomMapper.getOneRoom(roomType, roomNumber);
+    }
+
+
+
+    @Override
+    public List<Room> getRooms(String storeId) {
+        return roomMapper.selectByStoreId(storeId);
+    }
+
+    @Override
+    public List<Room> selectByStoreId() {
+        String storeId = storeFileService.getStoreFileId();
+        return roomMapper.selectByStoreId(storeId);
+    }
+
+    @Override
+    public List<Room> selectByRoomStyleId(String roomStylesId) {
+        String storeId = storeFileService.getStoreFileId();
+
+        return roomMapper.selectByRoomStyleId(storeId, roomStylesId);
+    }
+}

@@ -1,0 +1,46 @@
+package com.luer.storesdata.bean;
+public class CutImageOb {
+
+	
+	private String name;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	private String baseImgStr;//上传的文件对象二进制数组的 base64加密
+	public String getBaseImgStr() {
+		return baseImgStr;
+	}
+	public void setBaseImgStr(String baseImgStr) {
+		this.baseImgStr = baseImgStr;
+	}
+	private String tableName;//子文件夹,全路径所要存入的表名
+	private String fileUrl;//除了根目录下的全路径
+	private String DBName;//返回的全路径需要存入的那个数据库代码
+	
+	public String getDBName() {
+		return DBName;
+	}
+	public void setDBName(String dBName) {
+		DBName = dBName;
+	}
+	
+	public String getTableName() {
+		return tableName;
+	}
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+	
+	public String getFileUrl() {
+		return fileUrl;
+	}
+	public void setFileUrl(String fileUrl) {
+		this.fileUrl = fileUrl;
+	}
+	
+	
+}

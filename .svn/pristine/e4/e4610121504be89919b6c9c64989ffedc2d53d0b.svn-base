@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.NursingeducationMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Nursingeducation" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_basic_id" property="customerBasicId" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="behaviorObjectives" property="behaviorobjectives" jdbcType="VARCHAR" />
+    <result column="guideDate" property="guidedate" jdbcType="TIMESTAMP" />
+    <result column="familySignature" property="familysignature" jdbcType="VARCHAR" />
+    <result column="mentorSignature" property="mentorsignature" jdbcType="VARCHAR" />
+    <result column="evaluationDate" property="evaluationdate" jdbcType="TIMESTAMP" />
+    <result column="EvaluationResult" property="evaluationresult" jdbcType="VARCHAR" />
+    <result column="evaluationSignature" property="evaluationsignature" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="customerName" property="customername" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="week" property="week" jdbcType="INTEGER" />
+  </resultMap>
+
+    <select id="getEducationByMotherId" resultMap="BaseResultMap">
+        SELECT  id, customer_basic_id, project,
+  behaviorObjectives, guideDate, familySignature,
+  mentorSignature, evaluationDate, EvaluationResult,
+  evaluationSignature, note, customerName,
+  store_id, num,week from nursingeducation WHERE customer_basic_id=#{customer_basic_id} order by num
+    </select>
+<insert id="insertNursingeducationList" parameterType="java.util.List">
+  insert into nursingeducation (id, customer_basic_id, project,
+  behaviorObjectives, guideDate, familySignature,
+  mentorSignature, evaluationDate, EvaluationResult,
+  evaluationSignature, note, customerName,
+  store_id, num,week)
+    values
+  <foreach collection="nursingeducationList" item="item" index="index"    separator=",">
+    (#{item.id,jdbcType=VARCHAR}, #{item.customerBasicId,jdbcType=VARCHAR},
+    #{item.project,jdbcType=VARCHAR},    #{item.behaviorobjectives,jdbcType=VARCHAR},
+    #{item.guidedate,jdbcType=TIMESTAMP}, #{item.familysignature,jdbcType=VARCHAR},
+    #{item.mentorsignature,jdbcType=VARCHAR}, #{item.evaluationdate,jdbcType=TIMESTAMP},
+    #{item.evaluationresult,jdbcType=VARCHAR},    #{item.evaluationsignature,jdbcType=VARCHAR},
+    #{item.note,jdbcType=VARCHAR}, #{item.customername,jdbcType=VARCHAR},
+    #{item.storeId,jdbcType=VARCHAR}, #{item.num,jdbcType=INTEGER}, #{item.week,jdbcType=INTEGER})
+  </foreach>
+</insert>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, customer_basic_id, project, behaviorObjectives, guideDate, familySignature, mentorSignature, 
+    evaluationDate, EvaluationResult, evaluationSignature, note, customerName, store_id,
+    num, week
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.NursingeducationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from nursingeducation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from nursingeducation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from nursingeducation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.NursingeducationExample" >
+    delete from nursingeducation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Nursingeducation" >
+    insert into nursingeducation (id, customer_basic_id, project,
+    behaviorObjectives, guideDate, familySignature,
+    mentorSignature, evaluationDate, EvaluationResult,
+    evaluationSignature, note, customerName,
+    store_id, num, week)
+    values (#{id,jdbcType=VARCHAR}, #{customerBasicId,jdbcType=VARCHAR}, #{project,jdbcType=VARCHAR},
+    #{behaviorobjectives,jdbcType=VARCHAR}, #{guidedate,jdbcType=TIMESTAMP}, #{familysignature,jdbcType=VARCHAR},
+    #{mentorsignature,jdbcType=VARCHAR}, #{evaluationdate,jdbcType=TIMESTAMP}, #{evaluationresult,jdbcType=VARCHAR},
+    #{evaluationsignature,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{customername,jdbcType=VARCHAR},
+    #{storeId,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{week,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Nursingeducation" >
+    insert into nursingeducation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerBasicId != null" >
+        customer_basic_id,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="behaviorobjectives != null" >
+        behaviorObjectives,
+      </if>
+      <if test="guidedate != null" >
+        guideDate,
+      </if>
+      <if test="familysignature != null" >
+        familySignature,
+      </if>
+      <if test="mentorsignature != null" >
+        mentorSignature,
+      </if>
+      <if test="evaluationdate != null" >
+        evaluationDate,
+      </if>
+      <if test="evaluationresult != null" >
+        EvaluationResult,
+      </if>
+      <if test="evaluationsignature != null" >
+        evaluationSignature,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="customername != null" >
+        customerName,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="week != null" >
+        week,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBasicId != null" >
+        #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="behaviorobjectives != null" >
+        #{behaviorobjectives,jdbcType=VARCHAR},
+      </if>
+      <if test="guidedate != null" >
+        #{guidedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="familysignature != null" >
+        #{familysignature,jdbcType=VARCHAR},
+      </if>
+      <if test="mentorsignature != null" >
+        #{mentorsignature,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationdate != null" >
+        #{evaluationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluationresult != null" >
+        #{evaluationresult,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationsignature != null" >
+        #{evaluationsignature,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="customername != null" >
+        #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.NursingeducationExample" resultType="java.lang.Integer" >
+    select count(*) from nursingeducation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nursingeducation
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBasicId != null" >
+        customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.project != null" >
+        project = #{record.project,jdbcType=VARCHAR},
+      </if>
+      <if test="record.behaviorobjectives != null" >
+        behaviorObjectives = #{record.behaviorobjectives,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guidedate != null" >
+        guideDate = #{record.guidedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.familysignature != null" >
+        familySignature = #{record.familysignature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mentorsignature != null" >
+        mentorSignature = #{record.mentorsignature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluationdate != null" >
+        evaluationDate = #{record.evaluationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.evaluationresult != null" >
+        EvaluationResult = #{record.evaluationresult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluationsignature != null" >
+        evaluationSignature = #{record.evaluationsignature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customername != null" >
+        customerName = #{record.customername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.num != null" >
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.week != null" >
+        week = #{record.week,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nursingeducation
+    set id = #{record.id,jdbcType=VARCHAR},
+    customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+    project = #{record.project,jdbcType=VARCHAR},
+    behaviorObjectives = #{record.behaviorobjectives,jdbcType=VARCHAR},
+    guideDate = #{record.guidedate,jdbcType=TIMESTAMP},
+    familySignature = #{record.familysignature,jdbcType=VARCHAR},
+    mentorSignature = #{record.mentorsignature,jdbcType=VARCHAR},
+    evaluationDate = #{record.evaluationdate,jdbcType=TIMESTAMP},
+    EvaluationResult = #{record.evaluationresult,jdbcType=VARCHAR},
+    evaluationSignature = #{record.evaluationsignature,jdbcType=VARCHAR},
+    note = #{record.note,jdbcType=VARCHAR},
+    customerName = #{record.customername,jdbcType=VARCHAR},
+    store_id = #{record.storeId,jdbcType=VARCHAR},
+    num = #{record.num,jdbcType=INTEGER},
+    week = #{record.week,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Nursingeducation" >
+    update nursingeducation
+    <set >
+      <if test="customerBasicId != null" >
+        customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="behaviorobjectives != null" >
+        behaviorObjectives = #{behaviorobjectives,jdbcType=VARCHAR},
+      </if>
+      <if test="guidedate != null" >
+        guideDate = #{guidedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="familysignature != null" >
+        familySignature = #{familysignature,jdbcType=VARCHAR},
+      </if>
+      <if test="mentorsignature != null" >
+        mentorSignature = #{mentorsignature,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationdate != null" >
+        evaluationDate = #{evaluationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluationresult != null" >
+        EvaluationResult = #{evaluationresult,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationsignature != null" >
+        evaluationSignature = #{evaluationsignature,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="customername != null" >
+        customerName = #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="week != null" >
+        week = #{week,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Nursingeducation" >
+    update nursingeducation
+    set customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      project = #{project,jdbcType=VARCHAR},
+      behaviorObjectives = #{behaviorobjectives,jdbcType=VARCHAR},
+      guideDate = #{guidedate,jdbcType=TIMESTAMP},
+      familySignature = #{familysignature,jdbcType=VARCHAR},
+      mentorSignature = #{mentorsignature,jdbcType=VARCHAR},
+      evaluationDate = #{evaluationdate,jdbcType=TIMESTAMP},
+      EvaluationResult = #{evaluationresult,jdbcType=VARCHAR},
+      evaluationSignature = #{evaluationsignature,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      customerName = #{customername,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      week = #{week,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

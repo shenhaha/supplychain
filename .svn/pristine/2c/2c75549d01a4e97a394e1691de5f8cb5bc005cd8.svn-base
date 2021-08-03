@@ -1,0 +1,57 @@
+package com.luer.storesdata.service;
+
+import com.luer.storesdata.bean.Room;
+import com.luer.storesdata.bean.RoomExample;
+import com.luer.storesdata.bean.RoomResources;
+
+import java.util.List;
+
+/**
+ * 房间基本资料操作接口
+ */
+public interface RoomService{
+    /**
+     * 插入一条房间资料
+     * @param record 房间对象
+     * @return
+     */
+    int insert(Room record);
+
+    /**
+     * 根据id删除一条房间记录
+     * @param id 房间id
+     * @return
+     */
+    int deleteByPrimaryKey(String id);
+
+    /**
+     * 更新一条房间记录
+     * @param record   房间资料对象
+     * @return
+     */
+    int updateByPrimaryKey(Room record);
+
+    /**
+     * 根据条件查询所有房间资料
+     * @param example
+     * @return
+     */
+    List<Room> selectByExample(RoomExample example);
+
+    /**
+     * 根据id查询一条房间记录
+     * @param id
+     * @return
+     */
+    Room selectByPrimaryKey(String id);
+
+    List<RoomResources> getAllRoom(String storeId);
+
+    Room getOneRoom(String roomType, String roomNumber);
+
+    List<Room> getRooms(String stored);
+
+    List<Room> selectByStoreId();
+
+    List<Room> selectByRoomStyleId(String roomStylesId);
+}

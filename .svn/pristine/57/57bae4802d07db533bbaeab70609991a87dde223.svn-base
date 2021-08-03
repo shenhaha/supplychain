@@ -1,0 +1,51 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.Coupons;
+import com.luer.storemanager.bean.CouponsExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public interface CouponsMapper {
+    int countByExample(CouponsExample example);
+
+    int deleteByExample(CouponsExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Coupons record);
+
+    int insertSelective(Coupons record);
+
+    List<Coupons> selectByExample(CouponsExample example);
+
+    Coupons selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Coupons record, @Param("example") CouponsExample example);
+
+    int updateByExample(@Param("record") Coupons record, @Param("example") CouponsExample example);
+
+    int updateByPrimaryKeySelective(Coupons record);
+
+    int updateByPrimaryKey(Coupons record);
+
+    /**
+     * 查询所有的优惠券信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.Shopping>
+     * @author GavinJiang
+     * @date
+     * @params
+     */
+    List<Coupons> selectCoupons(@Param("storeId") String storeId);
+
+    //根据妈妈id获取优惠卷信息
+    List<Coupons> selectCouponsByMotherId(String customerBasicId);
+
+    Double selectHowMuchByMotherId(String customerBasicId);
+}

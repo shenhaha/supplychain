@@ -1,0 +1,34 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Growthrecord;
+import com.luer.servicecenter.bean.GrowthrecordExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface GrowthrecordMapper {
+    int countByExample(GrowthrecordExample example);
+
+    int deleteByExample(GrowthrecordExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Growthrecord record);
+
+    int insertSelective(Growthrecord record);
+
+    List<Growthrecord> selectByExample(GrowthrecordExample example);
+
+    Growthrecord selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Growthrecord record, @Param("example") GrowthrecordExample example);
+
+    int updateByExample(@Param("record") Growthrecord record, @Param("example") GrowthrecordExample example);
+
+    int updateByPrimaryKeySelective(Growthrecord record);
+
+    int updateByPrimaryKey(Growthrecord record);
+
+    List<Growthrecord> getGrowthByMatherId(@Param("motherId") String motherid);
+    List<Growthrecord> getGrowthByMatherIdanddata(@Param("motherid") String motherid, @Param("babaname") String babaname, @Param("recorddate") String recorddate);
+}

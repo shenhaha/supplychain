@@ -1,0 +1,277 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>库存盘点</title>
+    <style type="text/css">
+        div#rMenu {
+            position: absolute;
+            visibility: hidden;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0);
+            text-align: left;
+            padding: 2px;
+        }
+
+        div#rMenu ul li {
+            margin: 1px 0;
+            padding: 0 5px;
+            cursor: pointer;
+            list-style: none outside none;
+            background-color: #DFDFDF;
+        }
+
+        <%-- </style>
+         <style>--%>
+
+        nav {
+            line-height: 0px;
+            background-color: #eeeeee;
+            /*height: 100%;*/
+            width: 15.65%;
+            float: left;
+            padding: 5px;
+        }
+
+        section {
+            width: 84.35%;
+            height: 100%;
+            float: left;
+            padding: 10px;
+        }
+
+    </style>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="${ctx}/static/css/awesomeStyle/awesome.css" type="text/css">
+</head>
+<body>
+<script type="text/javascript" src="${ctx}/static/js/jquery.ztree.all.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery.ztree.exedit.js"></script>
+
+<input style="display: none" type="hidden" id="storeId" value="${storeId}">
+<%--菜单列表--%>
+<nav>
+
+    <%--屏蔽原本的右键菜单--%>
+    <div oncontextmenu="return false">
+        <h5>商品分类</h5>
+        <ul id="classifytree" class="ztree" style="width:230px;height: 100%; overflow:auto;"></ul>
+    </div>
+</nav>
+<section>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <!-- Row -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <%--<div class="panel-heading">
+                        <div class="pull-left">
+                            <ol class="breadcrumb">
+                                <li><a href="${ctx}/index">首页</a></li>
+                                <li class="active">库存预览</li>
+                            </ol>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>--%>
+                    <div>
+                        <div class="panel-body">
+                            <div class="table-wrap">
+                                <table id="footable_stockone" class="table" data-paging="true" data-filtering="true"
+                                       data-sorting="true">
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Row -->
+
+        </div>
+    </div>
+</section>
+<script>
+    var zNodes;
+    var classifyId;
+    var orders = [];
+    var setting = {
+        view: {
+            selectedMulti: false,
+            fontCss: setFontCss
+        },
+        check: {
+            enable: false
+        },
+        async: {
+            enable: true,
+            contentType: "application/json",
+            /*url: "http://host/getNode.php",*/
+            autoParam: ["id", "pid"]
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pid",
+                rootPid: null
+            }
+        },
+        callback: {//回调函数
+            onClick: zTreeOnClick,// 节点被点击时调用
+            /*onDblClick: zTreeOnDblClick,// 节点被双击时调用*/
+
+
+        },
+        edit: {
+            drag:{
+                isCopy:false,
+                isMove:false
+            },
+            enable: true,
+            showRemoveBtn: false,
+            showRenameBtn: false
+        }
+    };
+
+
+    $.ajax({
+        url: '${ctx}/classifyTree/getStoreClassify',
+        type: 'post',
+        dataType: 'text',
+        success: function (data) {
+            zNodes = eval(data);
+            console.log(zNodes);
+            $.fn.zTree.init($("#classifytree"), setting, zNodes);
+            var treeObj = $.fn.zTree.getZTreeObj("classifytree");//获得ztree对象//让ztree节点处于展开状态
+            treeObj.expandAll(true);
+        },
+        error: function (msg) {
+            alert('树加载异常!');
+        }
+    });
+
+    //鼠标左键双击
+    function zTreeOnClick(event, treeId, treeNode) {
+        //每次双击之前，获取当前选中的商品以及数量，添加到全局变量headSumOrderList中
+        console.log(orders);
+
+
+        var inputs = $('input[name="num"]');
+        $(inputs).each(function (index) {
+            var bb = $(this).val();
+            if ($(this).val() != "") {
+                var a = $(this).parent().parent().children('td').eq(0).text();
+                orders[index] = {"id": a, "number": $(this).val()};
+            }
+        })
+        classifyId = treeNode.id;
+        var storeId = '${storeId}';
+        aaa(classifyId);
+        document.getElementById("footable_stockone").innerHTML = '<table id="footable_stockone" class="table" data-paging="true" data-paging-position="right">\n' +
+            '                                </table>';
+
+    }
+
+    function setFontCss(treeId, treeNode) {
+        return treeNode.pid == null ? {color: "black"} : {};
+    };
+    $(function () {
+
+        function aaa(classifyId) {
+            var stockTitle = [
+                {
+                    "name": "id",
+                    "title": "ID",
+                    "breakpoints": "xs sm",
+                    "visible": false
+                },
+                {"name": "storeId", "title": "门店id", "visible": false},
+                {"name": "goodsId", "title": "商品id", "visible": false},
+                {"name": "goodsName", "title": "商品名称"},
+                {"name": "serialnum", "title": "商品编号"},
+                {"name": "lastStockNum", "title": "上月库存数量"},
+                {"name": "purchaseNum", "title": "本月入库数量"},
+                {"name": "purchaseTime", "title": "入库时间", "visible": false},
+                {"name": "shipmentsNum", "title": "本月出库数量"},
+                {"name": "shipmentsTime", "title": "出库时间", "visible": false},
+                {"name": "inventoryLoss", "title": "库存损耗"},
+                {"name": "stockNum", "title": "库存数量"},
+                {"name": "stockWarn", "title": "最小安全值"},
+                {"name": "supplierId", "title": "供应商id", "visible": false},
+                {"name": "supplierName", "title": "供应商名称", "visible": false},
+                {"name": "remark", "title": "备注", "visible": false},
+                {"name": "update", "title": "修改库存损耗"}
+
+            ];
+
+            function updateInventoryLoss(values) {
+                var dialog = BootstrapDialog.show({
+                    type: BootstrapDialog.TYPE_DEFAULT,
+                    title: "<span class='text-success'><i class='fa fa-plus'></i>修改库存损耗</span>",
+                    closable: false,
+                    draggable: true,
+                    cssClass: 'api-blacklist-form-add',
+                    message: $('<div></div>').load('${ctx}/template/storesandsales/stockinventory.jsp'),//加载弹出页面
+                    size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                    onhide: function () {
+                    },
+                    onshown: function () {
+                        $('#inventoryLoss').val(values.inventoryLoss);
+                    },
+                    buttons: [{
+                        id: 'btn-form-submit',
+                        label: '提交',
+                        icon: 'fa fa-check-circle',
+                        cssClass: 'btn-primary',
+
+                        action: function () {
+                            var json = {
+                                inventoryLoss: $('#inventoryLoss').val(),
+                                id: values.id,
+
+                                stockNum: values.stockNum
+
+
+                            };
+                            $.post("${ctx}/stock/updateStockInventory", json).done(function (data) {
+                                getCode(data)
+                            }).fail(function (data) {
+                                getCode(data)
+                            });
+                        }
+                    }, {
+                        label: '关闭',
+                        icon: 'fa fa-close',
+                        action: function (dialogItself) {
+                            dialogItself.close();
+                        }
+                    }]
+                });
+            }
+
+            window.updateInventoryLoss = updateInventoryLoss;
+            //启动footable
+            var ft = FooTable.init('#footable_stockone', {
+                "columns": stockTitle,
+                "rows": $.get("${ctx}/stock/selectByStoreId?classifyId=" + classifyId, function (data) {
+                    $(data).each(function () {
+                        this.update = "<button id='cx' class='btn btn-primary btn-sm'  onclick='updateInventoryLoss(" + JSON.stringify(this) + ")'>修改</button>";
+
+                    });
+                    //
+                    return data;
+                }),
+
+
+            });
+
+
+        }
+
+        window.aaa = aaa;
+    })
+
+</script>
+</body>
+</html>

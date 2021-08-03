@@ -1,0 +1,38 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.CheckIn;
+import com.luer.storemanager.bean.CheckInExample;
+import com.luer.storemanager.bean.MotherCheckIn;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface CheckInMapper {
+    CheckIn selectBymotherid(@Param("motherid") String motherid);
+
+    int countByExample(CheckInExample example);
+
+    int deleteByExample(CheckInExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(CheckIn record);
+
+    int insertSelective(CheckIn record);
+
+    List<CheckIn> selectByExample(CheckInExample example);
+
+    CheckIn selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") CheckIn record, @Param("example") CheckInExample example);
+
+    int updateByExample(@Param("record") CheckIn record, @Param("example") CheckInExample example);
+
+    int updateByPrimaryKeySelective(CheckIn record);
+
+    int updateByPrimaryKey(CheckIn record);
+
+    List<CheckIn> selectAllByStoreid(@Param("storeid")String storeid);
+
+    List<MotherCheckIn> selectMotherCheckIn(@Param("storeId") String storeId);
+}

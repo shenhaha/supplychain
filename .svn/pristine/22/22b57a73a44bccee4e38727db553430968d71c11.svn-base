@@ -1,0 +1,234 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+	<%--日期时间插件--%>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+	<style>
+		div{padding: 0 0 0 0;margin: 0 0 0 0}
+	</style>
+</head>
+<body>
+<form class="form-horizontal"role="form" id="myform">
+	<div class="form-group required" hidden="hidden">
+		<label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" id="id" name="id" placeholder="id" >
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="row">
+				<div class="form-group col-md-4">
+					<label for="operationDate" class="col-sm-4 control-label"style="padding-left: 0px;margin-left: 0px">查房日期：</label>
+					<div  class="input-group date form_datetime " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+						<input class="form-control" size="16" type="text" value="" name="operationDate" id="operationDate"placeholder="查房日期" readonly>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="baby" class="col-sm-5 control-label">宝宝姓名：</label>
+					<div class="col-sm-7">
+						<select class="form-control" id="baby">
+
+						</select>
+					</div>
+				</div>
+
+			</div>
+			<%--<div class="row">
+				<div class="form-group col-md-3">
+					<label for="mothername" class="col-sm-5 control-label">宝妈姓名：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="mothername" name="mothername" placeholder="宝妈姓名">
+					</div>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="baby" class="col-sm-5 control-label">宝宝姓名：</label>
+					<div class="col-sm-7">
+						<input type="text"  class="form-control" id="baby" name="baby" placeholder="宝宝姓名" >
+					</div>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="roomnum" class="col-sm-5 control-label">宝妈房间号：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="roomnum" name="roomnum" placeholder="宝妈房间号">
+					</div>
+				</div>
+			</div>--%>
+			<!--前缀-->
+			<div class="form-group col-md-3">
+				<label for="bornway" class="col-sm-5 control-label">出生方式：</label>
+				<div class="col-sm-7">
+					<%--<input type="text" class="form-control" id="bornway" name="bornway" placeholder="出生方式">--%>
+							<select type="text" class="form-control" id="bornway" name="bornway" tabindex="1">
+								<option value="自然生产">自然生产</option>
+								<option value="剖腹产">剖腹产</option>
+							</select>
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="pregnancy" class="col-sm-5 control-label">孕周：</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="pregnancy" name="pregnancy" placeholder="孕周">
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="feedingway" class="col-sm-5 control-label">喂养方式：</label>
+					<div class="col-sm-7">
+						<%--<input type="text" class="form-control" id="feedingway" name="feedingway" placeholder="喂养方式">--%>
+							<select type="text" class="form-control" id="feedingway" name="feedingway" tabindex="1">
+								<option value="母乳">母乳</option>
+								<option value="配方奶">配方奶</option>
+							</select>
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-3">
+				<label for="milkeveryday" class="col-sm-5 control-label">每日奶量(ml)：</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="milkeveryday" name="milkeveryday" placeholder="每日奶量">
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="reaction" class="col-sm-5 control-label">反应：</label>
+					<div class="col-sm-7">
+						<%--<input type="text" class="form-control" id="reaction" name="reaction" placeholder="反应">--%>
+							<select type="text" class="form-control" id="reaction" name="reaction" tabindex="1">
+								<option value="正常">正常</option>
+								<option value="不正常">不正常</option>
+							</select>
+					</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="skin" class="col-sm-5 control-label">皮肤：</label>
+				<div class="col-sm-7">
+					<%--<input type="text" class="form-control" id="skin" name="skin" placeholder="皮肤">--%>
+					<select type="text" class="form-control" id="skin" name="childBirthWay" tabindex="1">
+						<option value="正常">正常</option>
+						<option value="不正常">不正常</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-3">
+				<label for="headfeatures" class="col-sm-5 control-label">头部五官：</label>
+				<div class="col-sm-7">
+					<%--<input type="text" class="form-control" id="headfeatures" name="headfeatures" placeholder="头部五官">--%>
+						<select type="text" class="form-control" id="headfeatures" name="headfeatures" tabindex="1">
+							<option value="正常">正常</option>
+							<option value="不正常">不正常</option>
+						</select>
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="cardiopulmonary" class="col-sm-5 control-label">心肺：</label>
+				<div class="col-sm-7">
+					<%--<input type="text" class="form-control" id="cardiopulmonary" name="cardiopulmonary" placeholder="心肺">--%>
+					<select type="text" class="form-control" id="cardiopulmonary" name="cardiopulmonary" tabindex="1">
+						<option value="正常">正常</option>
+						<option value="不正常">不正常</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="abdomen" class="col-sm-5 control-label">腹部：</label>
+				<div class="col-sm-7">
+					<%--<input type="text" class="form-control" id="abdomen" name="abdomen" placeholder="腹部">--%>
+						<select type="text" class="form-control" id="abdomen" name="abdomen" tabindex="1">
+							<option value="正常">正常</option>
+							<option value="不正常">不正常</option>
+						</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-3">
+				<label for="umbilical" class="col-sm-5 control-label">脐带：</label>
+					<div class="col-sm-7">
+						<%--<input type="text" class="form-control" id="umbilical" name="umbilical" placeholder="脐带">--%>
+							<select type="text" class="form-control" id="umbilical" name="umbilical" tabindex="1">
+								<option value="正常">正常</option>
+								<option value="不正常">不正常</option>
+							</select>
+					</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="extremities" class="col-sm-5 control-label">四肢关节：</label>
+					<div class="col-sm-7">
+						<%--<input type="text" class="form-control" id="extremities" name="extremities" placeholder="四肢关节">--%>
+							<select type="text" class="form-control" id="extremities" name="extremities" tabindex="1">
+								<option value="正常">正常</option>
+								<option value="不正常">不正常</option>
+							</select>
+					</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="nervereflex" class="col-sm-5 control-label">神经反射：</label>
+				<div class="col-sm-7">
+						<%--<input type="text" class="form-control" id="nervereflex" name="nervereflex" placeholder="神经反射">--%>
+							<select type="text" class="form-control" id="nervereflex" name="nervereflex" tabindex="1">
+								<option value="正常">正常</option>
+								<option value="不正常">不正常</option>
+							</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-3">
+				<label for="fecal" class="col-sm-5 control-label">粪便：</label>
+				<div class="col-sm-7">
+						<%--<input type="text" class="form-control" id="fecal" name="fecal" placeholder="粪便">--%>
+							<select type="text" class="form-control" id="fecal" name="fecal" tabindex="1">
+								<option value="正常">正常</option>
+								<option value="不正常">不正常</option>
+							</select>
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="otherSituations" class="col-sm-5 control-label">其他情况：</label>
+				<div class="col-sm-7">
+					<textarea type="text" class="form-control" id="otherSituations" name="otherSituations" placeholder="其他情况"></textarea>
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="advice" class="col-sm-5 control-label">医嘱：</label>
+				<div class="col-sm-7">
+					<textarea type="text" class="form-control" id="advice" name="advice" placeholder="医嘱"></textarea>
+				</div>
+			</div>
+		</div>
+	    <div class="row">
+			<div class="form-group col-md-3">
+				<label for="signature" class="col-sm-5 control-label">医师签字：</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="signature" name="signature" placeholder="医师签字">
+				</div>
+			</div>
+
+		</div>
+	</div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+package com.luer.storemanager.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+/**
+ * Created by 87961 on 2018/8/30.
+ */
+@Setter
+@Getter
+public class PreviewEvents {
+    //房间入住状态表对应记录的UUID
+    private String id;
+    //妈妈姓名
+    private String title;
+    //开始时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date start;
+    //结束时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date end;
+    //resourceId	房间入住表对应的外键房间UUID
+    private String resourceId;
+    //门店id
+    private String storeId;
+    //订单id
+    private String orderCustomerId;
+    //房间状态
+    private String status;
+    //房间类型
+    private String roomStyle;
+    private String roomId;
+
+    @Override
+    public String toString() {
+        return "PreviewEvents{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", resourceId='" + resourceId + '\'' +
+                ", storeId='" + storeId + '\'' +
+                ", orderCustomerId='" + orderCustomerId + '\'' +
+                ", status='" + status + '\'' +
+                ", roomId='" + roomId + '\'' +
+                ", roomStyle='" + roomStyle + '\'' +
+                '}';
+    }
+}

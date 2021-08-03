@@ -1,0 +1,20 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Patientrounds;
+
+import java.util.List;
+
+public interface PatientRoundsService {
+
+    int insertPatientRounds(Patientrounds patientrounds);
+
+    List<Patientrounds> getPatientrounds(Patientrounds patientrounds);
+
+    int updatePatientrounds(Patientrounds patientrounds);
+
+    int deletePatientrounds(String id);
+
+    List selectPatientroundsBystoreId(String storeId);
+
+    List<Patientrounds> getPatientRoundsByMotherId(String motherid);
+}

@@ -1,0 +1,38 @@
+package com.luer.storesdata.dao;
+
+import com.luer.storesdata.bean.RoomStyles;
+import com.luer.storesdata.bean.RoomStylesExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@Component
+@MapperScan
+public interface RoomStylesMapper {
+    int countByExample(RoomStylesExample example);
+
+    int deleteByExample(RoomStylesExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(RoomStyles record);
+
+    int insertSelective(RoomStyles record);
+
+    List<RoomStyles> selectByExample(RoomStylesExample example);
+
+    RoomStyles selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") RoomStyles record, @Param("example") RoomStylesExample example);
+
+    int updateByExample(@Param("record") RoomStyles record, @Param("example") RoomStylesExample example);
+
+    int updateByPrimaryKeySelective(RoomStyles record);
+
+    int updateByPrimaryKey(RoomStyles record);
+
+    List<RoomStyles> getRoomStylesList();
+
+    List<RoomStyles> getRoomStyles(@Param("storeId")String storeId);
+}

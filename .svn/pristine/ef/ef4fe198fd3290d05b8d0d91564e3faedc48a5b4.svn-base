@@ -1,0 +1,386 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>商品表</title>
+    <style type="text/css">
+
+
+        nav {
+            line-height: 0px;
+            background-color: #eeeeee;
+            /*height: 100%;*/
+            width: 15.65%;
+            float: left;
+            padding: 5px;
+        }
+
+        section {
+            width: 84.35%;
+            height: 100%;
+            float: left;
+            padding: 10px;
+        }
+
+    </style>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="${ctx}/static/css/awesomeStyle/awesome.css" type="text/css">
+</head>
+<body>
+<script type="text/javascript" src="${ctx}/static/js/jquery.ztree.all.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery.ztree.exedit.js"></script>
+
+<input style="display: none" type="hidden" id="storeId" value="${storeId}">
+<%--菜单列表--%>
+<nav>
+    <div oncontextmenu="return false">
+        <h5>商品分类</h5>
+        <ul id="classifytree" class="ztree" style="width:230px;height: 100%; overflow:auto;"></ul>
+    </div>
+</nav>
+<section>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <ol class="breadcrumb">
+
+                                <div data-date-format="yyyy-mm-dd">
+                                    订单开始时间：<input size="6" type="text" value="" name="beginday" id="beginday"
+                                                  readonly="readonly">
+                                    订单截止时间：<input size="6" type="text" value="" name="endday" id="endday"
+                                                  readonly="readonly">
+                                    <button id="button1" class="btn btn-success" onclick="createclick()">生成订单</button>
+                                </div>
+
+                                <%-- <li><a href="${ctx}/index">首页</a></li>
+                                 <li class="active">总部提供的商品</li>--%>
+
+
+                            </ol>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div>
+                        <div class="panel-body">
+                            <div class="table-wrap">
+                                <table id="goodsLists" class="table" data-paging="true">
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+
+    var zNodes;
+    var classifyId;
+    var orders = [];
+    var setting = {
+        view: {
+            selectedMulti: false,
+            fontCss: setFontCss
+        },
+        check: {
+            enable: false
+        },
+        async: {
+            enable: true,
+            contentType: "application/json",
+            /*url: "http://host/getNode.php",*/
+            autoParam: ["id", "pid"]
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pid",
+                rootPid: null
+            }
+        },
+        callback: {//回调函数
+            onClick: zTreeOnClick,// 节点被点击时调用
+            /*onDblClick: zTreeOnDblClick,// 节点被双击时调用*/
+
+
+        },
+        edit: {
+            drag: {
+                isCopy: false,
+                isMove: false
+            },
+            enable: true,
+            showRemoveBtn: false,
+            showRenameBtn: false
+        }
+    };
+
+
+    $.ajax({
+        url: '${ctx}/classifyTree/getHeadClassify',
+        type: 'post',
+        dataType: 'text',
+        success: function (data) {
+            zNodes = eval(data);
+
+            $.fn.zTree.init($("#classifytree"), setting, zNodes);
+            var treeObj = $.fn.zTree.getZTreeObj("classifytree");//获得ztree对象//让ztree节点处于展开状态
+            treeObj.expandAll(true);
+        },
+        error: function (msg) {
+            alert('树加载异常!');
+        }
+    });
+
+
+    //点击事件
+    function zTreeOnClick(event, treeId, treeNode) {
+        //每次点击，获取当前选中的商品以及数量，添加到全局变量headSumOrderList中
+        var inputs = $('input[name="num"]');
+
+        $(inputs).each(function (index) {
+            var a = $(this).parent().parent().children('td').eq(0).text();
+            var flag = true;
+            for (var i = 0; i < orders.length; i++) {
+                if (a == orders[i].id) {
+                    if ($(this).val() == "") {
+                        orders[i].number = 0;
+                    } else {
+                        orders[i].number = $(this).val();
+                    }
+                    flag = false;
+                }
+            }
+            if (flag) {
+                if ($(this).val() != "") {
+                    orders[orders.length] = {"id": a, "number": $(this).val()};
+                }
+
+            }
+        })
+
+
+        classifyId = treeNode.id;
+        var storeId = '${storeId}';
+
+
+        document.getElementById("goodsLists").innerHTML = '<table id="goodsLists" class="table" data-paging="true" data-paging-position="right">\n' +
+            '                                </table>';
+
+        aaa(classifyId);
+
+    }
+
+
+    function setFontCss(treeId, treeNode) {
+        return treeNode.pid == null ? {color: "black"} : {};
+    };
+
+
+    $(document).ready(function () {
+        $.ajax({
+            url: "${ctx}/deadline/selectDeadline",
+            type: "post",
+            success:
+                function (data) {
+                    $("#beginday").val(data[0].begintime);
+                    $("#endday").val(data[0].endtime);
+                }
+        });
+    })
+
+    $(function () {
+
+        function aaa(classifyId) {
+            var goodsTitle = [
+                {
+                    "name": "id",
+                    "title": "ID",
+                    "breakpoints": "xs sm",
+                    "visible": false
+                },
+                {"name": "goodsName", "title": "商品名称"},
+                {"name": "alliasname", "title": "别名"},
+                {"name": "goodsOneId", "title": "物资一级分类", "visible": false},
+                {"name": "goodsTwoId", "title": "物资二级分类", "visible": false},
+                {"name": "classifyId", "title": "商品分类id", visible: false},
+                {"name": "classifyName", "title": "商品分类名称"},
+                {"name": "serialnum", "title": "商品编号"},
+                {"name": "specifications", "title": "规格"},
+                {"name": "unit", "title": "商品单位"},
+                {"name": "priceTwo", "title": "门店单价"},
+                {"name": "minpurchaseQuantityone", "title": "门店最小进货量"},
+                {"name": "remark", "title": "备注"},
+                {"name": "choice", "title": "填写商品数量"},
+                {"name": "supplierId", "title": "供应商id", "visible": false}
+            ];
+
+
+            //启动footable
+            var ft = FooTable.init('#goodsLists', {
+                "columns": goodsTitle,
+                "rows": $.get("${ctx}/goods/selectHeadOfficeGoodsByClassifyId?classifyId=" + classifyId, function (data) {
+                    $(data).each(function () {
+
+                        if (orders.length == 0 || this.id == null) {
+                            this.choice = "<input  type='text' style='width:120px ' name='num' placeholder='数量' +'>";
+                        } else {
+                            for (var i = 0; i < orders.length; i++) {
+                                if (orders[i] == null) {
+                                    continue;
+                                }
+
+                                if (this.id == orders[i].id) {
+
+                                    this.choice = "<input  type='text' style='width:120px ' name='num' value=" + orders[i].number + ">";
+                                    break;
+                                } else {
+                                    this.choice = "<input  type='text' style='width:120px ' name='num' placeholder='数量' +'>";
+                                }
+                            }
+
+
+                        }
+                    });
+                    return data;
+                }),
+            });
+
+
+        }
+
+        window.aaa = aaa;
+
+
+    });
+
+    var createclick = function () {
+        var end = $("#endday").val();
+        var begin = $("#beginday").val();
+        //获取起始时间的年月日
+        var beginday = parseInt(begin.substring(8, 10));
+        var beginmonth = parseInt(begin.substring(5, 7)) - 1;
+        var beginyear = parseInt(begin.substring(0, 4));
+        var beginDate = new Date(beginyear, beginmonth, beginday);
+        //获取截止时间的年月日
+        var endday = parseInt(end.substring(8, 10));
+        var endmonth = parseInt(end.substring(5, 7)) - 1;
+        var endyear = parseInt(end.substring(0, 4));
+        var endDate = new Date(endyear, endmonth, endday);
+        var nowdate = new Date();
+
+
+        if (!(nowdate <= endDate && nowdate >= beginDate)) {
+
+            PNotify.prototype.options.styling = "bootstrap3";
+            var delay = 1000 * 2;
+            new PNotify({
+                title: 'Oh No!',
+                text: '不在订单起止之内，无法向总部下单！',
+                delay: delay,
+                hide: true,
+                type: 'error'
+            });
+            return;
+        }
+
+        var inputs = $('input[name="num"]');
+        $(inputs).each(function (index) {
+            var a = $(this).parent().parent().children('td').eq(0).text();
+            var flag = true;
+            for (var i = 0; i < orders.length; i++) {
+                if (a == orders[i].id) {
+                    if ($(this).val() == "") {
+                        orders[i].number = 0;
+                    } else {
+                        orders[i].number = $(this).val();
+                    }
+                    flag = false;
+                }
+            }
+            if (flag) {
+                if ($(this).val() != "") {
+                    orders[orders.length] = {"id": a, "number": $(this).val()};
+                }
+
+            }
+        })
+        if (orders.length == 0) {
+            PNotify.prototype.options.styling = "bootstrap3";
+            var delay = 1000 * 2;
+            new PNotify({
+                title: 'Oh No!',
+                text: '操作失败,请填写商品数量',
+                delay: delay,
+                hide: true,
+                type: 'error'
+            });
+            return;
+        }
+        var headSumNum = {};
+        headSumNum["orders"] = orders;
+        var send = JSON.stringify(headSumNum);
+
+        $.confirm({
+            title: '系统提示',
+            content: '确认要生成吗？',
+            type: 'green',
+            buttons: {
+                cancel: {
+                    text: "取消",
+                    btnClass: 'btn-default',
+                    action: function () {
+                    }
+                },
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function () {
+
+                        $.ajax({
+                            type: "post",
+                            url: "${ctx}/goodsOrder/createGoodsOrder",
+                            data: JSON.stringify(headSumNum),
+                            contentType: "application/json;charsetset=UTF-8",
+                            dataType: "json",
+                            success: function (data) {
+                                PNotify.prototype.options.styling = "bootstrap3";
+                                var delay = 1000 * 2;
+                                if (data.code == 406) {
+                                    new PNotify({
+                                        title: 'Oh No!',
+                                        text: '操作失败',
+                                        delay: delay,
+                                        hide: true,
+                                        type: 'error'
+                                    });
+                                } else {
+                                    new PNotify({
+                                        title: 'Success!',
+                                        text: '操作成功',
+                                        delay: delay,
+                                        hide: true,
+                                        type: 'success'
+                                    });
+                                }
+                                window.location.reload();
+                            },
+
+                        });
+                    }
+                },
+
+            }
+        });
+    }
+</script>
+</body>
+</html>

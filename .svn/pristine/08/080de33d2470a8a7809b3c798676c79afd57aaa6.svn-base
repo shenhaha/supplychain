@@ -1,0 +1,149 @@
+package com.luer.stockandsales.bean;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+@Data
+public class Shipments {
+    private String id;
+
+    private String storeId;
+
+    private Integer status;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date shippingTime;
+
+    private String employerId;
+
+    private Double receivable;
+
+    private String motherId;
+
+    private String roomId;
+
+    private String roomNum;
+
+    private String employerName;
+
+    private String matherName;
+    //对应门店订单
+    private String goodsOrderId;
+    //对应门店id
+    public String storeFileId;
+    //对应门店名称
+    public String storeFileName;
+
+    public String getEmployerName() {
+        return employerName;
+    }
+
+    public void setEmployerName(String employerName) {
+        this.employerName = employerName;
+    }
+
+    public String getRoomNum() {
+        return roomNum;
+    }
+
+    public void setRoomNum(String roomNum) {
+        this.roomNum = roomNum;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getShippingTime() {
+        return shippingTime;
+    }
+
+    public void setShippingTime(Date shippingTime) {
+        this.shippingTime = shippingTime;
+    }
+
+    public String getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(String employerId) {
+        this.employerId = employerId == null ? null : employerId.trim();
+    }
+
+    public Double getReceivable() {
+        return receivable;
+    }
+
+    public void setReceivable(Double receivable) {
+        this.receivable = receivable;
+    }
+
+    public String getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(String motherId) {
+        this.motherId = motherId == null ? null : motherId.trim();
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId == null ? null : roomId.trim();
+    }
+
+    public String getMatherName() {
+        return matherName;
+    }
+
+    public void setMatherName(String matherName) {
+        this.matherName = matherName == null ? null : matherName.trim();
+    }
+
+    public String getGoodsOrderId() {
+        return goodsOrderId;
+    }
+
+    public void setGoodsOrderId(String goodsOrderId) {
+        this.goodsOrderId = goodsOrderId;
+    }
+
+    public String getStoreFileId() {
+        return storeFileId;
+    }
+
+    public void setStoreFileId(String storeFileId) {
+        this.storeFileId = storeFileId;
+    }
+
+    public String getStoreFileName() {
+        return storeFileName;
+    }
+
+    public void setStoreFileName(String storeFileName) {
+        this.storeFileName = storeFileName;
+    }
+}

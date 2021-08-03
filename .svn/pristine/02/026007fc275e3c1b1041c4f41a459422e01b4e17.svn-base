@@ -1,0 +1,178 @@
+package com.luer.businessmanager.bean;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+@Data
+public class Visit {
+    private String id;
+
+    private String classification;
+
+    private String name;
+
+    private String tell;
+
+    private String sex;
+
+    private String weChat;
+
+    private String mamName;
+
+    private String roomId;
+
+    private String level;
+
+    private String health;
+
+    private String temperature;
+
+    private String cough;
+
+    private String excepted;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date inTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date outTime;
+
+    private String storeId;
+
+    private String storeName;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification == null ? null : classification.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getTell() {
+        return tell;
+    }
+
+    public void setTell(String tell) {
+        this.tell = tell == null ? null : tell.trim();
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getWeChat() {
+        return weChat;
+    }
+
+    public void setWeChat(String weChat) {
+        this.weChat = weChat == null ? null : weChat.trim();
+    }
+
+    public String getMamName() {
+        return mamName;
+    }
+
+    public void setMamName(String mamName) {
+        this.mamName = mamName == null ? null : mamName.trim();
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId == null ? null : roomId.trim();
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level == null ? null : level.trim();
+    }
+
+    public String getHealth() {
+        return health;
+    }
+
+    public void setHealth(String health) {
+        this.health = health == null ? null : health.trim();
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature == null ? null : temperature.trim();
+    }
+
+    public String getCough() {
+        return cough;
+    }
+
+    public void setCough(String cough) {
+        this.cough = cough == null ? null : cough.trim();
+    }
+
+    public String getExcepted() {
+        return excepted;
+    }
+
+    public void setExcepted(String excepted) {
+        this.excepted = excepted == null ? null : excepted.trim();
+    }
+
+    public Date getInTime() {
+        return inTime;
+    }
+
+    public void setInTime(Date inTime) {
+        this.inTime = inTime;
+    }
+
+    public Date getOutTime() {
+        return outTime;
+    }
+
+    public void setOutTime(Date outTime) {
+        this.outTime = outTime;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName == null ? null : storeName.trim();
+    }
+}

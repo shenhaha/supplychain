@@ -1,0 +1,840 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<c:set var="motherType" value="${pageContext.request.getParameter('motherType')}" />
+<html>
+<head>
+    <title>妈妈入住评估</title>
+    <style>
+        .login-dialog .modal-dialog {
+            width: 1200px;
+        }
+    </style>
+</head>
+<body>
+<!--Main Content-->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+
+
+                <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+
+                    <li id="motherEvaluate"><a href="${ctx}/servicecenter/motherEvaluate?motherid=${motherid}&motherType=${motherType}">妈妈入住评估表</a></li>
+                    <li id="patientrounds"><a href="${ctx}/servicecenter/patientrounds?motherid=${motherid}&motherType=${motherType}">妈妈医生查房记录</a></li>
+                    <li id="mothernursingrecorddetail"><a href="${ctx}/servicecenter/mothernursingrecorddetail?motherid=${motherid}&motherType=${motherType}">妈妈护理记录</a></li>
+                    <li id="nursingEducation"><a href="${ctx}/servicecenter/nursingEducation?motherid=${motherid}&motherType=${motherType}">妈妈卫教登记表</a></li>
+                    <li id="motherquestion"><a href="${ctx}/servicecenter/motherquestion?motherid=${motherid}&motherType=${motherType}">妈妈产后忧虑量表</a></li>
+                    <li id="VitalSign"><a href="${ctx}/servicecenter/VitalSign?motherid=${motherid}&motherType=${motherType}">妈妈生命体征登记</a></li>
+                    <div id="babyInfo" style="margin-left: 60%;display: none;">
+                        <input type="button" id="type1" class='btn block btn-outline btn-rounded btn-primary' onclick="findbaby()" value="宝宝信息" >
+                    </div>
+                </ul>
+
+                <!--妈妈基本信息表开始-->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="mathercustomer" class="table" data-paging="true" data-filtering="true" data-sorting="true">
+                            </table>
+                        </div>
+                    </div>
+            </div>
+            <!--妈妈基本信息表结束-->
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script>
+    $(function () {
+        (function ($) {
+            $.getUrlParam = function (name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]); return null;
+            }
+        })(jQuery);
+        var motherType = $.getUrlParam('motherType');
+        if(motherType==1){
+            $("#babyInfo").css("display","block");
+        }
+        $('#motherEvaluate').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'mothernursingrecorddetail':
+                $('#mothernursingrecorddetail').addClass("active");
+                break;
+            case 'patientrounds':
+                $('#patientrounds').addClass("active");
+                break;
+            case 'nursingEducation':
+                $('#nursingEducation').addClass("active");
+                break;
+            case 'motherquestion':
+                $('#motherquestion').addClass("active");
+                break;
+            case 'motherEvaluate':
+                $('#motherEvaluate').addClass("active");
+                break;
+            case 'VitalSign':
+                $('#VitalSign').addClass("active");
+                break;
+        }
+        var motherTitle = [
+            {"name": "id", "title": "ID", "breakpoints": "xs sm", visible: false},
+            {"name": "badNo", "title": "床号"},
+            {"name": "childTime", "title": "胎次"},
+            {"name": "weightIncrease", "title": "体重增加"},
+            {"name": "pregnancy", "title": "妊娠合并症"},
+            {"name": "childBirthWay", "title": "分娩方式"},
+            {"name": "pph", "title": "PPH"},
+            {"name": "tear", "title": "撕裂伤", visible: false},
+            {"name": "t", "title": "T"},
+            {"name": "detail", "title": "查看详情"},
+            {"name": "p", "title": "P", visible: false},
+            {"name": "r", "title": "R", visible: false},
+            {"name": "bp", "title": "BP", visible: false},
+            {"name": "uterusHeight", "title": "子宫底高度", visible: false},
+            {"name": "uterusHardness", "title": "子宫底软硬度", visible: false},
+            {"name": "lochia", "title": "恶露", visible: false},
+            {"name": "color", "title": "颜色", visible: false},
+            {"name": "character1", "title": "性状", visible: false},
+            {"name": "taste", "title": "味道", visible: false},
+            {"name": "perineumWound", "title": "会阴伤口", visible: false},
+            {"name": "cesareanWound", "title": "剖腹产伤口", visible: false},
+            {"name": "breast", "title": "乳房", visible: false},
+            {"name": "nipple", "title": "乳头", visible: false},
+            {"name": "mastitis", "title": "乳腺炎", visible: false},
+            {"name": "defecation", "title": "排便情况", visible: false},
+            {"name": "infectiousDiseases", "title": "传染病", visible: false},
+            {"name": "extraMedications", "title": "备用药物", visible: false},
+            {"name": "mentalState", "title": "精神状态", visible: false},
+            {"name": "edemaState", "title": "水肿状态", visible: false},
+            {"name": "emotionalState", "title": "情绪状态", visible: false},
+            {"name": "assessment", "title": "评估人", visible: false},
+            {"name": "assessmentTime", "title": "评估时间", visible: false},
+            {"name": "note", "title": "备注", visible: false},
+            {"name": "secretion", "title": "乳汁分泌", visible: false},
+            {"name": "hemorrhoids", "title": "痔疮", visible: false}
+        ];
+
+        function findbaby(id) {
+            window.location.href='${ctx}/servicecenter/babybasic?motherid=${motherid}';
+        }
+
+        window.findbaby = findbaby;
+
+
+        function detail(values) {
+            var dialog = BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_DEFAULT,
+                title: "<span style=\"color: #ab8ce4\">修改一条数据</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'login-dialog',
+                message: $('<div></div>').load('${ctx}/template/servicecenter/motherEvaluate.jsp'),//加载弹出页面
+                size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                //数据回显
+                onshown: function (dialogRef) {
+                    $.ajax({
+                        url:"${ctx}/customerBasic/getCustomerBasic?type=0",
+                        type:"get",
+                        success:function(data){
+                            for(var i=0;i<data.length;i++){
+                                if(data[i].name==values.mothername){
+                                    $("#mothername").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                }else {
+                                    $("#mothername").append("<option  value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                }
+                            }
+                        }
+                    });
+                    $('#tear').change(function () {
+                        if($('#tear').val()=='0'){
+                            $('#fortear').hide()
+                        }else {
+                            $('#fortear').show()
+                        }
+                    })
+                    if(values.tear.split('?').length>1){//有撕裂伤
+                        $('#fortear').show()
+                        $('#tear').val(values.tear.split('?')[0]);
+                        var t = values.tear.split('?')[1].split(',');
+                        $(t).each(function () {
+                            if(this=='左切'){
+                                $('input[value="左切"]').attr("checked","checked");
+                            }
+                            if(this=='右切'){
+                                $('input[value="右切"]').attr("checked","checked");
+                            }
+                        })
+                    }
+                    if(values.lochia.split('?').length>1){//恶露
+                        $('#lochia').val(values.lochia.split('?')[0]);
+                        var t = values.lochia.split('?')[1].split(',');
+                        $(t).each(function () {
+                            if(this=='有'){
+                                $('input[value="有"]').attr("checked","checked");
+                            }
+                            if(this=='无'){
+                                $('input[value="无"]').attr("checked","checked");
+                            }
+                        })
+                    }
+                    $(values.breast.split(',')).each(function () {
+                        if(this=='柔软'){
+                            $('input[value="柔软"]').attr("checked","checked");
+                        }
+                        if(this=='充盈'){
+                            $('input[value="充盈"]').attr("checked","checked");
+                        }
+                        if(this=='肿胀'){
+                            $('input[value="肿胀"]').attr("checked","checked");
+                        }
+                        if(this=='硬块'){
+                            $('input[value="硬块"]').attr("checked","checked");
+                        }
+                        if(this=='疼痛'){
+                            $('input[value="疼痛"]').attr("checked","checked");
+                        }
+                        if(this=='副乳'){
+                            $('input[value="副乳"]').attr("checked","checked");
+                        }
+                        if(this=='双侧'){
+                            $('input[value="双侧"]').attr("checked","checked");
+                        }
+                        if(this=='左侧'){
+                            $('input[value="左侧"]').attr("checked","checked");
+                        }
+                        if(this=='右侧'){
+                            $('input[value="右侧"]').attr("checked","checked");
+                        }
+
+                    })
+                    $(values.nipple.split(',')).each(function () {
+                        if(this=='正常'){
+                            $('input[value="正常"]').attr("checked","checked");
+                        }
+                        if(this=='凹陷'){
+                            $('input[value="凹陷"]').attr("checked","checked");
+                        }
+                        if(this=='短小'){
+                            $('input[value="短小"]').attr("checked","checked");
+                        }
+                        if(this=='破裂'){
+                            $('input[value="破裂"]').attr("checked","checked");
+                        }
+                        if(this=='双侧'){
+                            $('input[value="双侧"]').attr("checked","checked");
+                        }
+                        if(this=='左侧'){
+                            $('input[value="左侧"]').attr("checked","checked");
+                        }
+                        if(this=='右侧'){
+                            $('input[value="右侧"]').attr("checked","checked");
+                        }
+
+                    })
+                    $('#id').val(values.id);
+                    $('#badNo').val(values.badNo);
+                    $('#childTime').val(values.childTime);
+                    $('#weightIncrease').val(values.weightIncrease);
+                    $('#pregnancy').val(values.pregnancy);
+                    $('#childBirthWay').val(values.childBirthWay);
+                    $('#pph').val(values.pph);
+                    $('#t').val(values.t);
+                    $('#p').val(values.p);
+                    $('#r').val(values.r);
+                    $('#bp').val(values.bp);
+                    $('#uterusHeight').val(values.uterusHeight);
+                    $('#uterusHardness').val(values.uterusHardness);
+                    $('#color').val(values.color);
+                    $('#character1').val(values.character1);
+                    $('#taste').val(values.taste);
+                    $('#perineumWound').val(values.perineumWound);
+                    $('#cesareanWound').val(values.cesareanWound);
+                    $('#mastitis').val(values.mastitis);
+                    $('#defecation').val(values.defecation);
+                    $('#infectiousDiseases').val(values.infectiousDiseases);
+                    $('#extraMedications').val(values.extraMedications);
+                    $('#mentalState').val(values.mentalState);
+                    $('#edemaState').val(values.edemaState);
+                    $('#emotionalState').val(values.emotionalState);
+                    $('#assessment').val(values.assessment);
+                    $('#assessmentTime').val(values.assessmentTime);
+                    $('#note').val(values.note);
+                    $('#secretion').val(values.secretion);
+                    $('#mothername').val(values.mothername);
+                    $('#hemorrhoids').val(values.hemorrhoids);
+                    $("#myform").find('input,select,textarea,label').attr("disabled","disabled");
+                },
+                buttons: [{
+                    label: '关闭',
+                    icon: 'fa fa-close',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        }
+        window.detail = detail;
+        //启动footable
+        var ft = FooTable.init('#mathercustomer', {
+            "columns": motherTitle,
+            "rows": $.get("${ctx}/motherEvaluate/getEvaluateByMotherId?customerBasicId=" + '${motherid}',function (data) {
+                $(data).each(function () {
+                    this.detail = "<button class='btn btn-primary btn-sm' onclick='detail("+JSON.stringify(this)+")'>查看详情</button>";
+                })
+            }),
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function () {
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog = BootstrapDialog.show({
+                        type: BootstrapDialog.TYPE_DEFAULT,
+                        title: "<span style=\"color: #ab8ce4\">新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'login-dialog',
+                        message: $('<div></div>').load('${ctx}/template/servicecenter/motherEvaluate.jsp'),//加载弹出页面
+                       // size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getCustomerBasic?type=0&storeId="+'<%=session.getAttribute("storeId")%>',
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        $("#mothername").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                    }
+                                }
+                            });
+                            $('#tear').change(function () {
+                                if($('#tear').val()=='0'){
+                                    $('#fortear').hide()
+                                }else {
+                                    $('#fortear').show()
+                                }
+                            })
+                        },
+                        buttons: [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function () {  //点击事件
+                                //阴道撕裂伤
+                                var tear = '';
+                                if($('#fortear').is(':visible')){
+                                    var zouce = '';
+                                    $('input[name="tear"]:checkbox').each(function (index) {
+                                        if(index==0){
+                                            zouce = $(this).val()
+                                        }else {
+                                            zouce = zouce+',' +$(this).val();
+                                        }
+                                    })
+                                    tear = $('#tear').val() +"?"+ zouce;
+                                }else {
+                                    tear = $('#tear').val();
+                                }
+                                //阴道撕裂伤
+                                //恶露
+                                var lochia = $('#lochia').val();
+                                var lochiaChar ='';
+                                $('input[name="lochia"]:checkbox').each(function (index) {
+                                    if(index==0){
+                                        lochiaChar = $(this).val()
+                                    }else {
+                                        lochiaChar = lochiaChar+',' +$(this).val();
+                                    }
+                                })
+                                lochia = lochia+'?'+lochiaChar;
+                                //恶露
+                                //乳房
+                                var breast='';
+                                $('input[name="breast"]:checked').each(function (index) {
+                                    if(index==0){
+                                        breast = $(this).val();
+                                    }else {
+                                        breast +=","+$(this).val();
+                                    }
+                                })
+                                //乳房
+                                //乳头nipple
+                                var nipple='';
+                                $('input[name="nipple"]:checked').each(function (index) {
+                                    if(index==0){
+                                        nipple = $(this).val();
+                                    }else {
+                                        nipple +=","+$(this).val();
+                                    }
+                                })
+                                //乳头nipple
+                                var json = {
+                                    /*'mothername': $('#mothername').val(),*/
+                                    'badNo': $('#badNo').val(),
+                                    'childTime': $('#childTime').val(),
+                                    'weightIncrease': $('#weightIncrease').val(),
+                                    'pregnancy': $('#pregnancy').val(),
+                                    'childBirthWay': $('#childBirthWay').val(),
+                                    'pph': $('#pph').val(),
+                                    'tear': tear,
+                                    't': $('#t').val(),
+                                    'p': $('#p').val(),
+                                    'r': $('#r').val(),
+                                    'bp': $('#bp').val(),
+                                    'uterusHeight': $('#uterusHeight').val(),
+                                    'uterusHardness': $('#uterusHardness').val(),
+                                    'lochia': lochia,
+                                    'color': $('#color').val(),
+                                    'character1': $('#character1').val(),
+                                    'taste': $('#taste').val(),
+                                    'perineumWound': $('#perineumWound').val(),
+                                    'cesareanWound': $('#cesareanWound').val(),
+                                    'breast': breast,
+                                    'nipple': nipple,
+                                    'mastitis': $('#mastitis').val(),
+                                    'defecation': $('#defecation').val(),
+                                    'infectiousDiseases': $('#infectiousDiseases').val(),
+                                    'extraMedications': $('#extraMedications').val(),
+                                    'mentalState': $('#mentalState').val(),
+                                    'edemaState': $('#edemaState').val(),
+                                    'emotionalState': $('#emotionalState').val(),
+                                    'assessment': $('#assessment').val(),
+                                    'assessmentTime': $('#assessmentTime').val(),
+                                    'note': $('#note').val(),
+                                    'secretion': $('#secretion').val(),
+                                    'hemorrhoids': $('#hemorrhoids').val(),
+                                    'customerBasicId':'${motherid}',
+                                    'storeId': '<%=session.getAttribute("storeId")%>'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: { //需要验证的字段
+                                        mothername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈姓名不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        badNo: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '床号不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        childTime: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '胎次不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        color: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '颜色不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        taste: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '味道不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        breast: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '乳房不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        infectiousDiseases: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '传染病不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        mentalState: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '精神状态不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        emotionalState: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '情绪状态不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        assessment: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '评估人不能为空'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if (bootstrapValidator.isValid()) { //新增
+                                    $.post("${ctx}/motherEvaluate/addMotherEvaluate", json).done(function (data) {
+                                        getCode(data)
+                                    }).fail(function (data) {
+                                        getCode(data)
+                                    });
+                                }
+                            }
+                        }, {
+                            label: '关闭',
+                            icon: 'fa fa-close',
+                            action: function (dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function (row) {
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled", "disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type: BootstrapDialog.TYPE_DEFAULT,
+                        title: "<span style=\"color: #ab8ce4\">修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'login-dialog',
+                        message: $('<div></div>').load('${ctx}/template/servicecenter/motherEvaluate.jsp'),//加载弹出页面
+                        size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown: function (dialogRef) {
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getCustomerBasic?type=0",
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        if(data[i].name==values.mothername){
+                                            $("#mothername").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }else {
+                                            $("#mothername").append("<option  value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }
+                                    }
+                                }
+                            });
+                            $('#tear').change(function () {
+                                if($('#tear').val()=='0'){
+                                    $('#fortear').hide()
+                                }else {
+                                    $('#fortear').show()
+                                }
+                            })
+                            if(values.tear.split('?').length>1){//有撕裂伤
+                                $('#fortear').show()
+                                $('#tear').val(values.tear.split('?')[0]);
+                                var t = values.tear.split('?')[1].split(',');
+                                $(t).each(function () {
+                                    if(this=='左切'){
+                                        $('input[value="左切"]').attr("checked","checked");
+                                    }
+                                    if(this=='右切'){
+                                        $('input[value="右切"]').attr("checked","checked");
+                                    }
+                                })
+                            }
+                            if(values.lochia.split('?').length>1){//恶露
+                                $('#lochia').val(values.lochia.split('?')[0]);
+                                var t = values.lochia.split('?')[1].split(',');
+                                $(t).each(function () {
+                                    if(this=='有'){
+                                        $('input[value="有"]').attr("checked","checked");
+                                    }
+                                    if(this=='无'){
+                                        $('input[value="无"]').attr("checked","checked");
+                                    }
+                                })
+                            }
+                            $(values.breast.split(',')).each(function () {
+                                if(this=='柔软'){
+                                    $('input[value="柔软"]').attr("checked","checked");
+                                }
+                                if(this=='充盈'){
+                                    $('input[value="充盈"]').attr("checked","checked");
+                                }
+                                if(this=='肿胀'){
+                                    $('input[value="肿胀"]').attr("checked","checked");
+                                }
+                                if(this=='硬块'){
+                                    $('input[value="硬块"]').attr("checked","checked");
+                                }
+                                if(this=='疼痛'){
+                                    $('input[value="疼痛"]').attr("checked","checked");
+                                }
+                                if(this=='副乳'){
+                                    $('input[value="副乳"]').attr("checked","checked");
+                                }
+                                if(this=='双侧'){
+                                    $('input[value="双侧"]').attr("checked","checked");
+                                }
+                                if(this=='左侧'){
+                                    $('input[value="左侧"]').attr("checked","checked");
+                                }
+                                if(this=='右侧'){
+                                    $('input[value="右侧"]').attr("checked","checked");
+                                }
+
+                            })
+                            $(values.nipple.split(',')).each(function () {
+                                if(this=='正常'){
+                                    $('input[value="正常"]').attr("checked","checked");
+                                }
+                                if(this=='凹陷'){
+                                    $('input[value="凹陷"]').attr("checked","checked");
+                                }
+                                if(this=='短小'){
+                                    $('input[value="短小"]').attr("checked","checked");
+                                }
+                                if(this=='破裂'){
+                                    $('input[value="破裂"]').attr("checked","checked");
+                                }
+                                if(this=='双侧'){
+                                    $('input[value="双侧"]').attr("checked","checked");
+                                }
+                                if(this=='左侧'){
+                                    $('input[value="左侧"]').attr("checked","checked");
+                                }
+                                if(this=='右侧'){
+                                    $('input[value="右侧"]').attr("checked","checked");
+                                }
+
+                            })
+                            $('#id').val(values.id);
+                            $('#badNo').val(values.badNo);
+                            $('#childTime').val(values.childTime);
+                            $('#weightIncrease').val(values.weightIncrease);
+                            $('#pregnancy').val(values.pregnancy);
+                            $('#childBirthWay').val(values.childBirthWay);
+                            $('#pph').val(values.pph);
+                            $('#t').val(values.t);
+                            $('#p').val(values.p);
+                            $('#r').val(values.r);
+                            $('#bp').val(values.bp);
+                            $('#uterusHeight').val(values.uterusHeight);
+                            $('#uterusHardness').val(values.uterusHardness);
+                            $('#color').val(values.color);
+                            $('#character1').val(values.character1);
+                            $('#taste').val(values.taste);
+                            $('#perineumWound').val(values.perineumWound);
+                            $('#cesareanWound').val(values.cesareanWound);
+                            $('#mastitis').val(values.mastitis);
+                            $('#defecation').val(values.defecation);
+                            $('#infectiousDiseases').val(values.infectiousDiseases);
+                            $('#extraMedications').val(values.extraMedications);
+                            $('#mentalState').val(values.mentalState);
+                            $('#edemaState').val(values.edemaState);
+                            $('#emotionalState').val(values.emotionalState);
+                            $('#assessment').val(values.assessment);
+                            $('#assessmentTime').val(values.assessmentTime);
+                            $('#note').val(values.note);
+                            $('#secretion').val(values.secretion);
+                            $('#mothername').val(values.mothername);
+                            $('#hemorrhoids').val(values.hemorrhoids);
+                        },
+                        buttons: [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function () {
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'mothername': $('#mothername').val(),
+                                    'badNo': $('#badNo').val(),
+                                    'childTime': $('#childTime').val(),
+                                    'weightIncrease': $('#weightIncrease').val(),
+                                    'pregnancy': $('#pregnancy').val(),
+                                    'childBirthWay': $('#childBirthWay').val(),
+                                    'pph': $('#pph').val(),
+                                    'tear': $('#tear').val(),
+                                    't': $('#t').val(),
+                                    'p': $('#p').val(),
+                                    'r': $('#r').val(),
+                                    'bp': $('#bp').val(),
+                                    'uterusHeight': $('#uterusHeight').val(),
+                                    'uterusHardness': $('#uterusHardness').val(),
+                                    'lochia': $('#lochia').val(),
+                                    'color': $('#color').val(),
+                                    'character1': $('#character1').val(),
+                                    'taste': $('#taste').val(),
+                                    'perineumWound': $('#perineumWound').val(),
+                                    'cesareanWound': $('#cesareanWound').val(),
+                                    'breast': $('#breast').val(),
+                                    'nipple': $('#nipple').val(),
+                                    'mastitis': $('#mastitis').val(),
+                                    'defecation': $('#defecation').val(),
+                                    'infectiousDiseases': $('#infectiousDiseases').val(),
+                                    'extraMedications': $('#extraMedications').val(),
+                                    'mentalState': $('#mentalState').val(),
+                                    'edemaState': $('#edemaState').val(),
+                                    'emotionalState': $('#emotionalState').val(),
+                                    'assessment': $('#assessment').val(),
+                                    'assessmentTime': $('#assessmentTime').val(),
+                                    'note': $('#note').val(),
+                                    'secretion': $('#secretion').val(),
+                                    'hemorrhoids': $('#hemorrhoids').val(),
+                                    'customerBasicId':'${motherid}',
+                                    'storeId': '<%=session.getAttribute("storeId")%>'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        mothername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈姓名不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        badNo: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '床号不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        childTime: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '胎次不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        color: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '颜色不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        taste: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '味道不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        breast: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '乳房不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        infectiousDiseases: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '传染病不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        mentalState: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '精神状态不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        emotionalState: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '情绪状态不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        assessment: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '评估人不能为空'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if (bootstrapValidator.isValid()) {
+                                    $.post("${ctx}/motherEvaluate/updateMotherEvaluate", json).done(function (data) {
+                                        getCode(data);
+                                    }).fail(function (data) {
+                                        getCode(data)
+                                    });
+                                }
+                            }
+                        }, {
+                            label: '关闭',
+                            icon: 'fa fa-close',
+                            action: function (dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //删除操作
+                deleteRow: function (row) {
+                    myConfirm("${ctx}/motherEvaluate/deleteMotherEvaluate", row);
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

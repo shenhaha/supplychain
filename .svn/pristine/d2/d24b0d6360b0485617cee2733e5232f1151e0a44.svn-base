@@ -1,0 +1,92 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group col-md-5" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-sm-5">
+                <label for="goodsId" class="col-sm-4 control-label">商品名称</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="goodsId" name="goodsId" placeholder="goodsId">
+
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group col-sm-5">
+                <label for="goodsNum" class="col-sm-4 control-label">数量</label>
+                <div class="col-sm-5">
+                    <input type="text"  class="form-control" id="goodsNum"
+                           name="goodsNum" placeholder="数量" >
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-5" hidden="hidden">
+                <label for="serialnum" class="col-sm-4 control-label">编号</label>
+                <div class="col-sm-5">
+                    <input type="text"  class="form-control" id="serialnum"
+                           name="serialnum" placeholder="编号" >
+                </div>
+            </div>
+            <div class="form-group col-sm-5" hidden="hidden">
+                <label for="price" class="col-sm-4 control-label">价格</label>
+                <div class="col-sm-5">
+                    <input type="text"  class="form-control" id="price" name="price"  placeholder="价格">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+
+    $(function () {
+        //动态查询库存商品信息
+        $.ajax({
+            url:"${ctx}/stock/selectOnlyByStoreId",
+            type:"post",
+            success:function(data){
+                for(var i=0;i<data.length;i++){
+
+                    $("#goodsId").append("<option  value='" + data[i].goodsId + "'>" + data[i].goodsName + "</option>");
+
+                }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

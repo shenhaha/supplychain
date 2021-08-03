@@ -1,0 +1,248 @@
+package com.luer.servicecenter.bean;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+@Data
+public class CustomerBasic {
+    private String id;
+
+    private String storeId;
+
+    private String motherId;
+
+    private String name;
+
+    private String sex;
+
+    private String age;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date birthDate;
+
+    private String bornHospital;
+
+    private String type;
+
+    private String weight;
+
+    private String height;
+
+    private String contact;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    private String mothername;
+
+    private String avoid;
+
+    private String status;
+
+    private String checkStatus;
+
+    private String motherType;
+
+    private String bornStyle;
+
+    private String gestation;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date optiondate;
+
+    private String optionway;
+
+    private String jaundice;
+
+    private String plantarBlood;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(String motherId) {
+        this.motherId = motherId == null ? null : motherId.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age == null ? null : age.trim();
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getBornHospital() {
+        return bornHospital;
+    }
+
+    public void setBornHospital(String bornHospital) {
+        this.bornHospital = bornHospital == null ? null : bornHospital.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight == null ? null : weight.trim();
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height == null ? null : height.trim();
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact == null ? null : contact.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getMothername() {
+        return mothername;
+    }
+
+    public void setMothername(String mothername) {
+        this.mothername = mothername == null ? null : mothername.trim();
+    }
+
+    public String getAvoid() {
+        return avoid;
+    }
+
+    public void setAvoid(String avoid) {
+        this.avoid = avoid == null ? null : avoid.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(String checkStatus) {
+        this.checkStatus = checkStatus == null ? null : checkStatus.trim();
+    }
+
+    public String getMotherType() {
+        return motherType;
+    }
+
+    public void setMotherType(String motherType) {
+        this.motherType = motherType == null ? null : motherType.trim();
+    }
+
+    public String getBornStyle() {
+        return bornStyle;
+    }
+
+    public void setBornStyle(String bornStyle) {
+        this.bornStyle = bornStyle == null ? null : bornStyle.trim();
+    }
+
+    public Date getOptiondate() {
+        return optiondate;
+    }
+
+    public void setOptiondate(Date optiondate) {
+        this.optiondate = optiondate;
+    }
+
+    public String getOptionway() {
+        return optionway;
+    }
+
+    public void setOptionway(String optionway) {
+        this.optionway = optionway == null ? null : optionway.trim();
+    }
+
+    public String getJaundice() {
+        return jaundice;
+    }
+
+    public void setJaundice(String jaundice) {
+        this.jaundice = jaundice == null ? null : jaundice.trim();
+    }
+
+    public String getPlantarBlood() {
+        return plantarBlood;
+    }
+
+    public void setPlantarBlood(String plantarBlood) {
+        this.plantarBlood = plantarBlood == null ? null : plantarBlood.trim();
+    }
+    public String getGestation() {
+        return gestation;
+    }
+
+    public void setGestation(String gestation) {
+        this.gestation = gestation == null ? null : gestation.trim();
+    }
+}

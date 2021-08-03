@@ -1,0 +1,52 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.*;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface MealmanagerMapper {
+    int countByExample(MealmanagerExample example);
+
+    int deleteByExample(MealmanagerExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Mealmanager record);
+
+    int insertSelective(Mealmanager record);
+
+    List<Mealmanager> selectByExample(MealmanagerExample example);
+
+    Mealmanager selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Mealmanager record, @Param("example") MealmanagerExample example);
+
+    int updateByExample(@Param("record") Mealmanager record, @Param("example") MealmanagerExample example);
+
+    int updateByPrimaryKeySelective(Mealmanager record);
+
+    int updateByPrimaryKey(Mealmanager record);
+
+    //按妈妈id分组查询统计早餐，中餐，晚餐，家属餐总数
+    List<MealmanagerCount> selectCountByMotherId(String store_id);
+
+    //查询所有妈妈，所有天的早中晚家属餐和房号记录
+    List<MealManagerTable> selectAllbyPage();
+
+    //根据妈妈id查询该妈妈所有28天的早中晚家属餐和房号记录
+    List<MealManagerTable> selectAllbyMotherid(String motherid);
+
+    //根据房间号查询房间id
+    String selectRoomIdByRoomnum(String roomnum);
+
+    List<MealDayAccount> getmealAccount(@Param("storeId") String storeId);
+//根据妈妈id统计妈妈的月子餐
+    List<MealmanagerCount> getmealAccountByMotherId(String motherId);
+
+    Double selectRefundByMotherId(String customerBasicId);
+}

@@ -1,0 +1,132 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.WorryEvaluate;
+import com.luer.servicecenter.bean.WorryProblem;
+import com.luer.servicecenter.service.WorryEvaluateService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/17.
+ */
+@Controller
+@RequestMapping("/worryEvaluate")
+public class WorryEvaluateController {
+    @Autowired
+    private WorryEvaluateService worryEvaluateService;
+
+
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getWorryProblemByMotherId")
+    @ResponseBody
+    public List<WorryProblem> getWorryProblemByMotherId(@NonNull String customerBasicId){
+
+        List<WorryProblem> worryProblems= worryEvaluateService.getWorryProblemByMotherId(customerBasicId);
+
+        return  worryProblems;
+
+    }
+
+
+
+
+
+
+
+
+
+    @RequestMapping(value = "/addWorryProblem")
+    @ResponseBody
+    public ResultSet add(@NonNull WorryProblem worryProblem){
+
+        worryEvaluateService.addWorryProblem(worryProblem);
+
+        return  ResultSet.getSuccess();
+
+    }
+
+    @RequestMapping(value = "/deleteWorryProblem")
+    @ResponseBody
+    public ResultSet delete(@NonNull String id){
+
+        worryEvaluateService.deleteWorryProblem(id);
+
+        return  ResultSet.getSuccess();
+
+    }
+    @GetMapping("/")
+    public ModelAndView init(ModelAndView modelAndView){
+        modelAndView.setViewName("servicecenter/borryProblem");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/getWorryProblem")
+    @ResponseBody
+    public List<WorryProblem> getList(@NonNull WorryProblem worryProblem){
+
+        List<WorryProblem> worryProblems= worryEvaluateService.getWorryProblem(worryProblem);
+
+        return  worryProblems;
+
+    }
+    @RequestMapping(value = "/updateWorryProblem")
+    @ResponseBody
+    public ResultSet update(@NonNull WorryProblem worryProblem){
+
+     worryEvaluateService.updateWorryProblem(worryProblem);
+
+        return  ResultSet.getSuccess();
+
+    }
+
+    @PostMapping(value = "/addWorryEvaluate")
+    @ResponseBody
+    public ResultSet addWorryEvaluate(@NonNull WorryEvaluate worryEvaluate){
+
+        worryEvaluateService.addWorryEvaluate(worryEvaluate);
+
+        return  ResultSet.getSuccess();
+
+    }
+
+    @RequestMapping(value = "/updateWorryEvaluate")
+    @ResponseBody
+    public ResultSet updateWorryEvaluate(@NonNull WorryEvaluate worryEvaluate){
+
+        worryEvaluateService.updateWorryEvaluate(worryEvaluate);
+
+        return  ResultSet.getSuccess();
+
+    }
+    @RequestMapping(value = "/deleteWorryEvaluate")
+    @ResponseBody
+    public ResultSet deleteWorryEvaluate(@NonNull String id){
+
+        worryEvaluateService.deleteWorryEvaluate(id);
+
+        return  ResultSet.getSuccess();
+
+    }
+    @RequestMapping(value = "/getWorryEvaluate")
+    @ResponseBody
+    public List<WorryEvaluate>  getWorryEvaluate(@NonNull WorryEvaluate worryEvaluate){
+
+        List<WorryEvaluate> worryEvaluates= worryEvaluateService.getListEvaluate(worryEvaluate.getStoreId());
+
+        return  worryEvaluates;
+
+    }
+
+
+
+}

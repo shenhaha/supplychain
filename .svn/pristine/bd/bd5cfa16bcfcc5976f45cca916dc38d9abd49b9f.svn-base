@@ -1,0 +1,52 @@
+package com.luer.storesdata.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storesdata.bean.RoomStyles;
+import com.luer.storesdata.dao.RoomMapper;
+import com.luer.storesdata.dao.RoomStylesMapper;
+import com.luer.storesdata.service.RoomStylesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/29.
+ */
+@Service
+@Transactional
+public class RoomStylesServiceImpl implements RoomStylesService {
+
+    @Autowired
+    private RoomStylesMapper roomStylesMapper;
+    @Autowired
+    private RoomMapper roomMapper;
+    public void addRoomStyles(RoomStyles roomStyles) {
+        roomStyles.setId(UUIDUtils.getUUID());
+        roomStylesMapper.insert(roomStyles);
+    }
+
+    @Override
+    public void updateRoomStyles(RoomStyles roomStyles) {
+        roomMapper.updateRooms(roomStyles.getId(),roomStyles.getRoomStyle());
+        roomStylesMapper.updateByPrimaryKeySelective(roomStyles);
+
+    }
+
+    @Override
+    public void deleteRoomStyles(String id) {
+        roomStylesMapper.deleteByPrimaryKey(id);
+
+    }
+
+    @Override
+    public List<RoomStyles> getRoomStyles() {
+        return roomStylesMapper.getRoomStylesList();
+    }
+
+    @Override
+    public List<RoomStyles> getRoomStylesList(String storeId) {
+        return roomStylesMapper.getRoomStyles(storeId);
+    }
+}

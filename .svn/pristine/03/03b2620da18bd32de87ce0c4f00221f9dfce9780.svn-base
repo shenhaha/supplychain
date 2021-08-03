@@ -1,0 +1,185 @@
+package com.luer.servicecenter.bean;
+
+import java.util.Date;
+
+public class Motherworryquestion {
+    private String id;
+
+    private String mothername;
+
+    private String answerone;
+
+    private String answertwo;
+
+    private String answerthree;
+
+    private String answerfour;
+
+    private String answerfive;
+
+    private String answersix;
+
+    private String answerseven;
+
+    private String answereight;
+
+    private String answernine;
+
+    private String answerten;
+
+    private String storeid;
+
+    private String motherid;
+
+    private Date updatetime;
+
+    private String store;
+
+    private String age;
+
+    private String roomnumber;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getMothername() {
+        return mothername;
+    }
+
+    public void setMothername(String mothername) {
+        this.mothername = mothername == null ? null : mothername.trim();
+    }
+
+    public String getAnswerone() {
+        return answerone;
+    }
+
+    public void setAnswerone(String answerone) {
+        this.answerone = answerone == null ? null : answerone.trim();
+    }
+
+    public String getAnswertwo() {
+        return answertwo;
+    }
+
+    public void setAnswertwo(String answertwo) {
+        this.answertwo = answertwo == null ? null : answertwo.trim();
+    }
+
+    public String getAnswerthree() {
+        return answerthree;
+    }
+
+    public void setAnswerthree(String answerthree) {
+        this.answerthree = answerthree == null ? null : answerthree.trim();
+    }
+
+    public String getAnswerfour() {
+        return answerfour;
+    }
+
+    public void setAnswerfour(String answerfour) {
+        this.answerfour = answerfour == null ? null : answerfour.trim();
+    }
+
+    public String getAnswerfive() {
+        return answerfive;
+    }
+
+    public void setAnswerfive(String answerfive) {
+        this.answerfive = answerfive == null ? null : answerfive.trim();
+    }
+
+    public String getAnswersix() {
+        return answersix;
+    }
+
+    public void setAnswersix(String answersix) {
+        this.answersix = answersix == null ? null : answersix.trim();
+    }
+
+    public String getAnswerseven() {
+        return answerseven;
+    }
+
+    public void setAnswerseven(String answerseven) {
+        this.answerseven = answerseven == null ? null : answerseven.trim();
+    }
+
+    public String getAnswereight() {
+        return answereight;
+    }
+
+    public void setAnswereight(String answereight) {
+        this.answereight = answereight == null ? null : answereight.trim();
+    }
+
+    public String getAnswernine() {
+        return answernine;
+    }
+
+    public void setAnswernine(String answernine) {
+        this.answernine = answernine == null ? null : answernine.trim();
+    }
+
+    public String getAnswerten() {
+        return answerten;
+    }
+
+    public void setAnswerten(String answerten) {
+        this.answerten = answerten == null ? null : answerten.trim();
+    }
+
+    public String getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(String storeid) {
+        this.storeid = storeid == null ? null : storeid.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getStore() {
+        return store;
+    }
+
+    public void setStore(String store) {
+        this.store = store == null ? null : store.trim();
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age == null ? null : age.trim();
+    }
+
+    public String getRoomnumber() {
+        return roomnumber;
+    }
+
+    public void setRoomnumber(String roomnumber) {
+        this.roomnumber = roomnumber == null ? null : roomnumber.trim();
+    }
+}

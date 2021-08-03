@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.WorryProblemMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.WorryProblem" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="answerone" property="answerone" jdbcType="VARCHAR" />
+    <result column="answertwo" property="answertwo" jdbcType="VARCHAR" />
+    <result column="answerthree" property="answerthree" jdbcType="VARCHAR" />
+    <result column="answerfour" property="answerfour" jdbcType="VARCHAR" />
+    <result column="answer_choose" property="answerChoose" jdbcType="VARCHAR" />
+    <result column="evaluation" property="evaluation" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="getList"  resultMap="BaseResultMap">
+    select * from worry_problem where store_id = #{store_id}
+  </select>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, store_id, problem, answerone, answertwo, answerthree, answerfour, answer_choose, 
+    evaluation
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.WorryProblemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from worry_problem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from worry_problem
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from worry_problem
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.WorryProblemExample" >
+    delete from worry_problem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.WorryProblem" >
+    insert into worry_problem (id, store_id, problem, 
+      answerone, answertwo, answerthree, 
+      answerfour, answer_choose, evaluation
+      )
+    values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{problem,jdbcType=VARCHAR}, 
+      #{answerone,jdbcType=VARCHAR}, #{answertwo,jdbcType=VARCHAR}, #{answerthree,jdbcType=VARCHAR}, 
+      #{answerfour,jdbcType=VARCHAR}, #{answerChoose,jdbcType=VARCHAR}, #{evaluation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.WorryProblem" >
+    insert into worry_problem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="problem != null" >
+        problem,
+      </if>
+      <if test="answerone != null" >
+        answerone,
+      </if>
+      <if test="answertwo != null" >
+        answertwo,
+      </if>
+      <if test="answerthree != null" >
+        answerthree,
+      </if>
+      <if test="answerfour != null" >
+        answerfour,
+      </if>
+      <if test="answerChoose != null" >
+        answer_choose,
+      </if>
+      <if test="evaluation != null" >
+        evaluation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="problem != null" >
+        #{problem,jdbcType=VARCHAR},
+      </if>
+      <if test="answerone != null" >
+        #{answerone,jdbcType=VARCHAR},
+      </if>
+      <if test="answertwo != null" >
+        #{answertwo,jdbcType=VARCHAR},
+      </if>
+      <if test="answerthree != null" >
+        #{answerthree,jdbcType=VARCHAR},
+      </if>
+      <if test="answerfour != null" >
+        #{answerfour,jdbcType=VARCHAR},
+      </if>
+      <if test="answerChoose != null" >
+        #{answerChoose,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluation != null" >
+        #{evaluation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.WorryProblemExample" resultType="java.lang.Integer" >
+    select count(*) from worry_problem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update worry_problem
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.problem != null" >
+        problem = #{record.problem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerone != null" >
+        answerone = #{record.answerone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answertwo != null" >
+        answertwo = #{record.answertwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerthree != null" >
+        answerthree = #{record.answerthree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerfour != null" >
+        answerfour = #{record.answerfour,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerChoose != null" >
+        answer_choose = #{record.answerChoose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluation != null" >
+        evaluation = #{record.evaluation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update worry_problem
+    set id = #{record.id,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      problem = #{record.problem,jdbcType=VARCHAR},
+      answerone = #{record.answerone,jdbcType=VARCHAR},
+      answertwo = #{record.answertwo,jdbcType=VARCHAR},
+      answerthree = #{record.answerthree,jdbcType=VARCHAR},
+      answerfour = #{record.answerfour,jdbcType=VARCHAR},
+      answer_choose = #{record.answerChoose,jdbcType=VARCHAR},
+      evaluation = #{record.evaluation,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.WorryProblem" >
+    update worry_problem
+    <set >
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="problem != null" >
+        problem = #{problem,jdbcType=VARCHAR},
+      </if>
+      <if test="answerone != null" >
+        answerone = #{answerone,jdbcType=VARCHAR},
+      </if>
+      <if test="answertwo != null" >
+        answertwo = #{answertwo,jdbcType=VARCHAR},
+      </if>
+      <if test="answerthree != null" >
+        answerthree = #{answerthree,jdbcType=VARCHAR},
+      </if>
+      <if test="answerfour != null" >
+        answerfour = #{answerfour,jdbcType=VARCHAR},
+      </if>
+      <if test="answerChoose != null" >
+        answer_choose = #{answerChoose,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluation != null" >
+        evaluation = #{evaluation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.WorryProblem" >
+    update worry_problem
+    set store_id = #{storeId,jdbcType=VARCHAR},
+      problem = #{problem,jdbcType=VARCHAR},
+      answerone = #{answerone,jdbcType=VARCHAR},
+      answertwo = #{answertwo,jdbcType=VARCHAR},
+      answerthree = #{answerthree,jdbcType=VARCHAR},
+      answerfour = #{answerfour,jdbcType=VARCHAR},
+      answer_choose = #{answerChoose,jdbcType=VARCHAR},
+      evaluation = #{evaluation,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

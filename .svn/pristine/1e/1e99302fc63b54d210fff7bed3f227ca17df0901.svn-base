@@ -1,0 +1,21 @@
+package com.luer.storesdata.service;
+
+import com.luer.storesdata.bean.Credentials;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+
+public interface CredentialsService {
+    //上传证书资料(证件所属id（门店id/员工id）,证件名称,证件号)
+    void uploadCredentials(MultipartFile files, Credentials credentials) throws IOException;
+
+    //删除证书
+    void deleteCredentialsById(String id) throws IOException;
+
+    //修改证书信息
+    void updateCredentials(Credentials credentials, MultipartFile file);
+
+    //通过otherId查询证书信息
+    List<Credentials> selectCredentialsbyOtherId(String otherId) throws IOException;
+}

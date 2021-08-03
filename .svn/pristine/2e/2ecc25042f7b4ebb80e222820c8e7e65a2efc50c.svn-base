@@ -1,0 +1,16 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Pavilionassessment;
+import com.luer.servicecenter.bean.PavilionassessmentExample;
+
+import java.util.List;
+
+public interface PavilionAssessmentService {
+    int insert(Pavilionassessment record);
+    int deleteByPrimaryKey(String id);
+    int updateByPrimaryKey(Pavilionassessment record);
+    List<Pavilionassessment> selectByExample(Pavilionassessment example);
+    Pavilionassessment selectByPrimaryKey(String id);
+
+    List<Pavilionassessment> getPavilionByMotherId(String motherid);
+}

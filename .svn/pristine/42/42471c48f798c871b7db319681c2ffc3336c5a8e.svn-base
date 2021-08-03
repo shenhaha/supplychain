@@ -1,0 +1,111 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.Schedule;
+import com.luer.storemanager.bean.ScheduleList;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 排班服务接口
+ *
+ * @description
+ * @ClassName ScheduleService
+ * @Author GavinJiang
+ * @Date 2018/8/14 11:28.
+ */
+public interface ScheduleService {
+    /**
+     * @return 查询所有的排班信息
+     * @author GavinJiang
+     * @date 2018/8/14 11:31
+     * @params []
+     */
+    List<ScheduleList> selectSchedule();
+
+    /**
+     * @return int
+     * @description 添加排班信息
+     * @author GavinJiang
+     * @date 2018/8/14 11:32
+     * @params [record]
+     */
+    int insert(Schedule record,String date) throws ParseException;
+
+    /**
+     * @return int
+     * 修改排班信息
+     * @author GavinJiang
+     * @date 2018/8/14 11:45
+     * @params [record]
+     */
+    int updateByPrimaryKeySelective(Schedule record);
+
+    /**
+     * 删除排班信息
+     *
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/14 11:46
+     * @params [id]
+     */
+    int deleteByPrimaryKey(String id);
+
+    /**
+     * 根据员工id、所在部门和班次类型查询对应的排班信息
+     *
+     * @param employId   员工id
+     * @param department 所在部门
+     * @param type       班次类型
+     * @return
+     */
+    List<Schedule> selectScheduleByType(String employId, String department, String type);
+
+
+    /**
+     * 根据开始时间、结束时间、员工id、所在部门和班次类型查询对应的排班信息(条件可为null)
+     *
+     * @param startTime  开始时间
+     * @param endTime    结束时间
+     * @param employId   员工id
+     * @param department 所在部门
+     * @param type       班次类型
+     * @return java.util.List<com.luer.storemanager.bean.Schedule>
+     * @author GavinJiang
+     * @date 2018/8/14 17:55
+     * @params
+     */
+    List<Schedule> selectScheduleByTime(Date startTime, Date endTime, String employId, String department, String type);
+
+    /**
+     * 查询所有的排班信息
+     *
+     * @return java.util.List
+     * @author GavinJiang
+     * @params
+     */
+    List selectScheduleAllList(String storeId);
+
+    /**
+     * @return int
+     * 修改排班信息
+     * @author GavinJiang
+     * @params [record]
+     */
+    int updateScheduleById(String id, String starttime, String endtime, String employid);
+
+    /**
+     * 系统默认的排班规则,循环遍历员工表,在需要排班的日期内，根据排班人数，每天都生成相应的排班信息
+     *
+     * @param startTime 排班开始日期
+     * @param endTime   排班结束日期
+     * @param number    每天排班总人数
+     * @return int
+     * @author GavinJiang
+     * @params
+     */
+    int defaultSchedule(Date startTime, Date endTime,int number) throws ParseException;
+
+    void advanceSchedule(String storeId);
+}

@@ -1,0 +1,33 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Pavilioneducation;
+import com.luer.servicecenter.bean.PavilioneducationExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface PavilioneducationMapper {
+    int countByExample(PavilioneducationExample example);
+
+    int deleteByExample(PavilioneducationExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Pavilioneducation record);
+
+    int insertSelective(Pavilioneducation record);
+
+    List<Pavilioneducation> selectByExample(PavilioneducationExample example);
+
+    Pavilioneducation selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Pavilioneducation record, @Param("example") PavilioneducationExample example);
+
+    int updateByExample(@Param("record") Pavilioneducation record, @Param("example") PavilioneducationExample example);
+
+    int updateByPrimaryKeySelective(Pavilioneducation record);
+
+    int updateByPrimaryKey(Pavilioneducation record);
+
+    List<Pavilioneducation> getPavilioneducationByMotherId(@Param("motherId") String motherid);
+}

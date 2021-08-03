@@ -1,0 +1,10 @@
+package com.luer.users.service;
+
+import com.luer.storesdata.bean.StoreFile;
+
+import javax.servlet.http.HttpServletRequest;
+
+public interface BranchService {
+
+    int addAdmin(StoreFile storeFile, String username, String password, HttpServletRequest request);
+}

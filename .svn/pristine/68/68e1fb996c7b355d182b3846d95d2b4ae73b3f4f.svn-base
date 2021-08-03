@@ -1,0 +1,137 @@
+package com.luer.businessmanager.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Callrecord {
+    private String id;
+
+    private String name;
+
+    private String tell;
+
+    private String forwhom;
+
+    private String way;
+
+    private String personnel;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date takeTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    private String isRegistration;
+
+    private String note;
+
+    private String storeId;
+
+    private Integer times;
+
+    private String callcontent;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getTell() {
+        return tell;
+    }
+
+    public void setTell(String tell) {
+        this.tell = tell == null ? null : tell.trim();
+    }
+
+    public String getForwhom() {
+        return forwhom;
+    }
+
+    public void setForwhom(String forwhom) {
+        this.forwhom = forwhom == null ? null : forwhom.trim();
+    }
+
+    public String getWay() {
+        return way;
+    }
+
+    public void setWay(String way) {
+        this.way = way == null ? null : way.trim();
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel == null ? null : personnel.trim();
+    }
+
+    public Date getTakeTime() {
+        return takeTime;
+    }
+
+    public void setTakeTime(Date takeTime) {
+        this.takeTime = takeTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getIsRegistration() {
+        return isRegistration;
+    }
+
+    public void setIsRegistration(String isRegistration) {
+        this.isRegistration = isRegistration == null ? null : isRegistration.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public Integer getTimes() {
+        return times;
+    }
+
+    public void setTimes(Integer times) {
+        this.times = times;
+    }
+
+    public String getCallcontent() {
+        return callcontent;
+    }
+
+    public void setCallcontent(String callcontent) {
+        this.callcontent = callcontent == null ? null : callcontent.trim();
+    }
+}

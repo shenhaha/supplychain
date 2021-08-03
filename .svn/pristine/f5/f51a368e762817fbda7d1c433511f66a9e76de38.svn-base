@@ -1,0 +1,86 @@
+package com.luer.businessmanager.service.impl;
+
+import com.luer.businessmanager.bean.Visit;
+import com.luer.businessmanager.bean.VisitExample;
+import com.luer.businessmanager.dao.VisitMapper;
+import com.luer.businessmanager.service.VisitService;
+import com.luer.comm.utils.UUIDUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+/**
+* @author 张路明
+*/
+@Service
+@Transactional
+public class VisitServiceImpl implements VisitService {
+    @Autowired
+    VisitMapper visitMapper;
+
+    /**
+     * 新增
+     * @param visit
+     * @return
+     */
+    @Override
+    public int insert(Visit visit) {
+        visit.setId(UUIDUtils.getUUID());
+        int  i = visitMapper.insert(visit);
+        return i;
+    }
+
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @Override
+    public int deleteVisitor(String id) {
+        VisitExample visitExample = new VisitExample();
+        VisitExample.Criteria criteria = visitExample.createCriteria();
+        criteria.andIdLike(id);
+        int i = visitMapper.deleteByExample(visitExample);
+        return i;
+    }
+
+    @Override
+    public void updateVisitor(Visit visit) {
+        visitMapper.updateByPrimaryKeySelective(visit);
+    }
+
+    /**
+     * 查询
+     * @return
+     */
+    @Override
+    public List<Visit> getVisitors3( String storeId, String classification,String level) {
+        VisitExample visitExample = new VisitExample();
+        VisitExample.Criteria criteria = visitExample.createCriteria();
+        if(storeId!=null){
+            criteria.andStoreIdEqualTo(storeId);
+        }
+        if(classification!=null){
+            criteria.andClassificationEqualTo(classification);
+        }
+
+        List<Visit> visits = visitMapper.selectByLevel(storeId,classification,level);
+        return visits;
+    }
+
+    @Override
+    public List<Visit> getVisitors(String storeId, String classification) {
+        VisitExample visitExample = new VisitExample();
+        VisitExample.Criteria criteria = visitExample.createCriteria();
+        if(storeId!=null){
+            criteria.andStoreIdEqualTo(storeId);
+        }
+        if(classification!=null){
+            criteria.andClassificationEqualTo(classification);
+        }
+        return visitMapper.selectByExample(visitExample);
+    }
+
+}

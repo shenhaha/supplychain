@@ -1,0 +1,51 @@
+package com.luer.systemmanager.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.systemmanager.bean.ParameterSet;
+import com.luer.systemmanager.service.ParameterSetService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/9/29.
+ */
+@Controller
+@RequestMapping(value = "/parameterSet")
+public class ParameterSetController {
+    @Autowired
+    private ParameterSetService parameterSetService;
+
+
+    @RequestMapping(value = "/addParameterSet")
+    @ResponseBody
+    public ResultSet addParameterSet(@NonNull ParameterSet parameterSet){
+            parameterSetService.addParameterSet(parameterSet);
+            return ResultSet.getSuccess();
+    }
+    @RequestMapping(value = "/updateParameterSet")
+    @ResponseBody
+    public ResultSet updateParameterSet(@NonNull ParameterSet parameterSet){
+            parameterSetService.updateParameterSet(parameterSet);
+            return ResultSet.getSuccess();
+    }
+    @RequestMapping(value = "/getParameterSet")
+    @ResponseBody
+    public List<ParameterSet> getParameterSet(@NonNull String storeId){
+
+            return parameterSetService.getParameterSet(storeId);
+    }
+
+    @RequestMapping(value = "/getEndday")
+    @ResponseBody
+    public Date getEndday(){
+
+        return parameterSetService.getEndday();
+    }
+
+}

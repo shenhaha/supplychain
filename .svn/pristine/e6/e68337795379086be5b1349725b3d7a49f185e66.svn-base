@@ -1,0 +1,22 @@
+package com.luer.storesdata.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
+
+@Getter
+@Setter
+public class AccountInfo {
+
+    private  String id;
+    private  String username;
+
+    private Date createTime;
+
+    private String companyName;
+
+    private String sort;
+
+    private String leader;
+}

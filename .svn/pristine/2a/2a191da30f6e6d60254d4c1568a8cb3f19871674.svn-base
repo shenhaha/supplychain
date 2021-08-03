@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.stockandsales.dao.GoodsTwoMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.stockandsales.bean.GoodsTwo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="goods_one_id" property="goodsOneId" jdbcType="VARCHAR" />
+    <result column="classify_two" property="classifyTwo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, goods_one_id, classify_two
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.stockandsales.bean.GoodsTwoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods_two
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goods_two
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from goods_two
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.stockandsales.bean.GoodsTwoExample" >
+    delete from goods_two
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.stockandsales.bean.GoodsTwo" >
+    insert into goods_two (id, goods_one_id, classify_two
+      )
+    values (#{id,jdbcType=VARCHAR}, #{goodsOneId,jdbcType=VARCHAR}, #{classifyTwo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.stockandsales.bean.GoodsTwo" >
+    insert into goods_two
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsOneId != null" >
+        goods_one_id,
+      </if>
+      <if test="classifyTwo != null" >
+        classify_two,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsOneId != null" >
+        #{goodsOneId,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyTwo != null" >
+        #{classifyTwo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.stockandsales.bean.GoodsTwoExample" resultType="java.lang.Integer" >
+    select count(*) from goods_two
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods_two
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsOneId != null" >
+        goods_one_id = #{record.goodsOneId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classifyTwo != null" >
+        classify_two = #{record.classifyTwo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods_two
+    set id = #{record.id,jdbcType=VARCHAR},
+    goods_one_id = #{record.goodsOneId,jdbcType=VARCHAR},
+    classify_two = #{record.classifyTwo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.stockandsales.bean.GoodsTwo" >
+    update goods_two
+    <set >
+      <if test="goodsOneId != null" >
+        goods_one_id = #{goodsOneId,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyTwo != null" >
+        classify_two = #{classifyTwo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.stockandsales.bean.GoodsTwo" >
+    update goods_two
+    set goods_one_id = #{goodsOneId,jdbcType=VARCHAR},
+      classify_two = #{classifyTwo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from goods_two
+  </select>
+
+</mapper>

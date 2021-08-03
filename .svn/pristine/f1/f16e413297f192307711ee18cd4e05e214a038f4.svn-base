@@ -1,0 +1,235 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>满月照满意度调查</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li class="active">满月照满意度调查</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="repairdiv">
+                    <div class="panel-body" >
+                        <div class="table-responsive">
+                            <table id="storeFileLists" class="table" data-paging="true" data-filtering="true" data-sorting="true">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $.ajax({
+            url: "${ctx}/room/queryAllRoom",
+            type: "post",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#roomnum").append("<option value='" + data[i].num + "'>" + data[i].num + "</option>");
+                }
+            }
+        });
+        var storeFileTitle = [
+            {"name": "id", "visible": false},
+            {"name": "roomnum", "title": "房间号"},
+            {"name": "mamname", "title": "妈妈姓名"},
+            {"name": "progess", "title": "服务中进度的掌握"},
+            {"name": "skills", "title": "专业技能满意程度"},
+            {"name": "attitude", "title": "服务态度满意程度"},
+            {"name": "solution", "title": "解决问题的情况"},
+            {"name": "consumption", "title": "强制消费的满意度"},
+            {"name": "feedback", "title": "改进意见"},
+        ];
+        //启动模态框
+        var $modal = $('#app-editor-modal'),
+                $editor = $('#editor'),
+                $editorTitle = $('#editor-title')
+        //启动footable 查询所有的门店人员会议信息
+        var ft = FooTable.init('#storeFileLists', {
+            "columns": storeFileTitle,
+            "rows": $.get("${ctx}/satisfactionSurvey/selectSatisfactionSurveys?surveyType=3&storeId="+'<%=session.getAttribute("storeId")%>'),
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storemanager/fullmoonphoto.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'roomnum': $('#roomnum').val(),
+                                    'mamname': $('#mamname').val(),
+                                    'progess': $('#progess').val(),
+                                    'skills': $('#skills').val(),
+                                    'attitude': $('#attitude').val(),
+                                    'solution': $('#solution').val(),
+                                    'consumption': $('#consumption').val(),
+                                    'storeFileId':'<%=session.getAttribute("storeId")%>',
+                                    'feedback': $('#feedback').val()
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        roomnum: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间号不能为空'
+                                                },
+                                            }
+                                        },
+                                        mamname:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    //新增一条记录   url服务器路径
+                                    $.post("${ctx}/satisfactionSurvey/saveSatisfactionSurvey?surveyType=3",json).done(function(data){
+                                        getCode(data)
+                                    }).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color:#ab8ce4\"><i class='fa fa-plus'></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storemanager/fullmoonphoto.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $('#id').val(values.id);
+                            $('#roomnum').val(values.roomnum);
+                            $('#mamname').val(values.mamname);
+                            $('#progess').val(values.progess);
+                            $('#skills').val(values.skills);
+                            $('#attitude').val(values.attitude);
+                            $('#solution').val(values.solution);
+                            $('#consumption').val(values.consumption);
+                            $('#feedback').val(values.feedback);
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'roomnum': $('#roomnum').val(),
+                                    'mamname': $('#mamname').val(),
+                                    'progess': $('#progess').val(),
+                                    'skills': $('#skills').val(),
+                                    'attitude': $('#attitude').val(),
+                                    'solution': $('#solution').val(),
+                                    'consumption': $('#consumption').val(),
+                                    'storeFileId':'<%=session.getAttribute("storeId")%>',
+                                    'feedback': $('#feedback').val()
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        roomnum: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间号不能为空'
+                                                },
+                                            }
+                                        },
+                                        mamname:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/satisfactionSurvey/updateSatisfactionSurvey",json).done(function(data){
+                                        getCode(data);
+                                    }).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作    url  服务器路径
+                deleteRow: function(row){
+                    myConfirm("${ctx}/satisfactionSurvey/deleteSatisfactionSurvey",row);
+                }
+            }
+        });
+        uid = 10;
+    });
+</script>
+</body>
+</html>

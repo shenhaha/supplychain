@@ -1,0 +1,153 @@
+package com.luer.storemanager.bean;
+
+public class SatisfactionSurvey {
+    private String id;
+
+    private String roomnum;
+
+    private String mamname;
+
+    private Integer surveyType;
+
+    private String skills;
+
+    private String attitude;
+
+    private String communication;
+
+    private String progess;
+
+    private String solution;
+
+    private String costumes;
+
+    private String time;
+
+    private String extraservice;
+
+    private String consumption;
+
+    private String feedback;
+
+    private String storeFileId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getRoomnum() {
+        return roomnum;
+    }
+
+    public void setRoomnum(String roomnum) {
+        this.roomnum = roomnum == null ? null : roomnum.trim();
+    }
+
+    public String getMamname() {
+        return mamname;
+    }
+
+    public void setMamname(String mamname) {
+        this.mamname = mamname == null ? null : mamname.trim();
+    }
+
+    public Integer getSurveyType() {
+        return surveyType;
+    }
+
+    public void setSurveyType(Integer surveyType) {
+        this.surveyType = surveyType;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills == null ? null : skills.trim();
+    }
+
+    public String getAttitude() {
+        return attitude;
+    }
+
+    public void setAttitude(String attitude) {
+        this.attitude = attitude == null ? null : attitude.trim();
+    }
+
+    public String getCommunication() {
+        return communication;
+    }
+
+    public void setCommunication(String communication) {
+        this.communication = communication == null ? null : communication.trim();
+    }
+
+    public String getProgess() {
+        return progess;
+    }
+
+    public void setProgess(String progess) {
+        this.progess = progess == null ? null : progess.trim();
+    }
+
+    public String getSolution() {
+        return solution;
+    }
+
+    public void setSolution(String solution) {
+        this.solution = solution == null ? null : solution.trim();
+    }
+
+    public String getCostumes() {
+        return costumes;
+    }
+
+    public void setCostumes(String costumes) {
+        this.costumes = costumes == null ? null : costumes.trim();
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time == null ? null : time.trim();
+    }
+
+    public String getExtraservice() {
+        return extraservice;
+    }
+
+    public void setExtraservice(String extraservice) {
+        this.extraservice = extraservice == null ? null : extraservice.trim();
+    }
+
+    public String getConsumption() {
+        return consumption;
+    }
+
+    public void setConsumption(String consumption) {
+        this.consumption = consumption == null ? null : consumption.trim();
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback == null ? null : feedback.trim();
+    }
+
+    public String getStoreFileId() {
+        return storeFileId;
+    }
+
+    public void setStoreFileId(String storeFileId) {
+        this.storeFileId = storeFileId == null ? null : storeFileId.trim();
+    }
+}

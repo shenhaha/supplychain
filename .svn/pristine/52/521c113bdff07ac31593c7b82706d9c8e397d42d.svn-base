@@ -1,0 +1,300 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<html>
+<head>
+	<title>宝宝洗澡记录</title>
+</head>
+<body>
+<div class="page-wrapper">
+	<div class="container-fluid">
+		<!-- Row -->
+		<div class="row">
+			<div class="col-sm-12">
+				<ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+					<li id="babybasic"><a  href="${ctx}/servicecenter/babybasic?motherid=${motherid}">宝宝基本信息</a></li>
+					<li id="babyEvaluate"><a  href="${ctx}/servicecenter/babyEvaluate?motherid=${motherid}">宝宝入住评估</a></li>
+					<li id="showNeonatalrounds"><a  href="${ctx}/neonatalrounds/showNeonatalrounds?motherid=${motherid}">儿科医生查房</a></li>
+					<li  id="showBabyNursing"><a href="${ctx}/babynursing/showBabyNursing?motherid=${motherid}">宝宝护理记录</a></li>
+					<li id="showGrowth"><a  href="${ctx}/growth/showGrowth?motherid=${motherid}">宝宝成长记录</a></li>
+					<%--<li id="showSwimming"><a  href="${ctx}/swimming/showSwimming?motherid=${motherid}">宝宝游泳</a></li>
+					<li id="babywash" ><a href="${ctx}/swimming/babywash?motherid=${motherid}">洗澡记录</a></li>
+					<li id="showPavilionassessment"><a href="${ctx}/pavilionassessment/showPavilionassessment?motherid=${motherid}">出馆身体评估</a></li>--%>
+					<li id="showPavilioneducation"><a href="${ctx}/pavilioneducation/showPavilioneducation?motherid=${motherid}">宝宝出馆卫教</a></li>
+				</ul>
+				<!--宝宝游泳记录开始-->
+					<div class="panel-body">
+						<div class="table-wrap">
+							<table id="swimming" class="table" data-paging="true" data-filtering="true"
+								   data-sorting="true">
+							</table>
+						</div>
+					</div>
+				<!--宝宝游泳记录结束-->
+			</div>
+		</div>
+		<!-- /Row -->
+	</div>
+</div>
+<script >
+	$(function () {
+        $('#babywash').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'babybasic':
+                $('#babybasic').addClass("active");
+                break;
+            case 'babyEvaluate':
+                $('#babyEvaluate').addClass("active");
+                break;
+            case 'showBabyNursing':
+                $('#showBabyNursing').addClass("active");
+                break;
+            case 'showGrowth':
+                $('#showGrowth').addClass("active");
+                break;
+            case 'showNeonatalrounds':
+                $('#showNeonatalrounds').addClass("active");
+                break;
+            case 'babywash':
+                $('#babywash').addClass("active");
+                break;
+            case 'showPavilionassessment':
+                $('#showPavilionassessment').addClass("active");
+                break;
+            case 'showPavilioneducation':
+                $('#showPavilioneducation').addClass("active");
+                break;
+        }
+		var swimmingTitle = [
+			{"name":"id","title":"ID","breakpoints":"xs sm",visible:false},
+            /*{"name":"mothername","title":"宝妈姓名"},*/
+            {"name":"babyname","title":"宝宝姓名"},
+			{"name":"washdate","title":"洗澡时间"},
+			//{"name":"babyfrom","title":"宝宝来源"},
+			{"name":"note","title":"备注"}
+		];
+		//启动footable
+		var ft = FooTable.init('#swimming',{
+			"columns": swimmingTitle,
+			"rows": $.get("${ctx}/Wash/getBabywashByMotherId?motherid="+'${motherid}'),
+			//功能操作
+			editing: {
+				enabled: true,
+				addRow: function(){
+					//新增模态框
+					var $that = $(this);
+					var dialog =  BootstrapDialog.show({
+								type : BootstrapDialog.TYPE_DEFAULT,
+								title : "<span style=\"color: #ab8ce4\">新增一条数据</span>",
+								closable: false,
+								draggable: true,
+								cssClass: 'api-blacklist-form-add',
+								message:$('<div></div>').load('${ctx}/template/servicecenter/babywash.jsp'),//加载弹出页面
+								size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+								onhide:function(){
+									$that.removeAttr("disabled");
+								},
+						onshown:function () {
+                            $.get("${ctx}/customerBasic/getBabyBasics?motherId="+'<%=request.getParameter("motherid")%>',function (data) {
+                                $(data).each(function () {
+                                    $("#babyname").append("<option value='"+this.name+"'>"+this.name+"</option>")
+                                })
+                            })
+                        },
+						buttons:[{
+							id: 'btn-form-submit',
+							label: '提交',
+							icon: 'fa fa-check-circle',
+							cssClass: 'btn-primary',
+							action:function(){  //点击事件
+									var json ={
+										'mothername':$('#mothername').val(),
+										'babyname':$('#babyname').val(),
+										///'babyfrom':$('#babyfrom').val(),
+										'washdate':$('#washdate').val(),
+										'note':$('#note').val(),
+                                        'motherid':'${motherid}',
+										'storeid':'<%=session.getAttribute("storeId")%>'
+									};
+								$("#myform").bootstrapValidator({
+									live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+									excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+									submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+									message: '通用的验证失败消息',//好像从来没出现过
+									feedbackIcons: {//根据验证结果显示的各种图标
+										valid: 'glyphicon glyphicon-ok',
+										invalid: 'glyphicon glyphicon-remove',
+										validating: 'glyphicon glyphicon-refresh'
+									},
+									fields:{ //需要验证的字段
+											/*mothername: {
+												validators: {
+													notEmpty: {
+														message: '妈妈名不能为空'
+													},
+												}
+											},
+										babyname:{
+												validators: {
+													notEmpty: {
+														message: '宝宝名不能为空！'
+													},
+												}
+											},*/
+										babyfrom: {
+												validators: {
+													notEmpty: {
+														message: '宝宝来源不能为空！'
+													},
+												}
+											},
+										washdate: {
+												validators: {
+													notEmpty: {
+														message: '洗澡时间不能为空！'
+													},
+												}
+											},
+										note: {
+												validators: {
+													notEmpty: {
+														message: '备注不能为空！'
+													},
+												}
+											}
+										}
+								});
+								var bootstrapValidator = $("#myform").data('bootstrapValidator');
+								bootstrapValidator.validate();
+								if(bootstrapValidator.isValid()){ //新增
+									$.post("${ctx}/Wash/add",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+								}
+							}
+						},{
+							label:'关闭',
+							icon:'fa fa-close',
+							action:function(dialogItself){
+								dialogItself.close();
+							}
+						}]
+					});
+				},
+				//这里是修改时绑定数据
+				editRow: function(row){
+					var values = row.val();
+					var $that = $(this);
+					//失效
+					$that.attr("disabled","disabled");
+					// 调用add方法
+					var dialog = BootstrapDialog.show({
+						type : BootstrapDialog.TYPE_DEFAULT,
+						title : "<span style=\"color: #ab8ce4\">修改一条数据</span>",
+						closable: false,
+						draggable: true,
+						cssClass: 'api-blacklist-form-add',
+						message:$('<div></div>').load('${ctx}/template/servicecenter/babywash.jsp'),//加载弹出页面
+						size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+						//数据回显
+						onshown:function(dialogRef){
+							$('#id').val(values.id);
+							//$('#babyfrom').val(values.babyfrom);
+							$('#washdate').val(values.washdate);
+                            $('#babyname').append("<option>"+values.babyname+"</option>").attr("disabled","disabled");
+							$('#note').val(values.note);
+						},
+						buttons:[{
+							id: 'btn-form-submit',
+							label: '提交',
+							icon: 'fa fa-check-circle',
+							cssClass: 'btn-primary',
+							action:function(){
+								var json = {
+                                    'id':$('#id').val(),
+									'mothername': $('#mothername').val(),
+									'washway': $('#washway').val(),
+									//'babyfrom': $('#babyfrom').val(),
+									'washdate': $('#washdate').val(),
+									'babyname': $('#babyname').val(),
+                                    'motherid':'${motherid}',
+									'note': $('#note').val(),
+									'storeid':'<%=session.getAttribute("storeId")%>',
+								};
+								$("#myform").bootstrapValidator({
+									live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+									excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+									submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+									message: '通用的验证失败消息',//好像从来没出现过
+									feedbackIcons: {//根据验证结果显示的各种图标
+										valid: 'glyphicon glyphicon-ok',
+										invalid: 'glyphicon glyphicon-remove',
+										validating: 'glyphicon glyphicon-refresh'
+									},
+									fields: {
+										/*mothername: {
+											validators: {
+												notEmpty: {
+													message: '妈妈名不能为空'
+												},
+											}
+										},
+										babyname: {
+											validators: {
+												notEmpty: {
+													message: '宝宝名不能为空！'
+												},
+											}
+										},*/
+										babyfrom: {
+											validators: {
+												notEmpty: {
+													message: '宝宝来源不能为空！'
+												},
+											}
+										},
+										washdate: {
+											validators: {
+												notEmpty: {
+													message: '洗澡时间不能为空！'
+												},
+											}
+										},
+										note: {
+											validators: {
+												notEmpty: {
+													message: '备注不能为空！'
+												},
+											}
+										},
+									},
+								});
+								var bootstrapValidator = $("#myform").data('bootstrapValidator');
+								bootstrapValidator.validate();
+								if(bootstrapValidator.isValid()){
+									$.post("${ctx}/Wash/update",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+									setTimeout("window.location.reload();",1000);
+									//修改一条记录  url  服务器地址
+								}
+							}
+						},{
+							label : '关闭',
+							icon: 'fa fa-close',
+							action : function(dialogItself) {
+								dialogItself.close();
+							}
+						}]
+					});
+				},
+				//删除操作
+				deleteRow: function(row){
+					myConfirm("${ctx}/Wash/delete",row);
+				}
+			}
+		});
+		uid=10;
+	});
+</script>
+</body>
+</html>

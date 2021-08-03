@@ -1,0 +1,354 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <title>客诉记录</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+                <%--<div class="panel-heading">
+                    <div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li class="active">客诉记录</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>--%>
+                <!--客诉管理-->
+                <div id="repairdiv">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                                <table id="guestlists" class="table" data-paging="true" data-filtering="true" data-sorting="true" style="width:150%">
+                                </table>
+                        </div>
+                    </div>
+                </div>
+                <!--客诉管理-->
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script >
+    $(function () {
+        var guestTitle = [
+            {"name": "id", "visible": false},
+            {"name":"department","title":"投诉部门", "visible": false},
+            {"name":"reporter","title":"投诉人"},
+            {"name":"reporttime","title":"报告时间"},
+            {"name":"reporttile","title":"事件报告标题"},
+            {"name":"eventtime","title":"事件发生时间"},
+            {"name":"customerReback","title":"客户反馈"},
+            {"name":"detail","title":"过程描述及原因", "visible": false},
+            {"name":"cause","title":"事件原因", "visible": false},
+            {"name":"employerName","title":"被投诉人"},
+            {"name":"result","title":"处理结果", "visible": false},
+            {"name":"solution","title":"解决方案", "visible": false},
+            {"name":"leaderidea","title":"领导解决意见", "visible": false},
+            {"name":"detail1","title":"操作"},
+        ];
+        function detail1(values) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title : "<span style=\"color:#ab8ce4\"><!--<i class='fa fa-plus'></i>-->查看一条数据</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'api-blacklist-form-add',
+                message:$('<div></div>').load('${ctx}/template/storemanager/guest_recorddetail.jsp'),//加载弹出页面
+                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                onshown:function () {
+                    $('#employer_id').append('<option>'+values.employerName+'</option>');
+                    $('#department').val(values.department);
+                    $('#reporter').val(values.reporter);
+                    $('#reporttime').val(values.reporttime);
+                    $('#reporttile').val(values.reporttile);
+                    $('#eventtime').val(values.eventtime);
+                    $('#detail').val(values.detail);
+                    $('#cause').val(values.cause);
+                    $('#result').val(values.result);
+                    $('#solution').val(values.solution);
+                    $('#leaderidea').val(values.leaderidea);
+                    $('#customerReback').val(values.customerReback);
+                    $('#myform').find('input,textarea,select').attr("disabled","disbaled");
+                },
+                buttons : [{
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                } ]
+            });
+        }
+        window.detail1 = detail1;
+        //启动footable
+        var ft=FooTable.init('#guestlists',{
+            "columns": guestTitle,
+            "rows": $.get("${ctx}/guestRecord/selectGuestRecords?storeFileId="+"<%=session.getAttribute("storeId")%>",function (data) {
+                $(data).each(function () {
+                    this.detail1 = "<button class='btn btn-primary btn-sm' onclick='detail1("+JSON.stringify(this)+")'>查看详情</button>"
+                })
+            }),
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storemanager/guest_record.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $.get("${ctx}/employer/selectEmployersByStoreFileIdandDept?dept=医护部&storeFileId=" + '<%=session.getAttribute("storeId")%>' + "&type=" + 1,function (data) {
+                                $(data).each(function () {
+                                    $('#employer_id').append('<option value="'+this.id+'">'+this.name+'</option>');
+                                })
+                            })
+                            $('#department').change(function () {
+                                $('#employer_id').empty()
+                                $.get("${ctx}/employer/selectEmployersByStoreFileIdandDept?dept="+$('#department').val()+"&storeFileId=" + '<%=session.getAttribute("storeId")%>' + "&type=" + 1,function (data) {
+                                    $(data).each(function () {
+                                        $('#employer_id').append('<option value="'+this.id+'">'+this.name+'</option>');
+                                    })
+                                })
+                            })
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'department': $('#department').val(),
+                                    'reporter': $('#reporter').val(),
+                                    'reporttime': $('#reporttime').val(),
+                                    'reporttile': $('#reporttile').val(),
+                                    'eventtime': $('#eventtime').val(),
+                                    'detail': $('#detail').val(),
+                                    'employerId':$('#employer_id').val(),
+                                    'cause': $('#cause').val(),
+                                    'solution': $('#solution').val(),
+                                    'leaderidea': $('#leaderidea').val(),
+                                    'result':$('#result').val(),
+                                    'storeFileId':'<%=session.getAttribute("storeId")%>',
+                                    'customerReback': $('#customerReback').val(),
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        department: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空'
+                                                },
+                                            }
+                                        },
+                                        reporter:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },reporttile:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },detail:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },
+                                        cause:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },
+                                        solution:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    //新增一条记录   url服务器路径
+                                    $.post("${ctx}/guestRecord/saveGuestRecord",json).done(function(data){
+                                        getCode(data)
+                                    }).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color:#ab8ce4\"><!--<i class='fa fa-plus'></i>-->新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storemanager/guest_record.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $.get("${ctx}/employer/selectEmployersByStoreFileId?storeFileId=" + '<%=session.getAttribute("storeId")%>' + "&type='普通员工'",function (data) {
+                                    $(data).each(function () {
+                                        if(this.name==values.employerName){
+                                            $('#employer_id').append('<option selected="selected" value="'+this.id+'">'+this.name+'</option>');
+                                        }else {
+                                            $('#employer_id').append('<option value="'+this.id+'">'+this.name+'</option>');
+                                        }
+                                    })
+                            });
+                            $('#id').val(values.id);
+                            $('#department').val(values.department);
+                            $('#reporter').val(values.reporter);
+                            $('#reporttime').val(values.reporttime);
+                            $('#reporttile').val(values.reporttile);
+                            $('#eventtime').val(values.eventtime);
+                            $('#detail').val(values.detail);
+                            $('#cause').val(values.cause);
+                            $('#result').val(values.result);
+                            $('#solution').val(values.solution);
+                            $('#leaderidea').val(values.leaderidea);
+                            $('#employerId').val(values.employerId);
+                            $('#customerReback').val(values.customerReback);
+                            //$('#myform').find("input,textarea").attr("readonly","readonly");
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'department': $('#department').val(),
+                                    'reporter': $('#reporter').val(),
+                                    'reporttime': $('#reporttime').val(),
+                                    'reporttile': $('#reporttile').val(),
+                                    'eventtime': $('#eventtime').val(),
+                                    'detail': $('#detail').val(),
+                                    'employerId':$('#employer_id').val(),
+                                    'cause': $('#cause').val(),
+                                    'solution': $('#solution').val(),
+                                    'leaderidea': $('#leaderidea').val(),
+                                    'result':$('#result').val(),
+                                    'storeFileId':'<%=session.getAttribute("storeId")%>',
+                                    'customerReback': $('#customerReback').val(),
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    }, fields: {
+                                        department: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空'
+                                                },
+                                            }
+                                        },
+                                        reporter:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },reporttile:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },detail:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },
+                                        cause:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },
+                                        solution:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '内容不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/guestRecord/updateGuestRecord",json).done(function(data){
+                                        getCode(data);
+                                    }).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作    url  服务器路径
+                deleteRow: function(row){
+                    myConfirm("${ctx}/guestRecord/deleteGuestRecord",row);
+                }
+            }
+        });
+        uid = 10;
+    });
+</script>
+</body>
+</html>

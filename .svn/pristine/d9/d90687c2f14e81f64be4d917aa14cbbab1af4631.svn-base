@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.SatisfactionRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.SatisfactionRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="question1" property="question1" jdbcType="INTEGER" />
+    <result column="question2" property="question2" jdbcType="INTEGER" />
+    <result column="question3" property="question3" jdbcType="INTEGER" />
+    <result column="employer_id1" property="employerId1" jdbcType="VARCHAR" />
+    <result column="question4" property="question4" jdbcType="VARCHAR" />
+    <result column="question5" property="question5" jdbcType="INTEGER" />
+    <result column="question6" property="question6" jdbcType="INTEGER" />
+    <result column="question7" property="question7" jdbcType="INTEGER" />
+    <result column="question8" property="question8" jdbcType="INTEGER" />
+    <result column="question9" property="question9" jdbcType="INTEGER" />
+    <result column="question10" property="question10" jdbcType="VARCHAR" />
+    <result column="employer_id2" property="employerId2" jdbcType="VARCHAR" />
+    <result column="question11" property="question11" jdbcType="INTEGER" />
+    <result column="question12" property="question12" jdbcType="INTEGER" />
+    <result column="question13" property="question13" jdbcType="INTEGER" />
+    <result column="question14" property="question14" jdbcType="INTEGER" />
+    <result column="question15" property="question15" jdbcType="INTEGER" />
+    <result column="question16" property="question16" jdbcType="INTEGER" />
+    <result column="question17" property="question17" jdbcType="INTEGER" />
+    <result column="question18" property="question18" jdbcType="VARCHAR" />
+    <result column="employer_id3" property="employerId3" jdbcType="VARCHAR" />
+    <result column="question19" property="question19" jdbcType="INTEGER" />
+    <result column="question20" property="question20" jdbcType="INTEGER" />
+    <result column="question21" property="question21" jdbcType="VARCHAR" />
+    <result column="question22" property="question22" jdbcType="INTEGER" />
+    <result column="question23" property="question23" jdbcType="VARCHAR" />
+    <result column="employer_id4" property="employerId4" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+    <result column="mother_id" property="motherId" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="store_file_id" property="storeFileId" jdbcType="VARCHAR" />
+    <result column="roomNum" property="roomNum" jdbcType="VARCHAR" />
+    <result column="motherName" property="motherName" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, question1, question2, question3, employer_id1, question4, question5, question6,
+    question7, question8, question9, question10, employer_id2, question11, question12,
+    question13, question14, question15, question16, question17, question18, employer_id3,
+    question19, question20, question21, question22, question23, employer_id4, room_id,
+    mother_id, date, store_file_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.SatisfactionRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from satisfaction_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from satisfaction_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from satisfaction_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.SatisfactionRecordExample" >
+    delete from satisfaction_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.storemanager.bean.SatisfactionRecord" >
+    insert into satisfaction_record (id, question1, question2,
+    question3, employer_id1, question4,
+    question5, question6, question7,
+    question8, question9, question10,
+    employer_id2, question11, question12,
+    question13, question14, question15,
+    question16, question17, question18,
+    employer_id3, question19, question20,
+    question21, question22, question23,
+    employer_id4, room_id, mother_id,
+    date, store_file_id)
+    values (#{id,jdbcType=VARCHAR}, #{question1,jdbcType=INTEGER}, #{question2,jdbcType=INTEGER},
+    #{question3,jdbcType=INTEGER}, #{employerId1,jdbcType=VARCHAR}, #{question4,jdbcType=VARCHAR},
+    #{question5,jdbcType=INTEGER}, #{question6,jdbcType=INTEGER}, #{question7,jdbcType=INTEGER},
+    #{question8,jdbcType=INTEGER}, #{question9,jdbcType=INTEGER}, #{question10,jdbcType=VARCHAR},
+    #{employerId2,jdbcType=VARCHAR}, #{question11,jdbcType=INTEGER}, #{question12,jdbcType=INTEGER},
+    #{question13,jdbcType=INTEGER}, #{question14,jdbcType=INTEGER}, #{question15,jdbcType=INTEGER},
+    #{question16,jdbcType=INTEGER}, #{question17,jdbcType=INTEGER}, #{question18,jdbcType=VARCHAR},
+    #{employerId3,jdbcType=VARCHAR}, #{question19,jdbcType=INTEGER}, #{question20,jdbcType=INTEGER},
+    #{question21,jdbcType=VARCHAR}, #{question22,jdbcType=INTEGER}, #{question23,jdbcType=VARCHAR},
+    #{employerId4,jdbcType=VARCHAR}, #{roomId,jdbcType=VARCHAR}, #{motherId,jdbcType=VARCHAR},
+    #{date,jdbcType=TIMESTAMP}, #{storeFileId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.storemanager.bean.SatisfactionRecord" >
+    insert into satisfaction_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="question1 != null" >
+        question1,
+      </if>
+      <if test="question2 != null" >
+        question2,
+      </if>
+      <if test="question3 != null" >
+        question3,
+      </if>
+      <if test="employerId1 != null" >
+        employer_id1,
+      </if>
+      <if test="question4 != null" >
+        question4,
+      </if>
+      <if test="question5 != null" >
+        question5,
+      </if>
+      <if test="question6 != null" >
+        question6,
+      </if>
+      <if test="question7 != null" >
+        question7,
+      </if>
+      <if test="question8 != null" >
+        question8,
+      </if>
+      <if test="question9 != null" >
+        question9,
+      </if>
+      <if test="question10 != null" >
+        question10,
+      </if>
+      <if test="employerId2 != null" >
+        employer_id2,
+      </if>
+      <if test="question11 != null" >
+        question11,
+      </if>
+      <if test="question12 != null" >
+        question12,
+      </if>
+      <if test="question13 != null" >
+        question13,
+      </if>
+      <if test="question14 != null" >
+        question14,
+      </if>
+      <if test="question15 != null" >
+        question15,
+      </if>
+      <if test="question16 != null" >
+        question16,
+      </if>
+      <if test="question17 != null" >
+        question17,
+      </if>
+      <if test="question18 != null" >
+        question18,
+      </if>
+      <if test="employerId3 != null" >
+        employer_id3,
+      </if>
+      <if test="question19 != null" >
+        question19,
+      </if>
+      <if test="question20 != null" >
+        question20,
+      </if>
+      <if test="question21 != null" >
+        question21,
+      </if>
+      <if test="question22 != null" >
+        question22,
+      </if>
+      <if test="question23 != null" >
+        question23,
+      </if>
+      <if test="employerId4 != null" >
+        employer_id4,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="motherId != null" >
+        mother_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="storeFileId != null" >
+        store_file_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="question1 != null" >
+        #{question1,jdbcType=INTEGER},
+      </if>
+      <if test="question2 != null" >
+        #{question2,jdbcType=INTEGER},
+      </if>
+      <if test="question3 != null" >
+        #{question3,jdbcType=INTEGER},
+      </if>
+      <if test="employerId1 != null" >
+        #{employerId1,jdbcType=VARCHAR},
+      </if>
+      <if test="question4 != null" >
+        #{question4,jdbcType=VARCHAR},
+      </if>
+      <if test="question5 != null" >
+        #{question5,jdbcType=INTEGER},
+      </if>
+      <if test="question6 != null" >
+        #{question6,jdbcType=INTEGER},
+      </if>
+      <if test="question7 != null" >
+        #{question7,jdbcType=INTEGER},
+      </if>
+      <if test="question8 != null" >
+        #{question8,jdbcType=INTEGER},
+      </if>
+      <if test="question9 != null" >
+        #{question9,jdbcType=INTEGER},
+      </if>
+      <if test="question10 != null" >
+        #{question10,jdbcType=VARCHAR},
+      </if>
+      <if test="employerId2 != null" >
+        #{employerId2,jdbcType=VARCHAR},
+      </if>
+      <if test="question11 != null" >
+        #{question11,jdbcType=INTEGER},
+      </if>
+      <if test="question12 != null" >
+        #{question12,jdbcType=INTEGER},
+      </if>
+      <if test="question13 != null" >
+        #{question13,jdbcType=INTEGER},
+      </if>
+      <if test="question14 != null" >
+        #{question14,jdbcType=INTEGER},
+      </if>
+      <if test="question15 != null" >
+        #{question15,jdbcType=INTEGER},
+      </if>
+      <if test="question16 != null" >
+        #{question16,jdbcType=INTEGER},
+      </if>
+      <if test="question17 != null" >
+        #{question17,jdbcType=INTEGER},
+      </if>
+      <if test="question18 != null" >
+        #{question18,jdbcType=VARCHAR},
+      </if>
+      <if test="employerId3 != null" >
+        #{employerId3,jdbcType=VARCHAR},
+      </if>
+      <if test="question19 != null" >
+        #{question19,jdbcType=INTEGER},
+      </if>
+      <if test="question20 != null" >
+        #{question20,jdbcType=INTEGER},
+      </if>
+      <if test="question21 != null" >
+        #{question21,jdbcType=VARCHAR},
+      </if>
+      <if test="question22 != null" >
+        #{question22,jdbcType=INTEGER},
+      </if>
+      <if test="question23 != null" >
+        #{question23,jdbcType=VARCHAR},
+      </if>
+      <if test="employerId4 != null" >
+        #{employerId4,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="motherId != null" >
+        #{motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeFileId != null" >
+        #{storeFileId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.storemanager.bean.SatisfactionRecordExample" resultType="java.lang.Integer" >
+    select count(*) from satisfaction_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update satisfaction_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question1 != null" >
+        question1 = #{record.question1,jdbcType=INTEGER},
+      </if>
+      <if test="record.question2 != null" >
+        question2 = #{record.question2,jdbcType=INTEGER},
+      </if>
+      <if test="record.question3 != null" >
+        question3 = #{record.question3,jdbcType=INTEGER},
+      </if>
+      <if test="record.employerId1 != null" >
+        employer_id1 = #{record.employerId1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question4 != null" >
+        question4 = #{record.question4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question5 != null" >
+        question5 = #{record.question5,jdbcType=INTEGER},
+      </if>
+      <if test="record.question6 != null" >
+        question6 = #{record.question6,jdbcType=INTEGER},
+      </if>
+      <if test="record.question7 != null" >
+        question7 = #{record.question7,jdbcType=INTEGER},
+      </if>
+      <if test="record.question8 != null" >
+        question8 = #{record.question8,jdbcType=INTEGER},
+      </if>
+      <if test="record.question9 != null" >
+        question9 = #{record.question9,jdbcType=INTEGER},
+      </if>
+      <if test="record.question10 != null" >
+        question10 = #{record.question10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employerId2 != null" >
+        employer_id2 = #{record.employerId2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question11 != null" >
+        question11 = #{record.question11,jdbcType=INTEGER},
+      </if>
+      <if test="record.question12 != null" >
+        question12 = #{record.question12,jdbcType=INTEGER},
+      </if>
+      <if test="record.question13 != null" >
+        question13 = #{record.question13,jdbcType=INTEGER},
+      </if>
+      <if test="record.question14 != null" >
+        question14 = #{record.question14,jdbcType=INTEGER},
+      </if>
+      <if test="record.question15 != null" >
+        question15 = #{record.question15,jdbcType=INTEGER},
+      </if>
+      <if test="record.question16 != null" >
+        question16 = #{record.question16,jdbcType=INTEGER},
+      </if>
+      <if test="record.question17 != null" >
+        question17 = #{record.question17,jdbcType=INTEGER},
+      </if>
+      <if test="record.question18 != null" >
+        question18 = #{record.question18,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employerId3 != null" >
+        employer_id3 = #{record.employerId3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question19 != null" >
+        question19 = #{record.question19,jdbcType=INTEGER},
+      </if>
+      <if test="record.question20 != null" >
+        question20 = #{record.question20,jdbcType=INTEGER},
+      </if>
+      <if test="record.question21 != null" >
+        question21 = #{record.question21,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question22 != null" >
+        question22 = #{record.question22,jdbcType=INTEGER},
+      </if>
+      <if test="record.question23 != null" >
+        question23 = #{record.question23,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employerId4 != null" >
+        employer_id4 = #{record.employerId4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherId != null" >
+        mother_id = #{record.motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.storeFileId != null" >
+        store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update satisfaction_record
+    set id = #{record.id,jdbcType=VARCHAR},
+    question1 = #{record.question1,jdbcType=INTEGER},
+    question2 = #{record.question2,jdbcType=INTEGER},
+    question3 = #{record.question3,jdbcType=INTEGER},
+    employer_id1 = #{record.employerId1,jdbcType=VARCHAR},
+    question4 = #{record.question4,jdbcType=VARCHAR},
+    question5 = #{record.question5,jdbcType=INTEGER},
+    question6 = #{record.question6,jdbcType=INTEGER},
+    question7 = #{record.question7,jdbcType=INTEGER},
+    question8 = #{record.question8,jdbcType=INTEGER},
+    question9 = #{record.question9,jdbcType=INTEGER},
+    question10 = #{record.question10,jdbcType=VARCHAR},
+    employer_id2 = #{record.employerId2,jdbcType=VARCHAR},
+    question11 = #{record.question11,jdbcType=INTEGER},
+    question12 = #{record.question12,jdbcType=INTEGER},
+    question13 = #{record.question13,jdbcType=INTEGER},
+    question14 = #{record.question14,jdbcType=INTEGER},
+    question15 = #{record.question15,jdbcType=INTEGER},
+    question16 = #{record.question16,jdbcType=INTEGER},
+    question17 = #{record.question17,jdbcType=INTEGER},
+    question18 = #{record.question18,jdbcType=VARCHAR},
+    employer_id3 = #{record.employerId3,jdbcType=VARCHAR},
+    question19 = #{record.question19,jdbcType=INTEGER},
+    question20 = #{record.question20,jdbcType=INTEGER},
+    question21 = #{record.question21,jdbcType=VARCHAR},
+    question22 = #{record.question22,jdbcType=INTEGER},
+    question23 = #{record.question23,jdbcType=VARCHAR},
+    employer_id4 = #{record.employerId4,jdbcType=VARCHAR},
+    room_id = #{record.roomId,jdbcType=VARCHAR},
+    mother_id = #{record.motherId,jdbcType=VARCHAR},
+    date = #{record.date,jdbcType=TIMESTAMP},
+    store_file_id = #{record.storeFileId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.SatisfactionRecord" >
+    update satisfaction_record
+    <set >
+      <if test="question1 != null" >
+        question1 = #{question1,jdbcType=INTEGER},
+      </if>
+      <if test="question2 != null" >
+        question2 = #{question2,jdbcType=INTEGER},
+      </if>
+      <if test="question3 != null" >
+        question3 = #{question3,jdbcType=INTEGER},
+      </if>
+      <if test="employerId1 != null" >
+        employer_id1 = #{employerId1,jdbcType=VARCHAR},
+      </if>
+      <if test="question4 != null" >
+        question4 = #{question4,jdbcType=VARCHAR},
+      </if>
+      <if test="question5 != null" >
+        question5 = #{question5,jdbcType=INTEGER},
+      </if>
+      <if test="question6 != null" >
+        question6 = #{question6,jdbcType=INTEGER},
+      </if>
+      <if test="question7 != null" >
+        question7 = #{question7,jdbcType=INTEGER},
+      </if>
+      <if test="question8 != null" >
+        question8 = #{question8,jdbcType=INTEGER},
+      </if>
+      <if test="question9 != null" >
+        question9 = #{question9,jdbcType=INTEGER},
+      </if>
+      <if test="question10 != null" >
+        question10 = #{question10,jdbcType=VARCHAR},
+      </if>
+      <if test="employerId2 != null" >
+        employer_id2 = #{employerId2,jdbcType=VARCHAR},
+      </if>
+      <if test="question11 != null" >
+        question11 = #{question11,jdbcType=INTEGER},
+      </if>
+      <if test="question12 != null" >
+        question12 = #{question12,jdbcType=INTEGER},
+      </if>
+      <if test="question13 != null" >
+        question13 = #{question13,jdbcType=INTEGER},
+      </if>
+      <if test="question14 != null" >
+        question14 = #{question14,jdbcType=INTEGER},
+      </if>
+      <if test="question15 != null" >
+        question15 = #{question15,jdbcType=INTEGER},
+      </if>
+      <if test="question16 != null" >
+        question16 = #{question16,jdbcType=INTEGER},
+      </if>
+      <if test="question17 != null" >
+        question17 = #{question17,jdbcType=INTEGER},
+      </if>
+      <if test="question18 != null" >
+        question18 = #{question18,jdbcType=VARCHAR},
+      </if>
+      <if test="employerId3 != null" >
+        employer_id3 = #{employerId3,jdbcType=VARCHAR},
+      </if>
+      <if test="question19 != null" >
+        question19 = #{question19,jdbcType=INTEGER},
+      </if>
+      <if test="question20 != null" >
+        question20 = #{question20,jdbcType=INTEGER},
+      </if>
+      <if test="question21 != null" >
+        question21 = #{question21,jdbcType=VARCHAR},
+      </if>
+      <if test="question22 != null" >
+        question22 = #{question22,jdbcType=INTEGER},
+      </if>
+      <if test="question23 != null" >
+        question23 = #{question23,jdbcType=VARCHAR},
+      </if>
+      <if test="employerId4 != null" >
+        employer_id4 = #{employerId4,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="motherId != null" >
+        mother_id = #{motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeFileId != null" >
+        store_file_id = #{storeFileId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.SatisfactionRecord" >
+    update satisfaction_record
+    set question1 = #{question1,jdbcType=INTEGER},
+    question2 = #{question2,jdbcType=INTEGER},
+    question3 = #{question3,jdbcType=INTEGER},
+    employer_id1 = #{employerId1,jdbcType=VARCHAR},
+    question4 = #{question4,jdbcType=VARCHAR},
+    question5 = #{question5,jdbcType=INTEGER},
+    question6 = #{question6,jdbcType=INTEGER},
+    question7 = #{question7,jdbcType=INTEGER},
+    question8 = #{question8,jdbcType=INTEGER},
+    question9 = #{question9,jdbcType=INTEGER},
+    question10 = #{question10,jdbcType=VARCHAR},
+    employer_id2 = #{employerId2,jdbcType=VARCHAR},
+    question11 = #{question11,jdbcType=INTEGER},
+    question12 = #{question12,jdbcType=INTEGER},
+    question13 = #{question13,jdbcType=INTEGER},
+    question14 = #{question14,jdbcType=INTEGER},
+    question15 = #{question15,jdbcType=INTEGER},
+    question16 = #{question16,jdbcType=INTEGER},
+    question17 = #{question17,jdbcType=INTEGER},
+    question18 = #{question18,jdbcType=VARCHAR},
+    employer_id3 = #{employerId3,jdbcType=VARCHAR},
+    question19 = #{question19,jdbcType=INTEGER},
+    question20 = #{question20,jdbcType=INTEGER},
+    question21 = #{question21,jdbcType=VARCHAR},
+    question22 = #{question22,jdbcType=INTEGER},
+    question23 = #{question23,jdbcType=VARCHAR},
+    employer_id4 = #{employerId4,jdbcType=VARCHAR},
+    room_id = #{roomId,jdbcType=VARCHAR},
+    mother_id = #{motherId,jdbcType=VARCHAR},
+    date = #{date,jdbcType=TIMESTAMP},
+    store_file_id = #{storeFileId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+
+<select id="selectAll" resultMap="BaseResultMap">
+  select * from satisfaction_record
+</select>
+
+  <!--通过门店id查询满意度调查表基本资料-->
+  <select id="selectByStoreFileId" resultMap="BaseResultMap">
+    select
+    s.id,
+    s.question1,s.question2,s.question3,s.question4,s.employer_id1,
+    s.question5 ,s.question6 ,s.question7 ,s.question8 ,s.question9 , s.question10,s.employer_id2,
+    s.question11,s.question12,s.question13,s.question14,s.question15,s.question16,s.question17,question18,s.employer_id3,
+    s.question19,s.question20,s.question21,s.employer_id4,
+    s.question22,s.question23,
+    s.room_id , r.num as roomNum,
+    s.mother_id,cb.name as motherName,
+    s.date,s.store_file_id
+     from satisfaction_record  s
+     left join room r on s.room_id=r.id
+     left join customer_basic cb on s.mother_id=cb.id
+     where  store_file_id =#{storeFileId}
+
+  </select>
+
+
+</mapper>

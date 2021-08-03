@@ -1,0 +1,302 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>酒店资料</title>
+    <style type="text/css">
+        .upload{
+            width: 500px;
+            height: 50px;
+            margin-top: 10px;
+        }
+        .delete{
+            width: 500px;
+            height: 50px;
+            margin-top: 10px;
+        }
+        .certificates2{
+            padding-left: 80px;
+        }
+        #result1 {
+            width: 500px;
+            height: 300px;
+        }
+        #note{
+            width: 500px;
+            height: 300px;
+        }
+        #update{
+            width: 500px;
+            height: 50px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<%--<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-md-6">
+            <div id="repairdiv">
+                <div class="panel-body">
+                    <form class="form-inline">
+                        <div>
+                            <textarea rows="10" cols="100%" id="note" name="note"></textarea>
+                        </div>
+                        <div style="margin-top: 10px" class="col-md-offset-6">
+                            <button class="btn btn-success" type="button" id="btn">修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Row -->
+</div>--%>
+<div style="margin-top: 50px;">
+    <div class="col-md-6">
+        <div class="certificates2">
+            <div>
+                <table width="500px" style="text-align: center;">
+                    <tr style="height: 65px;">
+                        <td width="500px"><label>酒店信息</label></td>
+                    </tr>
+                </table>
+            </div>
+            <form class="form-inline">
+                <div>
+                    <textarea rows="10" id="note" name="note"></textarea>
+                </div>
+                <div>
+                    <button id="update" class="btn btn-primary btn-sm upload">新增</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="certificates2">
+            <div>
+                <input type="hidden" id="id1">
+                <table width="500px" style="text-align: center;">
+                    <tr>
+                        <td width="167px"><label>证件名称</label></td>
+                        <td width="167px"><label>证件号</label></td>
+                        <td width="167px"><label>上传时间</label></td>
+                    </tr>
+                    <tr>
+                        <td><label id="name1">无</label></td>
+                        <td><label id="cardid1">无</label></td>
+                        <td><label id="uptime1">无</label></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="result">
+                <img id="result1">
+            </div>
+            <div>
+                <button id="upload1" class="btn btn-primary btn-sm upload" onclick="uploadCredentials(1)">上传</button>
+                <button id="delete1" style="display: none;" class="btn btn-primary btn-sm delete" onclick="deleteCredentials(1)">删除</button>
+                <div style="text-align: center;width: 500px;">
+                    <label style="display: none;">请先提交酒店信息！</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var storeId = '<%= session.getAttribute("storeId")%>';
+    var id = null;
+    $(function () {
+        $.get('${ctx}/getByStoreId', {'storeId': storeId}, function (data) {
+            if (data.data != null) {
+                id = data.data.id;
+                $('#note').val(data.data.note);
+                $("#update").text("修改");
+                $.ajax({
+                    url: "${ctx}/credentials/selectByOtherId",
+                    type: "post",
+                    data: {
+                        'otherId': id
+                    },
+                    success: function (credentialsList) {
+
+                        if (credentialsList[0] != null) {
+                            $('#id1').val(credentialsList[0].id);
+                            $('#name1').text(credentialsList[0].name);
+                            $('#cardid1').text(credentialsList[0].cardid);
+                            $('#uptime1').text(credentialsList[0].uptime);
+                            $('#result1').attr("src","/micc/credentials/testDownloadFile?fileUrl="+credentialsList[0].address);
+                            $("#upload1").css("display","none");
+                            $("#delete1").css("display","block");
+                        }else{
+                            $("#upload1").css("display","block");
+                            $("#delete1").css("display","none");
+                        }
+                    }
+                });
+            }else{
+                $("#update").text("新增");
+            }
+        })
+        $('#update').click(function () {
+
+            if(id!=null){
+            var json = {'id': id, 'storeId': storeId, 'note': $('#note').val()}
+            }else {
+                var json = { 'storeId': storeId, 'note': $('#note').val()}
+            }
+
+            $.post('${ctx}/insert',json,function (data) {
+                getCode(data)
+            });
+        })
+    });
+    function deleteCredentials(num) {
+        var id;
+        if (num == 1) {
+            id = document.getElementById('id1').value;
+        } else if (num == 2) {
+            id = document.getElementById('id2').value;
+        }
+        var json = {
+            'id': id
+
+        };
+        PNotify.prototype.options.styling = "bootstrap3";
+        if (id != null) {
+            var url = "${ctx}/credentials/deleteCredentialsById"
+            $.post(url, json).done(function (data) {
+                getCode(data)
+            }).fail(function (data) {
+                getCode(data)
+            });
+        } else {
+            new PNotify({
+                title: 'Oh No!',
+                text: '操作失败',
+                delay: delay,
+                hide: true,
+                type: 'error'
+            });
+        }
+
+    }
+    function uploadCredentials(num) {
+        if(id!=null){
+            var $that = $(this);
+            var dialog = BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_DEFAULT,
+                title: "<span style=\"color:#ab8ce4\">上传证书</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'api-blacklist-form-add',
+                message: $('<div></div>').load('${ctx}/template/storesdata/credentials.jsp'),//加载弹出页面
+                size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                onhide: function () {
+                    $that.removeAttr("disabled");
+                },
+                buttons: [{
+                    id: 'btn-form-submit',
+                    label: '提交',
+                    icon: 'fa fa-check-circle',
+                    cssClass: 'btn-primary',
+                    action: function () {
+
+                        var formData = new FormData();
+                        formData.append("file", document.getElementById("address").files[0]);//图片
+                        formData.append('name', document.getElementById("name").value);//证书名称
+                        formData.append('cardid', document.getElementById("cardid").value);//证书号
+                        formData.append('uptime', document.getElementById("uptime").value);//上传时间
+                        formData.append('otherId',id );//用户/门店id
+
+                        $("#myform").bootstrapValidator({
+                            live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                            excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                            submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                            message: '通用的验证失败消息',//好像从来没出现过
+                            feedbackIcons: {//根据验证结果显示的各种图标
+                                valid: 'glyphicon glyphicon-ok',
+                                invalid: 'glyphicon glyphicon-remove',
+                                validating: 'glyphicon glyphicon-refresh'
+                            },
+                            fields: {
+                                name: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '证书名称不能为空'
+                                        },
+                                    }
+                                },
+                                cardid: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '证件号不能为空'
+                                        },
+                                    }
+                                },
+                                uptime: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '上传时间不能为空！'
+                                        },
+                                    }
+                                },
+                                address: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: '证件图片不能为空！'
+                                        },
+                                    }
+                                }
+                            }
+                        });
+                        var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                        bootstrapValidator.validate();
+                        if (bootstrapValidator.isValid()) {
+
+                            $.ajax({
+                                url: "${ctx}/credentials/uploadCredentials",
+                                type: "post",
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (data) {
+                                    setTimeout( function(){5 * 1000});
+                                    getCode(data);
+                                }
+                            });
+
+
+                        }
+                    }
+                }, {
+                    label: '关闭',
+                    icon: 'fa fa-close',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        }else{
+            $("#upload1").siblings("div").children("label").css("display","block");
+        }
+
+
+    }
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".result").click(function () {
+            if($(this).children("img").attr("src")!=null){
+                $("#seeimage").children("div").children("img").attr("src",$(this).children("img").attr("src"));
+                $("#seeimage").css("display","block");
+            }
+        });
+        $("#seeimage").click(function () {
+            $(this).css("display","none");
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+package com.luer.businessmanager.service.impl;
+
+import com.luer.businessmanager.bean.QuestionSort;
+import com.luer.businessmanager.bean.QuestionSortExample;
+import com.luer.businessmanager.dao.QuestionSortMapper;
+import com.luer.businessmanager.service.Question_sortService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+@Service
+@Transactional
+public class Question_sortServiceImpl implements Question_sortService {
+
+    @Autowired
+    private QuestionSortMapper questionSortMapper;
+    @Override
+    public int insert(QuestionSort questionSort) {
+        return questionSortMapper.insert(questionSort);
+    }
+
+    @Override
+    public int deleteById(String id) {
+        return questionSortMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public boolean deleteListById(String id) {
+        return false;
+    }
+
+    @Override
+    public int updateById(String id, QuestionSort questionSort) {
+        QuestionSortExample questionSortExample = new QuestionSortExample();
+        QuestionSortExample.Criteria criteria = questionSortExample.createCriteria();
+        criteria.andIdEqualTo(id);
+        return questionSortMapper.updateByExampleSelective(questionSort,questionSortExample);
+    }
+
+    @Override
+    public List<QuestionSort> selectAllList() {
+        QuestionSortExample questionSortExample = new QuestionSortExample();
+        QuestionSortExample.Criteria criteria = questionSortExample.createCriteria();
+        return questionSortMapper.selectByExample(questionSortExample);
+    }
+    @Override
+    public QuestionSort selectSortId() {
+        return questionSortMapper.selectSortId();
+    }
+}

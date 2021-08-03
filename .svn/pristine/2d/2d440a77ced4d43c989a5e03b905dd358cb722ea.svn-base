@@ -1,0 +1,33 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Babywash;
+import com.luer.servicecenter.bean.BabywashExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface BabywashMapper {
+    int countByExample(BabywashExample example);
+
+    int deleteByExample(BabywashExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Babywash record);
+
+    int insertSelective(Babywash record);
+
+    List<Babywash> selectByExample(BabywashExample example);
+
+    Babywash selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Babywash record, @Param("example") BabywashExample example);
+
+    int updateByExample(@Param("record") Babywash record, @Param("example") BabywashExample example);
+
+    int updateByPrimaryKeySelective(Babywash record);
+
+    int updateByPrimaryKey(Babywash record);
+
+    List<Babywash> getBabywashByMotherId(@Param("motherid") String motherid);
+}

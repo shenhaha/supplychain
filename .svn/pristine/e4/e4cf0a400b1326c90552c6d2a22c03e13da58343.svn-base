@@ -1,0 +1,177 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-3 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="ID" >
+        </div>
+    </div>
+    <div class="container">
+       <%-- <div class="row">--%>
+            <!--前缀-->
+            <%--<div class="form-group col-md-5 ">
+                <label for="customerBasicId" class="col-sm-3 control-label">妈妈姓名 :</label>
+                <div class="col-sm-7">
+                    <select type="text" class="form-control" id="customerBasicId" name="customerBasicId">
+                    </select>
+                </div>
+            </div>--%>
+            <%--<div class="form-group col-md-5 ">
+                <label for="operationdate" class="col-sm-3 control-label">查房日期</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-sm-7" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" name="operationdate" id="operationdate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>--%>
+        <%--</div>--%>
+
+        <div class="row">
+            <div class="form-group col-sm-5">
+                <label for="shrinkage" class="col-sm-3 control-label">子宫收缩情况：</label>
+                <div class="col-sm-7">
+                   <%-- <input type="text" class="form-control" id="shrinkage" name="shrinkage" placeholder="子宫收缩情况" tabindex="1">--%>
+                       <select type="text" class="form-control" id="shrinkage" name="shrinkage" placeholder="子宫收缩情况" tabindex="1">
+                           <option value="正常">正常</option>
+                           <option value="不正常">不正常</option>
+                       </select>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-5">
+                <label from="cesareansection" class="col-sm-3 control-label">剖宫产术后刀口：</label>
+                <div class="col-sm-7">
+                   <%-- <input type="text" class="form-control" id="cesareansection" name="cesareansection" placeholder="剖腹产术后刀口">--%>
+                       <select type="text" class="form-control" id="cesareansection" name="cesareansection" placeholder="剖腹产术后刀口" >
+                           <option value="正常">正常</option>
+                           <option value="不正常">不正常</option>
+                       </select>
+                </div>
+            </div>
+        </div>
+
+           <div class="row">
+               <div class="form-group col-sm-5">
+                   <label from="sidecutter" class="col-sm-3 control-label">侧切刀情况：</label>
+                   <div class="col-sm-7">
+                       <%--<input type="text" class="form-control" id="sidecutter" name="sidecutter" placeholder="侧切刀情况" >--%>
+                           <select type="text" class="form-control" id="sidecutter" name="sidecutter" placeholder="侧切刀情况" >
+                               <option value="正常">正常</option>
+                               <option value="不正常">不正常</option>
+                           </select>
+                   </div>
+               </div>
+               <div class="form-group col-sm-5">
+                   <label from="leucorrhea" class="col-sm-3 control-label">白带情况：</label>
+                   <div class="col-sm-7">
+                       <%--<input type="text" class="form-control"id="leucorrhea" name="leucorrhea" placeholder="白带情况"  >--%>
+                           <select type="text" class="form-control" id="leucorrhea" name="leucorrhea" placeholder="白带情况" >
+                               <option value="正常">正常</option>
+                               <option value="不正常">不正常</option>
+                           </select>
+                   </div>
+               </div>
+           </div>
+
+        <div class="row">
+            <div class="form-group col-sm-5">
+                <label from="lochiacolor" class="col-sm-3 control-label">恶露颜色：</label>
+                <div class="col-sm-7">
+                    <%--<input type="text" class="form-control" id="lochiacolor" name="lochiacolor" placeholder="恶露颜色">--%>
+                        <select type="text" class="form-control" id="lochiacolor" name="lochiacolor" placeholder="恶露颜色" >
+                            <option value="正常">正常</option>
+                            <option value="不正常">不正常</option>
+                        </select>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-5">
+                <label from="lochiasmell" class="col-sm-3 control-label">恶露气味：</label>
+                <div class="col-sm-7">
+                    <%--<input type="text" class="form-control" id="lochiasmell" name="lochiasmell" placeholder="恶露气味" >--%>
+                        <select type="text" class="form-control" id="lochiasmell" name="lochiasmell" placeholder="恶露气味" >
+                            <option value="正常">正常</option>
+                            <option value="不正常">不正常</option>
+                        </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+                <div class="form-group col-sm-5">
+                    <label from="fever" class="col-sm-3 control-label">有无发热：</label>
+                    <div class="col-sm-7">
+                        <%--<input type="text" class="form-control"id="fever" name="fever" placeholder="有无发热"   >--%>
+                            <select type="text" class="form-control" id="fever" name="fever" placeholder="有无发热" >
+                                <option value="无">无</option>
+                                <option value="有">有</option>
+                            </select>
+                    </div>
+                </div>
+
+            <div class="form-group col-sm-5">
+                <label from="othersituations" class="col-sm-3 control-label">其他情况：</label>
+                <div class="col-sm-7">
+                    <textarea type="text" class="form-control"id="othersituations" name="othersituations" placeholder="其他情况"  ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                <div class="form-group col-md-5 ">
+                    <label for="operationdate" class="col-sm-3 control-label">查房日期：</label>
+                    <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-sm-7" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                        <input class="form-control" size="16" type="text" value="" name="operationdate" id="operationdate" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label from="signature" class="col-sm-3 control-label">医师签字：</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control"id="signature" name="signature" placeholder="医师签字"   >
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $(function () {
+        //动态查询妈妈信息
+        $.ajax({
+            url:"${ctx}/customerBasic/selectCustomerBasicByStoreId?type=0&storeId="+'<%=session.getAttribute("storeId")%>',
+            type:"post",
+            success:function(data){
+                for(var i=0;i<data.length;i++){
+                    $("#customerBasicId").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+                }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

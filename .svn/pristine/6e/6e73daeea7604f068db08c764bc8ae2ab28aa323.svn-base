@@ -1,0 +1,219 @@
+package com.luer.storesdata.bean;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+@Data
+public class StoreFile {
+    private String id;
+
+    private String name;
+
+    private String sort;
+
+    private String abbreviation;
+
+    private String property;
+
+    private String industryNature;
+
+    private String institutionNum;
+
+    private String institution;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date established;
+
+    private String leader;
+
+    private String tell;
+
+    private String email;
+
+    private String address;
+
+    private String zipCode;
+
+    private String accountName;
+
+    private String accountNumber;
+
+    private String bankname;
+
+    private String storeId;
+
+    private Double profits;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date expirationtime;
+
+    //所属上级分类名称
+    private String storeName;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort == null ? null : sort.trim();
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation == null ? null : abbreviation.trim();
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property == null ? null : property.trim();
+    }
+
+    public String getIndustryNature() {
+        return industryNature;
+    }
+
+    public void setIndustryNature(String industryNature) {
+        this.industryNature = industryNature == null ? null : industryNature.trim();
+    }
+
+    public String getInstitutionNum() {
+        return institutionNum;
+    }
+
+    public void setInstitutionNum(String institutionNum) {
+        this.institutionNum = institutionNum == null ? null : institutionNum.trim();
+    }
+
+    public String getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(String institution) {
+        this.institution = institution == null ? null : institution.trim();
+    }
+
+    public Date getEstablished() {
+        return established;
+    }
+
+    public void setEstablished(Date established) {
+        this.established = established;
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader == null ? null : leader.trim();
+    }
+
+    public String getTell() {
+        return tell;
+    }
+
+    public void setTell(String tell) {
+        this.tell = tell == null ? null : tell.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode == null ? null : zipCode.trim();
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName == null ? null : accountName.trim();
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber == null ? null : accountNumber.trim();
+    }
+
+    public String getBankname() {
+        return bankname;
+    }
+
+    public void setBankname(String bankname) {
+        this.bankname = bankname == null ? null : bankname.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public Double getProfits() {
+        return profits;
+    }
+
+    public void setProfits(Double profits) {
+        this.profits = profits;
+    }
+
+    public Date getExpirationtime() {
+        return expirationtime;
+    }
+
+    public void setExpirationtime(Date expirationtime) {
+        this.expirationtime = expirationtime;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+}

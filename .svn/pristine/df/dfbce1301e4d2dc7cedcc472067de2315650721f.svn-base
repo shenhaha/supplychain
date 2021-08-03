@@ -1,0 +1,16 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Neonatalrounds;
+import com.luer.servicecenter.bean.NeonatalroundsExample;
+
+import java.util.List;
+
+public interface NeonatalroundsService {
+    int insert(Neonatalrounds record);
+    int deleteByPrimaryKey(String id);
+    int updateByPrimaryKey(Neonatalrounds record);
+    List<Neonatalrounds> selectByExample(Neonatalrounds neonatalrounds);
+    Neonatalrounds selectByPrimaryKey(String id);
+
+    List<Neonatalrounds> getNeonatalroundsByMotherId(String motherId);
+}

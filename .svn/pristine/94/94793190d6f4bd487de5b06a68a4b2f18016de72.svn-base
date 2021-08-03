@@ -1,0 +1,218 @@
+package com.luer.comm.utils;
+
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
+
+import java.io.*;
+
+public class FTPUtils {
+
+    private static FTPClient ftpClient = null;
+
+    /**
+     * 连接到FTP服务器
+     *
+     * @param hostname 主机名
+     * @param port     ftp端口
+     * @param username ftp用户名
+     * @param password ftp密码
+     * @return 是否连接成功
+     * @throws IOException
+     */
+
+    public static boolean connect(String hostname, int port, String username,
+                                  String password) throws IOException {
+        ftpClient = new FTPClient();
+        ftpClient.connect(hostname, port);
+        if (FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
+            if (ftpClient.login(username, password)) {
+                return true;
+            }
+        }
+        disconnect();
+        return false;
+    }
+
+    /**
+     * 从FTP服务器上下载文件
+     *
+     * @param remote 远程文件路径
+     * @param local  本地文件路径
+     * @return 是否成功
+     * @throws IOException
+     */
+
+    public static boolean download(String remote, String local) throws IOException {
+        ftpClient.enterLocalPassiveMode();
+        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+        boolean result;
+        File f = new File(local);
+        FTPFile[] files = ftpClient.listFiles(remote);
+        if (files.length != 1) {
+            return false;
+        }
+        long lRemoteSize = files[0].getSize();
+        if (f.exists()) {
+            OutputStream out = new FileOutputStream(f, true);
+            if (f.length() >= lRemoteSize) {
+                return false;
+            }
+            ftpClient.setRestartOffset(f.length());
+            result = ftpClient.retrieveFile(remote, out);
+            out.close();
+        } else {
+            OutputStream out = new FileOutputStream(f);
+            result = ftpClient.retrieveFile(remote, out);
+            out.close();
+        }
+        return result;
+
+    }
+
+    /**
+     * 从FTP服务器上下载文件
+     *
+     * @param remote 远程文件路径
+     * @param out
+     * @return
+     * @throws IOException
+     */
+    public static boolean download(String remote, OutputStream out) throws IOException {
+        ftpClient.enterLocalPassiveMode();
+        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+        boolean result;
+        FTPFile[] files = ftpClient.listFiles(remote);
+        if (files.length != 1) {
+            return false;
+        }
+        result = ftpClient.retrieveFile(remote, out);
+        out.close();
+        out.close();
+        return result;
+
+    }
+
+    /**
+     * 上传文件到FTP服务器，支持断点续传
+     *
+     * @param in     上传的文件
+     * @param remote 远程文件路径，使用/home/directory1/subdirectory/file.ext
+     *               按照Linux上的路径指定方式，支持多级目录嵌套，支持递归创建不存在的目录结构
+     * @return 上传结果
+     * @throws IOException
+     */
+
+    public static String upload(InputStream in, String remote) {
+        String result = "";
+        try {
+            // 设置PassiveMode传输
+            ftpClient.enterLocalPassiveMode();
+            // 设置以二进制流的方式传输
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            // 设置编码
+            ftpClient.setControlEncoding("GBK");
+            ftpClient.enterLocalPassiveMode();
+
+            // 对远程目录的处理
+            String remoteFileName = remote;
+            if (remote.contains("/")) {
+                remoteFileName = remote.substring(remote.lastIndexOf("/") + 1);
+                String directory = remote.substring(0, remote.lastIndexOf("/") + 1);
+                if (!directory.equalsIgnoreCase("/")
+                        && !ftpClient.changeWorkingDirectory(directory)) {
+                    // 如果远程目录不存在，则递归创建远程服务器目录
+                    int start = 0;
+                    int end = 0;
+                    if (directory.startsWith("/")) {
+                        start = 1;
+                    } else {
+                        start = 0;
+                    }
+                    end = directory.indexOf("/", start);
+                    while (true) {
+                        String subDirectory = remote.substring(start, end);
+                        if (!ftpClient.changeWorkingDirectory(subDirectory)) {
+                            if (ftpClient.makeDirectory(subDirectory)) {
+                                ftpClient.changeWorkingDirectory(subDirectory);
+                            } else {
+                                return "创建文件夹失败";
+                            }
+                        }
+                        start = end + 1;
+                        end = directory.indexOf("/", start);
+                        // 检查所有目录是否创建完毕
+                        if (end <= start) {
+                            break;
+                        }
+                    }
+                }
+            }
+            InputStream is = in;
+            if (ftpClient.storeFile(new String(remoteFileName.getBytes("GBK"), "iso-8859-1"), is)) {
+                result = "上传文件成功";
+            } else {
+                result = "上传文件失败";
+            }
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return result;
+    }
+
+    /**
+     * 断开与远程服务器的连接
+     *
+     * @throws IOException
+     */
+
+    public static void disconnect() {
+        try {
+            if (ftpClient.isConnected()) {
+                ftpClient.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean deleteLoadFile(String fileName) {
+        boolean flag = false;
+        try {
+            if (ftpClient != null) {
+                flag = ftpClient.deleteFile(fileName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    public static void main(String[] args) {
+        FTPUtils myFtp = new FTPUtils();
+        try {
+
+            boolean flag = myFtp.connect("hidstv.oicp.net", 21, "dstftp",
+                    "123456");
+            boolean flag1 = myFtp.connect("222.73.52.24", 21, "dst2",
+                    "dst_glsl116");
+            // String ftpPath = "ftp://218.1.72.212:2015/";
+            // String filePath = "ftp://218.1.72.212:2015/111/123456.png";
+            // String fileName = filePath.replace(ftpPath, "");
+            // System.err.println(fileName);
+            // if (flag) {
+            // myFtp.deleteLoadFile(fileName);
+            // }
+            System.err.println("flag--" + flag);
+            myFtp.disconnect();
+        } catch (IOException e) {
+
+        }
+
+    }
+
+}

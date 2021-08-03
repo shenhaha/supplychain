@@ -1,0 +1,36 @@
+package com.luer.businessmanager.dao;
+
+import com.luer.businessmanager.bean.QuestionSort;
+import com.luer.businessmanager.bean.QuestionSortExample;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@MapperScan
+@Component
+public interface QuestionSortMapper {
+    QuestionSort selectSortId();
+    int countByExample(QuestionSortExample example);
+
+    int deleteByExample(QuestionSortExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(QuestionSort record);
+
+    int insertSelective(QuestionSort record);
+
+    List<QuestionSort> selectByExample(QuestionSortExample example);
+
+    QuestionSort selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") QuestionSort record, @Param("example") QuestionSortExample example);
+
+    int updateByExample(@Param("record") QuestionSort record, @Param("example") QuestionSortExample example);
+
+    int updateByPrimaryKeySelective(QuestionSort record);
+
+    int updateByPrimaryKey(QuestionSort record);
+}

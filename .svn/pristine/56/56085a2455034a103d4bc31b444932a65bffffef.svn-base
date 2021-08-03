@@ -1,0 +1,49 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.Items;
+import com.luer.storemanager.dao.ItemsMapper;
+import com.luer.storemanager.service.ItemsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * 商品信息服务实现类
+ * @ClassName ItemsServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/15 19:38.
+ */
+@Service
+@Transactional
+public class ItemsServiceImpl implements ItemsService {
+    @Autowired
+    private ItemsMapper itemsMapper;
+
+    @Override
+    //查询所有
+    public List<Items> selectItems() {
+        return itemsMapper.selectItems();
+    }
+
+    @Override
+    //添加
+    public int insert(Items record) {
+        record.setId(UUIDUtils.getUUID());
+        return itemsMapper.insert(record);
+    }
+
+    @Override
+    //修改
+    public int updateByPrimaryKeySelective(Items record) {
+        return itemsMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    //删除
+    public int deleteByPrimaryKey(String id) {
+        return itemsMapper.deleteByPrimaryKey(id);
+    }
+}

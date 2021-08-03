@@ -1,0 +1,242 @@
+package com.luer.users.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.springsecurity.bean.Role;
+import com.luer.springsecurity.bean.UserRole;
+import com.luer.springsecurity.service.RoleService;
+import com.luer.springsecurity.service.UserRoleService;
+import com.luer.storesdata.bean.AccountInfo;
+import com.luer.storesdata.service.StoreFileService;
+import com.luer.users.bean.Users;
+import com.luer.users.service.UsersService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * 用户控制层
+ *
+ * @ClassName UsersController
+ * @Author GavinJiang
+ * @Date 2018/8/16 14:53.
+ */
+@Controller
+public class UsersController {
+    @Autowired
+    private UsersService usersService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private UserRoleService userRoleService;
+    @Autowired
+    private StoreFileService storeFileService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @PostMapping("/testpassword")
+    @ResponseBody
+    public ResultSet testpassword(String pass,String username){
+        String s = passwordEncoder.encode(pass);
+        String s2 = passwordEncoder.encode(pass);
+        List<Users> users = usersService.selectUsers(s, username);
+        return ResultSet.getSuccess(users);
+    }
+    @PostMapping("/updatepass")
+    @ResponseBody
+    public ResultSet updatepass(String pass,String id){
+        usersService.updatepass(pass,id);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/updatepass1")
+    @ResponseBody
+    public ResultSet updatepass1(String pass,String id,HttpServletRequest request){
+        SecurityContextImpl securityContextImpl = (SecurityContextImpl)request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+        String name = securityContextImpl.getAuthentication().getName();
+        Users users = usersService.selectUsersByName(name);
+        usersService.updatepass(pass,users.getId());
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/getname")
+    @ResponseBody
+    public ResultSet getname(HttpServletRequest request){
+        SecurityContextImpl securityContextImpl = (SecurityContextImpl)request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+        String name = securityContextImpl.getAuthentication().getName();
+        return ResultSet.getSuccess(name);
+    }
+    /**
+     * 获取所有的超级管理员
+    * @author 张路明
+    */
+    @GetMapping("/getAccount")
+    @ResponseBody
+    public List<AccountInfo> getAccount(HttpServletRequest request){
+
+        String storeId = (String)request.getSession().getAttribute("storeId");
+        return storeFileService.selectAdmin(storeId);
+    }
+
+    /**新增超级管理员
+    * @author 张路明
+    */
+    public ResultSet addSuper(){
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 根据用户名删除用户，并删除其角色和权限
+    * @author 张路明
+    */
+    @PostMapping("/deleteUser")
+    @ResponseBody
+    public ResultSet deleteUser(String username){
+        usersService.deleteUser(username);
+        return  ResultSet.getSuccess();
+    }
+
+    //门店超级管理员权限最高，包括所有功能（新增普通用户，给普通用户设置权限，删除用户等）
+    //超级管理只能把自身权限设置给普通用户
+    //普通用户不能进行权限管理（没有权限管理页面）
+    /**
+     * 超级管理原为普通用户增加权限
+    * @author 张路明
+    * @return
+    */
+    @ResponseBody
+    @PostMapping("/addAuths")
+    public ResultSet addAuths(String auths,String username){
+        usersService.insertPerssion(username,auths);
+        return  ResultSet.getSuccess();
+    }
+    /**
+     * 超级管理员添加用户信息
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("addUsers")
+    public ResultSet addUsers(Users users, HttpServletRequest request) {
+        usersService.addAll(users,request);
+        return ResultSet.getSuccess();
+    }
+    /**
+     * 获取storeId查找user
+    * @author 张路明
+    * @param
+    * @return
+    */
+    @GetMapping("/getUsersByStoreID")
+    @ResponseBody
+    public List<Users> getUserNames(HttpServletRequest request){
+        List<Users> users = usersService.getUserByStoreId((String) request.getSession().getAttribute("storeId"));
+        return users;
+    }
+    /**
+     * 根据用户名获取当前用户权限
+    * @author 张路明
+    */
+    @PostMapping("/getAuth")
+    @ResponseBody
+    public ResultSet getAuthByUser(HttpServletRequest request){
+        SecurityContextImpl securityContextImpl = (SecurityContextImpl)request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+        List<String> auths = usersService.getAuthByUser(securityContextImpl.getAuthentication().getName());
+        return ResultSet.getSuccess(auths);
+    }
+
+    /**
+     * 用户登录验证
+     *
+     * @param users
+     * @return com.luer.comm.utils.ResultSet
+     * @author GavinJiang
+     * @date 2018/8/16 15:48
+     * @params
+     */
+    @ResponseBody
+    @PostMapping("/login_1")
+    public ResultSet login(Users users) {
+        String userName = users.getUsername();
+        Users user = usersService.selectUsersByName(userName);
+        //判断传入的密码与数据库查出的密码不一致，返回登录失败
+        if (users.getPassword() != user.getPassword()) {
+            return ResultSet.getFail();
+        }
+        return ResultSet.getSuccess(user);
+    }
+
+    /**
+     * 查询所有的用户信息
+     *
+     * @date 2018/8/16 14:21
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("/selectUsersAll")
+    public ResultSet selectUsersAll() {
+        List<Users> selectUsersAll = usersService.selectUsers();
+        return ResultSet.getSuccess(selectUsersAll);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param record
+     * @date 2018/8/16 14:40
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("updateUsers")
+    public ResultSet updateUsers(Users record) {
+        usersService.updateByPrimaryKeySelective(record);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 根据id删除用户信息
+     *
+     * @param id
+     * @date 2018/8/16 14:40
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("deleteUsers")
+    public ResultSet deleteUsers(@NonNull String id) {
+        usersService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 根据id批量删除用户信息
+     *
+     * @param ids
+     * @date 2018/8/16 14:40
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("deleteUserss")
+    public ResultSet deleteUserss(@NonNull String ids) {
+        String[] id = ids.split(",");
+        for (int i = 0; i < id.length; i++) {
+            usersService.deleteByPrimaryKey(id[i]);
+        }
+        return ResultSet.getSuccess();
+    }
+
+
+    //通过用户名和角色名获得角色的id
+
+    @ResponseBody
+    @RequestMapping("/getUserroleId")
+    public String getUserroleId(String username,String roledesc) {
+
+        return usersService.getUserroleId(username,roledesc);
+    }
+}

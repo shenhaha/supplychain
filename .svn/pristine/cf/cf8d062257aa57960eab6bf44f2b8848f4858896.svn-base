@@ -1,0 +1,305 @@
+package com.luer.servicecenter.bean;
+
+import java.util.Date;
+
+public class DoctorCheckout {
+    private String id;
+
+    private String motherId;
+
+    private String babyId;
+
+    private String storeId;
+
+    private String roomno;
+
+    private String name;
+
+    private String ap;
+
+    private String bw;
+
+    private String sex;
+
+    private String generalApprarence;
+
+    private String skin;
+
+    private String headNeek;
+
+    private String eyes;
+
+    private String earsNoseThroat;
+
+    private String thorax;
+
+    private String lungs;
+
+    private String heart;
+
+    private String abdomen;
+
+    private String genitalia;
+
+    private String anus;
+
+    private String trunkAndSpine;
+
+    private String extremities;
+
+    private String reflexs;
+
+    private String remark;
+
+    private String description;
+
+    private Date checktime;
+
+    private Date onetime;
+
+    private String signature;
+
+    private String strone;
+
+    private String strtwo;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(String motherId) {
+        this.motherId = motherId == null ? null : motherId.trim();
+    }
+
+    public String getBabyId() {
+        return babyId;
+    }
+
+    public void setBabyId(String babyId) {
+        this.babyId = babyId == null ? null : babyId.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getRoomno() {
+        return roomno;
+    }
+
+    public void setRoomno(String roomno) {
+        this.roomno = roomno == null ? null : roomno.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getAp() {
+        return ap;
+    }
+
+    public void setAp(String ap) {
+        this.ap = ap == null ? null : ap.trim();
+    }
+
+    public String getBw() {
+        return bw;
+    }
+
+    public void setBw(String bw) {
+        this.bw = bw == null ? null : bw.trim();
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getGeneralApprarence() {
+        return generalApprarence;
+    }
+
+    public void setGeneralApprarence(String generalApprarence) {
+        this.generalApprarence = generalApprarence == null ? null : generalApprarence.trim();
+    }
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin == null ? null : skin.trim();
+    }
+
+    public String getHeadNeek() {
+        return headNeek;
+    }
+
+    public void setHeadNeek(String headNeek) {
+        this.headNeek = headNeek == null ? null : headNeek.trim();
+    }
+
+    public String getEyes() {
+        return eyes;
+    }
+
+    public void setEyes(String eyes) {
+        this.eyes = eyes == null ? null : eyes.trim();
+    }
+
+    public String getEarsNoseThroat() {
+        return earsNoseThroat;
+    }
+
+    public void setEarsNoseThroat(String earsNoseThroat) {
+        this.earsNoseThroat = earsNoseThroat == null ? null : earsNoseThroat.trim();
+    }
+
+    public String getThorax() {
+        return thorax;
+    }
+
+    public void setThorax(String thorax) {
+        this.thorax = thorax == null ? null : thorax.trim();
+    }
+
+    public String getLungs() {
+        return lungs;
+    }
+
+    public void setLungs(String lungs) {
+        this.lungs = lungs == null ? null : lungs.trim();
+    }
+
+    public String getHeart() {
+        return heart;
+    }
+
+    public void setHeart(String heart) {
+        this.heart = heart == null ? null : heart.trim();
+    }
+
+    public String getAbdomen() {
+        return abdomen;
+    }
+
+    public void setAbdomen(String abdomen) {
+        this.abdomen = abdomen == null ? null : abdomen.trim();
+    }
+
+    public String getGenitalia() {
+        return genitalia;
+    }
+
+    public void setGenitalia(String genitalia) {
+        this.genitalia = genitalia == null ? null : genitalia.trim();
+    }
+
+    public String getAnus() {
+        return anus;
+    }
+
+    public void setAnus(String anus) {
+        this.anus = anus == null ? null : anus.trim();
+    }
+
+    public String getTrunkAndSpine() {
+        return trunkAndSpine;
+    }
+
+    public void setTrunkAndSpine(String trunkAndSpine) {
+        this.trunkAndSpine = trunkAndSpine == null ? null : trunkAndSpine.trim();
+    }
+
+    public String getExtremities() {
+        return extremities;
+    }
+
+    public void setExtremities(String extremities) {
+        this.extremities = extremities == null ? null : extremities.trim();
+    }
+
+    public String getReflexs() {
+        return reflexs;
+    }
+
+    public void setReflexs(String reflexs) {
+        this.reflexs = reflexs == null ? null : reflexs.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    public Date getChecktime() {
+        return checktime;
+    }
+
+    public void setChecktime(Date checktime) {
+        this.checktime = checktime;
+    }
+
+    public Date getOnetime() {
+        return onetime;
+    }
+
+    public void setOnetime(Date onetime) {
+        this.onetime = onetime;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
+    }
+
+    public String getStrone() {
+        return strone;
+    }
+
+    public void setStrone(String strone) {
+        this.strone = strone == null ? null : strone.trim();
+    }
+
+    public String getStrtwo() {
+        return strtwo;
+    }
+
+    public void setStrtwo(String strtwo) {
+        this.strtwo = strtwo == null ? null : strtwo.trim();
+    }
+}

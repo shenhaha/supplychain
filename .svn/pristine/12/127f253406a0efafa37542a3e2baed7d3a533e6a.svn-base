@@ -1,0 +1,48 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.MeetingrecordExample;
+import com.luer.storemanager.bean.Meetingrecord;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface MeetingrecordMapper {
+    int countByExample(MeetingrecordExample example);
+
+    int deleteByExample(MeetingrecordExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Meetingrecord record);
+
+    int insertSelective(Meetingrecord record);
+
+    List<Meetingrecord> selectByExample(MeetingrecordExample example);
+
+    Meetingrecord selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Meetingrecord record, @Param("example") MeetingrecordExample example);
+
+    int updateByExample(@Param("record") Meetingrecord record, @Param("example") MeetingrecordExample example);
+
+    int updateByPrimaryKeySelective(Meetingrecord record);
+
+    int updateByPrimaryKey(Meetingrecord record);
+
+    /**
+     *
+     * @description 查询所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/13 19:26
+     * @params []
+     * @return java.util.List<com.luer.storemanager.bean.Meetingrecord>
+     */
+    List<Meetingrecord> selectMeetingrecord();
+
+    //根据门店id查询
+    List<Meetingrecord> selectMeetingrecordAllBystoreId(String storeId);
+}

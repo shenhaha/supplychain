@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.BabywashMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Babywash" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="babyname" property="babyname" jdbcType="VARCHAR" />
+    <result column="babyid" property="babyid" jdbcType="VARCHAR" />
+    <result column="mothername" property="mothername" jdbcType="VARCHAR" />
+    <result column="motherid" property="motherid" jdbcType="VARCHAR" />
+    <result column="washway" property="washway" jdbcType="VARCHAR" />
+    <result column="washdate" property="washdate" jdbcType="TIMESTAMP" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="babyfrom" property="babyfrom" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="getBabywashByMotherId" resultMap="BaseResultMap">
+        SELECT * FROM babywash WHERE motherid=#{motherid}
+
+    </select>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, babyname, babyid, mothername, motherid, washway, washdate, note, babyfrom
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.BabywashExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from babywash
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from babywash
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from babywash
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.BabywashExample" >
+    delete from babywash
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Babywash" >
+    insert into babywash (id, babyname, babyid, 
+      mothername, motherid, washway, 
+      washdate, note, babyfrom,storeid
+      )
+    values (#{id,jdbcType=VARCHAR}, #{babyname,jdbcType=VARCHAR}, #{babyid,jdbcType=VARCHAR}, 
+      #{mothername,jdbcType=VARCHAR}, #{motherid,jdbcType=VARCHAR}, #{washway,jdbcType=VARCHAR}, 
+      #{washdate,jdbcType=TIMESTAMP}, #{note,jdbcType=VARCHAR}, #{babyfrom,jdbcType=VARCHAR},#{storeid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Babywash" >
+    insert into babywash
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="babyname != null" >
+        babyname,
+      </if>
+      <if test="babyid != null" >
+        babyid,
+      </if>
+      <if test="mothername != null" >
+        mothername,
+      </if>
+      <if test="motherid != null" >
+        motherid,
+      </if>
+      <if test="washway != null" >
+        washway,
+      </if>
+      <if test="washdate != null" >
+        washdate,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="babyfrom != null" >
+        babyfrom,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="babyname != null" >
+        #{babyname,jdbcType=VARCHAR},
+      </if>
+      <if test="babyid != null" >
+        #{babyid,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        #{mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="washway != null" >
+        #{washway,jdbcType=VARCHAR},
+      </if>
+      <if test="washdate != null" >
+        #{washdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="babyfrom != null" >
+        #{babyfrom,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.BabywashExample" resultType="java.lang.Integer" >
+    select count(*) from babywash
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update babywash
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.babyname != null" >
+        babyname = #{record.babyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.babyid != null" >
+        babyid = #{record.babyid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mothername != null" >
+        mothername = #{record.mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherid != null" >
+        motherid = #{record.motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.washway != null" >
+        washway = #{record.washway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.washdate != null" >
+        washdate = #{record.washdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.babyfrom != null" >
+        babyfrom = #{record.babyfrom,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update babywash
+    set id = #{record.id,jdbcType=VARCHAR},
+      babyname = #{record.babyname,jdbcType=VARCHAR},
+      babyid = #{record.babyid,jdbcType=VARCHAR},
+      mothername = #{record.mothername,jdbcType=VARCHAR},
+      motherid = #{record.motherid,jdbcType=VARCHAR},
+      washway = #{record.washway,jdbcType=VARCHAR},
+      washdate = #{record.washdate,jdbcType=TIMESTAMP},
+      note = #{record.note,jdbcType=VARCHAR},
+      babyfrom = #{record.babyfrom,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Babywash" >
+    update babywash
+    <set >
+      <if test="babyname != null" >
+        babyname = #{babyname,jdbcType=VARCHAR},
+      </if>
+      <if test="babyid != null" >
+        babyid = #{babyid,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        mothername = #{mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        motherid = #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="washway != null" >
+        washway = #{washway,jdbcType=VARCHAR},
+      </if>
+      <if test="washdate != null" >
+        washdate = #{washdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="babyfrom != null" >
+        babyfrom = #{babyfrom,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Babywash" >
+    update babywash
+    set babyname = #{babyname,jdbcType=VARCHAR},
+      babyid = #{babyid,jdbcType=VARCHAR},
+      mothername = #{mothername,jdbcType=VARCHAR},
+      motherid = #{motherid,jdbcType=VARCHAR},
+      washway = #{washway,jdbcType=VARCHAR},
+      washdate = #{washdate,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR},
+      babyfrom = #{babyfrom,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

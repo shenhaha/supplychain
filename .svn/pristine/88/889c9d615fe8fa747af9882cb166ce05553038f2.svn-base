@@ -1,0 +1,18 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.DoctorCheckout;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/10/16.
+ */
+public interface DoctorCheckoutService {
+    void addDoctorCheckout(DoctorCheckout doctorCheckout);
+
+    void updateDoctorCheckout(DoctorCheckout doctorCheckout);
+
+    void deleteDoctorCheckout(String id);
+
+    List<DoctorCheckout> getDoctorCheckout(String motherId);
+}

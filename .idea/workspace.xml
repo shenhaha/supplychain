@@ -1,0 +1,1523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="663bfd90-ce68-402f-9436-d30d01abde35" name="Default" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jsp File" />
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ResponseUtil</find>
+      <find>addressDetail</find>
+      <find>selectPNumberById</find>
+      <find>selectDAddressByCode</find>
+      <find>selectByCode</find>
+      <find>selectSupplier</find>
+      <find>selectByPurchaseNumber</find>
+      <find>spare02</find>
+      <find>itemCode</find>
+      <find>selectByAuditStatus</find>
+      <find>materialCode</find>
+      <find>oil_share</find>
+      <find>oilShare</find>
+      <find>OilShare</find>
+      <find>warehouse</find>
+      <find>warehouseNumber</find>
+      <find>select</find>
+      <find>id</find>
+      <find>insert</find>
+      <find>deleteByPNumber</find>
+      <find>deleteByIds</find>
+      <find>Warehousematerial</find>
+      <find>selectMaxCreateTime</find>
+      <find>seclectByCategory</find>
+      <find>selectByOddNumber</find>
+      <find>updateById</find>
+      <find>updateByExampleSelective</find>
+      <find>selectByFNameAndCategoryAndOddNumber</find>
+      <find>selectById</find>
+      <find>number</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>selectByMaterialCodeAndName</replace>
+    </replaceStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/basicsetup/controller/GoodsmessageController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/basicsetup/controller/MaterialmessageController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/service/impl/PurchasematerialServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/basicsetup/bean/Materialmessage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/basicsetup/bean/MaterialmessageExample.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mapper/basicsetupMapper/MaterialmessageMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/warehouseController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/warehouseService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/warehouseServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/service/impl/PurchaseServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/bean/PurchaseEnca.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/WarehousemdetailExample.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/bean/Purchasemdetail.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/bean/PurchasemdetailExample.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehousemController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseGService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseGController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseGDController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseGDService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseGDServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseGServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/dao/WarehouseMDMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/dao/WarehouseMMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/Warehousemdetail.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/WarehousematerialExample.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/service/impl/PurchasedetailServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mapper/purchaseMapper/PurchasematerialMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/Warehousematerial.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/comm/utils/PNumberUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/comm/utils/ODDNumberUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/WarehouseEnca.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseMService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/dao/WarehousematerialMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseMServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseMDService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseMDServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/dao/WarehousemdetailMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseMDController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/service/impl/PurchasemdetailServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/controller/PurchaseController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/service/PurchasemdetailService.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mapper/warehouseMapper/WarehousematerialMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/mapper/warehouseMapper/WarehousemdetailMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/dao/PurchasemdetailMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mapper/purchaseMapper/PurchasemdetailMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/controller/PurchasematerialController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/purchase/controller/PurchasemdetailController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseMController.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="userSettingsFile" value="D:\software\maven\apache-maven-3.5.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="supplychain" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="supplychain" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="supplychain" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="supplychain" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="spring-boot" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1147" />
+    <option name="y" value="247" />
+    <option name="width" value="1189" />
+    <option name="height" value="753" />
+  </component>
+  <component name="ProjectId" id="1wALm2XQqNumzBe2yVlRdSaxPE3" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="bean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="warehouse" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="warehouse" type="462c0819:PsiDirectoryNode" />
+              <item name="bean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="warehouse" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="warehouse" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="warehouse" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="luer" type="462c0819:PsiDirectoryNode" />
+              <item name="warehouse" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="basicsetupMapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="purchaseMapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="supplychain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="supplychain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="warehouseMapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelOrder2" value="2" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RequestMappingsPanelWidth2" value="75" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://E:/supplychainworkspace/supplychain/src/main/java/com/luer/purchase/bean/Purchasedetail.java" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.luer" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\supplychainworkspace\supplychain\src\main\java\com\luer\warehouse\bean" />
+      <recent name="E:\supplychainworkspace\supplychain\src\main\java\com\luer\warehouse\dao" />
+      <recent name="E:\supplychainworkspace\supplychain\src\main\resources\mapper\warehouseMapper" />
+      <recent name="E:\supplychainworkspace\supplychain\src\main\java\com\luer\purchase\bean" />
+      <recent name="E:\supplychainworkspace\supplychain\src\main\java\com\luer\basicsetup\bean" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.luer.businessmanager.controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\supplychainworkspace\supplychain\src\main\resources\mapper\purchaseMapper" />
+      <recent name="E:\micc\micc\src\main\webapp\template\" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ODDNumberUtil">
+    <configuration default="true" type="TomeeConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8099/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment />
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="_micc_3" />
+        <option name="HTTP_PORT" value="8099" />
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="64660" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="JRebel Debug">
+        <option name="DEBUG_PORT" value="64661" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="JRebel Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="JRebel Executor">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+    </configuration>
+    <configuration default="true" type="TomeeConfiguration" factoryName="Remote" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="PORT" value="8099" />
+      <option name="LOCAL" value="false" />
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8099/" />
+      <deployment />
+      <server-settings>
+        <data>
+          <option name="targets">
+            <list>
+              <WatchedTargetModelImpl>
+                <option name="name" value="CONTEXT_XML" />
+                <option name="transportStagingTarget">
+                  <TransportTarget>
+                    <option name="id" value="e2511780-cd0f-4114-ab82-97a664242d84" />
+                    <id>e2511780-cd0f-4114-ab82-97a664242d84</id>
+                  </TransportTarget>
+                </option>
+                <option name="watchedLocalPath" value="" />
+                <watched-path />
+                <name>CONTEXT_XML</name>
+                <transport-target>
+                  <TransportTarget>
+                    <option name="id" value="e2511780-cd0f-4114-ab82-97a664242d84" />
+                    <id>e2511780-cd0f-4114-ab82-97a664242d84</id>
+                  </TransportTarget>
+                </transport-target>
+              </WatchedTargetModelImpl>
+              <StagingTargetModelImpl>
+                <option name="name" value="STAGING" />
+                <option name="stagingRemotePath" value="" />
+                <option name="transportStagingTarget">
+                  <TransportTarget>
+                    <option name="id" value="578f4259-3334-4b9b-abd4-81fa89fe1492" />
+                    <id>578f4259-3334-4b9b-abd4-81fa89fe1492</id>
+                  </TransportTarget>
+                </option>
+                <staging-path />
+                <name>STAGING</name>
+                <transport-target>
+                  <TransportTarget>
+                    <option name="id" value="578f4259-3334-4b9b-abd4-81fa89fe1492" />
+                    <id>578f4259-3334-4b9b-abd4-81fa89fe1492</id>
+                  </TransportTarget>
+                </transport-target>
+              </StagingTargetModelImpl>
+            </list>
+          </option>
+          <option name="transportHostId" value="" />
+          <host-id />
+        </data>
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="64092" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="JRebel Debug">
+        <option name="DEBUG_PORT" value="64093" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8099/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment />
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="_micc_2" />
+        <option name="HTTP_PORT" value="8099" />
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="62695" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="JRebel Debug">
+        <option name="DEBUG_PORT" value="62696" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="JRebel Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="JRebel Executor">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="PORT" value="8099" />
+      <option name="LOCAL" value="false" />
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8099/" />
+      <deployment />
+      <server-settings>
+        <data>
+          <option name="targets">
+            <list>
+              <WatchedTargetModelImpl>
+                <option name="name" value="CONTEXT_XML" />
+                <option name="transportStagingTarget">
+                  <TransportTarget>
+                    <option name="id" value="61070203-7f58-485b-ac65-e6988b844080" />
+                    <id>61070203-7f58-485b-ac65-e6988b844080</id>
+                  </TransportTarget>
+                </option>
+                <option name="watchedLocalPath" value="" />
+                <watched-path />
+                <name>CONTEXT_XML</name>
+                <transport-target>
+                  <TransportTarget>
+                    <option name="id" value="61070203-7f58-485b-ac65-e6988b844080" />
+                    <id>61070203-7f58-485b-ac65-e6988b844080</id>
+                  </TransportTarget>
+                </transport-target>
+              </WatchedTargetModelImpl>
+              <StagingTargetModelImpl>
+                <option name="name" value="STAGING" />
+                <option name="stagingRemotePath" value="" />
+                <option name="transportStagingTarget">
+                  <TransportTarget>
+                    <option name="id" value="93a835a5-3c92-4b33-b16a-2b5c62dcbbfa" />
+                    <id>93a835a5-3c92-4b33-b16a-2b5c62dcbbfa</id>
+                  </TransportTarget>
+                </option>
+                <staging-path />
+                <name>STAGING</name>
+                <transport-target>
+                  <TransportTarget>
+                    <option name="id" value="93a835a5-3c92-4b33-b16a-2b5c62dcbbfa" />
+                    <id>93a835a5-3c92-4b33-b16a-2b5c62dcbbfa</id>
+                  </TransportTarget>
+                </transport-target>
+              </StagingTargetModelImpl>
+            </list>
+          </option>
+          <option name="transportHostId" value="" />
+          <host-id />
+        </data>
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="63187" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="JRebel Debug">
+        <option name="DEBUG_PORT" value="63188" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+    </configuration>
+    <configuration name="ODDNumberUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.luer.comm.utils.ODDNumberUtil" />
+      <module name="main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.luer.comm.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PNumberUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.luer.comm.utils.PNumberUtil" />
+      <module name="main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.luer.comm.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SubstringUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.luer.comm.utils.SubstringUtil" />
+      <module name="main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.luer.comm.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.luer.demo.test.test3" />
+      <module name="main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.luer.demo.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test6" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.luer.demo.test.test6" />
+      <module name="main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.luer.demo.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MiccApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.luer.MiccApplication" />
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.PNumberUtil" />
+      <item itemvalue="Application.SubstringUtil" />
+      <item itemvalue="Application.test6" />
+      <item itemvalue="Application.test3" />
+      <item itemvalue="Application.ODDNumberUtil" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ODDNumberUtil" />
+        <item itemvalue="Application.test3" />
+        <item itemvalue="Application.test6" />
+        <item itemvalue="Application.PNumberUtil" />
+        <item itemvalue="Application.SubstringUtil" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="663bfd90-ce68-402f-9436-d30d01abde35" name="Default" comment="" />
+      <created>1543640141469</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1543640141469</updated>
+      <workItem from="1543640142906" duration="5123000" />
+      <workItem from="1543646022450" duration="13304000" />
+      <workItem from="1543798716508" duration="1298000" />
+      <workItem from="1543800385262" duration="4652000" />
+      <workItem from="1543816089349" duration="2151000" />
+      <workItem from="1543818578149" duration="4000" />
+      <workItem from="1543827179323" duration="9777000" />
+      <workItem from="1543885355417" duration="663000" />
+      <workItem from="1543889546914" duration="1074000" />
+      <workItem from="1543890654770" duration="2591000" />
+      <workItem from="1543894313375" duration="1333000" />
+      <workItem from="1543896050732" duration="752000" />
+      <workItem from="1543901541084" duration="109000" />
+      <workItem from="1543902873416" duration="2490000" />
+      <workItem from="1544514739629" duration="30000" />
+      <workItem from="1544520132274" duration="994000" />
+      <workItem from="1544682951683" duration="38000" />
+      <workItem from="1545802599324" duration="44000" />
+      <workItem from="1545807203000" duration="642000" />
+      <workItem from="1545808109664" duration="6406000" />
+      <workItem from="1545872225525" duration="14159000" />
+      <workItem from="1545893200340" duration="9702000" />
+      <workItem from="1545903054253" duration="2273000" />
+      <workItem from="1545958935947" duration="35650000" />
+      <workItem from="1546044974808" duration="24269000" />
+      <workItem from="1546390776343" duration="16188000" />
+      <workItem from="1546411651453" duration="11632000" />
+      <workItem from="1546477082964" duration="20106000" />
+      <workItem from="1546563894863" duration="22704000" />
+      <workItem from="1546650416979" duration="8853000" />
+      <workItem from="1546666931392" duration="4000" />
+      <workItem from="1546667328579" duration="136000" />
+      <workItem from="1546667705712" duration="704000" />
+      <workItem from="1546668884086" duration="1369000" />
+      <workItem from="1546672366900" duration="1853000" />
+      <workItem from="1546676290458" duration="102000" />
+      <workItem from="1546678177624" duration="616000" />
+      <workItem from="1546830959129" duration="544000" />
+      <workItem from="1546831524097" duration="6579000" />
+      <workItem from="1546846941631" duration="9304000" />
+      <workItem from="1546908897000" duration="332000" />
+      <workItem from="1546910075799" duration="799000" />
+      <workItem from="1546915233783" duration="598000" />
+      <workItem from="1546915925778" duration="517000" />
+      <workItem from="1546917619786" duration="15827000" />
+      <workItem from="1546941247672" duration="2213000" />
+      <workItem from="1546995801332" duration="19386000" />
+      <workItem from="1547027122377" duration="597000" />
+      <workItem from="1547082633371" duration="3067000" />
+      <workItem from="1547168682218" duration="4687000" />
+      <workItem from="1547189159246" duration="3594000" />
+      <workItem from="1547427388161" duration="1788000" />
+      <workItem from="1547459248165" duration="703000" />
+      <workItem from="1547607882035" duration="11642000" />
+      <workItem from="1547626940992" duration="6287000" />
+      <workItem from="1547687278689" duration="22457000" />
+      <workItem from="1547773188601" duration="25746000" />
+      <workItem from="1548032118188" duration="7111000" />
+      <workItem from="1548039593681" duration="70000" />
+      <workItem from="1548040490436" duration="26410000" />
+      <workItem from="1548118440125" duration="10136000" />
+      <workItem from="1548132907405" duration="18321000" />
+      <workItem from="1548203997865" duration="4699000" />
+      <workItem from="1548209653002" duration="25571000" />
+      <workItem from="1548291507783" duration="2996000" />
+      <workItem from="1548296678735" duration="13088000" />
+      <workItem from="1548378254179" duration="4480000" />
+      <workItem from="1548393917525" duration="2601000" />
+      <workItem from="1549846258213" duration="1134000" />
+      <workItem from="1549849127657" duration="21805000" />
+      <workItem from="1549934545557" duration="8417000" />
+      <workItem from="1549943030085" duration="853000" />
+      <workItem from="1549947831313" duration="16293000" />
+      <workItem from="1550019828145" duration="3458000" />
+      <workItem from="1550025168689" duration="5078000" />
+      <workItem from="1550034739118" duration="8848000" />
+      <workItem from="1550045307853" duration="417000" />
+      <workItem from="1550046853990" duration="586000" />
+      <workItem from="1550049740718" duration="2665000" />
+      <workItem from="1550106356129" duration="5144000" />
+      <workItem from="1550113396830" duration="15031000" />
+      <workItem from="1550192507376" duration="23453000" />
+      <workItem from="1550452439115" duration="20585000" />
+      <workItem from="1550538045683" duration="1654000" />
+      <workItem from="1550540027824" duration="22894000" />
+      <workItem from="1550567593686" duration="878000" />
+      <workItem from="1550568733732" duration="2654000" />
+      <workItem from="1550627304762" duration="21811000" />
+      <workItem from="1550711379789" duration="28357000" />
+      <workItem from="1550743008798" duration="543000" />
+      <workItem from="1550797109941" duration="21805000" />
+      <workItem from="1551057601593" duration="19810000" />
+      <workItem from="1551142614871" duration="3003000" />
+      <workItem from="1551145780233" duration="20654000" />
+      <workItem from="1551228802930" duration="13402000" />
+      <workItem from="1551315073514" duration="24427000" />
+      <workItem from="1551345261106" duration="3823000" />
+      <workItem from="1551402043151" duration="18806000" />
+      <workItem from="1551660830483" duration="9577000" />
+      <workItem from="1551682591698" duration="852000" />
+      <workItem from="1551748105013" duration="19371000" />
+      <workItem from="1551835499660" duration="2327000" />
+      <workItem from="1551859361044" duration="3025000" />
+      <workItem from="1551927396819" duration="6447000" />
+      <workItem from="1552008157395" duration="8403000" />
+      <workItem from="1552265860913" duration="22013000" />
+      <workItem from="1552352318074" duration="27185000" />
+      <workItem from="1552439009214" duration="17484000" />
+      <workItem from="1552459849753" duration="10161000" />
+      <workItem from="1552525830343" duration="14622000" />
+      <workItem from="1552612703970" duration="26788000" />
+      <workItem from="1552871131041" duration="27794000" />
+      <workItem from="1552956382919" duration="26525000" />
+      <workItem from="1553043877189" duration="15141000" />
+      <workItem from="1553129431474" duration="13981000" />
+      <workItem from="1553158726987" duration="2925000" />
+      <workItem from="1553161892019" duration="1065000" />
+      <workItem from="1553215861059" duration="4612000" />
+      <workItem from="1553220598654" duration="24094000" />
+      <workItem from="1553475444125" duration="26533000" />
+      <workItem from="1553561378261" duration="18758000" />
+      <workItem from="1553648485249" duration="10048000" />
+      <workItem from="1553734747497" duration="20196000" />
+      <workItem from="1553820286000" duration="28254000" />
+      <workItem from="1554082060066" duration="24355000" />
+      <workItem from="1554169732483" duration="4840000" />
+      <workItem from="1554265694265" duration="20543000" />
+      <workItem from="1554290896952" duration="4000" />
+      <workItem from="1554339897636" duration="18614000" />
+      <workItem from="1554367656684" duration="9141000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1279911000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1147" y="247" width="1189" height="753" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="FindBugs-IDEA" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50159913" side_tool="true" weight="0.1452514" />
+      <window_info anchor="bottom" id="JRebel Console" order="7" side_tool="true" weight="0.1631285" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.2125775" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="JRebel Executor" order="7" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Structure" order="1" sideWeight="0.50406504" side_tool="true" weight="0.20362474" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.2905028" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" weight="0.3297062" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49840087" visible="true" weight="0.17567568" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32886904" />
+      <window_info anchor="bottom" id="Problems" order="9" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49273744" visible="true" weight="0.2976085" />
+      <window_info anchor="right" id="Bean Validation" order="3" weight="0.3295129" />
+      <window_info id="Web" order="2" sideWeight="0.5072626" side_tool="true" weight="0.20895523" />
+      <window_info id="JRebel" order="2" sideWeight="0.5007924" side_tool="true" weight="0.18176973" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.26815644" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.21117319" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/basicsetup/service/SupplierService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/basicsetup/service/impl/SupplierServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/basicsetup/dao/FactorymanageMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="16" column="46" lean-forward="true" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseGController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="35" lean-forward="true" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/WarehousematerialExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseGDServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseGDService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseGService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseGServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/service/impl/PurchasedetailServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/service/PurchasedetailService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="20" column="8" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/comm/utils/PNumberUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="94" column="5" lean-forward="true" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/dao/PurchaseMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="105" column="35" selection-start-line="105" selection-start-column="4" selection-end-line="105" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/comm/utils/ODDNumberUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="49" column="8" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseGDController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/bean/PurchaseEnca.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/basicsetup/controller/FactoryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="100" selection-start-line="100" selection-end-line="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/config/Swagger2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="569">
+          <caret line="46" column="51" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/Warehousematerial.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-418">
+          <caret line="11" column="31" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/service/PurchaseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="12" column="41" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/service/impl/PurchaseServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="41" column="18" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseMService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseMServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="817">
+          <caret line="43" column="43" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/dao/WarehousematerialMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="24" column="32" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/WarehouseEnca.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="65" column="29" lean-forward="true" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/WarehousemdetailExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="536">
+          <caret line="1915" column="9" lean-forward="true" selection-start-line="1915" selection-start-column="9" selection-end-line="1915" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/WarehouseMDService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/service/impl/WarehouseMDServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="45" column="32" lean-forward="true" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/dao/WarehousemdetailMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="36" column="44" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseMDController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="28" column="65" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/purchaseMapper/PurchasematerialMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20045">
+          <caret line="1055" column="24" selection-start-line="1055" selection-start-column="14" selection-end-line="1055" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/purchaseMapper/PurchasedetailMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/MiccApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#826#827#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/bean/Warehousemdetail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="32" lean-forward="true" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/purchaseMapper/PurchaseMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="873" column="25" selection-start-line="873" selection-start-column="25" selection-end-line="873" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/warehouseMapper/WarehousematerialMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="620" column="40" selection-start-line="620" selection-start-column="40" selection-end-line="621" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/warehouseMapper/WarehousemdetailMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="720" lean-forward="true" selection-start-line="720" selection-end-line="720" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/service/PurchasematerialService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="84" column="28" selection-start-line="84" selection-start-column="28" selection-end-line="84" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/service/impl/PurchasematerialServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="224" column="5" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/dao/PurchasematerialMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/service/impl/PurchasemdetailServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="50" column="37" selection-start-line="50" selection-start-column="37" selection-end-line="50" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/purchaseMapper/PurchasemdetailMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="706" column="24" selection-start-line="706" selection-start-column="14" selection-end-line="706" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/controller/PurchasedetailController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="54" column="65" selection-start-line="54" selection-start-column="55" selection-end-line="54" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/controller/PurchaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="103" column="60" selection-start-line="103" selection-start-column="50" selection-end-line="103" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/dao/PurchasemdetailMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/controller/PurchasematerialController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="96" selection-start-line="96" selection-end-line="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/controller/PurchasemdetailController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="48" column="38" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/service/PurchasemdetailService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/purchase/bean/Purchasemdetail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="201" column="16" selection-start-line="201" selection-start-column="16" selection-end-line="201" selection-end-column="16" />
+          <folding>
+            <element signature="e#4004#4005#0" expanded="true" />
+            <element signature="e#4040#4041#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luer/warehouse/controller/WarehouseMController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="232" lean-forward="true" selection-start-line="231" selection-start-column="55" selection-end-line="232" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>main</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

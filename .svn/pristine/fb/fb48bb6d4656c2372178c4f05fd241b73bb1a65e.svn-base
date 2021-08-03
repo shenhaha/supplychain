@@ -1,0 +1,64 @@
+package com.luer.storesdata.service;
+
+import com.luer.storesdata.bean.AccountInfo;
+import com.luer.storesdata.bean.StoreFile;
+
+import java.util.List;
+
+public interface StoreFileService {
+    List<StoreFile> getStoreBySort(StoreFile storeFile);
+
+    List<StoreFile> getAllBranch();
+
+    //通过全权限获取门店id
+    String getStoreFileId();
+
+    //新增门店资料
+    void saveStoreFile(StoreFile storeFile);
+
+    //删除门店资料
+    void deleteStoreFile(String storeFileId);
+
+    //修改除门店资料
+    void updateStoreFile(StoreFile storeFile);
+
+    //查询除门店资料
+    List<StoreFile> selectStoreFiles();
+
+    //查询门店详细资料
+    List<StoreFile> selectByStoreFileId(String storeFileId);
+
+
+    /**
+     * 通过门店id和门店分类判断其是总公司或分公司还是门店
+     *
+     * @param id
+     * @return java.util.List<com.luer.storesdata.bean.StoreFile>
+     * @author GavinJiang
+     * @date 2018/9/10 11:20
+     * @params
+     */
+    List<StoreFile> selectStoreFileBySortIdAndName(String id);
+
+    /**
+     * 查询所有总公司基本资料
+     *
+     * @return
+     * @author GavinJiang
+     * @params
+     */
+    List<StoreFile> selectStoreFilesByHeadquarters();
+
+    /**
+     * 根据上级门店id查询当前上级门店id下面所有的门店信息
+     *
+     * @param storeId
+     * @return java.util.List<com.luer.storesdata.bean.StoreFile>
+     * @author GavinJiang
+     * @date 2018/9/11 18:15
+     * @params
+     */
+    List<StoreFile> selectByStoreFileIdAll(String storeId,String sort);
+
+    List<AccountInfo> selectAdmin(String storeId);
+}

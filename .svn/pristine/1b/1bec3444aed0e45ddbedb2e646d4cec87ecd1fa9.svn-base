@@ -1,0 +1,112 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html>
+<head>
+    <title>月子餐订餐信息</title>
+</head>
+<body>
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                    <%--<div class="panel-heading">
+                        <div class="pull-left">
+                            <ol class="breadcrumb">
+                                <li><a href="${ctx}/index">首页</a></li>
+                                <li class="active">月子餐订餐管理</li>
+                            </ol>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>--%>
+                    <div>
+                        <div class="panel-body" >
+                            <div class="table-responsive">
+                                <table id="footable_appointment" class="table" data-paging="true" data-filtering="true" data-sorting="true" >
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script >
+    $(function () {
+        var appointmentTitle = [
+            /*{"name":"motherid","title":"ID","style":{"width":400,"maxWidth":800}},*/
+            {"name":"mothername","title":"姓名"},
+            {"name":"roomnum","title":"房号"},
+            {"name":"breakfastSum","title":"早餐"},
+            {"name":"lunchSum","title":"午餐"},
+            {"name":"dinner","title":"晚餐"},
+            {"name":"familymealcount","title":"家属餐"},
+            {"name":"reveille","title":"早点"},
+            {"name":"snack","title":"午点"},
+            {"name":"midnight_snack","title":"夜宵"},
+            {"name":"avoid","title":"禁忌"},
+            {"name":"details","title":"查看详情"},
+            {"name":"options","title":"操作"}
+        ];
+        function addoptions(values) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title : "<span style=\"color: #ab8ce4\">新增或修改禁忌</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'api-blacklist-form-add',
+                message:$('<div></div>').load('${ctx}/template/servicecenter/orderstatistics.jsp'),//加载弹出页面
+                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                onhide:function(){
+                },
+                onshown:function () {
+                    $('#avoid').val(values.avoid);
+                },
+                buttons : [{
+                    id: 'btn-form-submit',
+                    label: '提交',
+                    icon: 'fa fa-check-circle',
+                    cssClass: 'btn-primary',
+                    action: function(){
+                        var json = {
+                            avoid:$('#avoid').val(),
+                            motherid: values.motherid,
+                        };
+                            $.post("${ctx}/customerBasic/updateAvoid",json).
+                            done(function(data){
+                                getCode(data)}).
+                            fail(function(data){
+                                getCode(data)});
+                    }
+                },{
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        }
+        window.addoptions = addoptions;
+        var ft = FooTable.init('#footable_appointment',{
+            "columns": appointmentTitle,
+            "rows": $.get("${ctx}/mealmanager/queryMealGroupByMotherid?storeId="+'<%=session.getAttribute("storeId")%>',function(data){
+                    $(data).each(function(){//用这个类样式写css就行了 detailsBtn
+                        this.options = "<button class='btn btn-primary btn-sm' onclick='addoptions("+JSON.stringify(this)+")'>修改禁忌</button>";
+                        this.details = "<button id='cx' class='btn btn-primary btn-sm' onclick='findDetails("+'"'+this.motherid+'"'+")'>点击查看</button>";
+                    });
+                }),
+        });
+    });
+    //查看详情
+    function findDetails(id){
+        window.location.href="${ctx}/mealmanager/showqueryAllMealByMotherid?motherid="+id;
+    }
+</script>
+
+</body>
+</html>

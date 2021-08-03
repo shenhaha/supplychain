@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.MemberManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.MemberManager" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="membername" property="membername" jdbcType="VARCHAR" />
+    <result column="leavetime" property="leavetime" jdbcType="TIMESTAMP" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getList"  resultMap="BaseResultMap">
+    select * from member_manager
+  </select>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, store_id, membername, leavetime, address, phone
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.MemberManagerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from member_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_manager
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from member_manager
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.MemberManagerExample" >
+    delete from member_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.storemanager.bean.MemberManager" >
+    insert into member_manager (id, store_id, membername, 
+      leavetime, address, phone
+      )
+    values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{membername,jdbcType=VARCHAR}, 
+      #{leavetime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.storemanager.bean.MemberManager" >
+    insert into member_manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="membername != null" >
+        membername,
+      </if>
+      <if test="leavetime != null" >
+        leavetime,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="membername != null" >
+        #{membername,jdbcType=VARCHAR},
+      </if>
+      <if test="leavetime != null" >
+        #{leavetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.storemanager.bean.MemberManagerExample" resultType="java.lang.Integer" >
+    select count(*) from member_manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update member_manager
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.membername != null" >
+        membername = #{record.membername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leavetime != null" >
+        leavetime = #{record.leavetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update member_manager
+    set id = #{record.id,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      membername = #{record.membername,jdbcType=VARCHAR},
+      leavetime = #{record.leavetime,jdbcType=TIMESTAMP},
+      address = #{record.address,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.MemberManager" >
+    update member_manager
+    <set >
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="membername != null" >
+        membername = #{membername,jdbcType=VARCHAR},
+      </if>
+      <if test="leavetime != null" >
+        leavetime = #{leavetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.MemberManager" >
+    update member_manager
+    set store_id = #{storeId,jdbcType=VARCHAR},
+      membername = #{membername,jdbcType=VARCHAR},
+      leavetime = #{leavetime,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

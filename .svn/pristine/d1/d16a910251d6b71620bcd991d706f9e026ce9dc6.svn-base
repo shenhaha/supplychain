@@ -1,0 +1,45 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Babywash;
+import com.luer.servicecenter.service.WashService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/Wash")
+public class WashController {
+
+    @Autowired
+    WashService washService;
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getBabywashByMotherId")
+    @ResponseBody
+    public List<Babywash> getBabywashByMotherId(@NonNull String motherid){
+        return washService.getBabywashByMotherId(motherid);
+    }
+
+    @GetMapping("/get")
+    public List<Babywash> get(@NonNull Babywash  babywashes){
+        return washService.getAll(babywashes);
+    }
+    @PostMapping("/add")
+    public ResultSet add(@NonNull Babywash babywash){
+        washService.add(babywash);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/update")
+    public ResultSet update(@NonNull Babywash babywash){
+        washService.update(babywash);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/delete")
+    public ResultSet delete(@NonNull Babywash babywash){
+        washService.delete(babywash);
+        return ResultSet.getSuccess();
+    }
+}

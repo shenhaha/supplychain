@@ -1,0 +1,33 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.Purchase;
+
+import java.util.List;
+
+public interface PurchaseService {
+    void savePurchase(Purchase purchase);
+
+    void deletePurchaseById(String purchaseId);
+
+    void updatePurchase(Purchase purchase);
+
+    List<Purchase> selectPurchases();
+
+    //查询门店的进货信息
+    List<Purchase> selectByStoreId();
+
+    //查询门店自采信息
+    List<Purchase> selectSelfPurchase();
+
+    //查询门店从总部采购的商品的进货信息
+    List<Purchase> selectByHeadOffice();
+
+    //根据订单id查询对应的进货信息
+    List<Purchase> selectByOrderId(String orderId);
+
+    //分公司查询门店的进货信息
+    List<Purchase> selectPurchaseByBranchOfficeId();
+
+    //通过分公司的id查询分公司的利润
+    double selectBranchProfitsByStoreId();
+}

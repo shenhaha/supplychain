@@ -1,0 +1,425 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <title>满意度统计</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <%--<div class="panel-heading">
+                <div class="pull-left">
+                    <ol class="breadcrumb">
+                        <li><a href="${ctx}/index">首页</a></li>
+                        <li class="active">满意度统计</li>
+                    </ol>
+                </div>
+                <div class="clearfix"></div>
+            </div>--%>
+
+            <!--满意度统计开始-->
+            <div id="repairdiv">
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <table id="satifactionlist" class="table" data-paging="true" data-filtering="true" data-sorting="true"></table>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--满意度统计结束-->
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<script>
+    $(function (){
+        var satifactionTitle = [
+            {   "name":"id",
+                "title":"id",
+                "visible": false},
+            {"name":"motherId","title":"妈妈id","visible": false},
+            {"name":"motherName","title":"妈妈姓名"},
+            {"name":"roomId","title":"房间id","visible": false},
+            {"name":"roomNum","title":"房间号"},
+            {"name":"question1","title":"问题1","visible": false},
+            {"name":"question2","title":"问题","visible": false},
+            {"name":"question3","title":"问题","visible": false},
+            {"name":"question4","title":"问题","visible": false},
+            {"name":"question5","title":"问题","visible": false},
+            {"name":"question6","title":"问题","visible": false},
+            {"name":"question7","title":"问题","visible": false},
+            {"name":"question8","title":"问题","visible": false},
+            {"name":"question9","title":"问题","visible": false},
+            {"name":"question10","title":"问题","visible": false},
+            {"name":"question11","title":"问题","visible": false},
+            {"name":"question12","title":"问题","visible": false},
+            {"name":"question13","title":"问题","visible": false},
+            {"name":"question14","title":"问题","visible": false},
+            {"name":"question15","title":"问题","visible": false},
+            {"name":"question16","title":"问题","visible": false},
+            {"name":"question17","title":"问题","visible": false},
+            {"name":"question18","title":"问题","visible": false},
+            {"name":"question18","title":"问题","visible": false},
+            {"name":"question19","title":"问题","visible": false},
+            {"name":"question20","title":"问题","visible": false},
+            {"name":"question21","title":"问题","visible": false},
+            {"name":"question22","title":"总体满意度"},
+            {"name":"question23","title":"建议","visible": false},
+            {"name":"employerId1","title":"员工1号","visible": false},
+            {"name":"employerId2","title":"员工2号","visible": false},
+            {"name":"employerId3","title":"员工3号","visible": false},
+            {"name":"employerId4","title":"员工4号","visible": false},
+            {"name":"date","title":"调查时间"},
+            {"name": "details","title":"详情"}
+        ];
+        //启动footable
+        var ft = FooTable.init('#satifactionlist',{
+
+            "columns": satifactionTitle,
+            "rows": $.get("${ctx}/satisfactionRecord/selectSatisfactionRecords?storeFileId="+'<%=session.getAttribute("storeId")%>',function(data){
+                    $(data).each(function(){//用这个类样式写css就行了 detailsBtn
+                        this.details = "<button id='cx' class='btn btn-primary btn-sm' onclick='findDetails(" + JSON.stringify(this) + ")'>点击查看</button>";
+                    });
+                    return data;
+                }),
+            //功能操作
+
+
+
+
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storemanager/satisfaction.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $that.removeAttr("disabled");
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'motherId':$('#motherId').val(),
+                                    'roomId':$('#roomId').val(),
+                                    'question1':$("input[name='question1']:checked").val(),
+                                    'question2':$("input[name='question2']:checked").val(),
+                                    'question3':$("input[name='question3']:checked").val(),
+                                    'question5':$("input[name='question5']:checked").val(),
+                                    'question6':$("input[name='question6']:checked").val(),
+                                    'question7':$("input[name='question7']:checked").val(),
+                                    'question8':$("input[name='question8']:checked").val(),
+                                    'question9':$("input[name='question9']:checked").val(),
+                                    'question11':$("input[name='question11']:checked").val(),
+                                    'question12':$("input[name='question12']:checked").val(),
+                                    'question13':$("input[name='question13']:checked").val(),
+                                    'question14':$("input[name='question14']:checked").val(),
+                                    'question15':$("input[name='question15']:checked").val(),
+                                    'question16':$("input[name='question16']:checked").val(),
+                                    'question17':$("input[name='question17']:checked").val(),
+                                    'question19':$("input[name='question19']:checked").val(),
+                                    'question20':$("input[name='question20']:checked").val(),
+                                    'question22':$("input[name='question22']:checked").val(),
+                                    'question4':$('#question4').val(),
+                                    'question10':$('#question10').val(),
+                                    'question18':$('#question18').val(),
+                                    'question21':$('#question21').val(),
+                                    'question23':$('#question23').val(),
+                                    'employerId1':$('#employerId1').val(),
+                                    'employerId2':$('#employerId2').val(),
+                                    'employerId3':$('#employerId3').val(),
+                                    'employerId4':$('#employerId4').val(),
+                                    'storeFileId':'<%=session.getAttribute("storeId")%>',
+                                    'date':$('#date').val()
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields:{
+                                        motherId: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空'
+                                                },
+                                            }
+                                        },
+                                        roomId:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间号不能为空！'
+                                                },
+                                            }
+                                        },
+                                        date: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '时间不能为空！'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/satisfactionRecord/saveSatisfactionRecord",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storemanager/satisfaction.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function (dialogRef) {
+                            function method(name,value) {
+                                $('input[type="radio"][name=' + name + ']').each(function() {
+                                    if ($(this).val() == value) {
+                                        $(this).attr("checked", true);
+                                    }
+                                });
+                            }
+                            $('#id').val(values.id);
+                            $('#motherId').val(values.motherId);
+                            $('#motherName').val(values.motherName);
+                            $('#roomId').val(values.roomId);
+                            $('#roomNum').val(values.roomNum);
+                            $('#date').val(values.date);
+                            $('#question4').val(values.question4);
+                            $('#question10').val(values.question10);
+                            $('#question18').val(values.question18);
+                            $('#question21').val(values.question21);
+                            $('#question23').val(values.question23);
+                            $('#employerId1').val(values.employerId1);
+                            $('#employerId2').val(values.employerId2);
+                            $('#employerId3').val(values.employerId3);
+                            $('#employerId4').val(values.employerId4);
+                            method("question1",values.question1);
+                            method("question2",values.question2);
+                            method("question3",values.question3);
+                            method("question5",values.question5);
+                            method("question6",values.question6);
+                            method("question7",values.question7);
+                            method("question8",values.question8);
+                            method("question9",values.question9);
+                            method("question11",values.question11);
+                            method("question12",values.question12);
+                            method("question13",values.question13);
+                            method("question14",values.question14);
+                            method("question15",values.question15);
+                            method("question16",values.question16);
+                            method("question17",values.question17);
+                            method("question19",values.question19);
+                            method("question20",values.question20);
+                            method("question22",values.question22);
+
+
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'motherId':$('#motherId').val(),
+                                    'roomId':$('#roomId').val(),
+                                    'question1':$("input[name='question1']:checked").val(),
+                                    'question2':$("input[name='question2']:checked").val(),
+                                    'question3':$("input[name='question3']:checked").val(),
+
+                                    'question5':$("input[name='question5']:checked").val(),
+                                    'question6':$("input[name='question6']:checked").val(),
+                                    'question7':$("input[name='question7']:checked").val(),
+                                    'question8':$("input[name='question8']:checked").val(),
+                                    'question9':$("input[name='question9']:checked").val(),
+
+                                    'question11':$("input[name='question11']:checked").val(),
+                                    'question12':$("input[name='question12']:checked").val(),
+                                    'question13':$("input[name='question13']:checked").val(),
+                                    'question14':$("input[name='question14']:checked").val(),
+                                    'question15':$("input[name='question15']:checked").val(),
+                                    'question16':$("input[name='question16']:checked").val(),
+                                    'question17':$("input[name='question17']:checked").val(),
+
+                                    'question19':$("input[name='question19']:checked").val(),
+                                    'question20':$("input[name='question20']:checked").val(),
+
+                                    'question22':$("input[name='question22']:checked").val(),
+
+                                    'question4':$('#question4').val(),
+                                    'question10':$('#question10').val(),
+                                    'question18':$('#question18').val(),
+                                    'question21':$('#question21').val(),
+                                    'question23':$('#question23').val(),
+                                    'employerId1':$('#employerId1').val(),
+                                    'employerId2':$('#employerId2').val(),
+                                    'employerId3':$('#employerId3').val(),
+                                    'employerId4':$('#employerId4').val(),
+                                    'storeFileId':'<%=session.getAttribute("storeId")%>',
+                                    'date':$('#date').val()
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields:{
+                                        motherId: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空'
+                                                },
+                                            }
+                                        },
+                                        roomId:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间号不能为空！'
+                                                },
+                                            }
+                                        },
+                                        date: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '时间不能为空！'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/satisfactionRecord/updateSatisfactionRecord",json).    //修改操作
+                                    done(function(data){getCode(data)}).
+                                    fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作  url  服务器地址
+                deleteRow: function(row){
+                    myConfirm("${ctx}/satisfactionRecord/deleteSatisfactionRecord",row); //删除操作
+                }
+            }
+        });
+        uid = 10;
+    });
+    function findDetails(values) {
+        var dialog = BootstrapDialog.show({
+            type: BootstrapDialog.TYPE_DEFAULT,
+            title: "<span style=\"color: #ab8ce4\"><!--<i class='fa fa-plus'></i>-->满意度详细信息</span>",
+            closable: false,
+            draggable: true,
+            cssClass: 'api-blacklist-form-add',
+            message: $('<div></div>').load('${ctx}/template/storemanager/satisfaction.jsp'),//加载弹出页面
+            size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+            //数据回显
+            onshown: function (dialogRef) {
+                $('#myform').find('input,select,textarea').attr('disabled','disabled');
+                function method(name,value) {
+                    $('input[type="radio"][name=' + name + ']').each(function() {
+                        if ($(this).val() == value) {
+                            $(this).attr("checked", true);
+                        }
+                    });
+                }
+                $('#id').val(values.id);
+                $('#motherId').val(values.motherId);
+                $('#motherName').val(values.motherName);
+                $('#roomId').val(values.roomId);
+                $('#roomNum').val(values.roomNum);
+                $('#date').val(values.date);
+                $('#question4').val(values.question4);
+                $('#question10').val(values.question10);
+                $('#question18').val(values.question18);
+                $('#question21').val(values.question21);
+                $('#question23').val(values.question23);
+                $('#employerId1').val(values.employerId1);
+                $('#employerId2').val(values.employerId2);
+                $('#employerId3').val(values.employerId3);
+                $('#employerId4').val(values.employerId4);
+                method("question1",values.question1);
+                method("question2",values.question2);
+                method("question3",values.question3);
+                method("question5",values.question5);
+                method("question6",values.question6);
+                method("question7",values.question7);
+                method("question8",values.question8);
+                method("question9",values.question9);
+                method("question11",values.question11);
+                method("question12",values.question12);
+                method("question13",values.question13);
+                method("question14",values.question14);
+                method("question15",values.question15);
+                method("question16",values.question16);
+                method("question17",values.question17);
+                method("question19",values.question19);
+                method("question20",values.question20);
+                method("question22",values.question22);
+            },
+            buttons: [{
+                id: 'btn-form-submit',
+
+                label: '关闭',
+                icon: 'fa fa-close',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }]
+        });
+    }
+</script>
+</body>
+</html>

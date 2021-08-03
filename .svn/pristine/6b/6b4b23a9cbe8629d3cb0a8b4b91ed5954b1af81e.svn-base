@@ -1,0 +1,35 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.BabyEvaluate;
+import com.luer.servicecenter.bean.BabyEvaluateExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface BabyEvaluateMapper {
+    int countByExample(BabyEvaluateExample example);
+
+    int deleteByExample(BabyEvaluateExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(BabyEvaluate record);
+
+    int insertSelective(BabyEvaluate record);
+
+    List<BabyEvaluate> selectByExample(BabyEvaluateExample example);
+
+    BabyEvaluate selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") BabyEvaluate record, @Param("example") BabyEvaluateExample example);
+
+    int updateByExample(@Param("record") BabyEvaluate record, @Param("example") BabyEvaluateExample example);
+
+    int updateByPrimaryKeySelective(BabyEvaluate record);
+
+    int updateByPrimaryKey(BabyEvaluate record);
+
+    List<BabyEvaluate> getList(@Param("store_id") String storeId);
+
+    List<BabyEvaluate> getBymotherId(@Param("customer_basic_id") String customerBasicId);
+}

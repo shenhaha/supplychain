@@ -1,0 +1,22 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.ExtraService;
+
+import java.util.List;
+
+public interface ExtraServiceService {
+
+     //添加加值服务信息
+    void saveExtraService(ExtraService extraService);
+    //删除加值服务信息
+    void deleteExtraServiceById(String extraServiceId);
+    //修改加值服务信息
+    void updateExtraService(ExtraService extraService);
+
+    //通过门店id查询增值服务基本资料
+    List<ExtraService> selectExtraServices(String storeFileId);
+    //查询所有加值服务
+    List<ExtraService> selectAll(String storeId);
+
+    ExtraService selectById(String id);
+}

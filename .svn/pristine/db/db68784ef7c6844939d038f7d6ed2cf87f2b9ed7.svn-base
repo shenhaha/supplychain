@@ -1,0 +1,308 @@
+package com.luer.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+/**
+ * a shortcut for defining a ParameterizableViewController that immediately forwards to a view when invoked.
+ * Use it in static cases when there is no Java Controller logic to execute before the view generates the response.
+ *
+ * @author max
+ * @date 2018/8/19
+ */
+@Configuration
+public class MvcConfig extends WebMvcConfigurerAdapter {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/index").setViewName("homepage");
+        registry.addViewController("/login").setViewName("login");
+        /*本店用户管理和下级账号管理*/
+        registry.addViewController("/sonmanager").setViewName("systemmanager/sonmanager");
+        registry.addViewController("/storeuser").setViewName("systemmanager/storeuser");
+        /*增加分公司或门店*/
+        registry.addViewController("/addbranch").setViewName("systemmanager/addbranch");
+        registry.addViewController("/addstore").setViewName("systemmanager/addstore");
+        /*
+         * 加值服务*/
+        registry.addViewController("/servicecenter/storeservice").setViewName("servicecenter/storeservice");
+        /**
+         * 妈妈基本信息和宝宝基本信息
+         * WorryEvaluate产后身体评估，WorryProblem产后忧郁评估，
+         * MotherEvaluate妈妈入住评估，CustomerBasic妈妈和宝宝基本信息公用，BabyEvaluate宝宝入住评估
+         */
+        registry.addViewController("/servicecenter/motherbasic").setViewName("servicecenter/mathercustomerBasic");
+        registry.addViewController("/servicecenter/worryEvaluate").setViewName("servicecenter/worryEvaluate");
+        registry.addViewController("/servicecenter/worryProblem").setViewName("servicecenter/worryProblem");
+        registry.addViewController("/servicecenter/motherEvaluate").setViewName("servicecenter/motherEvaluate");
+        registry.addViewController("/servicecenter/motherquestion").setViewName("servicecenter/worryquestion");
+        registry.addViewController("/servicecenter/familyfunction").setViewName("servicecenter/familyfunction");
+        registry.addViewController("/servicecenter/socialsupport").setViewName("servicecenter/socialsupport");
+        registry.addViewController("/servicecenter/babybasic").setViewName("servicecenter/babyCustomerBasic");
+        registry.addViewController("/servicecenter/babyEvaluate").setViewName("servicecenter/babyEvaluate");
+        registry.addViewController("/servicecenter/mothercustomer-preoccupation").setViewName("servicecenter/mothercustomer-preoccupation");
+        registry.addViewController("/servicecenter/mothercustomer-abortion").setViewName("servicecenter/mothercustomer-abortion");
+        registry.addViewController("/servicecenter/leavemotherbasic").setViewName("servicecenter/leavemotherbasic");
+        registry.addViewController("/servicecenter/leavemother-abortion").setViewName("servicecenter/leavemother-abortion");
+        registry.addViewController("/servicecenter/VitalSign").setViewName("servicecenter/VitalSign");
+        /*加值服务详细*/
+        registry.addViewController("/servicecenter/servicedetail").setViewName("servicecenter/storeservicedetail");
+        /*宝宝成长详细*/
+        registry.addViewController("/servicecenter/growthdetail").setViewName("servicecenter/growthdetail");
+        /**
+         * 入住提醒
+         */
+        registry.addViewController("/businessmanager/getnoticelist").setViewName("businessmanager/stayinnotice");
+        /*
+         *妈妈护理管理页面跳转
+         * */
+        registry.addViewController("/servicecenter/nurseRecord").setViewName("servicecenter/motherrecord");
+        registry.addViewController("/servicecenter/nursingEducation").setViewName("servicecenter/mothereducation");
+        registry.addViewController("/servicecenter/patientrounds").setViewName("servicecenter/motherrounds");
+        registry.addViewController("/servicecenter/mothernursingrecorddetail").setViewName("servicecenter/motherditytype");
+
+        /*
+         *业务管理页面跳转
+         * */
+        registry.addViewController("/businessmanager/getphoneList").setViewName("businessmanager/phonefollow");
+        registry.addViewController("/businessmanager/getquestionList").setViewName("businessmanager/question");
+        registry.addViewController("/businessmanager/getappointmentList").setViewName("businessmanager/appointment");
+        registry.addViewController("/businessmanager/selectListAppointmentToday").setViewName("businessmanager/appointmentforToday");
+        registry.addViewController("/businessmanager/getorderList").setViewName("businessmanager/order");
+        registry.addViewController("/businessmanager/getnoticeList").setViewName("businessmanager/stayinnotice");
+        registry.addViewController("/businessmanager/getcontactList").setViewName("businessmanager/contact");
+        registry.addViewController("/businessmanager/getsendcarList").setViewName("businessmanager/sendcar");
+        //月子餐概叙（先统计）
+        registry.addViewController("/mealmanager/showqueryMealGroupByMotherid").setViewName("servicecenter/orderstatistics");
+        //月子餐详细（再详细）
+        registry.addViewController("/mealmanager/showqueryAllMeal").setViewName("servicecenter/orderdetails");
+        registry.addViewController("/mealmanager/account").setViewName("servicecenter/mealaccount");
+        //月子餐详细(测试)
+        registry.addViewController("/mealmanager/showqueryAllMealByMotherid").setViewName("servicecenter/orderdetails");
+
+
+
+        /*
+         *门店资料管理页面跳转
+         * */
+        registry.addViewController("/employer").setViewName("storesdata/employerlist");
+
+        registry.addViewController("/employer/dispached").setViewName("storesdata/dispachedlist");
+        //房间管理
+        registry.addViewController("/room").setViewName("storesdata/roomlist");
+        //房间类型
+        registry.addViewController("/roomStyles").setViewName("storesdata/stylesList");
+
+        //类型详情
+        registry.addViewController("/room/selectroomDetailsByStyleId").setViewName("storesdata/styleroomlist");
+        //部门管理
+        registry.addViewController("/department").setViewName("storesdata/departmentList");
+        //查看证件
+        registry.addViewController("/credentials/selectCredentialsByOtherId").setViewName("storesdata/cre_test");
+        //月子餐管理
+        registry.addViewController("/mealmanager/checkthedocuments").setViewName("storesdata/checkthedocuments");
+        /**
+         * 总公司的
+         */
+        //总公司基本资料
+        registry.addViewController("/storeFile/storefileHeadquarterslist").setViewName("storesdata/storefileHeadquarterslist");
+        //下级分公司资料
+        registry.addViewController("/storeFile/storefileDivision").setViewName("storesdata/storefileDivision");
+        //下级门店资料
+        registry.addViewController("/storeFile/storefile").setViewName("storesdata/storefile");
+        /**
+         * 分公司的
+         */
+        //下级分公司资料
+        registry.addViewController("/storeFile/storefileDivisionlist").setViewName("storesdata/storefileDivisionlist");
+        /*区域加盟店 直营店 总公司加盟店*/
+        registry.addViewController("/storeFile/areanapaStore").setViewName("storesdata/areanapaStore");
+        registry.addViewController("/storeFile/directsaleStore").setViewName("storesdata/directsaleStore");
+        registry.addViewController("/storeFile/headnapaStore").setViewName("storesdata/headnapaStore");
+        /**
+         * 门店的
+         */
+        //下级分公司资料
+        registry.addViewController("/storeFile/storefilelist").setViewName("storesdata/storefilelist");
+        //酒店资料
+        registry.addViewController("/hotel").setViewName("storesdata/hotel");
+
+        /*
+         *进销存页面跳转
+         * */
+
+
+        /*registry.addViewController("/stock/").setViewName("storesandsales/classifygoods");*/
+        //库存预览
+       registry.addViewController("/stock/").setViewName("storesandsales/headstocklist");
+        //库存盘点
+        registry.addViewController("/stock/inventory").setViewName("storesandsales/stockinventory");
+
+        //截止时间
+        registry.addViewController("/deadline/").setViewName("storesandsales/deadline");
+        //总部商品
+        registry.addViewController("/goods/head").setViewName("storesandsales/headgoodslist");
+
+        //总部查看总订单
+        registry.addViewController("/order/showtotalorder").setViewName("storesandsales/totalorderlist");
+
+
+        //总部查看所有门店的订单
+        registry.addViewController("/order/showstoreorder").setViewName("storesandsales/allstoreorderlist");
+        // 总部领用出库信息
+        registry.addViewController("/shipments/headcollar").setViewName("storesandsales/headcollarlist");
+        //门店页面
+        //门店库存
+        registry.addViewController("/stock/store").setViewName("storesandsales/storestocklist");
+        // 门店商品
+        registry.addViewController("/goods/fromhead").setViewName("storesandsales/fromheadgoodslist");
+        registry.addViewController("/goods/other").setViewName("storesandsales/storegoodslist");
+        // 领用出库信息
+        registry.addViewController("/shipments/collar").setViewName("storesandsales/collarlist");
+        //销售出库信息
+        registry.addViewController("/shipments/sale").setViewName("storesandsales/salelist");
+        //总部商品入库，只有总部有
+        registry.addViewController("/purchase/tohead").setViewName("storesandsales/headpurchaselist");
+        //自采商品入库信息
+        registry.addViewController("/purchase/other").setViewName("storesandsales/otherpurchaselist");
+        //门店总采商品入库信息
+        registry.addViewController("/purchase/head").setViewName("storesandsales/storepurchaselist");
+        //门店向总部下订单
+        registry.addViewController("/order/head").setViewName("storesandsales/headorderlist");
+        //自采订单
+        registry.addViewController("/order/other").setViewName("storesandsales/otherorderlist");
+
+        //分公司页面
+        //分公司查看旗下门店的进货信息
+        registry.addViewController("/purchase/branch").setViewName("storesandsales/storepurchase");
+        //分公司查看门店的总采订单
+        registry.addViewController("/order/branch").setViewName("storesandsales/branchshowstorelist");
+        //公用页面
+        //订单详细
+        registry.addViewController("/orderDetails/selectDetailsByOrderId").setViewName("storesandsales/orderdetailslist");
+        registry.addViewController("/orderDetails/selectReadDetailsByOrderId").setViewName("storesandsales/readdetails");
+        registry.addViewController("/orderDetails/selectheadReadDetailsByOrderId").setViewName("storesandsales/headreaddetails");
+        //分公司订单详情
+        registry.addViewController("/orderDetails/selectBranchDetailsByOrderId").setViewName("storesandsales/branchorderdetailslist");
+        //总公司订单详情
+        registry.addViewController("/orderDetails/selectHeadDetailsByOrderId").setViewName("storesandsales/headdetailslist");
+
+        //出货详情
+        registry.addViewController("/orderDetails/selectDetailsByShipmentsId").setViewName("storesandsales/shipmentsdetailslist");
+        //供应商
+        registry.addViewController("/supplier/").setViewName("storesandsales/supplierlist");
+        //总部供应商对应商品
+        registry.addViewController("/goods/selectHeadGoodsDetailsBySupplierId").setViewName("storesandsales/suppliergoodslist");
+        //门店供应商对应商品
+        registry.addViewController("/goods/selectStoreGoodsDetailsBySupplierId").setViewName("storesandsales/supplierstoregoodslist");
+
+
+        /*
+            参放者（维修人员、家属、预约客户）管理
+            //维修人员信息登记表
+            //家属信息登记表
+            //预约客户信息登记表
+        * */
+        registry.addViewController("/businessmanager/visit1").setViewName("businessmanager/repairvisit");
+        registry.addViewController("/businessmanager/visit2").setViewName("businessmanager/personvisit");
+        registry.addViewController("/businessmanager/visit3").setViewName("businessmanager/customvisit");
+        registry.addViewController("/businessmanager/visit4").setViewName("businessmanager/customvisit1");
+        registry.addViewController("/businessmanager/visit5").setViewName("businessmanager/customvisit2");
+
+
+        /**
+         * 门店管理模块
+         */
+        //门店人员体温记录
+        registry.addViewController("/temperatureRegister").setViewName("storemanager/temperatureRegisterList");
+        //排班日历页面
+        registry.addViewController("/scale").setViewName("storemanager/scale");
+        //会议记录
+        registry.addViewController("/meetingrecord").setViewName("storemanager/meetingrecordList");
+        //物品使用记录
+        registry.addViewController("/itemsUse").setViewName("storemanager/itemsUseList");
+        //商品记录
+        registry.addViewController("/items").setViewName("storemanager/itemsList");
+        //入住记录
+        //registry.addViewController("/checkIn").setViewName("storemanager/checkInList");
+        //入住核实
+        registry.addViewController("/checkIn").setViewName("storemanager/CheckIn");
+        //入住核实详细页面
+        registry.addViewController("/checkInDeatil").setViewName("storemanager/checkInDeatil");
+        //换房调整
+        registry.addViewController("/preview").setViewName("storemanager/preview");
+        //退房记录
+        registry.addViewController("/checkOut").setViewName("storemanager/checkOutList");
+        //退房_月子餐详情
+        registry.addViewController("/storemanager/mealdetails").setViewName("storemanager/mealdetails");
+        //退房_购物详情
+        registry.addViewController("/storemanager/shopdetails").setViewName("storemanager/shopdetails");
+
+        registry.addViewController("/storemanager/shopdetails2").setViewName("storemanager/shopdetails2");
+        //退房_优惠详情
+        registry.addViewController("/storemanager/couponsdetails").setViewName("storemanager/couponsdetails");
+        //退房_加值服务详情
+        registry.addViewController("/storemanager/extraservicedetails").setViewName("storemanager/extraservicedetails");
+        //排房管理
+        registry.addViewController("/roomscale").setViewName("storemanager/roomscale");
+        //查询预览
+        registry.addViewController("/querypreview").setViewName("storemanager/querypreview");
+        //订房信息记录
+        registry.addViewController("/orderRoom").setViewName("storemanager/orderRoomList");
+        //购物信息记录
+        registry.addViewController("/shopping").setViewName("storemanager/shoppingList");
+        //优惠券信息记录
+        registry.addViewController("/coupons").setViewName("storemanager/couponsList");
+        //排房预览
+        registry.addViewController("/querypreview").setViewName("storemanager/querypreview");
+        //会员管理
+        registry.addViewController("/member_manager").setViewName("storemanager/member_manager");
+        //客诉管理
+        registry.addViewController("/guestrecord").setViewName("storemanager/guest_record");
+        registry.addViewController("/guestcount").setViewName("storemanager/guestcount");
+        //加值服务
+        registry.addViewController("/extra_service").setViewName("storemanager/extra_service");
+       /* //客诉管理
+        registry.addViewController("/guest_record").setViewName("storemanager/guest_record");*/
+        //满意度调查
+        registry.addViewController("/satisfaction").setViewName("storemanager/satisfactionlist");
+        registry.addViewController("/breast_care").setViewName("storemanager/breast_care");
+
+        registry.addViewController("/fullmoonphoto").setViewName("storemanager/fullmoonphoto");
+
+        //服务中心模块页面跳转
+        registry.addViewController("/growth/showGrowth").setViewName("servicecenter/babygrow");
+        registry.addViewController("/babynursing/showBabyNursing").setViewName("servicecenter/babynursing");
+        registry.addViewController("/neonatalrounds/showNeonatalrounds").setViewName("servicecenter/babyrounds");
+        registry.addViewController("/swimming/showSwimming").setViewName("servicecenter/babyswimming");
+        registry.addViewController("/swimming/babywash").setViewName("servicecenter/babywash");
+        registry.addViewController("/pavilionassessment/showPavilionassessment").setViewName("servicecenter/pavilionhealth");
+        registry.addViewController("/pavilioneducation/showPavilioneducation").setViewName("servicecenter/pavilioneducation");
+        registry.addViewController("/doctorcheck").setViewName("servicecenter/doctorcheckout");
+        //系统角色管理
+        registry.addViewController("/powercontroll").setViewName("systemmanager/powercontroll");
+        registry.addViewController("/authorize").setViewName("systemmanager/authorize");
+        //参数管理
+        registry.addViewController("/getParameter").setViewName("systemmanager/parameterset");
+
+        /*报表中心*/
+        registry.addViewController("/reportform/checkstorescale").setViewName("reportform/checkstorescale");
+        registry.addViewController("/reportform/scaleforHeadcheck").setViewName("reportform/scaleforHeadcheck");
+
+        //报表中心页面跳转
+        //销售报表管理、一般销售金额报表
+        registry.addViewController("/reportmanager/salesreport").setViewName("reportmanager/salesreport");
+        registry.addViewController("/appointmentreport").setViewName("reportmanager/appointmentreport");
+        registry.addViewController("/signature_number_day").setViewName("reportmanager/signature_number_day");
+        registry.addViewController("/signature_number_month").setViewName("reportmanager/signature_number_month");
+        registry.addViewController("/bill_of_money").setViewName("reportmanager/bill_of_money");
+        registry.addViewController("/total_sales_amount").setViewName("reportmanager/total_sales_amount");
+
+
+        registry.addViewController("/storeappointment").setViewName("reportmanager/storeappointment");
+        registry.addViewController("/storesignature_number_month").setViewName("reportmanager/storesignature_number_month");
+        registry.addViewController("/storebill_of_money").setViewName("reportmanager/storebill_of_money");
+        registry.addViewController("/storetotal_sales_amount").setViewName("reportmanager/storetotal_sales_amount");
+    }
+}

@@ -1,0 +1,89 @@
+package com.luer.stockandsales.bean;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+@Data
+public class Purchase {
+    private String id;
+
+    private String storeId;
+
+    private String goodsOrderId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date purchaseTime;
+
+    private String employerId;
+
+    private String employerName;
+
+    private Double payable;
+
+    private Integer type;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public String getGoodsOrderId() {
+        return goodsOrderId;
+    }
+
+    public Date getPurchaseTime() {
+        return purchaseTime;
+    }
+
+    public String getEmployerId() {
+        return employerId;
+    }
+
+    public String getEmployerName() {
+        return employerName;
+    }
+
+    public Double getPayable() {
+        return payable;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
+
+    public void setGoodsOrderId(String goodsOrderId) {
+        this.goodsOrderId = goodsOrderId;
+    }
+
+    public void setPurchaseTime(Date purchaseTime) {
+        this.purchaseTime = purchaseTime;
+    }
+
+    public void setEmployerId(String employerId) {
+        this.employerId = employerId;
+    }
+
+    public void setEmployerName(String employerName) {
+        this.employerName = employerName;
+    }
+
+    public void setPayable(Double payable) {
+        this.payable = payable;
+    }
+}

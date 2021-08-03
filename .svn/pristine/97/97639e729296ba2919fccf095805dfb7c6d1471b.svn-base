@@ -1,0 +1,10 @@
+package com.luer.springsecurity.service;
+
+import com.luer.springsecurity.bean.Userss;
+
+/**
+ * Created by 小强 on 2018/8/22.
+ */
+public interface UserssService {
+    Userss getByName(String name);
+}

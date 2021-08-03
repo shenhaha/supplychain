@@ -1,0 +1,379 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<c:set var="motherType" value="${pageContext.request.getParameter('motherType')}" />
+<html>
+<head>
+    <title>宝妈卫教登记表</title>
+</head>
+<body>
+<!--Main Content-->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+                    <li id="motherEvaluate"><a href="${ctx}/servicecenter/motherEvaluate?motherid=${motherid}&motherType=${motherType}">妈妈入住评估表</a></li>
+                    <li id="patientrounds"><a href="${ctx}/servicecenter/patientrounds?motherid=${motherid}&motherType=${motherType}">妈妈医生查房记录</a></li>
+                    <li id="mothernursingrecorddetail"><a href="${ctx}/servicecenter/mothernursingrecorddetail?motherid=${motherid}&motherType=${motherType}">妈妈护理记录</a></li>
+                    <li id="nursingEducation"><a href="${ctx}/servicecenter/nursingEducation?motherid=${motherid}&motherType=${motherType}">妈妈卫教登记表</a></li>
+                    <li id="motherquestion"><a href="${ctx}/servicecenter/motherquestion?motherid=${motherid}&motherType=${motherType}">妈妈产后忧虑量表</a></li>
+                    <li id="VitalSign"><a href="${ctx}/servicecenter/VitalSign?motherid=${motherid}&motherType=${motherType}">妈妈生命体征登记</a></li>
+                    <div id="babyInfo" style="margin-left: 60%;display: none;">
+                        <input type="button" id="type1" class='btn block btn-outline btn-rounded btn-primary' onclick="findbaby()" value="宝宝信息" >
+                    </div>
+                </ul>
+                    <!--妈妈卫教登记表-->
+                        <div class="panel-body">
+                            <div class="table-wrap">
+                                <table id="nuringeducation" class="table" data-paging="true" data-filtering="true"
+                                       data-sorting="true">
+                                </table>
+                            </div>
+                        </div>
+                    <!--妈妈卫教登记表-->
+
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script>
+    $(function () {
+        (function ($) {
+            $.getUrlParam = function (name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]); return null;
+            }
+        })(jQuery);
+        var motherType = $.getUrlParam('motherType');
+        if(motherType==1){
+            $("#babyInfo").css("display","block");
+        }
+        $('#nursingEducation').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'mothernursingrecorddetail':
+                $('#mothernursingrecorddetail').addClass("active");
+                break;
+            case 'patientrounds':
+                $('#patientrounds').addClass("active");
+                break;
+            case 'nursingEducation':
+                $('#nursingEducation').addClass("active");
+                break;
+            case 'motherquestion':
+                $('#motherquestion').addClass("active");
+                break;
+            case 'motherEvaluate':
+                $('#motherEvaluate').addClass("active");
+                break;
+            case 'VitalSign':
+                $('#VitalSign').addClass("active");
+                break;
+        }
+        var swimmingTitle = [
+            {
+                "name": "id",
+                "title": "ID",
+                "breakpoints": "xs sm",
+                visible:false
+            },
+            /*{"name": "customername", "title": "宝妈姓名"},*/
+            {"name": "week", "title": "周数"},
+            {"name": "project", "title": "卫教项目"},
+            {"name": "behaviorobjectives", "title": "个别行为目标"},
+            {"name": "guidedate", "title": "指导日期"},
+            {"name": "familysignature", "title": "家属签名"},
+            {"name": "mentorsignature", "title": "指导者签名"},
+            {"name": "evaluationdate", "title": "评量日期"},
+            {"name": "evaluationresult", "title": "评量结果"},
+            {"name": "note", "title": "备注"}
+        ];
+        function findbaby(id) {
+            window.location.href='${ctx}/servicecenter/babybasic?motherid=${motherid}';
+        }
+
+        window.findbaby = findbaby;
+
+        //启动footable
+        var ft = FooTable.init('#nuringeducation',{
+            "columns": swimmingTitle,
+            "rows": $.get("${ctx}/servicecenter/getEducationByMotherId?customerBasicId="+'${motherid}'),
+            //功能操作
+            editing: {
+                enabled: true,
+                /*addRow: function(){
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog =  BootstrapDialog.show({
+                                type : BootstrapDialog.TYPE_DEFAULT,
+                                title : "<span style=\"color: #ab8ce4\"><i></i>新增一条数据</span>",
+                                closable: false,
+                                draggable: true,
+                                cssClass: 'api-blacklist-form-add',
+                                message:$('<div></div>').load(template/servicecenter/mothereducation.jsp'),//加载弹出页面
+                                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                                onshown:function () {
+                                    $.ajax({
+                                        url:/customerBasic/getCustomerBasic?type=0&storeId="+'',
+                                        type:"get",
+                                        success:function(data){/!*<option value="0">姓名</option>*!/
+                                            for(var i=0;i<data.length;i++){
+                                                $("#customername").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                            }
+                                        }
+                                    });
+                                },
+                                onhide:function(){
+                                    $that.removeAttr("disabled");
+                                },
+                        buttons:[{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action:function(){  //点击事件
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'project': $('#project').val(),
+                                    'behaviorobjectives': $('#behaviorobjectives').val(),
+                                    'guidedate': $('#guidedate').val(),
+                                    'familysignature': $('#familysignature').val(),
+                                    'mentorsignature': $('#mentorsignature').val(),
+                                    'evaluationresult': $('#evaluationresult').val(),
+                                    'evaluationdate': $('#evaluationdate').val(),
+                                    'evaluationsignature': $('#evaluationsignature').val(),
+                                    'note': $('#note').val(),
+                                    'evaluationsignature': "张三",
+                                    'customername': $('#customername').val(),
+
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields:{ //需要验证的字段
+                                        customername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        project: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '卫教项目不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        familysignature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '家属签名不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        evaluationresult: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '评量结果不能为空'
+                                                },
+                                            }
+                                        },
+                                        mentorsignature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '指导者签名不能为空'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){ //新增
+                                    $.post(
+                        },{
+                            label:'关闭',
+                            icon:'fa fa-close',
+                            action:function(dialogItself){
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },*/
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/mothereducation.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown:function(dialogRef) {
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getCustomerBasic?type=0&storeId="+'<%=session.getAttribute("storeId")%>',
+                                type:"get",
+                                success:function(data){/*<option value="0">姓名</option>*/
+                                    for(var i=0;i<data.length;i++){
+                                        if(date[i].name==values.customername){
+                                            $("#customername").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+
+                                        }else {
+
+                                            $("#customername").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }
+                                    }
+                                }
+                            });
+                            $('#id').val(values.id);
+                            $('#project').val(values.project);
+                            $('#behaviorobjectives').val(values.behaviorobjectives);
+                            $('#guidedate').val(values.guidedate);
+                            $('#familysignature').val(values.familysignature);
+                            $('#mentorsignature').val(values.mentorsignature);
+                            $('#evaluationresult').val(values.evaluationresult);
+                            $('#evaluationdate').val(values.evaluationdate);
+                            $('#evaluationsignature').val(values.evaluationsignature);
+                            $('#note').val(values.note);
+                            $('#week').val(values.week);
+                            $('#customername').val();
+                        },
+                        buttons:[{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action:function(){
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'project': $('#project').val(),
+                                    'behaviorobjectives': $('#behaviorobjectives').val(),
+                                    'guidedate': $('#guidedate').val(),
+                                    'familysignature': $('#familysignature').val(),
+                                    'mentorsignature': $('#mentorsignature').val(),
+                                    'evaluationresult': $('#evaluationresult').val(),
+                                    'evaluationdate': $('#evaluationdate').val(),
+                                    'evaluationsignature': $('#evaluationsignature').val(),
+                                    'week': $('#week').val(),
+                                    'note': $('#note').val(),
+                                    'customername': $('#customername').val(),
+                                    'customerBasicId':'${motherid}',
+                                    'storeId':'<%=session.getAttribute("storeId")%>'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        /*customername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空'
+                                                },
+                                            }
+                                        },*/
+
+                                        guidedate: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '指导日期不能为空'
+                                                },
+                                            }
+                                        },
+                                        week: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '周数不能为空'
+                                                },
+                                            }
+                                        },
+                                        evaluationdate: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '评量日期不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        familysignature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '家属签名不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        evaluationresult: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '评量结果不能为空'
+                                                },
+                                            }
+                                        },
+                                        mentorsignature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '指导者签名不能为空'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/servicecenter/updateNursingEducation",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+                                    setTimeout("window.location.reload();",1000);
+                                    //修改一条记录  url  服务器地址
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //删除操作
+                /*deleteRow: function(row){
+                    myConfirm("/servicecenter/deleteNursingEducation",row);
+                }*/
+            }
+        });
+        uid=10;
+    });
+</script>
+</body>
+</html>

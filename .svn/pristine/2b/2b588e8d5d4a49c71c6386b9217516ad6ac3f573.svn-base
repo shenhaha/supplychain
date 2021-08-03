@@ -1,0 +1,13 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.SocialSupport;
+
+import java.util.List;
+
+public interface SocialSupportService {
+
+    List<SocialSupport> selectBymotherId(String motherid);
+    int delete(String id);
+    int update(SocialSupport socialSupport);
+    int insert(SocialSupport socialSupport);
+}

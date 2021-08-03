@@ -1,0 +1,74 @@
+package com.luer.servicecenter.controller;
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Growthrecord;
+import com.luer.servicecenter.service.GrowthService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+/**
+ * @author EVEA
+ * 宝宝成长记录
+ */
+@Controller
+@RequestMapping("/growth")
+public class GrowthController {
+    @Autowired
+    private GrowthService growthService;
+
+    //根据妈妈ID,时间获取信息
+
+    @RequestMapping("/getGrowthByMatherIdanddata")
+    @ResponseBody
+    public List<Growthrecord> getGrowthByMatherIdanddata(@NonNull String  motherid,@NonNull String  babaname,@NonNull String  recorddate){
+        List<Growthrecord> growthrecordList = growthService.getGrowthByMatherIdanddata(motherid,babaname,recorddate);
+        return  growthrecordList;
+    }
+    //根据妈妈ID获取信息
+
+    @RequestMapping("/getGrowthByMatherId")
+    @ResponseBody
+    public List<Growthrecord> getGrowthByMatherId(@NonNull String  motherid){
+        List<Growthrecord> growthrecordList = growthService.getGrowthByMatherId(motherid);
+        return  growthrecordList;
+    }
+
+    @RequestMapping("/addGrowth")
+    @ResponseBody
+    public ResultSet addGrowth(Growthrecord growthrecord){
+        growthService.insert(growthrecord);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/delGrowth")
+    @ResponseBody
+    public ResultSet delGrowth(@NonNull String id){
+        growthService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    @PostMapping("/updateGrowth")
+    @ResponseBody
+    public ResultSet updateGrowth(Growthrecord growthrecord){
+        growthService.updateByPrimaryKey(growthrecord);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/queryOneGrowth")
+    @ResponseBody
+    public Growthrecord queryOneGrowth(@NonNull String id){
+        Growthrecord growthrecord = growthService.selectByPrimaryKey(id);
+        return growthrecord;
+    }
+
+    @RequestMapping("/queryAllGrowth")
+    @ResponseBody
+    public List<Growthrecord> queryAllGrowth(Growthrecord growthrecord){
+        List<Growthrecord> growthrecordList = growthService.selectByExample(growthrecord);
+        return  growthrecordList;
+    }
+}

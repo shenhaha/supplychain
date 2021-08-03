@@ -1,0 +1,89 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Nursingeducation;
+import com.luer.servicecenter.service.NursingEducationService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController()
+@RequestMapping("/servicecenter")
+public class NursingEducationController {
+
+    @Autowired
+    NursingEducationService nursingEducationService;
+
+
+
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getEducationByMotherId")
+    @ResponseBody
+    public List<Nursingeducation> getEducationByMotherId(@NonNull String  customerBasicId){
+
+        List<Nursingeducation> list = nursingEducationService.getEducationByMotherId(customerBasicId);
+        return  list;
+    }
+
+
+
+
+
+
+
+    /**
+     * @author 张路明
+     * 查询妈妈卫教登记表
+     * @return
+     */
+    @GetMapping("/getNursingEducation")
+    public List getNursingEducation(@NonNull Nursingeducation nursingeducation){
+
+        List<Nursingeducation> list = nursingEducationService.getNursingEducation(nursingeducation);
+        return  list;
+    }
+
+    /**
+     * @author 张路明
+     * 新增妈妈卫教登记表
+     * @param nursingeducation
+     * @return
+     */
+    @PostMapping("/insertNursingEducation")
+    public ResultSet insertNursingEducation(@NonNull Nursingeducation nursingeducation){
+        nursingEducationService.insertNursingEducation(nursingeducation);
+        return  ResultSet.getSuccess();
+
+    }
+
+    /**
+     * @author 张路明
+     * 根据id删除妈妈卫教登记表
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteNursingEducation")
+    public  ResultSet deleteNursingEducation(@NonNull String id){
+        nursingEducationService.deleteNursingEducation(id);
+
+        return  ResultSet.getSuccess();
+
+    }
+
+    /**
+     * @author 张路明
+     * 更新妈妈卫教登记表
+     * @param nursingeducation
+     * @return
+     */
+    @PostMapping("/updateNursingEducation")
+    public ResultSet updateNursingEducation(@NonNull Nursingeducation nursingeducation){
+        nursingEducationService.updateNursingEducation(nursingeducation);
+
+        return  ResultSet.getSuccess();
+
+    }
+}

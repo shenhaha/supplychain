@@ -1,0 +1,44 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.ServiceAccount;
+import com.luer.servicecenter.bean.ServiceDetail;
+import com.luer.servicecenter.bean.Storeservice;
+import com.luer.servicecenter.bean.StoreserviceExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface StoreserviceMapper {
+
+    int updatePrice(@Param("serviceid") String serviceid,@Param("price") String price, @Param("profit") String profit );
+
+    List<ServiceDetail> getServiceDetail(@Param("motherId") String motherId);
+
+    List<ServiceAccount> getAccount(@Param("storeid") String  storeid);
+
+    ServiceAccount getAccountByMotherId(@Param("customerBasicId") String  customerBasicId);
+
+    int countByExample(StoreserviceExample example);
+
+    int deleteByExample(StoreserviceExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Storeservice record);
+
+    int updateTime(@Param("id") String id,@Param("time") String time);
+
+    int insertSelective(Storeservice record);
+
+    List<Storeservice> selectByExample(StoreserviceExample example);
+
+    Storeservice selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Storeservice record, @Param("example") StoreserviceExample example);
+
+    int updateByExample(@Param("record") Storeservice record, @Param("example") StoreserviceExample example);
+
+    int updateByPrimaryKeySelective(Storeservice record);
+
+    int updateByPrimaryKey(Storeservice record);
+}

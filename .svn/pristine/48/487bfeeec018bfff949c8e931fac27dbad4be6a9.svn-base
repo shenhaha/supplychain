@@ -1,0 +1,53 @@
+package com.luer.storesdata.bean;
+
+public class Department {
+    private String id;
+
+    private String storeId;
+
+    private String name;
+
+    private String leader;
+
+    private String storeName;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader == null ? null : leader.trim();
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+}

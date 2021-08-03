@@ -1,0 +1,33 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.MotherEvaluate;
+import com.luer.servicecenter.bean.MotherEvaluateExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface MotherEvaluateMapper {
+    int countByExample(MotherEvaluateExample example);
+
+    int deleteByExample(MotherEvaluateExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(MotherEvaluate record);
+
+    int insertSelective(MotherEvaluate record);
+
+    List<MotherEvaluate> selectByExample(MotherEvaluateExample example);
+
+    MotherEvaluate selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") MotherEvaluate record, @Param("example") MotherEvaluateExample example);
+
+    int updateByExample(@Param("record") MotherEvaluate record, @Param("example") MotherEvaluateExample example);
+
+    int updateByPrimaryKeySelective(MotherEvaluate record);
+
+    int updateByPrimaryKey(MotherEvaluate record);
+
+    List<MotherEvaluate> getEvaluateByMotherId(@Param("customer_basic_id") String customerBasicId);
+}

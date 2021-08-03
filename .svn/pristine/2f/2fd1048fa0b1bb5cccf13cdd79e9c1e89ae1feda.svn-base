@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.springsecurity.dao.UserssMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.springsecurity.bean.Userss" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column=" lastLogintime" property="lastlogintime" jdbcType="DATE" />
+    <result column="enabled" property="enabled" jdbcType="INTEGER" />
+    <result column="accountNonExpired" property="accountnonexpired" jdbcType="INTEGER" />
+    <result column="accountNonLocked" property="accountnonlocked" jdbcType="INTEGER" />
+    <result column="credentialsNonExpired" property="credentialsnonexpired" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, username, realname, password, createdate, lastLogintime, enabled, accountNonExpired,
+    accountNonLocked, credentialsNonExpired
+  </sql>
+  <select id="getByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    *
+    from users
+    where username=#{name}
+  </select>
+
+  <select id="findPermissionByUsername" resultType="com.luer.springsecurity.bean.Permission" parameterType="java.lang.String" >
+   select p.*
+        from users u
+        LEFT JOIN user_role ur on u.id= ur.userss_id
+        LEFT JOIN role r on r.id=ur.role_id
+        LEFT JOIN role_permission rp on r.id=rp.role_id
+        LEFT JOIN permission p on p.id =rp.permission_id
+        where u.username=#{name}
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.springsecurity.bean.UserssExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from userss
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from userss
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.springsecurity.bean.UserssExample" >
+    delete from userss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.springsecurity.bean.Userss" >
+    insert into userss (id, username, realname, 
+      password, createdate, " lastLogintime", 
+      enabled, accountNonExpired, accountNonLocked, 
+      credentialsNonExpired)
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{createdate,jdbcType=DATE}, #{lastlogintime,jdbcType=DATE}, 
+      #{enabled,jdbcType=INTEGER}, #{accountnonexpired,jdbcType=INTEGER}, #{accountnonlocked,jdbcType=INTEGER}, 
+      #{credentialsnonexpired,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.springsecurity.bean.Userss" >
+    insert into userss
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="lastlogintime != null" >
+        " lastLogintime",
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+      <if test="accountnonexpired != null" >
+        accountNonExpired,
+      </if>
+      <if test="accountnonlocked != null" >
+        accountNonLocked,
+      </if>
+      <if test="credentialsnonexpired != null" >
+        credentialsNonExpired,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="lastlogintime != null" >
+        #{lastlogintime,jdbcType=DATE},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="accountnonexpired != null" >
+        #{accountnonexpired,jdbcType=INTEGER},
+      </if>
+      <if test="accountnonlocked != null" >
+        #{accountnonlocked,jdbcType=INTEGER},
+      </if>
+      <if test="credentialsnonexpired != null" >
+        #{credentialsnonexpired,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.springsecurity.bean.UserssExample" resultType="java.lang.Integer" >
+    select count(*) from userss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update userss
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null" >
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.lastlogintime != null" >
+        " lastLogintime" = #{record.lastlogintime,jdbcType=DATE},
+      </if>
+      <if test="record.enabled != null" >
+        enabled = #{record.enabled,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountnonexpired != null" >
+        accountNonExpired = #{record.accountnonexpired,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountnonlocked != null" >
+        accountNonLocked = #{record.accountnonlocked,jdbcType=INTEGER},
+      </if>
+      <if test="record.credentialsnonexpired != null" >
+        credentialsNonExpired = #{record.credentialsnonexpired,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update userss
+    set id = #{record.id,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      createdate = #{record.createdate,jdbcType=DATE},
+      " lastLogintime" = #{record.lastlogintime,jdbcType=DATE},
+      enabled = #{record.enabled,jdbcType=INTEGER},
+      accountNonExpired = #{record.accountnonexpired,jdbcType=INTEGER},
+      accountNonLocked = #{record.accountnonlocked,jdbcType=INTEGER},
+      credentialsNonExpired = #{record.credentialsnonexpired,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.springsecurity.bean.Userss" >
+    update userss
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="lastlogintime != null" >
+        " lastLogintime" = #{lastlogintime,jdbcType=DATE},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="accountnonexpired != null" >
+        accountNonExpired = #{accountnonexpired,jdbcType=INTEGER},
+      </if>
+      <if test="accountnonlocked != null" >
+        accountNonLocked = #{accountnonlocked,jdbcType=INTEGER},
+      </if>
+      <if test="credentialsnonexpired != null" >
+        credentialsNonExpired = #{credentialsnonexpired,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.springsecurity.bean.Userss" >
+    update userss
+    set username = #{username,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=DATE},
+      " lastLogintime" = #{lastlogintime,jdbcType=DATE},
+      enabled = #{enabled,jdbcType=INTEGER},
+      accountNonExpired = #{accountnonexpired,jdbcType=INTEGER},
+      accountNonLocked = #{accountnonlocked,jdbcType=INTEGER},
+      credentialsNonExpired = #{credentialsnonexpired,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,28 @@
+package com.luer.systemmanager.service;
+
+import com.luer.systemmanager.bean.ParameterSet;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/9/29.
+ */
+public interface ParameterSetService {
+
+    /**
+     * 获取月子餐参数
+     * @param storeId paramName
+    * @author 张路明
+    */
+    ParameterSet getParameterSet2(String storeId,String name);
+
+    void addParameterSet(ParameterSet parameterSet);
+
+    void updateParameterSet(ParameterSet parameterSet);
+
+    List<ParameterSet> getParameterSet(String storeId);
+
+    Date getEndday();
+}

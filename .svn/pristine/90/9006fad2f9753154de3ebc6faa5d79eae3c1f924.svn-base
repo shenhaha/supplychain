@@ -1,0 +1,113 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.bean.ServiceAccount;
+import com.luer.servicecenter.dao.CustomerBasicMapper;
+import com.luer.servicecenter.dao.MealmanagerMapper;
+import com.luer.servicecenter.dao.StoreserviceMapper;
+import com.luer.stockandsales.dao.ShipmentsMapper;
+import com.luer.storemanager.bean.CheckOut;
+import com.luer.storemanager.dao.CheckOutMapper;
+import com.luer.storemanager.dao.CouponsMapper;
+import com.luer.storemanager.service.CheckOutService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @ClassName CheckOutServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/17 11:43.
+ */
+@Service
+@Transactional
+public class CheckOutServiceImpl implements CheckOutService {
+    @Autowired
+    private CheckOutMapper checkOutMapper;
+    @Autowired
+    private CustomerBasicMapper customerBasicMapper;
+    @Autowired
+    private ShipmentsMapper shipmentsMapper;
+    @Autowired
+    private CouponsMapper couponsMapper;
+    @Autowired
+    private StoreserviceMapper storeserviceMapper;
+    @Autowired
+    private MealmanagerMapper mealmanagerMapper;
+
+    @Override
+    public List<CheckOut> selectCheckOut(String storeId) {
+        CheckOut checkOut = null;
+        CustomerBasic customerBasic = null;
+        String type = "0";
+        double shoppingFee = 0;
+        double howMouch = 0;
+        double mealfee = 0;
+        double allcost = 0;
+        List<CheckOut> checkOutList = new ArrayList<CheckOut>();
+        //获取门店在住妈妈id
+
+        List<String> customerBasicIdList = customerBasicMapper.selectCustomerBasicIds(storeId, type);
+
+        //遍历妈妈id集合，获取用餐费用，加值服务费用，购物费用，和优惠费用
+        for (String customerBasicId : customerBasicIdList) {
+
+            checkOut = new CheckOut();
+            customerBasic = customerBasicMapper.selectByPrimaryKey(customerBasicId);
+            checkOut.setCustomerId(customerBasicId);
+            checkOut.setCustomerName(customerBasic.getName());
+            //获取购物费用
+            shoppingFee = shipmentsMapper.selectSumPrice(customerBasicId);
+            //获取优惠金额
+            howMouch = couponsMapper.selectHowMuchByMotherId(customerBasicId);
+            //获取加值服务费用
+            ServiceAccount serviceAccount = storeserviceMapper.getAccountByMotherId(customerBasicId);
+            //加值服务总费用
+            checkOut.setAddServiceFee(Double.parseDouble(serviceAccount.getPrice()));
+            //加值服务利润
+            checkOut.setProfits(Double.parseDouble(serviceAccount.getProfit()));
+            //获取月子餐退费
+            System.out.println("customerBasicId====="+customerBasicId);
+            mealfee = mealmanagerMapper.selectRefundByMotherId(customerBasicId);
+            checkOut.setMealFee(mealfee);
+
+            checkOut.setShoppingFee(shoppingFee);
+
+
+            if ((shoppingFee - howMouch - mealfee) > 0) {
+
+
+                allcost = shoppingFee - howMouch - mealfee;
+
+            } else {
+                allcost = shoppingFee - mealfee;
+                howMouch = 0;
+
+            }
+            checkOut.setCoupons(howMouch);
+
+            checkOut.setAllCost(allcost);
+            checkOutList.add(checkOut);
+
+        }
+        return checkOutList;
+    }
+
+    @Override
+    public int insert(CheckOut record) {
+        return checkOutMapper.insert(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(CheckOut record) {
+        return checkOutMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return checkOutMapper.deleteByPrimaryKey(id);
+    }
+}

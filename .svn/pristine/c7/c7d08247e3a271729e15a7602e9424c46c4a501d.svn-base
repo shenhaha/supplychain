@@ -1,0 +1,72 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.bean.CustomerBasicExample;
+import com.luer.servicecenter.bean.Patientrounds;
+import com.luer.servicecenter.bean.PatientroundsExample;
+import com.luer.servicecenter.dao.CustomerBasicMapper;
+import com.luer.servicecenter.dao.PatientroundsMapper;
+import com.luer.servicecenter.service.PatientRoundsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@Transactional
+/**
+* @author 张路明
+*
+*/
+public class PatientRoundsServiceImpl implements PatientRoundsService{
+
+    @Autowired
+    PatientroundsMapper patientroundsMapper;
+
+    @Autowired
+    private CustomerBasicMapper cb;
+    @Override
+    public int insertPatientRounds(Patientrounds patientrounds) {
+        patientrounds.setId(UUIDUtils.getUUID());
+        return patientroundsMapper.insert(patientrounds);
+    }
+
+    @Override
+    public List<Patientrounds> getPatientrounds(Patientrounds patientrounds) {
+        PatientroundsExample patientroundsExample = new PatientroundsExample();
+        PatientroundsExample.Criteria criteria = patientroundsExample.createCriteria();
+        if(patientrounds.getStoreId()!=null){
+            criteria.andStoreIdLike(patientrounds.getStoreId());
+        }
+        List<Patientrounds> list = patientroundsMapper.selectByExample(patientroundsExample);
+        return list;
+    }
+
+    @Override
+    public int updatePatientrounds(Patientrounds patientrounds) {
+        PatientroundsExample patientroundsExample = new PatientroundsExample();
+        PatientroundsExample.Criteria criteria = patientroundsExample.createCriteria();
+        criteria.andIdLike(patientrounds.getId());
+        int i = patientroundsMapper.updateByExampleSelective(patientrounds,patientroundsExample);
+        return i;
+    }
+
+    @Override
+    public int deletePatientrounds(String id) {
+        int i = patientroundsMapper.deleteByPrimaryKey(id);
+        return i;
+    }
+
+    @Override
+    public List selectPatientroundsBystoreId(String storeId) {
+        return patientroundsMapper.selectPatientroundsBystoreId(storeId);
+    }
+
+    @Override
+    public List<Patientrounds> getPatientRoundsByMotherId(String motherid) {
+        return patientroundsMapper.getPatientRoundsByMotherId(motherid);
+    }
+}

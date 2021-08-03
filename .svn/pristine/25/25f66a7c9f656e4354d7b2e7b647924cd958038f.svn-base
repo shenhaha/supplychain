@@ -1,0 +1,72 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Pavilioneducation;
+import com.luer.servicecenter.bean.PavilioneducationExample;
+import com.luer.servicecenter.service.PavilioneducationService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * @author EVEA
+ * 出馆卫教
+ */
+@Controller
+@RequestMapping("/pavilioneducation")
+public class PavilioneducationController {
+
+    @Autowired
+    private PavilioneducationService pavilioneducationService;
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getPavilioneducationByMotherId")
+    @ResponseBody
+    public List<Pavilioneducation> getPavilioneducationByMotherId(@NonNull String motherid ){
+        List<Pavilioneducation> pavilioneducations = pavilioneducationService.getPavilioneducationByMotherId(motherid);
+        return pavilioneducations;
+    }
+
+    @RequestMapping("/addPavilioneducation")
+    @ResponseBody
+    public ResultSet addPavilioneducation(Pavilioneducation pavilioneducation){
+        pavilioneducationService.insert(pavilioneducation);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping(value = "/delPavilioneducation",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultSet delPavilioneducation(@NonNull String id){
+        pavilioneducationService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/updatePavilioneducation")
+    @ResponseBody
+    public ResultSet updatePavilioneducation(Pavilioneducation pavilioneducation){
+        pavilioneducationService.updateByPrimaryKey(pavilioneducation);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/queryOnePavilioneducation")
+    @ResponseBody
+    public Pavilioneducation queryOnePavilioneducation(@NonNull String id){
+        Pavilioneducation pavilioneducation = pavilioneducationService.selectByPrimaryKey(id);
+        return pavilioneducation;
+    }
+
+    @RequestMapping("/queryAllPavilioneducation")
+    @ResponseBody
+    public List<Pavilioneducation> queryAllPavilioneducation(Pavilioneducation pavilioneducation){
+        List<Pavilioneducation> pavilioneducations = pavilioneducationService.selectByExample(pavilioneducation);
+        return pavilioneducations;
+    }
+}

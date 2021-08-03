@@ -1,0 +1,49 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.TemperatureRegister;
+import com.luer.storemanager.dao.TemperatureRegisterMapper;
+import com.luer.storemanager.service.TemperatureRegisterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 门店人员体温记录实现类
+ *
+ * @ClassName TemperatureRegisterServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/13 19:26.
+ */
+@Service
+@Transactional
+public class TemperatureRegisterServiceImpl implements TemperatureRegisterService {
+    @Autowired
+    private TemperatureRegisterMapper temperatureRegisterMapper;
+
+    //查询所有
+    public List<TemperatureRegister> selectTemperatureRegiste(String storeId) {
+        return temperatureRegisterMapper.selectTemperatureRegiste(storeId);
+    }
+
+    //添加
+    public int insert(TemperatureRegister record) {
+        record.setId(UUIDUtils.getUUID());
+        record.setTime(new Date());
+        return temperatureRegisterMapper.insert(record);
+    }
+
+    //修改
+    public int updateByPrimaryKeySelective(TemperatureRegister record) {
+        return temperatureRegisterMapper.updateByPrimaryKeySelective(record);
+    }
+
+    //删除
+    public int deleteByPrimaryKey(String id) {
+        return temperatureRegisterMapper.deleteByPrimaryKey(id);
+    }
+
+}

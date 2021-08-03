@@ -1,0 +1,169 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Pavilioneducation {
+    private String id;
+    private String customerId;
+    private String pavilionweight;
+    private String stayweight;
+    private String bornweight;
+    private String temperature;
+    private String heartbeat;
+    private String milkinterval;
+    private String howlong;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:ss:mm")
+    private Date onfeeding;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:ss:mm")
+    private Date underfeeding;
+    private String temperatures;
+    private String familymembers;
+    private String nurse;
+    private String motherid;
+    private String storeId;
+    private String babyname;
+    private String mothername;
+
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+    public String getCustomerId() {
+        return customerId;
+    }
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId == null ? null : customerId.trim();
+    }
+    public String getPavilionweight() {
+        return pavilionweight;
+    }
+
+    public void setPavilionweight(String pavilionweight) {
+        this.pavilionweight = pavilionweight == null ? null : pavilionweight.trim();
+    }
+
+    public String getStayweight() {
+        return stayweight;
+    }
+
+    public void setStayweight(String stayweight) {
+        this.stayweight = stayweight == null ? null : stayweight.trim();
+    }
+
+    public String getBornweight() {
+        return bornweight;
+    }
+
+    public void setBornweight(String bornweight) {
+        this.bornweight = bornweight == null ? null : bornweight.trim();
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature == null ? null : temperature.trim();
+    }
+
+    public String getHeartbeat() {
+        return heartbeat;
+    }
+
+    public void setHeartbeat(String heartbeat) {
+        this.heartbeat = heartbeat == null ? null : heartbeat.trim();
+    }
+
+    public String getMilkinterval() {
+        return milkinterval;
+    }
+
+    public void setMilkinterval(String milkinterval) {
+        this.milkinterval = milkinterval == null ? null : milkinterval.trim();
+    }
+
+    public String getHowlong() {
+        return howlong;
+    }
+
+    public void setHowlong(String howlong) {
+        this.howlong = howlong == null ? null : howlong.trim();
+    }
+
+    public Date getOnfeeding() {
+        return onfeeding;
+    }
+
+    public void setOnfeeding(Date onfeeding) {
+        this.onfeeding = onfeeding;
+    }
+
+    public Date getUnderfeeding() {
+        return underfeeding;
+    }
+
+    public void setUnderfeeding(Date underfeeding) {
+        this.underfeeding = underfeeding;
+    }
+
+    public String getTemperatures() {
+        return temperatures;
+    }
+
+    public void setTemperatures(String temperatures) {
+        this.temperatures = temperatures == null ? null : temperatures.trim();
+    }
+
+    public String getFamilymembers() {
+        return familymembers;
+    }
+
+    public void setFamilymembers(String familymembers) {
+        this.familymembers = familymembers == null ? null : familymembers.trim();
+    }
+
+    public String getNurse() {
+        return nurse;
+    }
+
+    public void setNurse(String nurse) {
+        this.nurse = nurse == null ? null : nurse.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getBabyname() {
+        return babyname;
+    }
+
+    public void setBabyname(String babyname) {
+        this.babyname = babyname == null ? null : babyname.trim();
+    }
+
+    public String getMothername() {
+        return mothername;
+    }
+
+    public void setMothername(String mothername) {
+        this.mothername = mothername == null ? null : mothername.trim();
+    }
+}

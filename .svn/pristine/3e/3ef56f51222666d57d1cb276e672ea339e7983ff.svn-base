@@ -1,0 +1,36 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.GoodsOne;
+import com.luer.stockandsales.bean.GoodsOneExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface GoodsOneMapper {
+    int countByExample(GoodsOneExample example);
+
+    int deleteByExample(GoodsOneExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(GoodsOne record);
+
+    int insertSelective(GoodsOne record);
+
+    List<GoodsOne> selectByExample(GoodsOneExample example);
+
+    GoodsOne selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") GoodsOne record, @Param("example") GoodsOneExample example);
+
+    int updateByExample(@Param("record") GoodsOne record, @Param("example") GoodsOneExample example);
+
+    int updateByPrimaryKeySelective(GoodsOne record);
+
+    int updateByPrimaryKey(GoodsOne record);
+
+    List<GoodsOne> selectAll();
+}

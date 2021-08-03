@@ -1,0 +1,192 @@
+package com.luer.stockandsales.service.impl;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.luer.comm.utils.GetDate;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.Goods;
+import com.luer.stockandsales.bean.HeadSumOrder;
+import com.luer.stockandsales.bean.Purchase;
+import com.luer.stockandsales.dao.GoodsMapper;
+import com.luer.stockandsales.dao.GoodsOrderMapper;
+import com.luer.stockandsales.dao.OrderDetailsMapper;
+import com.luer.stockandsales.dao.PurchaseMapper;
+import com.luer.stockandsales.service.PurchaseService;
+import com.luer.storesdata.dao.EmployerMapper;
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Transactional
+@Service
+public class PurchaseServiceImpl implements PurchaseService {
+    @Autowired
+    private PurchaseMapper purchaseMapper;
+    @Autowired
+    private GoodsOrderMapper orderMapper;
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+    @Autowired
+    private OrderDetailsMapper orderDetailsMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
+    @Autowired
+    private StoreFileService storeFileService;
+
+
+    @Override
+    public void savePurchase(Purchase purchase) {
+        purchase.setId(UUIDUtils.getUUID());
+        purchase.setPayable(0.0);
+        String storeId = storeFileService.getStoreFileId();
+        purchase.setStoreId(storeId);
+        if (purchase.getPurchaseTime() == null) {
+            purchase.setPurchaseTime(GetDate.getDate());
+        }
+
+        purchaseMapper.insert(purchase);
+    }
+
+    @Override
+    public void deletePurchaseById(String purchaseId) {
+
+        orderDetailsMapper.deleteByOrderId(purchaseId);
+        purchaseMapper.deleteByPrimaryKey(purchaseId);
+    }
+
+    @Override
+    public void updatePurchase(Purchase purchase) {
+        purchaseMapper.updateByPrimaryKey(purchase);
+    }
+
+    @Override
+    public List<Purchase> selectPurchases() {
+        return purchaseMapper.selectAll();
+    }
+
+    //查询门店的进货信息
+    @Override
+    public List<Purchase> selectByStoreId() {
+        return purchaseMapper.selectByStoreId(storeFileService.getStoreFileId());
+    }
+
+    //查询门店自采的进货信息
+    @Override
+    public List<Purchase> selectSelfPurchase() {
+        //获取总部id
+        String storeId = storeFileService.getStoreFileId();
+        Integer type = 1;
+        //获取所有自采入库信息
+        List<Purchase> purchaseList = purchaseMapper.selectPurchaseBystoreId(storeId, type);
+
+        return purchaseList;
+    }
+
+    //查询门店从总部领用的进货信息
+    @Override
+    public List<Purchase> selectByHeadOffice() {
+        //获取总部id
+        String supplierId = storeFileMapper.selectIdBySort();
+        String storeId = storeFileService.getStoreFileId();
+        List<String> orderIdList = orderMapper.selectIdsByType(storeId, 0);
+        for (String orderId:orderIdList
+             ) {
+            System.out.println("orderId================"+orderId);
+        }
+        List<Purchase> purchaseList = null;
+        if (orderIdList.size() != 0) {
+            purchaseList = purchaseMapper.selectPurchasebyOrderIdlist(orderIdList);
+        }
+        return purchaseList;
+    }
+
+    //根据订单id查询对应的进货信息
+    @Override
+    public List<Purchase> selectByOrderId(String orderId) {
+
+
+        return purchaseMapper.selectByOrderId(orderId);
+    }
+
+    //根据分公司id查询对应的门店的进货信息
+    @Override
+    public List<Purchase> selectPurchaseByBranchOfficeId() {
+        //获取分公司对应的门店id的集合
+        String storeId = storeFileService.getStoreFileId();
+        List<String> storeIdList = storeFileMapper.selectIdsByBranchId(storeId);
+        //获取总部id
+        String headOfficeId = storeFileMapper.selectIdBySort();
+        if (storeIdList.size() == 0) {
+            return null;
+        }
+        //获取门店对应的进货记录
+        List<Purchase> purchaseList1 = purchaseMapper.selectPurchaseBystoreIdList(storeIdList);
+        List<Purchase> purchaseList = new ArrayList<Purchase>();
+        //遍历记录,获取向总部下的订单对应的进货记录
+        for (Purchase purchase : purchaseList1) {
+            String orderId = purchase.getGoodsOrderId();
+            if (orderMapper.selectByPrimaryKey(orderId).getSupplierId().equals(headOfficeId)) {
+                purchaseList.add(purchase);
+            }
+        }
+
+
+        return purchaseList;
+    }
+
+    //根据分公司的id得出对应的利润
+    @Override
+    public double selectBranchProfitsByStoreId() {
+
+        double progfits = 0.0;
+        Goods goods = null;
+        //获取总部id
+        String headOfficeId = storeFileMapper.selectIdBySort();
+        //获取分公司id
+        String storeId = storeFileService.getStoreFileId();
+        //获取分公司旗下的门店id集合
+        List<String> storeIdList = storeFileMapper.selectIdsByBranchId(storeId);
+        if (storeIdList.size() == 0) {
+            return 0;
+        }
+        //获取分公司旗下的门店的进货信息
+        List<Purchase> purchaseList1 = purchaseMapper.selectPurchaseBystoreIdList(storeIdList);
+        //从总部进货的信息id
+        List<String> orderIds = new ArrayList<String>();
+
+        //遍历记录,获取向总部下的订单对应的进货记录
+        for (Purchase purchase : purchaseList1) {
+            //获取进货信息对应的订单id
+            String orderId = purchase.getGoodsOrderId();
+
+            if (orderMapper.selectByPrimaryKey(orderId).getSupplierId().equals(headOfficeId)) {
+                orderIds.add(purchase.getId());
+            }
+        }
+        if (orderIds.size() == 0) {
+            return 0;
+        }
+        //汇总进货商品及其数量
+        List<HeadSumOrder> detailsList = orderDetailsMapper.selectByOrderIds(orderIds);
+        if (detailsList.size() == 0) {
+            return 0;
+        }
+        //得到门店利润
+        for (HeadSumOrder headSumOrder : detailsList) {
+            String goodsId = headSumOrder.getGoodsId();
+            goods = goodsMapper.selectByPrimaryKey(goodsId);
+            if (goods == null) {
+                continue;
+            }
+            progfits += (goods.getPriceTwo() - goods.getPriceOne()) * headSumOrder.getSumNum();
+        }
+
+        return progfits;
+    }
+
+
+}

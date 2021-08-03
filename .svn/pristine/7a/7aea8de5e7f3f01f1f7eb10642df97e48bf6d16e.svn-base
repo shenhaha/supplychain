@@ -1,0 +1,59 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.bean.CustomerBasicExample;
+import com.luer.servicecenter.bean.Mothernursingrecorddetail;
+import com.luer.servicecenter.bean.MothernursingrecorddetailExample;
+import com.luer.servicecenter.dao.CustomerBasicMapper;
+import com.luer.servicecenter.dao.MothernursingrecorddetailMapper;
+import com.luer.servicecenter.service.MothernursingrecorddetailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class MothernursingrecorddetailServiceImpl implements MothernursingrecorddetailService{
+    @Autowired
+    MothernursingrecorddetailMapper mothernursingrecorddetailMapper;
+
+    @Override
+    public int deleteMothernursingrecorddetail(String id) {
+        mothernursingrecorddetailMapper.deleteByPrimaryKey(id);
+        return 0;
+    }
+
+    @Override
+    public List<Mothernursingrecorddetail> getMothernursingrecorddetailby(Mothernursingrecorddetail mothernursingrecorddetail) {
+        MothernursingrecorddetailExample mothernursingrecorddetailExample =new MothernursingrecorddetailExample();
+        MothernursingrecorddetailExample.Criteria criteria = mothernursingrecorddetailExample.createCriteria();
+        criteria.andStoreIdEqualTo(mothernursingrecorddetail.getStoreId());
+        List<Mothernursingrecorddetail> list = mothernursingrecorddetailMapper.selectByExample(mothernursingrecorddetailExample);
+        return list;
+    }
+
+    @Override
+    public int insertMothernursingrecorddetail(Mothernursingrecorddetail mothernursingrecorddetail) {
+        mothernursingrecorddetail.setId(UUIDUtils.getUUID());
+
+        mothernursingrecorddetailMapper.insertSelective(mothernursingrecorddetail);
+        return 0;
+    }
+
+    @Override
+    public int updateMothernursingrecorddetail(Mothernursingrecorddetail mothernursingrecorddetail) {
+        MothernursingrecorddetailExample mothernursingrecorddetailExample =new MothernursingrecorddetailExample();
+        MothernursingrecorddetailExample.Criteria criteria = mothernursingrecorddetailExample.createCriteria();
+        criteria.andIdLike(mothernursingrecorddetail.getId());
+        mothernursingrecorddetailMapper.updateByExampleSelective(mothernursingrecorddetail,mothernursingrecorddetailExample);
+        return 0;
+    }
+
+    @Override
+    public List<Mothernursingrecorddetail> getNursingByMotherId(String motherId) {
+        return mothernursingrecorddetailMapper.getNursingByMotherId(motherId);
+    }
+}

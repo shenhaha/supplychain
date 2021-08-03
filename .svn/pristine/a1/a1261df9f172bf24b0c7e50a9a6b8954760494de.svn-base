@@ -1,0 +1,88 @@
+package com.luer.businessmanager.service.impl;
+
+import com.luer.businessmanager.bean.Callrecord;
+import com.luer.businessmanager.bean.CallrecordExample;
+import com.luer.businessmanager.dao.CallrecordMapper;
+import com.luer.businessmanager.service.CallrecordService;
+import com.luer.comm.utils.UUIDUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/13.
+ */
+
+@Service
+@Transactional
+public class CallrecoreServiceImpl implements CallrecordService {
+    private static final Logger log = LoggerFactory.getLogger(CallrecoreServiceImpl.class);
+
+    @Autowired
+    private CallrecordMapper callrecordMapper;
+
+
+
+    @Override
+    public int insert(Callrecord callrecord) {
+        callrecord.setId(UUIDUtils.getUUID());
+        int insert = callrecordMapper.insert(callrecord);
+        log.info("添加成功！");
+        return insert;
+    }
+
+    @Override
+    public int deleteById(String id) {
+        CallrecordExample callrecordExample = new CallrecordExample();
+        CallrecordExample.Criteria criteria = callrecordExample.createCriteria();
+        criteria.andIdEqualTo(id);
+        return callrecordMapper.deleteByExample(callrecordExample);
+    }
+
+    @Override
+    public boolean deleteListById(String id) {
+        String[] ids = id.split(",");
+
+        if (callrecordMapper.deleteListById(ids)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int updateById(String id, Callrecord callrecord) {
+        CallrecordExample callrecordExample = new CallrecordExample();
+        CallrecordExample.Criteria criteria = callrecordExample.createCriteria();
+        criteria.andIdEqualTo(id);
+        return callrecordMapper.updateByExampleSelective(callrecord, callrecordExample);
+    }
+
+    @Override
+    public List<Callrecord> selectByName(String name) {
+        CallrecordExample callrecordExample = new CallrecordExample();
+        CallrecordExample.Criteria criteria = callrecordExample.createCriteria();
+        criteria.andNameLike("%" + name + "%");
+
+        return callrecordMapper.selectByExample(callrecordExample);
+    }
+
+    @Override
+    public List<Callrecord> selectByStoreId(String storeId) {
+        CallrecordExample callrecordExample = new CallrecordExample();
+        CallrecordExample.Criteria criteria = callrecordExample.createCriteria();
+        criteria.andStoreIdEqualTo(storeId);
+        return callrecordMapper.selectByExample(callrecordExample);
+    }
+
+    @Override
+    public List<Callrecord> selectAllList() {
+        CallrecordExample callrecordExample = new CallrecordExample();
+        CallrecordExample.Criteria criteria = callrecordExample.createCriteria();
+        return callrecordMapper.selectByExample(callrecordExample);
+    }
+}

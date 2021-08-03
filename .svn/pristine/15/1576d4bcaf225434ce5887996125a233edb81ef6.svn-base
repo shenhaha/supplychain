@@ -1,0 +1,70 @@
+package com.luer.storemanager.controller;
+
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storemanager.bean.ExtraService;
+import com.luer.storemanager.service.ExtraServiceService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/extraService")
+public class ExtraServiceController {
+    @Autowired
+    private ExtraServiceService extraServiceService;
+
+
+    //查询所有加值服务
+    @ResponseBody
+    @RequestMapping("/selectAll")
+    public List<ExtraService> selectAll(String storeId) {
+        List<ExtraService> extraServiceList = extraServiceService.selectAll(storeId);
+        return extraServiceList;
+    }
+    //添加增值服务信息
+    @ResponseBody
+    @RequestMapping(value = "/saveExtraService")
+    public ResultSet saveExtraService(@NonNull ExtraService extraService) {
+
+        extraServiceService.saveExtraService(extraService);
+        return ResultSet.getSuccess();
+
+    }
+
+    //删除增值服务信息
+    @RequestMapping("/deleteExtraService")
+    @ResponseBody
+    public ResultSet deleteExtraServiceById(@NonNull String id) {
+        extraServiceService.deleteExtraServiceById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改增值服务基本资料
+    @ResponseBody
+    @RequestMapping(value = "/updateExtraService")
+    public ResultSet updateExtraServiceDetail(@NonNull ExtraService extraService) {
+        extraServiceService.updateExtraService(extraService);
+        return ResultSet.getSuccess();
+    }
+
+
+    //通过门店id查询增值服务基本资料
+    @ResponseBody
+    @RequestMapping("/selectExtraServices")
+    public List<ExtraService> selectExtraServices(@NonNull String storeFileId) {
+        List<ExtraService> extraServiceList = extraServiceService.selectExtraServices(storeFileId);
+        return extraServiceList;
+    }
+    //通过id查询增值服务基本资料
+    @ResponseBody
+    @RequestMapping("/selectEmployerById")
+    public ExtraService selectEmployerById(String id) {
+        ExtraService extraService = extraServiceService.selectById(id);
+        return extraService;
+    }
+
+}

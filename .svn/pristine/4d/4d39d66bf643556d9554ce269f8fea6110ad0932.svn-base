@@ -1,0 +1,105 @@
+package com.luer.stockandsales.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.stockandsales.bean.Purchase;
+import com.luer.stockandsales.service.PurchaseService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/purchase")
+public class PurchaseController {
+    @Autowired
+    private PurchaseService purchaseService;
+
+
+    //新增进货信息
+    @ResponseBody
+    @RequestMapping(value = "/savePurchase")
+    public ResultSet saveInGoods(@NonNull Purchase purchase) {
+
+        purchaseService.savePurchase(purchase);
+        return ResultSet.getSuccess();
+    }
+
+    //删除进货信息
+    @ResponseBody
+    @RequestMapping(value = "/deletePurchaseById")
+    public ResultSet deleteGoodsById(@NonNull String id) {
+        purchaseService.deletePurchaseById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改进货信息
+    @ResponseBody
+    @RequestMapping(value = "/updatePurchase")
+    public ResultSet updateGoods(@NonNull Purchase purchase) {
+
+        purchaseService.updatePurchase(purchase);
+        return ResultSet.getSuccess();
+    }
+
+    //查询所有进货信息
+    @ResponseBody
+    @RequestMapping(value = "/selectPurchase")
+    public List<Purchase> selectPurchase() {
+        List<Purchase> purchaseList = purchaseService.selectPurchases();
+        return purchaseList;
+    }
+
+    //查询门店的进货信息
+    @ResponseBody
+    @RequestMapping(value = "/selectByStoreId")
+    public List<Purchase> selectByStoreid() {
+        List<Purchase> purchaseList = purchaseService.selectByStoreId();
+        return purchaseList;
+    }
+
+    //查询门店自采商品的进货信息
+    @ResponseBody
+    @RequestMapping(value = "/selectSelfPurchase")
+    public List<Purchase> selectSelfPurchase() {
+        List<Purchase> purchaseList = purchaseService.selectSelfPurchase();
+        return purchaseList;
+    }
+
+    //查询门店从总部采购的商品的进货信息
+    @ResponseBody
+    @RequestMapping(value = "/selectByHeadOffice")
+    public List<Purchase> selectByHeadOffice() {
+        List<Purchase> purchaseList = purchaseService.selectByHeadOffice();
+        return purchaseList;
+    }
+
+    //根据订单id查询对应的进货信息
+    @ResponseBody
+    @RequestMapping(value = "/selectByOrderId")
+    public List<Purchase> selectByOrderId(@NonNull String orderId) {
+        List<Purchase> purchaseList = purchaseService.selectByOrderId(orderId);
+        return purchaseList;
+    }
+
+    //分公司查询门店的进货信息
+    @ResponseBody
+    @RequestMapping(value = "/selectPurchaseByBranchOfficeId")
+    public List<Purchase> selectPurchaseByBranchOfficeId() {
+        List<Purchase> purchaseList = purchaseService.selectPurchaseByBranchOfficeId();
+        return purchaseList;
+    }
+
+    //通过分公司的id查询分公司的利润
+    @ResponseBody
+    @RequestMapping(value = "/selectBranchProfitsByStoreId")
+    public double selectBranchProfitsByStoreId() {
+
+        double profits = purchaseService.selectBranchProfitsByStoreId();
+
+        return profits;
+    }
+
+}

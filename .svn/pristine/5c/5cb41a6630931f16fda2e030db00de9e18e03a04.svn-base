@@ -1,0 +1,78 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.BabyEvaluate;
+import com.luer.servicecenter.bean.BabyEvaluateExample;
+import com.luer.servicecenter.bean.MotherEvaluate;
+import com.luer.servicecenter.dao.BabyEvaluateMapper;
+import com.luer.servicecenter.service.BabyEvaluateService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/14.
+ */
+@Service
+@Transactional
+public class BabyEvaluateServiceImpl implements BabyEvaluateService {
+    @Autowired
+    private BabyEvaluateMapper babyEvaluateMapper;
+    @Override
+
+    public void addBabyEvaluate(BabyEvaluate babyEvaluate) {
+        babyEvaluate.setId(UUIDUtils.getUUID());
+        babyEvaluate.setUpdatetime(new Date());
+         babyEvaluateMapper.insertSelective(babyEvaluate);
+    }
+
+    @Override
+
+    public void updateBabyEvaluate(BabyEvaluate babyEvaluate) {
+        babyEvaluate.setUpdatetime(new Date());
+       babyEvaluateMapper.updateByPrimaryKeySelective(babyEvaluate);
+    }
+/**删除
+* @author 张路明
+*/
+    @Override
+    public void deteleBabyEvaluate(BabyEvaluate babyEvaluate) {
+        babyEvaluateMapper.deleteByPrimaryKey(babyEvaluate.getId());
+    }
+
+    @Override
+    /**获取宝宝入住评估
+    * @author 张路明
+    */
+
+    public List<BabyEvaluate> getList(BabyEvaluate babyEvaluate) {
+        BabyEvaluateExample babyEvaluateExample = new BabyEvaluateExample();
+        BabyEvaluateExample.Criteria criteria = babyEvaluateExample.createCriteria();
+        if(babyEvaluate.getStoreId()!=null){
+            criteria.andStoreIdEqualTo(babyEvaluate.getStoreId());
+        }
+        List<BabyEvaluate> list = babyEvaluateMapper.selectByExample(babyEvaluateExample);
+        return list;
+    }
+
+    /**
+     *
+    * @author 张路明
+    */
+    @Override
+    public List<BabyEvaluate> selectBabyEvaluate(String storeId) {
+        return babyEvaluateMapper.getList(storeId);
+    }
+
+    /**
+     * 根据妈妈id查找宝宝入住评估
+    * @author 张路明
+    */
+    @Override
+    public List<BabyEvaluate> getBymotherId(String customerBasicId) {
+        return babyEvaluateMapper.getBymotherId(customerBasicId);
+    }
+}

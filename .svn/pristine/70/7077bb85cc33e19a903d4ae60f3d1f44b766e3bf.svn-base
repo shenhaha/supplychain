@@ -1,0 +1,138 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class WorryEvaluate {
+    private String id;
+
+    private String customerBasicId;
+
+    private String worryProblemId;
+
+    private String problem;
+
+    private String answerone;
+
+    private String answertwo;
+
+    private String answerthree;
+
+    private String answerfour;
+
+    private String answerchoose;
+
+    private String evaluation;
+
+    private String roomId;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date assessmentTime;
+
+    private String storeId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public String getWorryProblemId() {
+        return worryProblemId;
+    }
+
+    public void setWorryProblemId(String worryProblemId) {
+        this.worryProblemId = worryProblemId == null ? null : worryProblemId.trim();
+    }
+
+    public String getProblem() {
+        return problem;
+    }
+
+    public void setProblem(String problem) {
+        this.problem = problem == null ? null : problem.trim();
+    }
+
+    public String getAnswerone() {
+        return answerone;
+    }
+
+    public void setAnswerone(String answerone) {
+        this.answerone = answerone == null ? null : answerone.trim();
+    }
+
+    public String getAnswertwo() {
+        return answertwo;
+    }
+
+    public void setAnswertwo(String answertwo) {
+        this.answertwo = answertwo == null ? null : answertwo.trim();
+    }
+
+    public String getAnswerthree() {
+        return answerthree;
+    }
+
+    public void setAnswerthree(String answerthree) {
+        this.answerthree = answerthree == null ? null : answerthree.trim();
+    }
+
+    public String getAnswerfour() {
+        return answerfour;
+    }
+
+    public void setAnswerfour(String answerfour) {
+        this.answerfour = answerfour == null ? null : answerfour.trim();
+    }
+
+    public String getAnswerchoose() {
+        return answerchoose;
+    }
+
+    public void setAnswerchoose(String answerchoose) {
+        this.answerchoose = answerchoose == null ? null : answerchoose.trim();
+    }
+
+    public String getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(String evaluation) {
+        this.evaluation = evaluation == null ? null : evaluation.trim();
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId == null ? null : roomId.trim();
+    }
+
+    public Date getAssessmentTime() {
+        return assessmentTime;
+    }
+
+    public void setAssessmentTime(Date assessmentTime) {
+        this.assessmentTime = assessmentTime;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+}

@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storesdata.dao.StoreFileMapper">
+    <resultMap id="accountInfo" type="com.luer.storesdata.bean.AccountInfo">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"></result>
+        <result column="companyName" property="companyName" jdbcType="VARCHAR"></result>
+        <result column="createTime" property="createTime" jdbcType="VARCHAR"></result>
+        <result column="sort" property="sort" jdbcType="VARCHAR"></result>
+        <result column="leader" property="leader" jdbcType="VARCHAR"></result>
+    </resultMap>
+    <resultMap id="BaseResultMap" type="com.luer.storesdata.bean.StoreFile">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="VARCHAR"/>
+        <result column="abbreviation" property="abbreviation" jdbcType="VARCHAR"/>
+        <result column="property" property="property" jdbcType="VARCHAR"/>
+        <result column="industry_nature" property="industryNature" jdbcType="VARCHAR"/>
+        <result column="institution_num" property="institutionNum" jdbcType="VARCHAR"/>
+        <result column="institution" property="institution" jdbcType="VARCHAR"/>
+        <result column="established" property="established" jdbcType="TIMESTAMP"/>
+        <result column="leader" property="leader" jdbcType="VARCHAR"/>
+        <result column="tell" property="tell" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="zip_code" property="zipCode" jdbcType="VARCHAR"/>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="account_number" property="accountNumber" jdbcType="VARCHAR"/>
+        <result column="bankname" property="bankname" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="profits" property="profits" jdbcType="DOUBLE"/>
+        <result column="expirationtime" property="expirationtime" jdbcType="TIMESTAMP"/>
+        <result column="zip_code" property="zipCode" jdbcType="VARCHAR"/>
+        <result column="storeName" property="storeName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, name, sort, abbreviation, property, industry_nature, institution_num, institution,
+        established, leader, tell, email, address, zip_code, account_name, account_number,
+        bankname, store_id, profits, expirationtime
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storesdata.bean.StoreFileExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from store_file
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select S1.id, S1.name, S1.sort, S1.abbreviation, S1.property, S1.industry_nature, S1.institution_num,
+        S1.institution,S1.established, S1.leader, S1.tell, S1.email, S1.address, S1.zip_code, S1.account_name,
+        S1.account_number,S1.bankname, S1.store_id, S1.profits, S1.expirationtime, S2.name as storeName
+        from store_file S1 LEFT JOIN store_file S2 ON S1.store_id=S2.id
+        where S1.id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from store_file
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.storesdata.bean.StoreFileExample">
+        delete from store_file
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.storesdata.bean.StoreFile">
+        insert into store_file (id, name, sort,
+        abbreviation, property, industry_nature,
+        institution_num, institution, established,
+        leader, tell, email,
+        address, zip_code, account_name,
+        account_number, bankname, store_id,
+        profits, expirationtime)
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR},
+        #{abbreviation,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR}, #{industryNature,jdbcType=VARCHAR},
+        #{institutionNum,jdbcType=VARCHAR}, #{institution,jdbcType=VARCHAR}, #{established,jdbcType=TIMESTAMP},
+        #{leader,jdbcType=VARCHAR}, #{tell,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR},
+        #{accountNumber,jdbcType=VARCHAR}, #{bankname,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR},
+        #{profits,jdbcType=DOUBLE}, #{expirationtime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.storesdata.bean.StoreFile">
+        insert into store_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="abbreviation != null">
+                abbreviation,
+            </if>
+            <if test="property != null">
+                property,
+            </if>
+            <if test="industryNature != null">
+                industry_nature,
+            </if>
+            <if test="institutionNum != null">
+                institution_num,
+            </if>
+            <if test="institution != null">
+                institution,
+            </if>
+            <if test="established != null">
+                established,
+            </if>
+            <if test="leader != null">
+                leader,
+            </if>
+            <if test="tell != null">
+                tell,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="zipCode != null">
+                zip_code,
+            </if>
+            <if test="accountName != null">
+                account_name,
+            </if>
+            <if test="accountNumber != null">
+                account_number,
+            </if>
+            <if test="bankname != null">
+                bankname,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="profits != null">
+                profits,
+            </if>
+            <if test="expirationtime != null">
+                expirationtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="abbreviation != null">
+                #{abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="property != null">
+                #{property,jdbcType=VARCHAR},
+            </if>
+            <if test="industryNature != null">
+                #{industryNature,jdbcType=VARCHAR},
+            </if>
+            <if test="institutionNum != null">
+                #{institutionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="institution != null">
+                #{institution,jdbcType=VARCHAR},
+            </if>
+            <if test="established != null">
+                #{established,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null">
+                #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null">
+                #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="accountName != null">
+                #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountNumber != null">
+                #{accountNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="bankname != null">
+                #{bankname,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="profits != null">
+                #{profits,jdbcType=DOUBLE},
+            </if>
+            <if test="expirationtime != null">
+                #{expirationtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.storesdata.bean.StoreFileExample"
+            resultType="java.lang.Integer">
+        select count(*) from store_file
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update store_file
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sort != null">
+                sort = #{record.sort,jdbcType=VARCHAR},
+            </if>
+            <if test="record.abbreviation != null">
+                abbreviation = #{record.abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="record.property != null">
+                property = #{record.property,jdbcType=VARCHAR},
+            </if>
+            <if test="record.industryNature != null">
+                industry_nature = #{record.industryNature,jdbcType=VARCHAR},
+            </if>
+            <if test="record.institutionNum != null">
+                institution_num = #{record.institutionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.institution != null">
+                institution = #{record.institution,jdbcType=VARCHAR},
+            </if>
+            <if test="record.established != null">
+                established = #{record.established,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.leader != null">
+                leader = #{record.leader,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tell != null">
+                tell = #{record.tell,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null">
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.zipCode != null">
+                zip_code = #{record.zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.accountName != null">
+                account_name = #{record.accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.accountNumber != null">
+                account_number = #{record.accountNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.bankname != null">
+                bankname = #{record.bankname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeId != null">
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.profits != null">
+                profits = #{record.profits,jdbcType=DOUBLE},
+            </if>
+            <if test="record.expirationtime != null">
+                expirationtime = #{record.expirationtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update store_file
+        set id = #{record.id,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
+        sort = #{record.sort,jdbcType=VARCHAR},
+        abbreviation = #{record.abbreviation,jdbcType=VARCHAR},
+        property = #{record.property,jdbcType=VARCHAR},
+        industry_nature = #{record.industryNature,jdbcType=VARCHAR},
+        institution_num = #{record.institutionNum,jdbcType=VARCHAR},
+        institution = #{record.institution,jdbcType=VARCHAR},
+        established = #{record.established,jdbcType=TIMESTAMP},
+        leader = #{record.leader,jdbcType=VARCHAR},
+        tell = #{record.tell,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        address = #{record.address,jdbcType=VARCHAR},
+        zip_code = #{record.zipCode,jdbcType=VARCHAR},
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+        account_number = #{record.accountNumber,jdbcType=VARCHAR},
+        bankname = #{record.bankname,jdbcType=VARCHAR},
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+        profits = #{record.profits,jdbcType=DOUBLE},
+        expirationtime = #{record.expirationtime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.storesdata.bean.StoreFile">
+        update store_file
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="abbreviation != null">
+                abbreviation = #{abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="property != null">
+                property = #{property,jdbcType=VARCHAR},
+            </if>
+            <if test="industryNature != null">
+                industry_nature = #{industryNature,jdbcType=VARCHAR},
+            </if>
+            <if test="institutionNum != null">
+                institution_num = #{institutionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="institution != null">
+                institution = #{institution,jdbcType=VARCHAR},
+            </if>
+            <if test="established != null">
+                established = #{established,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leader != null">
+                leader = #{leader,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null">
+                tell = #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null">
+                zip_code = #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="accountName != null">
+                account_name = #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountNumber != null">
+                account_number = #{accountNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="bankname != null">
+                bankname = #{bankname,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="profits != null">
+                profits = #{profits,jdbcType=DOUBLE},
+            </if>
+            <if test="expirationtime != null">
+                expirationtime = #{expirationtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.storesdata.bean.StoreFile">
+        update store_file
+        set name = #{name,jdbcType=VARCHAR},
+        sort = #{sort,jdbcType=VARCHAR},
+        abbreviation = #{abbreviation,jdbcType=VARCHAR},
+        property = #{property,jdbcType=VARCHAR},
+        industry_nature = #{industryNature,jdbcType=VARCHAR},
+        institution_num = #{institutionNum,jdbcType=VARCHAR},
+        institution = #{institution,jdbcType=VARCHAR},
+        established = #{established,jdbcType=TIMESTAMP},
+        leader = #{leader,jdbcType=VARCHAR},
+        tell = #{tell,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+        account_name = #{accountName,jdbcType=VARCHAR},
+        account_number = #{accountNumber,jdbcType=VARCHAR},
+        bankname = #{bankname,jdbcType=VARCHAR},
+        store_id = #{storeId,jdbcType=VARCHAR},
+        profits = #{profits,jdbcType=DOUBLE},
+        expirationtime = #{expirationtime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <!-- 查询所有门店资料-->
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.luer.storesdata.bean.StoreFile">
+        select * from store_file where sort="门店"
+    </select>
+    <!--查询总公司id-->
+    <select id="selectIdBySort" resultType="java.lang.String">
+        select id from store_file WHERE sort='总公司'
+    </select>
+    <!--查询分公司id-->
+    <select id="selectBranch" resultMap="BaseResultMap">
+        select * from store_file WHERE sort='分公司' OR sort='区域加盟'OR sort='总公司加盟'
+    </select>
+    <!--查询分公司对应的门店信息-->
+    <select id="selectByBranchId" resultMap="BaseResultMap">
+        select * from store_file WHERE  store_id = #{storeId}
+    </select>
+    <select id="selectIdsByBranchId" resultType="java.lang.String">
+        select * from store_file WHERE  store_id = #{storeId}
+    </select>
+
+    <!--通过门店id和门店分类判断其是总公司或分公司还是门店信息-->
+    <select id="selectStoreFileBySortIdAndName" resultMap="BaseResultMap">
+        select id, name, sort,abbreviation, property, industry_nature,institution_num, institution, established,
+        leader, tell, email,address, zip_code, account_name,account_number, bankname, store_id,profits,
+        expirationtime from store_file WHERE  id = #{id}
+    </select>
+
+    <!--查询所有总公司基本资料-->
+    <select id="selectStoreFilesByHeadquarters" resultMap="BaseResultMap">
+        select id, name, sort,abbreviation, property, industry_nature,institution_num, institution, established,
+        leader, tell, email,address, zip_code, account_name,account_number, bankname, store_id,profits,
+        expirationtime from store_file WHERE  (store_id is null or store_id="") and sort='总公司'
+    </select>
+    <!--多表查询超级管理员等-->
+    <select id="selectAdmin" resultMap="accountInfo">
+        SELECT u.id id,u.username username ,u.sex sex,u.createdate createTime,sf.`name` companyName,
+        sf.sort sort,sf.established established,sf.leader  leader FROM store_file
+            sf INNER JOIN users u ON u.store_id = sf.id
+            INNER JOIN user_role ur ON u.id = ur.userss_id
+            INNER JOIN role ON role.id = ur.role_id
+            WHERE role.roledesc = '管理员'
+    </select>
+    <select id="selectById" resultMap="BaseResultMap">
+         select * from store_file WHERE  id = #{storeId}
+    </select>
+    <!--根据上级门店id查询当前上级门店id下面所有的门店信息-->
+    <select id="selectByStoreFileIdAll" resultMap="BaseResultMap">
+        select S1.id, S1.name, S1.sort, S1.abbreviation, S1.property, S1.industry_nature, S1.institution_num,
+        S1.institution,S1.established, S1.leader, S1.tell, S1.email, S1.address, S1.zip_code, S1.account_name,
+        S1.account_number,S1.bankname, S1.store_id, S1.profits, S1.expirationtime, S2.name as storeName
+        from store_file S1 LEFT JOIN store_file S2 ON S1.store_id=S2.id
+        where S2.id = #{id,jdbcType=VARCHAR} and S1.sort = #{sort}
+    </select>
+</mapper>

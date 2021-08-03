@@ -1,0 +1,27 @@
+package com.luer.businessmanager.service;
+
+import com.luer.businessmanager.bean.Appointment;
+import com.luer.businessmanager.bean.CountAppointment;
+
+import java.util.List;
+
+
+public interface AppointmentService {
+    int insert(Appointment record);
+    int deleteByPrimaryKey(String id);
+    int updateById(String id, Appointment appointment);
+    boolean deleteListById(String ids);
+    List<Appointment> selectListByStoreId(String storeId);
+    List<Appointment> selectListAppointmentToday(String storeId);
+    List<Appointment> selectAllList();
+    List<CountAppointment> getCountAppointments(String time);
+    List<CountAppointment> getSignatureNumberDay(String time);
+    List<CountAppointment> getSignatureNumberMonth(String time);
+    List<CountAppointment> getTotalSalesAmount(String time);
+    List<CountAppointment> getBillofMoney(String time);
+
+
+
+
+
+ }

@@ -1,0 +1,90 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>查看门店订单</title>
+</head>
+<body>
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                    <%--<div class="panel-heading">
+                        <div class="pull-left">
+                            <ol class="breadcrumb">
+                                <li><a href="${ctx}/index">首页</a></li>
+                                <li class="active">分公司查看各门店订单</li>
+                            </ol>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>--%>
+                    <div>
+                        <div class="panel-body">
+                            <div class="table-wrap">
+                                <table id="orderList" class="table" data-paging="true" data-filtering="true" data-sorting="true">
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script>
+    $(function () {
+        var orderTitle = [
+            {
+                "name": "id",
+                "title": "ID",
+                "breakpoints": "xs sm",
+                "visible": false
+            },
+            {"name": "storeId", "title": "门店id","visible": false},
+            {"name": "storeName", "title": "门店名称"},
+            {"name": "num", "title": "订单编号"},
+            {"name": "supplierId", "title": "所属供应商id","visible": false},
+            {"name": "status", "title": "订单状态","visible": false},
+            {"name": "employerId", "title": "申请员工id","visible": false},
+            {"name": "employerName", "title": "下单员工姓名"},
+            {"name": "tell", "title": "联系方式"},
+            {"name": "applicationtime", "title": "申请时间", "style": {"width": 120, "maxWidth": 240}},
+            {"name": "ordertime", "title": "下单时间", "style": {"width": 120, "maxWidth": 240}},
+
+            {"name": "sumprice", "title": "门店应付"},
+            {"name": "profits", "title": "利润"},
+         {"name": "remark", "title": "备注"},
+            {"name": "details", "title": "详情"}
+        ];
+        //启动模态框
+        var $modal = $('#app-editor-modal'),
+            $editor = $('#editor'),
+            $editorTitle = $('#editor-title')
+        //启动footable
+        var ft = FooTable.init('#orderList', {
+            "columns": orderTitle,
+            "rows": $.get("${ctx}/goodsOrder/selectByBranchOfficeId", function (data) {
+                $(data).each(function () {
+                    this.details = "<button id='cx' class='btn btn-primary btn-sm'  onclick='findDetails(" + '"' + this.id + '"' + ")'>点击查看</button>";
+
+                });
+                //
+                return data;
+            }),
+        });
+    });
+
+    //查询详情
+    function findDetails(id) {
+        //这里写你的逻辑就行了
+        window.location.href = "${ctx}/orderDetails/selectBranchDetailsByOrderId?orderId=" + id + "&detailstype=" + 0;
+    }
+</script>
+</body>
+</html>
+

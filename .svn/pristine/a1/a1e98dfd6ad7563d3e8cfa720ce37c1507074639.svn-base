@@ -1,0 +1,42 @@
+package com.luer.systemmanager.dao;
+
+import com.luer.systemmanager.bean.ParameterSet;
+import com.luer.systemmanager.bean.ParameterSetExample;
+
+import java.util.Date;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface ParameterSetMapper {
+    int countByExample(ParameterSetExample example);
+
+    int deleteByExample(ParameterSetExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(ParameterSet record);
+
+    int insertSelective(ParameterSet record);
+
+    List<ParameterSet> selectByExample(ParameterSetExample example);
+
+    ParameterSet selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") ParameterSet record, @Param("example") ParameterSetExample example);
+
+    int updateByExample(@Param("record") ParameterSet record, @Param("example") ParameterSetExample example);
+
+    int updateByPrimaryKeySelective(ParameterSet record);
+
+    int updateByPrimaryKey(ParameterSet record);
+
+    List<ParameterSet> getParameterSet(@Param("store_id") String storeId);
+
+    void updateEndDays(@Param("intParameter") Integer intParameter ,@Param("last_date")Date date);
+
+    List<ParameterSet> selectByPrimaryId(@Param("store_id") String s);
+
+    ParameterSet getParameterSet2(@Param("storeId") String storeId,@Param("name") String name);
+
+    Integer getEndday(String storeId);
+}

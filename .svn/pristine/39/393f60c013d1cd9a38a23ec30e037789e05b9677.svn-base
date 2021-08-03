@@ -1,0 +1,50 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.Announce;
+import com.luer.storemanager.dao.AnnounceMapper;
+import com.luer.storemanager.service.AnnounceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/9/3.
+ */
+@Service
+@Transactional
+public class AnnounceServiceImpl implements AnnounceService {
+    @Autowired
+    private AnnounceMapper announceMapper;
+
+    @Override
+    public List<Announce> getAnnounce() {
+        return announceMapper.getAnnounceList();
+    }
+
+    @Override
+    public void addAnnounce(Announce announce) {
+        announce.setId(UUIDUtils.getUUID());
+        announce.setPublishTime(new Date());
+         announceMapper.insert(announce);
+    }
+
+    @Override
+    public void deleteAnnounce(String id) {
+          announceMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void updateAnnounce(Announce announce) {
+        announceMapper.updateByPrimaryKeySelective(announce);
+
+    }
+
+    @Override
+    public Announce getOneAnnounce(String id) {
+        return announceMapper.selectByPrimaryKey(id);
+    }
+}

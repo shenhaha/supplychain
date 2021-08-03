@@ -1,0 +1,57 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.ItemsUse;
+
+import java.util.List;
+
+/**
+ * 物品使用服务类
+ *
+ * @ClassName ItemsUseService
+ * @Author GavinJiang
+ * @Date 2018/8/16 18:42.
+ */
+public interface ItemsUseService {
+    /**
+     * 查询所有的物品使用信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.ItemsUse>
+     * @author GavinJiang
+     * @date 2018/8/17 11:06
+     * @params
+     */
+    List<ItemsUse> selectItemsUse();
+
+    /**
+     * 添加物品使用信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/17 11:07
+     * @params
+     */
+    int insert(ItemsUse record);
+
+    /**
+     * 修改物品使用信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/17 11:08
+     * @params
+     */
+    int updateByPrimaryKeySelective(ItemsUse record);
+
+    /**
+     * 根据id删除物品使用信息
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/17 11:08
+     * @params
+     */
+    int deleteByPrimaryKey(String id);
+}

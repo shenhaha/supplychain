@@ -1,0 +1,243 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>基本资料</title>
+</head>
+<body>
+<!--获用户登录时取存入session域对象中门店id-->
+<input style="display:none" type="hidden" id="storeId" value="${storeId}">
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+                <div class="panel-heading">
+                    <%--<div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li class="active">分公司资料管理</li>
+                        </ol>
+                    </div>--%>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div id="repairdiv">
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <table id="storeFileLists" class="table" data-paging="true" data-sorting="true">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!-- Row -->
+</div>
+
+<script>
+    $(function () {
+        //获取storeId的值
+        var storeValue = $("#storeId").val();
+        var storeFileTitle = [
+            {"name": "id", "title": "分公司序号"},
+            {"name": "storeId", "visible": false},
+            {"name": "name", "title": "名称", "visible": false},
+            {"name": "abbreviation", "title": "简称"},
+            {"name": "sort", "title": "分类"},
+            {"name": "institution", "title": "所属机构"},
+            {"name": "property", "title": "性质", "visible": false},
+            {"name": "industryNature", "visible": false},
+            {"name": "institutionNum", "title": "机构编号", "visible": false},
+            /*{"name": "institution", "title": "所属机构", "visible": false},*/
+            {"name": "leader", "title": "负责人"},
+            {"name": "established", "title": "成立时间"},
+            {"name": "tell", "title": "电话", "visible": false},
+            {"name": "email", "title": "邮箱", "visible": false},
+            {"name": "address", "title": "地址"},
+            {"name": "bankname", "title": "开户行", "visible": false},
+            {"name": "accountNumber", "title": "账户", "visible": false},
+            {"name":"details","title":"查看门店"},
+            {"name":"find","title":"查看详细"}
+        ];
+        function find(values) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title : "<span style=\"color:#ab8ce4\">查看详情</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'api-blacklist-form-add',
+                message:$('<div></div>').load('${ctx}/template/storesdata/storefileDivisionlist.jsp'),//加载弹出页面
+                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                //数据回显
+                onshown: function(dialogRef){
+                    $('#id').val(values.id);
+                    $('#name').val(values.name);
+                    $('#sort').val(values.sort);
+                    $('#abbreviation').val(values.abbreviation);
+                    $('#property').val(values.property);
+                    $('#industryNature').val(values.industryNature);
+                    $('#institutionNum').val(values.institutionNum);
+                    $('#institution').val(values.institution);
+                    $('#leader').val(values.leader);
+                    $('#established').val(values.established);
+                    $('#tell').val(values.tell);
+                    $('#email').val(values.email);
+                    $('#address').val(values.address);
+                    $('#accountNumber').val(values.accountNumber);
+                    $('#bankname').val(values.bankname);
+                    $('#myform').find("input,select,textarea").attr("disabled","disabled");
+                },
+                buttons : [{
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                } ]
+            });
+        }
+        window.find = find;
+        //启动footable 查询所有的门店资料管理信息
+        var ft = FooTable.init('#storeFileLists', {
+            "columns": storeFileTitle,
+            "rows": $.get("${ctx}/storeFile/selectByStoreFileId?storeFileId="+storeValue,function(data){
+                $(data).each(function(){//用这个类样式写css就行了 detailsBtn
+                    this.find = "<button id='cx' class='btn btn-primary btn-sm' onclick='find("+JSON.stringify(this)+")'>查看详细</button>";
+                    this.details = "<button id='cx' class='btn btn-primary btn-sm' onclick='findDetails("+'"'+this.id+'"'+")'>点击查看</button>";
+                });
+                return data;
+            }),
+            //功能操作
+            editing: {
+                enabled: true,
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    //修改模态框
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color:#ab8ce4\">修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storesdata/storefileDivisionlist.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown: function(dialogRef){
+                            $('#id').val(values.id);
+                            $('#name').val(values.name);
+                            $('#sort').val(values.sort);
+                            $('#abbreviation').val(values.abbreviation);
+                            $('#property').val(values.property);
+                            $('#industryNature').val(values.industryNature);
+                            $('#institutionNum').val(values.institutionNum);
+                            $('#institution').val(values.institution);
+                            $('#leader').val(values.leader);
+                            $('#established').val(values.established);
+                            $('#tell').val(values.tell);
+                            $('#email').val(values.email);
+                            $('#address').val(values.address);
+                            $('#bankname').val(values.bankname);
+                            $('#accountNumber').val(values.accountNumber);
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'name':$('#name').val(),
+                                    'sort':$('#sort').val(),
+                                    'abbreviation':$('#abbreviation').val(),
+                                    'property':$('#property').val(),
+                                    'industryNature':$('#industryNature').val(),
+                                    'institutionNum':$('#institutionNum').val(),
+                                    'institution':$('#institution').val(),
+                                    'leader':$('#leader').val(),
+                                    'established':$('#established').val(),
+                                    'tell':$('#tell').val(),
+                                    'email':$('#email').val(),
+                                    'address':$('#address').val(),
+                                    'bankname':$('#bankname').val(),
+                                    'accountNumber':$('#accountNumber').val(),
+                                };
+
+                                //非空验证，手机与邮箱验证
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        leader: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '负责人不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        email:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '邮箱不能为空！'
+                                                },
+                                                regexp : {
+                                                    regexp:/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+                                                    message:'邮箱格式不正确！'
+                                                }
+                                            }
+                                        },
+                                    }
+                                });
+
+
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                //判断数据是否符合规定
+                                if(bootstrapValidator.isValid()){
+                                    //修改数据提交路径
+                                    $.post("${ctx}/storeFile/updateStoreFileDetail", json).done(function (data) {
+                                        getCode(data)
+                                    }).fail(function (data) {
+                                        getCode(data)
+                                    });
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作
+                deleteRow: function (row) {
+                    myConfirm("${ctx}/storeFile/deleteStoreFileById", row);
+                }
+            }
+        });
+    });
+
+    //查询门店详情
+    function findDetails(id){
+        //这里写你的逻辑就行了
+        window.location.href="${ctx}/storeFile/storefile?storeid="+id+"&sort=门店";
+    }
+</script>
+</body>
+</html>

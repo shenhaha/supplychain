@@ -1,0 +1,60 @@
+package com.luer.businessmanager.service.impl;
+
+import com.luer.businessmanager.bean.Contact;
+import com.luer.businessmanager.bean.ContactExample;
+import com.luer.businessmanager.dao.ContactMapper;
+import com.luer.businessmanager.service.ContactService;
+import com.luer.comm.utils.UUIDUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+@Service
+@Transactional
+public class ContactServiceImpl implements ContactService {
+
+    @Autowired
+    private ContactMapper contactMapper;
+
+    @Override
+    public int insert(Contact record) {
+        record.setId(UUIDUtils.getUUID());
+        return contactMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return contactMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Contact selectByPrimaryKey(String id) {
+        return contactMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateById(String id, Contact contact) {
+        ContactExample contactExample = new ContactExample();
+        ContactExample.Criteria criteria = contactExample.createCriteria();
+        criteria.andIdEqualTo(id);
+
+        return contactMapper.updateByExampleSelective(contact,contactExample);
+    }
+
+    @Override
+    public List<Contact> selectAllContact() {
+        return contactMapper.selectAllContact();
+    }
+
+    @Override
+    public List<Contact> selectContacts(String storeId) {
+        return contactMapper.selectContacts(storeId);
+    }
+
+
+}

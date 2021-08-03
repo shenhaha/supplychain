@@ -1,0 +1,81 @@
+package com.luer.stockandsales.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.Supplier;
+import com.luer.stockandsales.dao.GoodsMapper;
+import com.luer.stockandsales.dao.SupplierMapper;
+import com.luer.stockandsales.service.SupplierService;
+import com.luer.storesdata.bean.StoreFile;
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Transactional
+@Service
+public class SupplierServiceImpl implements SupplierService {
+    //供应商
+    @Autowired
+    private SupplierMapper supplierMapper;
+    @Autowired
+    private StoreFileService storeFileService;
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
+
+    @Override
+    public void saveSupplier(Supplier supplier) {
+        String storeId = storeFileService.getStoreFileId();
+        supplier.setStoreId(storeId);
+        supplier.setId(UUIDUtils.getUUID());
+        supplierMapper.insertSelective(supplier);
+    }
+
+    @Override
+    public void deleteSupplierById(String supplierId) {
+        goodsMapper.deleteBySupplierId(supplierId);
+        supplierMapper.deleteByPrimaryKey(supplierId);
+    }
+
+    @Override
+    public void updateSupplier(Supplier supplier) {
+        supplierMapper.updateByPrimaryKey(supplier);
+    }
+
+    @Override
+    public List<Supplier> selectSupplier() {
+        String storeId = storeFileService.getStoreFileId();
+
+        StoreFile storeFile = storeFileMapper.selectById(storeId);
+        List<Supplier> supplierList = supplierMapper.selectByStoreId(storeId);
+
+        if (storeFile.getSort().equals("总公司")) {
+            for (Supplier supplier : supplierList
+                    ) {
+                supplier.setType("1");
+            }
+        } else {
+            for (Supplier supplier : supplierList
+                    ) {
+                supplier.setType("2");
+            }
+        }
+
+        return supplierList;
+    }
+
+    @Override
+    public List<Supplier> selectSupplierByGoodsName(String goodsName) {
+        return supplierMapper.selectByGoodsName(goodsName);
+    }
+
+    @Override
+    public List<Supplier> selectHeadSupplier() {
+        String storeId = storeFileMapper.selectIdBySort();
+        return supplierMapper.selectByStoreId(storeId);
+    }
+}

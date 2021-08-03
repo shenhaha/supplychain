@@ -1,0 +1,12 @@
+package com.luer.businessmanager.bean;
+
+import lombok.Data;
+
+@Data
+public class CountAppointment {
+
+    private String count;
+    private String abbreviation1;
+    private String time;
+    private String storeid;
+}

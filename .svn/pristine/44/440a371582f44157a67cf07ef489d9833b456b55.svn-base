@@ -1,0 +1,53 @@
+package com.luer.storesdata.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storesdata.bean.Department;
+import com.luer.storesdata.dao.DepartmentMapper;
+import com.luer.storesdata.dao.EmployerMapper;
+import com.luer.storesdata.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/9/3.
+ */
+@Service
+@Transactional
+public class DepartmentServiceImpl implements DepartmentService {
+
+    @Autowired
+    private DepartmentMapper departmentMapper;
+    @Autowired
+    private EmployerMapper employerMapper;
+
+    @Override
+    public List<Department> getDepartments(String storeId) {
+        return departmentMapper.getDepartments(storeId);
+    }
+
+    @Override
+    public void addDepartment(Department department) {
+        department.setId(UUIDUtils.getUUID());
+        departmentMapper.insert(department);
+    }
+
+    @Override
+    public void updateDepartment(Department department) {
+        Department departmentone=departmentMapper.selectByPrimaryKey(department.getId());
+        employerMapper.updateEmployersDepartment(departmentone.getName(),departmentone.getStoreId(),department.getName());
+        departmentMapper.updateByPrimaryKeySelective(department);
+    }
+
+    @Override
+    public void deleteDepartment(String id) {
+        departmentMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Department> selectDepartmentAll() {
+        return departmentMapper.selectDepartmentAll();
+    }
+}

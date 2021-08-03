@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.MeetingrecordMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.Meetingrecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="store_file_id" property="storeFileId" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="meetingTime" property="meetingtime" jdbcType="TIMESTAMP" />
+    <result column="place" property="place" jdbcType="VARCHAR" />
+    <result column="attendees" property="attendees" jdbcType="VARCHAR" />
+    <result column="absencepersonnel" property="absencepersonnel" jdbcType="VARCHAR" />
+    <result column="host" property="host" jdbcType="VARCHAR" />
+    <result column="recorder" property="recorder" jdbcType="VARCHAR" />
+    <result column="meetingcontent" property="meetingcontent" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="nexttime" property="nexttime" jdbcType="TIMESTAMP" />
+    <result column="storeFileName" property="storeFileName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, store_file_id, department, meetingTime, place, attendees, absencepersonnel, host, 
+    recorder, meetingcontent, note, signature, endtime, nexttime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.MeetingrecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from meetingrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from meetingrecord
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from meetingrecord
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.MeetingrecordExample" >
+    delete from meetingrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.storemanager.bean.Meetingrecord" >
+    insert into meetingrecord (id, store_file_id, department, 
+      meetingTime, place, attendees, 
+      absencepersonnel, host, recorder, 
+      meetingcontent, note, signature, 
+      endtime, nexttime)
+    values (#{id,jdbcType=VARCHAR}, #{storeFileId,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{meetingtime,jdbcType=TIMESTAMP}, #{place,jdbcType=VARCHAR}, #{attendees,jdbcType=VARCHAR}, 
+      #{absencepersonnel,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, #{recorder,jdbcType=VARCHAR}, 
+      #{meetingcontent,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{nexttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.storemanager.bean.Meetingrecord" >
+    insert into meetingrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="storeFileId != null" >
+        store_file_id,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="meetingtime != null" >
+        meetingTime,
+      </if>
+      <if test="place != null" >
+        place,
+      </if>
+      <if test="attendees != null" >
+        attendees,
+      </if>
+      <if test="absencepersonnel != null" >
+        absencepersonnel,
+      </if>
+      <if test="host != null" >
+        host,
+      </if>
+      <if test="recorder != null" >
+        recorder,
+      </if>
+      <if test="meetingcontent != null" >
+        meetingcontent,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="nexttime != null" >
+        nexttime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="storeFileId != null" >
+        #{storeFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingtime != null" >
+        #{meetingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="place != null" >
+        #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="attendees != null" >
+        #{attendees,jdbcType=VARCHAR},
+      </if>
+      <if test="absencepersonnel != null" >
+        #{absencepersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="host != null" >
+        #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="recorder != null" >
+        #{recorder,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingcontent != null" >
+        #{meetingcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nexttime != null" >
+        #{nexttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.storemanager.bean.MeetingrecordExample" resultType="java.lang.Integer" >
+    select count(*) from meetingrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update meetingrecord
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeFileId != null" >
+        store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingtime != null" >
+        meetingTime = #{record.meetingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.place != null" >
+        place = #{record.place,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attendees != null" >
+        attendees = #{record.attendees,jdbcType=VARCHAR},
+      </if>
+      <if test="record.absencepersonnel != null" >
+        absencepersonnel = #{record.absencepersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.host != null" >
+        host = #{record.host,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recorder != null" >
+        recorder = #{record.recorder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingcontent != null" >
+        meetingcontent = #{record.meetingcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signature != null" >
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.nexttime != null" >
+        nexttime = #{record.nexttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update meetingrecord
+    set id = #{record.id,jdbcType=VARCHAR},
+      store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      meetingTime = #{record.meetingtime,jdbcType=TIMESTAMP},
+      place = #{record.place,jdbcType=VARCHAR},
+      attendees = #{record.attendees,jdbcType=VARCHAR},
+      absencepersonnel = #{record.absencepersonnel,jdbcType=VARCHAR},
+      host = #{record.host,jdbcType=VARCHAR},
+      recorder = #{record.recorder,jdbcType=VARCHAR},
+      meetingcontent = #{record.meetingcontent,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      nexttime = #{record.nexttime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <!--//参数可为空-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.Meetingrecord" >
+    update meetingrecord
+    <set >
+      <if test="storeFileId != null" >
+        store_file_id = #{storeFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingtime != null" >
+        meetingTime = #{meetingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="place != null" >
+        place = #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="attendees != null" >
+        attendees = #{attendees,jdbcType=VARCHAR},
+      </if>
+      <if test="absencepersonnel != null" >
+        absencepersonnel = #{absencepersonnel,jdbcType=VARCHAR},
+      </if>
+      <if test="host != null" >
+        host = #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="recorder != null" >
+        recorder = #{recorder,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingcontent != null" >
+        meetingcontent = #{meetingcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nexttime != null" >
+        nexttime = #{nexttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.Meetingrecord" >
+    update meetingrecord
+    set store_file_id = #{storeFileId,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      meetingTime = #{meetingtime,jdbcType=TIMESTAMP},
+      place = #{place,jdbcType=VARCHAR},
+      attendees = #{attendees,jdbcType=VARCHAR},
+      absencepersonnel = #{absencepersonnel,jdbcType=VARCHAR},
+      host = #{host,jdbcType=VARCHAR},
+      recorder = #{recorder,jdbcType=VARCHAR},
+      meetingcontent = #{meetingcontent,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      nexttime = #{nexttime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询所有的会议信息 -->
+  <select id="selectMeetingrecord" resultMap="BaseResultMap">
+    select m.id, m.store_file_id, m.department, m.meetingTime, m.place, m.attendees, m.absencepersonnel,
+    m.host, m.recorder,  m.meetingcontent, m.note, m.signature, m.endtime, m.nexttime,f.name as storeFileName
+    from meetingrecord m LEFT JOIN store_file f ON m.store_file_id=f.id
+  </select>
+
+  <!-- 根据门店id查询会议记录 -->
+  <select id="selectMeetingrecordAllBystoreId" resultMap="BaseResultMap">
+    select m.id, m.store_file_id, m.department, m.meetingTime, m.place, m.attendees, m.absencepersonnel,
+    m.host, m.recorder,  m.meetingcontent, m.note, m.signature, m.endtime, m.nexttime,f.name as storeFileName
+    from meetingrecord m LEFT JOIN store_file f ON m.store_file_id=f.id where m.store_file_id = #{storeId}
+  </select>
+
+</mapper>

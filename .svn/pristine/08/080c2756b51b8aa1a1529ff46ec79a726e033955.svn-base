@@ -1,0 +1,100 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<html>
+<head>
+    <title>加值服务统计</title>
+</head>
+<body>
+<!--Main Content-->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+                    <li id="mealdetail"><a href="${ctx}/storemanager/mealdetails?motherid=${motherid}">用餐统计</a></li>
+                    <li id="shopdetail"><a href="${ctx}/storemanager/shopdetails?motherid=${motherid}">购物统计</a></li>
+                    <li id="extraservicedetail"><a href="${ctx}/storemanager/extraservicedetails?motherid=${motherid}">加值服务统计</a></li>
+                    <li id="couponsdetail"><a href="${ctx}/storemanager/couponsdetails?motherid=${motherid}">优惠卷统计</a></li>
+
+                </ul>
+                <!--妈妈护理详细信息登记表-->
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <table id="motherrec" class="table" data-paging="true" data-filtering="true"
+                               data-sorting="true">
+                        </table>
+                    </div>
+                </div>
+                <!--妈妈护理详细信息登记表-->
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<script >
+    $(function () {
+        $('#extraservicedetail').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'mealdetail':
+                $('#mealdetail').addClass("active");
+                break;
+            case 'shopdetail':
+                $('#shopdetail').addClass("active");
+                break;
+            case 'extraservicedetail':
+                $('#extraservicedetail').addClass("active");
+                break;
+            case 'couponsdetail':
+                $('#couponsdetail').addClass("active");
+                break;
+
+        }
+        $.get("${ctx}/customerBasic/getCustomerBasic?type=0&storeId="+'<%=session.getAttribute("storeId")%>').done(function(data){
+            for(var i=0;i<data.length;i++){
+                $("#mothername").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+            }
+        });
+        $.get("${ctx}/extraService/selectAll?type=0&storeId="+'${motherid}').done(function(data){
+            for(var i=0;i<data.length;i++){
+                var s = data[i].project;
+                $("#servicediv").append("<input style='margin-right: 3px;margin-top: 1px'  type='checkbox' id='checkbox"+(i+1)+"'><label style='margin-right: 5px;padding-bottom: 2px' for='checkbox"+(i+1)+"'>"+s+"</label>");
+            }
+        });
+        var swimmingTitle = [
+            {
+                "name": "motherid",
+                "title": "ID",
+                "breakpoints": "xs sm",
+                visible:false
+            },
+            {"name": "mothername", "title": "妈妈姓名"},
+            {"name": "roomnum", "title": "房间号"},
+            {"name": "price", "title": "总金额"},
+            {"name": "profit", "title": "总门店抽成"},
+            {"name": "detail", "title": "查看详细"},
+        ];
+        function detail(values) {
+            window.location.href = "${ctx}/servicecenter/servicedetail?motherid="+values.motherid;
+        }
+        window.detail = detail;
+        //启动footable
+        var ft = FooTable.init('#motherrec',{
+            "columns": swimmingTitle,
+            "rows": $.get("${ctx}/storeservice/getCountByMotherId?motherId="+'${motherid}',function (data) {
+                $(data).each(function () {
+                    this.detail = "<button class='btn btn-primary btn-sm' onclick='detail("+JSON.stringify(this)+")'>查看详细</button>"
+                })
+            }),
+        });
+        uid = 10;
+    });
+</script>
+<script src="${ctx}/static/js/jquery-1.10.2/jquery.min.js"></script>
+<script src="${ctx}/static/js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
+</body>
+</html>

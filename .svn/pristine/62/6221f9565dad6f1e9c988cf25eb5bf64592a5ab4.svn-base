@@ -1,0 +1,45 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.GuestCount;
+import com.luer.storemanager.bean.GuestRecord;
+import com.luer.storemanager.bean.GuestRecordExample;
+import com.luer.storemanager.bean.GuestRecordWithBLOBs;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface GuestRecordMapper {
+    int countByExample(GuestRecordExample example);
+
+    int deleteByExample(GuestRecordExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(GuestRecord record);
+
+    int insertSelective(GuestRecordWithBLOBs record);
+
+    List<GuestRecordWithBLOBs> selectByExampleWithBLOBs(GuestRecordExample example);
+
+    List<GuestRecord> selectByExample(GuestRecordExample example);
+
+    GuestRecordWithBLOBs selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") GuestRecordWithBLOBs record, @Param("example") GuestRecordExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") GuestRecordWithBLOBs record, @Param("example") GuestRecordExample example);
+
+    int updateByExample(@Param("record") GuestRecord record, @Param("example") GuestRecordExample example);
+
+    int updateByPrimaryKeySelective(GuestRecordWithBLOBs record);
+
+    int updateByPrimaryKeyWithBLOBs(GuestRecordWithBLOBs record);
+
+    int updateByPrimaryKey(GuestRecord record);
+
+    List<GuestRecord> selectAll();
+    //通过门店id查询加值服务信息
+    List<GuestRecord> selectByStoreFileId(String storeFileId);
+
+    List<GuestCount> selectGuestCount(String storeId);
+}

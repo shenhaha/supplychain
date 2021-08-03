@@ -1,0 +1,59 @@
+package com.luer.storesdata.service;
+
+import com.luer.storesdata.bean.Employer;
+
+import java.util.List;
+
+public interface EmployerService {
+    //添加门店人员基本信息
+    void saveEmployer(Employer employer);
+
+    //删除门店人员基本信息
+    void deleteEmployerById(String employerId);
+
+    //修改门店人员基本信息
+    void updateEmployer(Employer employer);
+
+    //通过门店id查询门店人员基本信息
+    List<Employer> selectEmployersBystoreFileId(String storeFileId);
+
+    //通过门店id查询门店人员基本信息
+    List<Employer> selectEmployersByStoreFileIdandDept(String storeFileId,String dept);
+
+    //查询所有员工信息
+    List<Employer> selectEmployers();
+
+    //批量删除员工信息
+    void deleteEmployerByIds(String employerIds);
+
+    //查询所有派遣人员信息
+    List<Employer> selectDispached();
+
+    //查询门店派遣人员信息
+    List<Employer> selectBydispachedId(String storeFileId);
+
+    /**
+     * 排班管理根据店铺id查询所有员工信息
+     *
+     * @return java.util.List
+     * @author GavinJiang
+     * @date 2018/8/30 10:56
+     * @params
+     */
+    List selectemployersByScale(String storeId);
+
+    /**
+     * 根据店铺id和员工类型查询所有员工信息
+     * @author GavinJiang
+     * @date 2018/9/8 18:04
+     * @params
+     */
+    List<Employer> selectemployerBystoreId(String storeId,String type);
+
+    Employer selectById(String id);
+
+    List<Employer> selectEmployersBystoreId();
+
+
+    Employer selectEmployersById(String vid);
+}

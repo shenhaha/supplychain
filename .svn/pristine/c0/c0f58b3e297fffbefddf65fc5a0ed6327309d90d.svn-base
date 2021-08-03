@@ -1,0 +1,63 @@
+package com.luer.businessmanager.bean;
+
+public class Question {
+    private String id;
+
+    private String sortId;
+
+    private String detail;
+
+    private String answer;
+
+    private String storeId;
+
+    private String status;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(String sortId) {
+        this.sortId = sortId == null ? null : sortId.trim();
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail == null ? null : detail.trim();
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer == null ? null : answer.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+}

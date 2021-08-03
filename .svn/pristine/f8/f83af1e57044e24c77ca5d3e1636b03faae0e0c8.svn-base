@@ -1,0 +1,220 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+	<link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+	<link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="${ctx}/static/template/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+	<%--日期时间插件--%>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="orderform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5 ">
+                <label for="firstParty" class="col-sm-4 control-label">宝妈：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="firstParty" name="firstParty" placeholder="宝妈">
+                </div>
+            </div>
+            <div class="form-group col-md-5 ">
+                <label for="cardId" class="col-sm-4 control-label">宝妈身份证：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="cardId" name="cardId" placeholder="宝妈身份证">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="tell" class="col-sm-4 control-label">宝妈电话：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="tell" name="tell" placeholder="宝妈电话">
+                </div>
+            </div>
+            <div class="form-group col-md-5 ">
+                <label for="address" class="col-sm-4 control-label">生产医院：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="address" name="address" placeholder="生产医院">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="fathername" class="col-sm-4 control-label">宝爸姓名：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="fathername" name="fathername" placeholder="宝爸姓名">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="fathertell" class="col-sm-4 control-label">宝爸电话：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="fathertell" name="fathertell" placeholder="宝爸电话">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="bornTimes" class="col-sm-4 control-label">胎次：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="bornTimes" name="bornTimes" placeholder="胎次">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="intime" class="col-md-4 control-label">预产期：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+                    <input class="form-control" size="16" type="text" value="" name="intime" id="intime"placeholder="预产期" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="borndate" class="col-md-4 control-label">实际生产期：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+                    <input class="form-control" size="16" type="text" value="" name="borndate" id="borndate"placeholder="实际生产期" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+            <div class="form-group col-md-5 ">
+                <label for="days" class="col-sm-4 control-label">订房天数：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="days" name="days" placeholder="订房天数">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="roomType" class="col-sm-4 control-label">预定房型：</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="roomType" onchange="change($(this))" name="roomType" placeholder="预定房型" tabindex="1">
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5 ">
+                <label for="roomNumber" class="col-sm-4 control-label">预定会所房间号：</label>
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" id="roomNumber" name="roomNumber" placeholder="预定会所房间号" tabindex="2"></select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="price" class="col-sm-4 control-label">总费用：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="price" name="price" placeholder="总费用">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="payWay" class="col-sm-4 control-label">支付方式：</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="payWay" name="payWay" placeholder="支付方式">
+                        <option value="网银转账">网银转账</option>
+                        <option value="支付宝">支付宝</option>
+                        <option value="微信">微信</option>
+                        <option value="现金">现金</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="bargainMoney" class="col-sm-4 control-label">缴纳金额：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="bargainMoney" name="bargainMoney" placeholder="定金">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="operator" class="col-sm-4 control-label">经办人：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="operator" name="operator" placeholder="经办人">
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="finalPaymentStatus" class="col-sm-4 control-label">尾款状态：</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="finalPaymentStatus" name="finalPaymentStatus" placeholder="尾款状态">
+                        <option value="未支付">未支付</option>
+                        <option value="已支付">已支付</option>
+                    </select>
+                </div>
+            </div>
+            <!--后缀-->
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="remark" class="col-sm-4 control-label">备注：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="remark" name="remark" placeholder="备注">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(function () {
+        $.get("${ctx}/roomStyles/getRoomStylesList?storeId="+'<%=session.getAttribute("storeId")%>').done(function(data){
+            for(var i=0;i<data.length;i++){
+                $("#roomType").append("<option value='"+data[i].id+"'>"+data[i].roomStyle+"</option>");
+            }
+        });
+        $.get("${ctx}/room/getRooms?storeId="+'<%=session.getAttribute("storeId")%>').done(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                $("#roomNumber").append("<option value='" + data[i].num + "'>" + data[i].classify + data[i].num + "</option>");
+            }
+
+        });
+    });
+
+    function change(roomType) {
+
+        $("#roomNumber option").remove();
+        $.get("${ctx}/room/selectByRoomStyleId?roomStylesId="+roomType.val()).done(function(data) {
+            for (var i = 0; i < data.length; i++) {
+                $("#roomNumber").append("<option value='" + data[i].id + "'>" + data[i].classify + data[i].num + "</option>");
+            }
+
+        });
+        
+    }
+	$('.form_datetime').datetimepicker({
+		language: 'zh-CN',
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+	});
+</script>
+</body>
+</html>

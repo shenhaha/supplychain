@@ -1,0 +1,38 @@
+package com.luer.businessmanager.dao;
+
+import com.luer.businessmanager.bean.Question;
+import com.luer.businessmanager.bean.QuestionExample;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@MapperScan
+@Component
+public interface QuestionMapper {
+    int countByExample(QuestionExample example);
+
+    int deleteByExample(QuestionExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Question record);
+
+    int insertSelective(Question record);
+
+    List<Question> selectByExample(QuestionExample example);
+
+    List<Question> selectAllQuestion(@Param("storeId") String storeId);
+
+    Question selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Question record, @Param("example") QuestionExample example);
+
+    int updateByExample(@Param("record") Question record, @Param("example") QuestionExample example);
+
+    int updateByPrimaryKeySelective(Question record);
+
+    int updateByPrimaryKey(Question record);
+}

@@ -1,0 +1,378 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<c:set var="motherType" value="${pageContext.request.getParameter('motherType')}" />
+<html>
+<head>
+    <title>妈妈产后忧虑量表</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+                <li id="motherEvaluate"><a href="${ctx}/servicecenter/motherEvaluate?motherid=${motherid}&motherType=${motherType}">妈妈入住评估表</a></li>
+                <li id="patientrounds"><a href="${ctx}/servicecenter/patientrounds?motherid=${motherid}&motherType=${motherType}">妈妈医生查房记录</a></li>
+                <li id="mothernursingrecorddetail"><a href="${ctx}/servicecenter/mothernursingrecorddetail?motherid=${motherid}&motherType=${motherType}">妈妈护理记录</a></li>
+                <li id="nursingEducation"><a href="${ctx}/servicecenter/nursingEducation?motherid=${motherid}&motherType=${motherType}">妈妈卫教登记表</a></li>
+                <li id="motherquestion"><a href="${ctx}/servicecenter/motherquestion?motherid=${motherid}&motherType=${motherType}"><%--妈妈忧虑问题测试--%>妈妈产后忧虑量表</a></li>
+                <li id="VitalSign"><a href="${ctx}/servicecenter/VitalSign?motherid=${motherid}&motherType=${motherType}">妈妈生命体征登记</a></li>
+                <div id="babyInfo" style="margin-left: 60%;display: none;">
+                    <input type="button" id="type1" class='btn block btn-outline btn-rounded btn-primary' onclick="findbaby()" value="宝宝信息" >
+                </div>
+            </ul>
+            <%--<ul class="list-group">
+                <li class="list-group-item">产后情绪关注评估表</li>
+                <li class="list-group-item">社会支持量表</li>
+                <li class="list-group-item">APGAR家庭功能评估表</li>
+            </ul>--%>
+            <ul class="list-unstyled list-inline">
+                <li style="margin-left: 10px"><a href="">产后情绪关注评估表</a></li>
+                <li><a href="${ctx}/servicecenter/socialsupport?motherid=${motherid}&motherType=${motherType}">社会支持量表</a></li>
+                <li><a href="${ctx}/servicecenter/familyfunction?motherid=${motherid}&motherType=${motherType}">APGAR家庭功能评估表</a></li>
+            </ul>
+            <h6>总分10-12分，有可能为忧郁症，需注意及追踪并近期内再次评估或找专科医生处理。总分超过13分，代表极有可能已受忧郁症所苦，应找专科医生处理</h6>
+                <!--忧虑问题-->
+                <div id="repairdiv">
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <table id="growthrecord" class="table" data-paging="true"  data-sorting="true">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--忧虑问题-->
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<script >
+    $(function () {
+        (function ($) {
+            $.getUrlParam = function (name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]); return null;
+            }
+        })(jQuery);
+        var motherType = $.getUrlParam('motherType');
+        if(motherType==1){
+            $("#babyInfo").css("display","block");
+        }
+        $('#motherquestion').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'mothernursingrecorddetail':
+                $('#mothernursingrecorddetail').addClass("active");
+                break;
+            case 'patientrounds':
+                $('#patientrounds').addClass("active");
+                break;
+            case 'nursingEducation':
+                $('#nursingEducation').addClass("active");
+                break;
+            case 'motherquestion':
+                $('#motherquestion').addClass("active");
+                break;
+            case 'motherEvaluate':
+                $('#motherEvaluate').addClass("active");
+                break;
+            case 'VitalSign':
+                $('#VitalSign').addClass("active");
+                break;
+        }
+        var swimmingTitle = [
+            {"name":"id",
+                "title":"ID",
+                "breakpoints":"xs sm", visible:false
+            },
+            /*{"name":"mothername","title":"妈妈姓名"},*/
+            {"name":"answerone","title":"你能看到事物有趣的一面，并很开心"},
+            {"name":"answertwo","title":"你欣然期待未来的一切"},
+            {"name":"answerthree","title":"当事情出错时，你会不必要的责备自己"},
+            {"name":"answerfour","title":"你无缘无故感到焦虑和担心"},
+            {"name":"answerfive","title":"你无缘无故的感到害怕和惊慌", visible:false},
+            {"name":"answersix","title":"很多事情冲着你来，使你透不过气", visible:false},
+            {"name":"answerseven","title":"你很不开心，以致失眠", visible:false},
+            {"name":"answereight","title":"你感到伤心难过", visible:false},
+            {"name":"answernine","title":"你不开心到哭泣", visible:false},
+            {"name":"answerten","title":"你想要伤害自己", visible:false},
+            {"name":"age","title":"你想要伤害自己", visible:false},
+            {"name":"store","title":"分数"},
+            {"name": "detail", "title": "查看详情"},
+        ];
+        function findbaby(id) {
+            window.location.href='${ctx}/servicecenter/babybasic?motherid=${motherid}';
+        }
+        window.findbaby = findbaby;
+
+        function detail(values) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title : "<span style=\"color: #ab8ce4\"><i></i>修改一条数据</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'login-dialog',
+                message:$('<div></div>').load('${ctx}/template/servicecenter/worryquestion.jsp'),//加载弹出页面
+                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                onshown:function () {
+                    $.ajax({
+                        url:"${ctx}/customerBasic/getCustomerBasic?type=0",
+                        type:"get",
+                        success:function(data){
+                            for(var i=0;i<data.length;i++){
+                                if(data[i].name==values.mothername){
+                                    $("#mothername").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                }else {
+                                    $("#mothername").append("<option  value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                }
+                            }
+                        }
+                    });
+                    $('#id').val(values.id);
+                    $('#mothername').val(values.mothername);
+                    $('#answerone').val(values.answerone);
+                    $('#answertwo').val(values.answertwo);
+                    $('#answerthree').val(values.answerthree);
+                    $('#answerfour').val(values.answerfour);
+                    $('#answerfive').val(values.answerfive);
+                    $('#answersix').val(values.answersix);
+                    $('#answerseven').val(values.answerseven);
+                    $('#answereight').val(values.answereight);
+                    $('#answernine').val(values.answernine);
+                    $('#answerten').val(values.answerten);
+                    $('#note').val(values.age);
+                    $("#myform").find("select,input").attr("disabled","disables");
+                },
+                buttons : [{
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                } ]
+            });
+        }
+        window.detail = detail;
+        //启动模态框
+        //启动footable
+        var ft = FooTable.init('#growthrecord',{
+            "columns": swimmingTitle,
+            "rows": $.get("${ctx}/worryQuestion/getByMotherId?motherid="+'${motherid}',function (data) {
+                $(data).each(function () {
+                    this.detail = "<button class='btn btn-primary btn-sm' onclick='detail("+JSON.stringify(this)+")'>查看详情</button>";
+                })
+            }), //查询  服务器路径
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/worryquestion.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $.get("/customerBasic/getCustomerBasic?type=0").done(function(data){
+                                for(var i=0;i<data.length;i++){
+                                    $("#mothername").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                }
+                            });
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    /*'mothername':$('#mothername').val(),*/
+                                    'answerone':$('#answerone').val(),
+                                    'answertwo':$('#answertwo').val(),
+                                    'answerthree':$('#answerthree').val(),
+                                    'answerfour':$('#answerfour').val(),
+                                    'answerfive':$('#answerfive').val(),
+                                    'answersix':$('#answersix').val(),
+                                    'answerseven':$('#answerseven').val(),
+                                    'answereight':$('#answereight').val(),
+                                    'answernine':$('#answernine').val(),
+                                    'answerten':$('#answerten').val(),
+                                    'age':$('#note').val(),
+                                    'motherid':'${motherid}',
+                                    'storeid':'<%=session.getAttribute("storeId")%>',
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        /*mothername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空'
+                                                },
+                                            }
+                                        },*/
+                                        store: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '分数不能为空'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    //新增一条记录   url服务器路径
+                                    $.post("${ctx}/worryQuestion/add",json).done(function(data){
+                                        getCode(data)
+                                    }).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/worryquestion.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getCustomerBasic?type=0",
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        if(data[i].name==values.mothername){
+                                            $("#mothername").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }else {
+                                            $("#mothername").append("<option  value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }
+                                    }
+                                }
+                            });
+                            $('#id').val(values.id);
+                            $('#mothername').val(values.mothername);
+                            $('#answerone').val(values.answerone);
+                            $('#answertwo').val(values.answertwo);
+                            $('#answerthree').val(values.answerthree);
+                            $('#answerfour').val(values.answerfour);
+                            $('#answerfive').val(values.answerfive);
+                            $('#answersix').val(values.answersix);
+                            $('#answerseven').val(values.answerseven);
+                            $('#note').val(values.age);
+                            $('#answereight').val(values.answereight);
+                            $('#answernine').val(values.answernine);
+                            $('#answerten').val(values.answerten);
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    /*'mothername':$('#mothername').val(),*/
+                                    'answerone':$('#answerone').val(),
+                                    'answertwo':$('#answertwo').val(),
+                                    'answerthree':$('#answerthree').val(),
+                                    'answerfour':$('#answerfour').val(),
+                                    'answerfive':$('#answerfive').val(),
+                                    'answersix':$('#answersix').val(),
+                                    'answerseven':$('#answerseven').val(),
+                                    'answereight':$('#answereight').val(),
+                                    'answernine':$('#answernine').val(),
+                                    'answerten':$('#answerten').val(),
+                                    'age':$('#note').val(),
+                                    'motherid':'${motherid}',
+                                    'storeid':'<%=session.getAttribute("storeId")%>',
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        /*mothername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空'
+                                                },
+                                            }
+                                        },*/
+                                        store: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '分数不能为空'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/worryQuestion/update",json).done(function(data){
+                                        getCode(data);
+                                    }).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作    url  服务器路径
+                deleteRow: function(row){
+                    myConfirm("${ctx}/worryQuestion/delete",row);
+                }
+            }
+        });
+        uid = 10;
+    });
+</script>
+<script src="${ctx}/static/js/jquery-1.10.2/jquery.min.js"></script>
+<script src="${ctx}/static/js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
+</body>
+</html>

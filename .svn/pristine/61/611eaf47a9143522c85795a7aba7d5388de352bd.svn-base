@@ -1,0 +1,56 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.Shipments;
+import com.luer.stockandsales.bean.ShipmentsExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface ShipmentsMapper {
+    int countByExample(ShipmentsExample example);
+
+    int deleteByExample(ShipmentsExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Shipments record);
+
+    int insertSelective(Shipments record);
+
+    List<Shipments> selectByExample(ShipmentsExample example);
+
+    Shipments selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Shipments record, @Param("example") ShipmentsExample example);
+
+    int updateByExample(@Param("record") Shipments record, @Param("example") ShipmentsExample example);
+
+    int updateByPrimaryKeySelective(Shipments record);
+
+    int updateByPrimaryKey(Shipments record);
+
+    //查询所有进货信息
+    List<Shipments> selectAll();
+
+    //查询门店的进货信息
+    List<Shipments> selectByStoreId(String storeId);
+
+    //查询领用的信息
+    List<Shipments> selectCollar(String storeId);
+
+    //查询销售的信息
+    List<Shipments> selectSales(String storeId);
+
+    //总部查询领用信息
+    List<Shipments> selectHeadCollar(String storeId);
+
+    //通过妈妈id获取购物费用
+    Double selectSumPrice(@Param("customerBasicId")String customerBasicId);
+
+    List<Shipments> selectByMotherId(String motherId);
+}

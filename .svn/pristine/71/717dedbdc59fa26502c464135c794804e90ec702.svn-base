@@ -1,0 +1,91 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.NurseRecord;
+import com.luer.servicecenter.service.NurseRecordService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * 妈妈护理记录控制器
+ */
+@RequestMapping(value = "/servicecenter")
+@RestController
+public class NurseRecordController {
+
+    @Autowired
+    NurseRecordService nurseRecordService;
+
+    /**
+     * @author 张路明
+     * 无条件查询妈妈护理记录表
+     * @return
+     */
+    @GetMapping("/getNurseRecords")
+    public List getNurseRecords(@NonNull NurseRecord nurseRecord){
+
+        List<NurseRecord> list = nurseRecordService.getNurseRecords(nurseRecord);
+        return  list;
+    }
+
+    /**
+     * @author 张路明
+     * 修改妈妈护理记录
+     * @param nurseRecord
+     * @return
+     */
+    @PostMapping("/updateNurseRecord")
+    public ResultSet updateNurseRecord(@NonNull NurseRecord nurseRecord){
+
+        nurseRecordService.updateNurseRecord(nurseRecord);
+
+        return  ResultSet.getSuccess();
+    }
+
+    /**
+     * @author 张路明
+     * 根据妈妈护理记录的id删除记录
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteNurseRecord")
+    public ResultSet deleteNurseRecord(@NonNull  String id){
+
+        nurseRecordService.deleteNurseRecord(id);
+        return  ResultSet.getSuccess();
+
+    }
+
+    /**
+     * @author 张路明
+     * 插入一条妈妈护理记录
+     * 注意时间为yyyy-MM-dd格式
+     * @param nurseRecord
+     * @return
+     */
+    @PostMapping("/insertNurseRecord")
+    public ResultSet insertNurseRecord(@NonNull NurseRecord nurseRecord){
+         nurseRecordService.insertNurseRecord(nurseRecord);
+
+         return  ResultSet.getSuccess();
+
+    }
+
+
+    /** 
+     * 根据门店id查询妈妈护理记录表
+     * @author GavinJiang
+     * @params 
+     * @param storeId
+     * @return java.util.List  
+     */
+    @GetMapping("/selectNurseRecordsBystoreId")
+    public List selectNurseRecordsBystoreId(@NonNull String storeId){
+
+        List<NurseRecord> list = nurseRecordService.selectNurseRecordsBystoreId(storeId);
+        return  list;
+    }
+}

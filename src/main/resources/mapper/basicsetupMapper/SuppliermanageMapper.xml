@@ -1,0 +1,1045 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.basicsetup.dao.SuppliermanageMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.basicsetup.bean.Suppliermanage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="unit_code" property="unitCode" jdbcType="VARCHAR" />
+    <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+    <result column="main_contact" property="mainContact" jdbcType="VARCHAR" />
+    <result column="class_code" property="classCode" jdbcType="VARCHAR" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="mailbox" property="mailbox" jdbcType="VARCHAR" />
+    <result column="full_name" property="fullName" jdbcType="VARCHAR" />
+    <result column="tax" property="tax" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="corporate_representative" property="corporateRepresentative" jdbcType="VARCHAR" />
+    <result column="bill_address" property="billAddress" jdbcType="VARCHAR" />
+    <result column="invoice01" property="invoice01" jdbcType="VARCHAR" />
+    <result column="invoice02" property="invoice02" jdbcType="VARCHAR" />
+    <result column="data_state" property="dataState" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="line_credit" property="lineCredit" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="salesman" property="salesman" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="business_scope" property="businessScope" jdbcType="VARCHAR" />
+    <result column="business_tips" property="businessTips" jdbcType="VARCHAR" />
+    <result column="spare01" property="spare01" jdbcType="VARCHAR" />
+    <result column="spare02" property="spare02" jdbcType="VARCHAR" />
+    <result column="spare03" property="spare03" jdbcType="VARCHAR" />
+    <result column="spare04" property="spare04" jdbcType="VARCHAR" />
+    <result column="spare05" property="spare05" jdbcType="VARCHAR" />
+    <result column="spare06" property="spare06" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, unit_code, unit_name, main_contact, class_code, class_name, 
+    zip_code, region, address, phone_number, fax, mailbox, full_name, tax, bank, bank_account, 
+    corporate_representative, bill_address, invoice01, invoice02, data_state, website, 
+    remark, line_credit, birthday, salesman, company, business_scope, business_tips, 
+    spare01, spare02, spare03, spare04, spare05, spare06
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.basicsetup.bean.SuppliermanageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from suppliermanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from suppliermanage
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from suppliermanage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.basicsetup.bean.SuppliermanageExample" >
+    delete from suppliermanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.basicsetup.bean.Suppliermanage" >
+    insert into suppliermanage (id, create_time, update_time, 
+      unit_code, unit_name, main_contact, 
+      class_code, class_name, zip_code, 
+      region, address, phone_number, 
+      fax, mailbox, full_name, 
+      tax, bank, bank_account, 
+      corporate_representative, bill_address, invoice01, 
+      invoice02, data_state, website, 
+      remark, line_credit, birthday, 
+      salesman, company, business_scope, 
+      business_tips, spare01, spare02, 
+      spare03, spare04, spare05, 
+      spare06)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{unitCode,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, #{mainContact,jdbcType=VARCHAR}, 
+      #{classCode,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{fax,jdbcType=VARCHAR}, #{mailbox,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, 
+      #{tax,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, 
+      #{corporateRepresentative,jdbcType=VARCHAR}, #{billAddress,jdbcType=VARCHAR}, #{invoice01,jdbcType=VARCHAR}, 
+      #{invoice02,jdbcType=VARCHAR}, #{dataState,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{lineCredit,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{salesman,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{businessScope,jdbcType=VARCHAR}, 
+      #{businessTips,jdbcType=VARCHAR}, #{spare01,jdbcType=VARCHAR}, #{spare02,jdbcType=VARCHAR}, 
+      #{spare03,jdbcType=VARCHAR}, #{spare04,jdbcType=VARCHAR}, #{spare05,jdbcType=VARCHAR}, 
+      #{spare06,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.basicsetup.bean.Suppliermanage" >
+    insert into suppliermanage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="unitCode != null" >
+        unit_code,
+      </if>
+      <if test="unitName != null" >
+        unit_name,
+      </if>
+      <if test="mainContact != null" >
+        main_contact,
+      </if>
+      <if test="classCode != null" >
+        class_code,
+      </if>
+      <if test="className != null" >
+        class_name,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="mailbox != null" >
+        mailbox,
+      </if>
+      <if test="fullName != null" >
+        full_name,
+      </if>
+      <if test="tax != null" >
+        tax,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="corporateRepresentative != null" >
+        corporate_representative,
+      </if>
+      <if test="billAddress != null" >
+        bill_address,
+      </if>
+      <if test="invoice01 != null" >
+        invoice01,
+      </if>
+      <if test="invoice02 != null" >
+        invoice02,
+      </if>
+      <if test="dataState != null" >
+        data_state,
+      </if>
+      <if test="website != null" >
+        website,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="lineCredit != null" >
+        line_credit,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="salesman != null" >
+        salesman,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="businessScope != null" >
+        business_scope,
+      </if>
+      <if test="businessTips != null" >
+        business_tips,
+      </if>
+      <if test="spare01 != null" >
+        spare01,
+      </if>
+      <if test="spare02 != null" >
+        spare02,
+      </if>
+      <if test="spare03 != null" >
+        spare03,
+      </if>
+      <if test="spare04 != null" >
+        spare04,
+      </if>
+      <if test="spare05 != null" >
+        spare05,
+      </if>
+      <if test="spare06 != null" >
+        spare06,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unitCode != null" >
+        #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="mainContact != null" >
+        #{mainContact,jdbcType=VARCHAR},
+      </if>
+      <if test="classCode != null" >
+        #{classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="mailbox != null" >
+        #{mailbox,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="tax != null" >
+        #{tax,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateRepresentative != null" >
+        #{corporateRepresentative,jdbcType=VARCHAR},
+      </if>
+      <if test="billAddress != null" >
+        #{billAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice01 != null" >
+        #{invoice01,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice02 != null" >
+        #{invoice02,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null" >
+        #{dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="lineCredit != null" >
+        #{lineCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="salesman != null" >
+        #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null" >
+        #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTips != null" >
+        #{businessTips,jdbcType=VARCHAR},
+      </if>
+      <if test="spare01 != null" >
+        #{spare01,jdbcType=VARCHAR},
+      </if>
+      <if test="spare02 != null" >
+        #{spare02,jdbcType=VARCHAR},
+      </if>
+      <if test="spare03 != null" >
+        #{spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="spare04 != null" >
+        #{spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="spare05 != null" >
+        #{spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        #{spare06,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.basicsetup.bean.SuppliermanageExample" resultType="java.lang.Integer" >
+    select count(*) from suppliermanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update suppliermanage
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.unitCode != null" >
+        unit_code = #{record.unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitName != null" >
+        unit_name = #{record.unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainContact != null" >
+        main_contact = #{record.mainContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classCode != null" >
+        class_code = #{record.classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.className != null" >
+        class_name = #{record.className,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zipCode != null" >
+        zip_code = #{record.zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null" >
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null" >
+        fax = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mailbox != null" >
+        mailbox = #{record.mailbox,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullName != null" >
+        full_name = #{record.fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tax != null" >
+        tax = #{record.tax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bank != null" >
+        bank = #{record.bank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccount != null" >
+        bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corporateRepresentative != null" >
+        corporate_representative = #{record.corporateRepresentative,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billAddress != null" >
+        bill_address = #{record.billAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoice01 != null" >
+        invoice01 = #{record.invoice01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoice02 != null" >
+        invoice02 = #{record.invoice02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataState != null" >
+        data_state = #{record.dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.website != null" >
+        website = #{record.website,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lineCredit != null" >
+        line_credit = #{record.lineCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesman != null" >
+        salesman = #{record.salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null" >
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessScope != null" >
+        business_scope = #{record.businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessTips != null" >
+        business_tips = #{record.businessTips,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare01 != null" >
+        spare01 = #{record.spare01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare02 != null" >
+        spare02 = #{record.spare02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare03 != null" >
+        spare03 = #{record.spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare04 != null" >
+        spare04 = #{record.spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare05 != null" >
+        spare05 = #{record.spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare06 != null" >
+        spare06 = #{record.spare06,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update suppliermanage
+    set id = #{record.id,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      unit_code = #{record.unitCode,jdbcType=VARCHAR},
+      unit_name = #{record.unitName,jdbcType=VARCHAR},
+      main_contact = #{record.mainContact,jdbcType=VARCHAR},
+      class_code = #{record.classCode,jdbcType=VARCHAR},
+      class_name = #{record.className,jdbcType=VARCHAR},
+      zip_code = #{record.zipCode,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      fax = #{record.fax,jdbcType=VARCHAR},
+      mailbox = #{record.mailbox,jdbcType=VARCHAR},
+      full_name = #{record.fullName,jdbcType=VARCHAR},
+      tax = #{record.tax,jdbcType=VARCHAR},
+      bank = #{record.bank,jdbcType=VARCHAR},
+      bank_account = #{record.bankAccount,jdbcType=VARCHAR},
+      corporate_representative = #{record.corporateRepresentative,jdbcType=VARCHAR},
+      bill_address = #{record.billAddress,jdbcType=VARCHAR},
+      invoice01 = #{record.invoice01,jdbcType=VARCHAR},
+      invoice02 = #{record.invoice02,jdbcType=VARCHAR},
+      data_state = #{record.dataState,jdbcType=VARCHAR},
+      website = #{record.website,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      line_credit = #{record.lineCredit,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      salesman = #{record.salesman,jdbcType=VARCHAR},
+      company = #{record.company,jdbcType=VARCHAR},
+      business_scope = #{record.businessScope,jdbcType=VARCHAR},
+      business_tips = #{record.businessTips,jdbcType=VARCHAR},
+      spare01 = #{record.spare01,jdbcType=VARCHAR},
+      spare02 = #{record.spare02,jdbcType=VARCHAR},
+      spare03 = #{record.spare03,jdbcType=VARCHAR},
+      spare04 = #{record.spare04,jdbcType=VARCHAR},
+      spare05 = #{record.spare05,jdbcType=VARCHAR},
+      spare06 = #{record.spare06,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.basicsetup.bean.Suppliermanage" >
+    update suppliermanage
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unitCode != null" >
+        unit_code = #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="mainContact != null" >
+        main_contact = #{mainContact,jdbcType=VARCHAR},
+      </if>
+      <if test="classCode != null" >
+        class_code = #{classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="mailbox != null" >
+        mailbox = #{mailbox,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        full_name = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="tax != null" >
+        tax = #{tax,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateRepresentative != null" >
+        corporate_representative = #{corporateRepresentative,jdbcType=VARCHAR},
+      </if>
+      <if test="billAddress != null" >
+        bill_address = #{billAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice01 != null" >
+        invoice01 = #{invoice01,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice02 != null" >
+        invoice02 = #{invoice02,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null" >
+        data_state = #{dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="lineCredit != null" >
+        line_credit = #{lineCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="salesman != null" >
+        salesman = #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null" >
+        business_scope = #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTips != null" >
+        business_tips = #{businessTips,jdbcType=VARCHAR},
+      </if>
+      <if test="spare01 != null" >
+        spare01 = #{spare01,jdbcType=VARCHAR},
+      </if>
+      <if test="spare02 != null" >
+        spare02 = #{spare02,jdbcType=VARCHAR},
+      </if>
+      <if test="spare03 != null" >
+        spare03 = #{spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="spare04 != null" >
+        spare04 = #{spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="spare05 != null" >
+        spare05 = #{spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        spare06 = #{spare06,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.basicsetup.bean.Suppliermanage" >
+    update suppliermanage
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      unit_code = #{unitCode,jdbcType=VARCHAR},
+      unit_name = #{unitName,jdbcType=VARCHAR},
+      main_contact = #{mainContact,jdbcType=VARCHAR},
+      class_code = #{classCode,jdbcType=VARCHAR},
+      class_name = #{className,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      mailbox = #{mailbox,jdbcType=VARCHAR},
+      full_name = #{fullName,jdbcType=VARCHAR},
+      tax = #{tax,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      corporate_representative = #{corporateRepresentative,jdbcType=VARCHAR},
+      bill_address = #{billAddress,jdbcType=VARCHAR},
+      invoice01 = #{invoice01,jdbcType=VARCHAR},
+      invoice02 = #{invoice02,jdbcType=VARCHAR},
+      data_state = #{dataState,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      line_credit = #{lineCredit,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      salesman = #{salesman,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      business_scope = #{businessScope,jdbcType=VARCHAR},
+      business_tips = #{businessTips,jdbcType=VARCHAR},
+      spare01 = #{spare01,jdbcType=VARCHAR},
+      spare02 = #{spare02,jdbcType=VARCHAR},
+      spare03 = #{spare03,jdbcType=VARCHAR},
+      spare04 = #{spare04,jdbcType=VARCHAR},
+      spare05 = #{spare05,jdbcType=VARCHAR},
+      spare06 = #{spare06,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+    delete from suppliermanage where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="selectById" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+      /**查询全部可用数据*/
+    select * from suppliermanage
+  </select>
+
+  <select id="selectByClassName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage where class_name = #{className,jdbcType=VARCHAR}
+
+  </select>
+
+  <select id="selectByUnitName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where
+    <if test="unitName != null">
+      A.unit_name like CONCAT('%',#{unitName},'%')
+    </if>
+  </select>
+
+  <select id="selectByUnitNameAndPhoneNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where
+    <if test="unitName != null">
+      A.unit_name like CONCAT('%',#{unitName},'%')
+    </if>
+    <if test="phoneNumber != null">
+     AND A.phone_number like CONCAT('%',#{phoneNumber},'%')
+    </if>
+  </select>
+
+
+  <select id="selectByPhoneNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where
+    <if test="phoneNumber != null">
+       A.phone_number like CONCAT('%',#{phoneNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectYByUnitName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where class_name = '原材料供应商'
+    <if test="unitName != null">
+     AND A.unit_name like CONCAT('%',#{unitName},'%')
+    </if>
+  </select>
+
+  <select id="selectYByUnitNameAndPhoneNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where class_name = '原材料供应商'
+    <if test="unitName != null">
+      AND A.unit_name like CONCAT('%',#{unitName},'%')
+    </if>
+    <if test="phoneNumber != null">
+      A.phone_number like CONCAT('%',#{phoneNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectYByPhoneNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where class_name = '原材料供应商'
+    <if test="phoneNumber != null">
+      AND A.phone_number like CONCAT('%',#{phoneNumber},'%')
+    </if>
+  </select>
+
+
+  <select id="selectFByUnitName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where class_name = '辅料供应商'
+    <if test="unitName != null">
+      AND A.unit_name like CONCAT('%',#{unitName},'%')
+    </if>
+  </select>
+
+  <select id="selectFByPhoneNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where class_name = '辅料供应商'
+    <if test="phoneNumber != null">
+      AND A.phone_number like CONCAT('%',#{phoneNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectByUnitCode" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage where unit_code = #{unitCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUNameByUcode" resultType="java.lang.String" parameterType="java.lang.String">
+    select unit_name from suppliermanage where unit_code = #{unitCode,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectOtherBySpare01" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where
+    <if test="spare01 != null">
+      A.unit_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+     or A.main_contact like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.class_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.zip_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.region like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.address like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.fax like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.mailbox like CONCAT('%',#{spare01},'%')
+  </if>
+    <if test="spare01 != null">
+      or A.full_name like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.tax like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bank like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bank_account like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.corporate_representative like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bill_address like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.invoice01 like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.invoice02 like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.website like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.remark like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.line_credit like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.birthday like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.salesman like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.company like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.business_scope like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.business_tips like CONCAT('%',#{spare01},'%')
+    </if>
+  </select>
+
+
+  <select id="selectOtherYBySpare01" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where class_name = '原材料供应商'
+    <if test="spare01 != null">
+      AND A.unit_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.main_contact like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.class_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.zip_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.region like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.address like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.fax like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.mailbox like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.full_name like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.tax like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bank like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bank_account like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.corporate_representative like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bill_address like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.invoice01 like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.invoice02 like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.website like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.remark like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.line_credit like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.birthday like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.salesman like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.company like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.business_scope like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.business_tips like CONCAT('%',#{spare01},'%')
+    </if>
+  </select>
+
+
+  <select id="selectOtherFBySpare01" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from suppliermanage A where class_name = '辅料供应商'
+    <if test="spare01 != null">
+      AND A.unit_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.main_contact like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.class_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.zip_code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.region like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.address like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.fax like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.mailbox like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.full_name like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.tax like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bank like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bank_account like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.corporate_representative like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.bill_address like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.invoice01 like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.invoice02 like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.website like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.remark like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.line_credit like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.birthday like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.salesman like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.company like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.business_scope like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.business_tips like CONCAT('%',#{spare01},'%')
+    </if>
+  </select>
+
+
+</mapper>

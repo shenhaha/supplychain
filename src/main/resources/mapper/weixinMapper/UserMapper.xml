@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.weixin.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.weixin.bean.User" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="headimgurl" property="headimgurl" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="subscribe" property="subscribe" jdbcType="VARCHAR" />
+    <result column="subscribe_scene" property="subscribeScene" jdbcType="VARCHAR" />
+    <result column="subscribe_time" property="subscribeTime" jdbcType="VARCHAR" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, appid, city, country, headimgurl, mobile, name, nickname, 
+    openid, province, remark, sex, subscribe, subscribe_scene, subscribe_time, tag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.weixin.bean.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getAllSubscribeAmount" resultType="java.lang.Integer"  >
+    select count(*) from user
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.weixin.bean.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.weixin.bean.User" >
+    insert into user (id, create_time, update_time, 
+      appid, city, country, 
+      headimgurl, mobile, name, 
+      nickname, openid, province, 
+      remark, sex, subscribe, 
+      subscribe_scene, subscribe_time, tag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{appid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{headimgurl,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{subscribe,jdbcType=VARCHAR}, 
+      #{subscribeScene,jdbcType=VARCHAR}, #{subscribeTime,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.weixin.bean.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="headimgurl != null" >
+        headimgurl,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="subscribe != null" >
+        subscribe,
+      </if>
+      <if test="subscribeScene != null" >
+        subscribe_scene,
+      </if>
+      <if test="subscribeTime != null" >
+        subscribe_time,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null" >
+        #{headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribe != null" >
+        #{subscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeScene != null" >
+        #{subscribeScene,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeTime != null" >
+        #{subscribeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.weixin.bean.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.appid != null" >
+        appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headimgurl != null" >
+        headimgurl = #{record.headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null" >
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openid != null" >
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subscribe != null" >
+        subscribe = #{record.subscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subscribeScene != null" >
+        subscribe_scene = #{record.subscribeScene,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subscribeTime != null" >
+        subscribe_time = #{record.subscribeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tag != null" >
+        tag = #{record.tag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set id = #{record.id,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      headimgurl = #{record.headimgurl,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      subscribe = #{record.subscribe,jdbcType=VARCHAR},
+      subscribe_scene = #{record.subscribeScene,jdbcType=VARCHAR},
+      subscribe_time = #{record.subscribeTime,jdbcType=VARCHAR},
+      tag = #{record.tag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.weixin.bean.User" >
+    update user
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null" >
+        headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribe != null" >
+        subscribe = #{subscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeScene != null" >
+        subscribe_scene = #{subscribeScene,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeTime != null" >
+        subscribe_time = #{subscribeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.weixin.bean.User" >
+    update user
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      appid = #{appid,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      subscribe = #{subscribe,jdbcType=VARCHAR},
+      subscribe_scene = #{subscribeScene,jdbcType=VARCHAR},
+      subscribe_time = #{subscribeTime,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

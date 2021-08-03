@@ -1,0 +1,57 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.Purchase;
+import com.luer.stockandsales.bean.PurchaseExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface PurchaseMapper {
+    int countByExample(PurchaseExample example);
+
+    int deleteByExample(PurchaseExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Purchase record);
+
+    int insertSelective(Purchase record);
+
+    List<Purchase> selectByExample(PurchaseExample example);
+
+    Purchase selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Purchase record, @Param("example") PurchaseExample example);
+
+    int updateByExample(@Param("record") Purchase record, @Param("example") PurchaseExample example);
+
+    int updateByPrimaryKeySelective(Purchase record);
+
+    int updateByPrimaryKey(Purchase record);
+
+    //查询所有进货信息
+    List<Purchase> selectAll();
+
+    //查询门店的所有进货信息
+    List<Purchase> selectByStoreId(String storeId);
+
+    //根据订单id的集合查询门店的进货信息
+    List<Purchase> selectPurchasebyOrderIdlist(@Param("orderIdList") List<String> orderIdList);
+
+    //根据订单id查询对应的进货信息
+    List<Purchase> selectByOrderId(String orderId);
+
+    //根据门店id的集合查询对应的进货信息
+    List<Purchase> selectPurchaseBystoreIdList(@Param("storeIdList") List<String> storeIdList);
+
+    //根据门店id的集合查询对应的进货id
+    List<String> selectPurchaseIdsBystoreIdList(@Param("storeIdList") List<String> storeIdList);
+
+    //根据门店id和入库类型获取入库信息
+    List<Purchase> selectPurchaseBystoreId(@Param("storeId")String storeId, @Param("type")int type);
+}

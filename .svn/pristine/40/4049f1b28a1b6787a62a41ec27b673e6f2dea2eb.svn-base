@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.CustomerBasicMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.CustomerBasic" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="mother_id" property="motherId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
+    <result column="birth_date" property="birthDate" jdbcType="TIMESTAMP" />
+    <result column="born_hospital" property="bornHospital" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="mothername" property="mothername" jdbcType="VARCHAR" />
+    <result column="avoid" property="avoid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="check_status" property="checkStatus" jdbcType="VARCHAR" />
+    <result column="mother_type" property="motherType" jdbcType="VARCHAR" />
+    <result column="born_style" property="bornStyle" jdbcType="VARCHAR" />
+    <result column="optiondate" property="optiondate" jdbcType="TIMESTAMP" />
+    <result column="gestation" property="gestation" jdbcType="VARCHAR" />
+    <result column="optionway" property="optionway" jdbcType="VARCHAR" />
+    <result column="jaundice" property="jaundice" jdbcType="VARCHAR" />
+    <result column="plantar_blood" property="plantarBlood" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, store_id, mother_id, name, sex, age, birth_date, born_hospital, type, weight,
+    height, contact, update_time, mothername, avoid, status, check_status, mother_type,
+    born_style, optiondate, gestation, optionway, jaundice, plantar_blood
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.CustomerBasicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer_basic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from customer_basic
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from customer_basic
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.CustomerBasicExample" >
+    delete from customer_basic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.CustomerBasic" >
+    insert into customer_basic (id, store_id, mother_id,
+      name, sex, age, birth_date,
+      born_hospital, type, weight,
+      height, contact, update_time,
+      mothername, avoid, status,
+      check_status, mother_type, born_style,
+      optiondate, gestation, optionway,
+      jaundice, plantar_blood)
+    values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{motherId,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{birthDate,jdbcType=TIMESTAMP},
+      #{bornHospital,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{weight,jdbcType=VARCHAR},
+      #{height,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{mothername,jdbcType=VARCHAR}, #{avoid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+      #{checkStatus,jdbcType=VARCHAR}, #{motherType,jdbcType=VARCHAR}, #{bornStyle,jdbcType=VARCHAR},
+      #{optiondate,jdbcType=TIMESTAMP}, #{gestation,jdbcType=VARCHAR}, #{optionway,jdbcType=VARCHAR},
+      #{jaundice,jdbcType=VARCHAR}, #{plantarBlood,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.CustomerBasic" >
+    insert into customer_basic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="motherId != null" >
+        mother_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="birthDate != null" >
+        birth_date,
+      </if>
+      <if test="bornHospital != null" >
+        born_hospital,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="mothername != null" >
+        mothername,
+      </if>
+      <if test="avoid != null" >
+        avoid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="checkStatus != null" >
+        check_status,
+      </if>
+      <if test="motherType != null" >
+        mother_type,
+      </if>
+      <if test="bornStyle != null" >
+        born_style,
+      </if>
+      <if test="optiondate != null" >
+        optiondate,
+      </if>
+      <if test="gestation != null" >
+        gestation,
+      </if>
+      <if test="optionway != null" >
+        optionway,
+      </if>
+      <if test="jaundice != null" >
+        jaundice,
+      </if>
+      <if test="plantarBlood != null" >
+        plantar_blood,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="motherId != null" >
+        #{motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        #{birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bornHospital != null" >
+        #{bornHospital,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mothername != null" >
+        #{mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="avoid != null" >
+        #{avoid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null" >
+        #{motherType,jdbcType=VARCHAR},
+      </if>
+      <if test="bornStyle != null" >
+        #{bornStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="optiondate != null" >
+        #{optiondate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gestation != null" >
+        #{gestation,jdbcType=VARCHAR},
+      </if>
+      <if test="optionway != null" >
+        #{optionway,jdbcType=VARCHAR},
+      </if>
+      <if test="jaundice != null" >
+        #{jaundice,jdbcType=VARCHAR},
+      </if>
+      <if test="plantarBlood != null" >
+        #{plantarBlood,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.CustomerBasicExample" resultType="java.lang.Integer" >
+    select count(*) from customer_basic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update customer_basic
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherId != null" >
+        mother_id = #{record.motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDate != null" >
+        birth_date = #{record.birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bornHospital != null" >
+        born_hospital = #{record.bornHospital,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null" >
+        height = #{record.height,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contact != null" >
+        contact = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mothername != null" >
+        mothername = #{record.mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avoid != null" >
+        avoid = #{record.avoid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStatus != null" >
+        check_status = #{record.checkStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherType != null" >
+        mother_type = #{record.motherType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bornStyle != null" >
+        born_style = #{record.bornStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optiondate != null" >
+        optiondate = #{record.optiondate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gestation != null" >
+        gestation = #{record.gestation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionway != null" >
+        optionway = #{record.optionway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jaundice != null" >
+        jaundice = #{record.jaundice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plantarBlood != null" >
+        plantar_blood = #{record.plantarBlood,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update customer_basic
+    set id = #{record.id,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      mother_id = #{record.motherId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=VARCHAR},
+      birth_date = #{record.birthDate,jdbcType=TIMESTAMP},
+      born_hospital = #{record.bornHospital,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      weight = #{record.weight,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=VARCHAR},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      mothername = #{record.mothername,jdbcType=VARCHAR},
+      avoid = #{record.avoid,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      check_status = #{record.checkStatus,jdbcType=VARCHAR},
+      mother_type = #{record.motherType,jdbcType=VARCHAR},
+      born_style = #{record.bornStyle,jdbcType=VARCHAR},
+      optiondate = #{record.optiondate,jdbcType=TIMESTAMP},
+      gestation = #{record.gestation,jdbcType=VARCHAR},
+      optionway = #{record.optionway,jdbcType=VARCHAR},
+      jaundice = #{record.jaundice,jdbcType=VARCHAR},
+      plantar_blood = #{record.plantarBlood,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.CustomerBasic" >
+    update customer_basic
+    <set >
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="motherId != null" >
+        mother_id = #{motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bornHospital != null" >
+        born_hospital = #{bornHospital,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mothername != null" >
+        mothername = #{mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="avoid != null" >
+        avoid = #{avoid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null" >
+        check_status = #{checkStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null" >
+        mother_type = #{motherType,jdbcType=VARCHAR},
+      </if>
+      <if test="bornStyle != null" >
+        born_style = #{bornStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="optiondate != null" >
+        optiondate = #{optiondate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gestation != null" >
+        gestation = #{gestation,jdbcType=VARCHAR},
+      </if>
+      <if test="optionway != null" >
+        optionway = #{optionway,jdbcType=VARCHAR},
+      </if>
+      <if test="jaundice != null" >
+        jaundice = #{jaundice,jdbcType=VARCHAR},
+      </if>
+      <if test="plantarBlood != null" >
+        plantar_blood = #{plantarBlood,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.CustomerBasic" >
+    update customer_basic
+    set store_id = #{storeId,jdbcType=VARCHAR},
+      mother_id = #{motherId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=VARCHAR},
+      birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      born_hospital = #{bornHospital,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=VARCHAR},
+      height = #{height,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      mothername = #{mothername,jdbcType=VARCHAR},
+      avoid = #{avoid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      check_status = #{checkStatus,jdbcType=VARCHAR},
+      mother_type = #{motherType,jdbcType=VARCHAR},
+      born_style = #{bornStyle,jdbcType=VARCHAR},
+      optiondate = #{optiondate,jdbcType=TIMESTAMP},
+      gestation = #{gestation,jdbcType=VARCHAR},
+      optionway = #{optionway,jdbcType=VARCHAR},
+      jaundice = #{jaundice,jdbcType=VARCHAR},
+      plantar_blood = #{plantarBlood,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <!--根据门店id和客户类型查询客户资料列表-->
+  <select id="selectCustomerBasicByStoreId"  resultMap="BaseResultMap">
+    select id, store_id, name,
+    sex, age, birth_date,
+    born_hospital, type, weight,
+    height, contact, update_time,
+    mothername from customer_basic where store_id = #{storeId} and type = #{type}
+  </select>
+  <!--获取门店的再住妈妈的所有id-->
+  <select id="selectCustomerBasicIds"  resultType="java.lang.String">
+    select id from customer_basic where store_id = #{storeId} and type = #{type} and check_status=1
+  </select>
+  <!--获取签单尚未入住客户信息-->
+  <select id="getOneCustomerBasics"  resultMap="BaseResultMap">
+    select * from customer_basic where store_id = #{storeId} and type = #{type} and check_status=0;
+  </select>
+  <!--获取签单尚未入住客户信息-->
+  <select id="getTwoCustomerBasics"  resultMap="BaseResultMap">
+    select * from customer_basic where
+    store_id = #{storeId} and type = #{type}
+    and check_status=#{checkStatus} and mother_type=#{motherType};
+  </select>
+  <!--获取本店客户基本资料-->
+  <select id="getList"  resultMap="BaseResultMap">
+    select * from customer_basic where store_id = #{storeId}
+  </select>
+  <select id="getBabyBasics" resultMap="BaseResultMap">
+    SELECT * FROM customer_basic WHERE type='1' and mother_id=#{mother_id}
+  </select>
+  <select id="getMothers" resultMap="BaseResultMap">
+
+    SELECT * FROM customer_basic WHERE store_id=#{storeId} and check_status in (0,1)
+
+  </select>
+
+  <!--获取妈妈信息基本资料-->
+  <select id="getCustomerBasic"  resultMap="BaseResultMap">
+    select * from customer_basic where store_id = #{storeId} and check_status="2"
+  </select>
+
+  <update id="updateAvoid">
+    update customer_basic
+    set avoid = #{avoid}
+    where id=#{motherid}
+  </update>
+
+  <select id="getMotherList"  resultMap="BaseResultMap">
+    select * from customer_basic where store_id = #{storeId} and type=0 and check_status=1
+  </select>
+
+</mapper>

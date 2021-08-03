@@ -1,0 +1,21 @@
+package com.luer.businessmanager.service;
+
+import com.luer.businessmanager.bean.OrderCustomer;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+public interface OrderCustomerService {
+    void insert(OrderCustomer record);
+    int deleteByPrimaryKey(String id);
+    OrderCustomer selectByPrimaryKey(String id);
+    int updateById(OrderCustomer orderCustomer);
+
+    List<OrderCustomer> selectAllOrderCustomer();
+
+    List<OrderCustomer> selectNotice(OrderCustomer orderCustomer);
+
+    List<OrderCustomer> getOrderCustomers(String storeId);
+}

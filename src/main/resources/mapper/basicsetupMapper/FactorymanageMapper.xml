@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.basicsetup.dao.FactorymanageMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.basicsetup.bean.Factorymanage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="detailed_address" property="detailedAddress" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="spare01" property="spare01" jdbcType="VARCHAR" />
+    <result column="spare02" property="spare02" jdbcType="VARCHAR" />
+    <result column="spare03" property="spare03" jdbcType="VARCHAR" />
+    <result column="spare04" property="spare04" jdbcType="VARCHAR" />
+    <result column="spare05" property="spare05" jdbcType="VARCHAR" />
+    <result column="spare06" property="spare06" jdbcType="VARCHAR" />
+    <result column="spare07" property="spare07" jdbcType="VARCHAR" />
+    <result column="spare08" property="spare08" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, code, name, company, address, detailed_address, contact, 
+    phone_number, spare01, spare02, spare03, spare04, spare05, spare06, spare07, spare08, 
+    remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.basicsetup.bean.FactorymanageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from factorymanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from factorymanage
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from factorymanage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.basicsetup.bean.FactorymanageExample" >
+    delete from factorymanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.basicsetup.bean.Factorymanage" >
+    insert into factorymanage (id, create_time, update_time, 
+      code, name, company, 
+      address, detailed_address, contact, 
+      phone_number, spare01, spare02, 
+      spare03, spare04, spare05, 
+      spare06, spare07, spare08, 
+      remark)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{detailedAddress,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{spare01,jdbcType=VARCHAR}, #{spare02,jdbcType=VARCHAR}, 
+      #{spare03,jdbcType=VARCHAR}, #{spare04,jdbcType=VARCHAR}, #{spare05,jdbcType=VARCHAR}, 
+      #{spare06,jdbcType=VARCHAR}, #{spare07,jdbcType=VARCHAR}, #{spare08,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.basicsetup.bean.Factorymanage" >
+    insert into factorymanage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="detailedAddress != null" >
+        detailed_address,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="spare01 != null" >
+        spare01,
+      </if>
+      <if test="spare02 != null" >
+        spare02,
+      </if>
+      <if test="spare03 != null" >
+        spare03,
+      </if>
+      <if test="spare04 != null" >
+        spare04,
+      </if>
+      <if test="spare05 != null" >
+        spare05,
+      </if>
+      <if test="spare06 != null" >
+        spare06,
+      </if>
+      <if test="spare07 != null" >
+        spare07,
+      </if>
+      <if test="spare08 != null" >
+        spare08,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAddress != null" >
+        #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="spare01 != null" >
+        #{spare01,jdbcType=VARCHAR},
+      </if>
+      <if test="spare02 != null" >
+        #{spare02,jdbcType=VARCHAR},
+      </if>
+      <if test="spare03 != null" >
+        #{spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="spare04 != null" >
+        #{spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="spare05 != null" >
+        #{spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        #{spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="spare07 != null" >
+        #{spare07,jdbcType=VARCHAR},
+      </if>
+      <if test="spare08 != null" >
+        #{spare08,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.basicsetup.bean.FactorymanageExample" resultType="java.lang.Integer" >
+    select count(*) from factorymanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update factorymanage
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null" >
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailedAddress != null" >
+        detailed_address = #{record.detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contact != null" >
+        contact = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare01 != null" >
+        spare01 = #{record.spare01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare02 != null" >
+        spare02 = #{record.spare02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare03 != null" >
+        spare03 = #{record.spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare04 != null" >
+        spare04 = #{record.spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare05 != null" >
+        spare05 = #{record.spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare06 != null" >
+        spare06 = #{record.spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare07 != null" >
+        spare07 = #{record.spare07,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare08 != null" >
+        spare08 = #{record.spare08,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update factorymanage
+    set id = #{record.id,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    code = #{record.code,jdbcType=VARCHAR},
+    name = #{record.name,jdbcType=VARCHAR},
+    company = #{record.company,jdbcType=VARCHAR},
+    address = #{record.address,jdbcType=VARCHAR},
+    detailed_address = #{record.detailedAddress,jdbcType=VARCHAR},
+    contact = #{record.contact,jdbcType=VARCHAR},
+    phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+    spare01 = #{record.spare01,jdbcType=VARCHAR},
+    spare02 = #{record.spare02,jdbcType=VARCHAR},
+    spare03 = #{record.spare03,jdbcType=VARCHAR},
+    spare04 = #{record.spare04,jdbcType=VARCHAR},
+    spare05 = #{record.spare05,jdbcType=VARCHAR},
+    spare06 = #{record.spare06,jdbcType=VARCHAR},
+    spare07 = #{record.spare07,jdbcType=VARCHAR},
+    spare08 = #{record.spare08,jdbcType=VARCHAR},
+    remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.basicsetup.bean.Factorymanage" >
+    update factorymanage
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAddress != null" >
+        detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="spare01 != null" >
+        spare01 = #{spare01,jdbcType=VARCHAR},
+      </if>
+      <if test="spare02 != null" >
+        spare02 = #{spare02,jdbcType=VARCHAR},
+      </if>
+      <if test="spare03 != null" >
+        spare03 = #{spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="spare04 != null" >
+        spare04 = #{spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="spare05 != null" >
+        spare05 = #{spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        spare06 = #{spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="spare07 != null" >
+        spare07 = #{spare07,jdbcType=VARCHAR},
+      </if>
+      <if test="spare08 != null" >
+        spare08 = #{spare08,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.basicsetup.bean.Factorymanage" >
+    update factorymanage
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      spare01 = #{spare01,jdbcType=VARCHAR},
+      spare02 = #{spare02,jdbcType=VARCHAR},
+      spare03 = #{spare03,jdbcType=VARCHAR},
+      spare04 = #{spare04,jdbcType=VARCHAR},
+      spare05 = #{spare05,jdbcType=VARCHAR},
+      spare06 = #{spare06,jdbcType=VARCHAR},
+      spare07 = #{spare07,jdbcType=VARCHAR},
+      spare08 = #{spare08,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+    delete from factorymanage where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="selectById" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from factorymanage where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+      /**查询全部可用数据*/
+    select * from factorymanage
+  </select>
+
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    select * from factorymanage A where
+     <if test="name != null">
+     A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectByNameAndCompany" resultMap="BaseResultMap">
+    select * from factorymanage A where
+    <if test="name != null">
+      A.name like CONCAT('%',#{name},'%')
+    </if>
+    <if test="company != null">
+     AND A.company like CONCAT('%',#{company},'%')
+    </if>
+  </select>
+
+  <select id="selectByCompany" resultMap="BaseResultMap">
+    select * from factorymanage A where
+    <if test="company != null">
+      A.company like CONCAT('%',#{company},'%')
+    </if>
+  </select>
+
+
+  <select id="selectOtherBySpare01" resultMap="BaseResultMap">
+    select * from factorymanage A where
+    <if test="spare01 != null">
+      A.code like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+     or A.address like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.contact like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.phone_number like CONCAT('%',#{spare01},'%')
+    </if>
+    <if test="spare01 != null">
+      or A.remark like CONCAT('%',#{spare01},'%')
+    </if>
+  </select>
+
+  <select id="selectAddressByCode" resultType="java.lang.String"  parameterType="java.lang.String">
+    select address from factorymanage where code = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from factorymanage where code = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectDAddressByCode" resultType="java.lang.String"  parameterType="java.lang.String">
+    select detailed_address from factorymanage where code = #{code,jdbcType=VARCHAR}
+  </select>
+
+
+</mapper>

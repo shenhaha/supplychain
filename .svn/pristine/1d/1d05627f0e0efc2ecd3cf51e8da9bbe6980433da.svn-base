@@ -1,0 +1,18 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.NurseRecord;
+
+import java.util.List;
+
+public interface NurseRecordService {
+
+     List<NurseRecord> getNurseRecords(NurseRecord nurseRecord);
+
+     int updateNurseRecord(NurseRecord nurseRecord);
+
+     int deleteNurseRecord(String id);
+
+     int insertNurseRecord(NurseRecord nurseRecord);
+
+     List selectNurseRecordsBystoreId(String storeId);
+}

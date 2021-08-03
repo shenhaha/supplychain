@@ -1,0 +1,56 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.TemperatureRegister;
+
+import java.util.List;
+
+/**
+ * 门店人员体温记录服务接口
+ *
+ * @author GavinJiang
+ * @date 2018/8/15 18:17
+ */
+public interface TemperatureRegisterService {
+
+    /**
+     * 查询所有的门店人员体温信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.TemperatureRegister>
+     * @author GavinJiang
+     * @date 2018/8/13 16:40
+     * @params
+     */
+    List<TemperatureRegister> selectTemperatureRegiste(String storeId);
+
+    /**
+     * 添加门店人员体温信息
+     *
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/13 16:50
+     * @params [record]
+     */
+    int insert(TemperatureRegister record);
+
+    /**
+     * 修改门店人员体温信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/13 16:55
+     * @params
+     */
+    int updateByPrimaryKeySelective(TemperatureRegister record);
+
+    /**
+     * 根据id删除门店人员体温信息
+     *
+     * @return int
+     * @description
+     * @author GavinJiang
+     * @date 2018/8/13 17:02
+     * @params [id]
+     */
+    int deleteByPrimaryKey(String id);
+}

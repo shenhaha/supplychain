@@ -1,0 +1,36 @@
+package com.luer.springsecurity.dao;
+
+import com.luer.springsecurity.bean.Permission;
+import com.luer.springsecurity.bean.Userss;
+import com.luer.springsecurity.bean.UserssExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface UserssMapper {
+
+    Userss getByName(String name);
+
+    List<Permission> findPermissionByUsername(String username);
+    int countByExample(UserssExample example);
+
+    int deleteByExample(UserssExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Userss record);
+
+    int insertSelective(Userss record);
+
+    List<Userss> selectByExample(UserssExample example);
+
+    Userss selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Userss record, @Param("example") UserssExample example);
+
+    int updateByExample(@Param("record") Userss record, @Param("example") UserssExample example);
+
+    int updateByPrimaryKeySelective(Userss record);
+
+    int updateByPrimaryKey(Userss record);
+}

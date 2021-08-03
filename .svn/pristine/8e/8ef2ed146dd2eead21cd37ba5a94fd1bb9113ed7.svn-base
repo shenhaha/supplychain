@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.CheckInMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.CheckIn" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="towel" property="towel" jdbcType="VARCHAR" />
+    <result column="washcloth" property="washcloth" jdbcType="VARCHAR" />
+    <result column="mattowel" property="mattowel" jdbcType="VARCHAR" />
+    <result column="washbasin" property="washbasin" jdbcType="VARCHAR" />
+    <result column="chair_cushion" property="chairCushion" jdbcType="VARCHAR" />
+    <result column="stew" property="stew" jdbcType="VARCHAR" />
+    <result column="chopsticks" property="chopsticks" jdbcType="VARCHAR" />
+    <result column="spoon" property="spoon" jdbcType="VARCHAR" />
+    <result column="glass_watercup" property="glassWatercup" jdbcType="VARCHAR" />
+    <result column="black_porcelaincup" property="blackPorcelaincup" jdbcType="VARCHAR" />
+    <result column="remote_control" property="remoteControl" jdbcType="VARCHAR" />
+    <result column="conditioner_control" property="conditionerControl" jdbcType="VARCHAR" />
+    <result column="lactation_clothes" property="lactationClothes" jdbcType="VARCHAR" />
+    <result column="lactation_pillow" property="lactationPillow" jdbcType="VARCHAR" />
+    <result column="water_treasure" property="waterTreasure" jdbcType="VARCHAR" />
+    <result column="shower_seats" property="showerSeats" jdbcType="VARCHAR" />
+    <result column="humidifier" property="humidifier" jdbcType="VARCHAR" />
+    <result column="soap_box" property="soapBox" jdbcType="VARCHAR" />
+    <result column="tabletop_frame" property="tabletopFrame" jdbcType="VARCHAR" />
+    <result column="paring_knife" property="paringKnife" jdbcType="VARCHAR" />
+    <result column="hair_drier" property="hairDrier" jdbcType="VARCHAR" />
+    <result column="bath_mat" property="bathMat" jdbcType="VARCHAR" />
+    <result column="DND_sign" property="dndSign" jdbcType="VARCHAR" />
+    <result column="wireless_router" property="wirelessRouter" jdbcType="VARCHAR" />
+    <result column="tissue" property="tissue" jdbcType="VARCHAR" />
+    <result column="toothpaste" property="toothpaste" jdbcType="VARCHAR" />
+    <result column="shampoo" property="shampoo" jdbcType="VARCHAR" />
+    <result column="soap" property="soap" jdbcType="VARCHAR" />
+    <result column="room_card" property="roomCard" jdbcType="VARCHAR" />
+    <result column="down_quilt" property="downQuilt" jdbcType="VARCHAR" />
+    <result column="parking_permit" property="parkingPermit" jdbcType="VARCHAR" />
+    <result column="entrance_card" property="entranceCard" jdbcType="VARCHAR" />
+    <result column="storeid" property="storeid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, customer_id, contract_id, status, room_id, begin_time, end_time, create_id, towel, 
+    washcloth, mattowel, washbasin, chair_cushion, stew, chopsticks, spoon, glass_watercup, 
+    black_porcelaincup, remote_control, conditioner_control, lactation_clothes, lactation_pillow, 
+    water_treasure, shower_seats, humidifier, soap_box, tabletop_frame, paring_knife, 
+    hair_drier, bath_mat, DND_sign, wireless_router, tissue, toothpaste, shampoo, soap, 
+    room_card, down_quilt, parking_permit, entrance_card, storeid
+  </sql>
+    <resultMap id="MotherCheckIn" type="com.luer.storemanager.bean.MotherCheckIn">
+        <result column="name" property="name"></result>
+        <result column="motherid" property="motherid"></result>
+        <result column="roomnumber" property="roomnumber"></result>
+    </resultMap>
+  <select id="selectMotherCheckIn" resultMap="MotherCheckIn">
+        SELECT cc.`name` name, cc.id  motherid ,oc.room_number roomnumber FROM customer_basic cc INNER JOIN order_customer oc
+    ON oc.customer_id = cc.id
+    WHERE cc.type =0 AND cc.store_id = #{storeId}
+  </select>
+  <select id="selectAllByStoreid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    FROM check_in WHERE storeid = #{storeid}
+  </select>
+  <select id="selectBymotherid" resultMap="BaseResultMap">
+    SELECT * FROM check_in WHERE customer_id = #{motherid}
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.CheckInExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from check_in
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from check_in
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from check_in
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.CheckInExample" >
+    delete from check_in
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.storemanager.bean.CheckIn" >
+    insert into check_in (id, customer_id, contract_id, 
+      status, room_id, begin_time, 
+      end_time, create_id, towel, 
+      washcloth, mattowel, washbasin, 
+      chair_cushion, stew, chopsticks, 
+      spoon, glass_watercup, black_porcelaincup, 
+      remote_control, conditioner_control, lactation_clothes, 
+      lactation_pillow, water_treasure, shower_seats, 
+      humidifier, soap_box, tabletop_frame, 
+      paring_knife, hair_drier, bath_mat, 
+      DND_sign, wireless_router, tissue, 
+      toothpaste, shampoo, soap, 
+      room_card, down_quilt, parking_permit, 
+      entrance_card, storeid)
+    values (#{id,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR}, #{contractId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{roomId,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{towel,jdbcType=VARCHAR}, 
+      #{washcloth,jdbcType=VARCHAR}, #{mattowel,jdbcType=VARCHAR}, #{washbasin,jdbcType=VARCHAR}, 
+      #{chairCushion,jdbcType=VARCHAR}, #{stew,jdbcType=VARCHAR}, #{chopsticks,jdbcType=VARCHAR}, 
+      #{spoon,jdbcType=VARCHAR}, #{glassWatercup,jdbcType=VARCHAR}, #{blackPorcelaincup,jdbcType=VARCHAR}, 
+      #{remoteControl,jdbcType=VARCHAR}, #{conditionerControl,jdbcType=VARCHAR}, #{lactationClothes,jdbcType=VARCHAR}, 
+      #{lactationPillow,jdbcType=VARCHAR}, #{waterTreasure,jdbcType=VARCHAR}, #{showerSeats,jdbcType=VARCHAR}, 
+      #{humidifier,jdbcType=VARCHAR}, #{soapBox,jdbcType=VARCHAR}, #{tabletopFrame,jdbcType=VARCHAR}, 
+      #{paringKnife,jdbcType=VARCHAR}, #{hairDrier,jdbcType=VARCHAR}, #{bathMat,jdbcType=VARCHAR}, 
+      #{dndSign,jdbcType=VARCHAR}, #{wirelessRouter,jdbcType=VARCHAR}, #{tissue,jdbcType=VARCHAR}, 
+      #{toothpaste,jdbcType=VARCHAR}, #{shampoo,jdbcType=VARCHAR}, #{soap,jdbcType=VARCHAR}, 
+      #{roomCard,jdbcType=VARCHAR}, #{downQuilt,jdbcType=VARCHAR}, #{parkingPermit,jdbcType=VARCHAR}, 
+      #{entranceCard,jdbcType=VARCHAR}, #{storeid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.storemanager.bean.CheckIn" >
+    insert into check_in
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="contractId != null" >
+        contract_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="towel != null" >
+        towel,
+      </if>
+      <if test="washcloth != null" >
+        washcloth,
+      </if>
+      <if test="mattowel != null" >
+        mattowel,
+      </if>
+      <if test="washbasin != null" >
+        washbasin,
+      </if>
+      <if test="chairCushion != null" >
+        chair_cushion,
+      </if>
+      <if test="stew != null" >
+        stew,
+      </if>
+      <if test="chopsticks != null" >
+        chopsticks,
+      </if>
+      <if test="spoon != null" >
+        spoon,
+      </if>
+      <if test="glassWatercup != null" >
+        glass_watercup,
+      </if>
+      <if test="blackPorcelaincup != null" >
+        black_porcelaincup,
+      </if>
+      <if test="remoteControl != null" >
+        remote_control,
+      </if>
+      <if test="conditionerControl != null" >
+        conditioner_control,
+      </if>
+      <if test="lactationClothes != null" >
+        lactation_clothes,
+      </if>
+      <if test="lactationPillow != null" >
+        lactation_pillow,
+      </if>
+      <if test="waterTreasure != null" >
+        water_treasure,
+      </if>
+      <if test="showerSeats != null" >
+        shower_seats,
+      </if>
+      <if test="humidifier != null" >
+        humidifier,
+      </if>
+      <if test="soapBox != null" >
+        soap_box,
+      </if>
+      <if test="tabletopFrame != null" >
+        tabletop_frame,
+      </if>
+      <if test="paringKnife != null" >
+        paring_knife,
+      </if>
+      <if test="hairDrier != null" >
+        hair_drier,
+      </if>
+      <if test="bathMat != null" >
+        bath_mat,
+      </if>
+      <if test="dndSign != null" >
+        DND_sign,
+      </if>
+      <if test="wirelessRouter != null" >
+        wireless_router,
+      </if>
+      <if test="tissue != null" >
+        tissue,
+      </if>
+      <if test="toothpaste != null" >
+        toothpaste,
+      </if>
+      <if test="shampoo != null" >
+        shampoo,
+      </if>
+      <if test="soap != null" >
+        soap,
+      </if>
+      <if test="roomCard != null" >
+        room_card,
+      </if>
+      <if test="downQuilt != null" >
+        down_quilt,
+      </if>
+      <if test="parkingPermit != null" >
+        parking_permit,
+      </if>
+      <if test="entranceCard != null" >
+        entrance_card,
+      </if>
+      <if test="storeid != null" >
+        storeid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="towel != null" >
+        #{towel,jdbcType=VARCHAR},
+      </if>
+      <if test="washcloth != null" >
+        #{washcloth,jdbcType=VARCHAR},
+      </if>
+      <if test="mattowel != null" >
+        #{mattowel,jdbcType=VARCHAR},
+      </if>
+      <if test="washbasin != null" >
+        #{washbasin,jdbcType=VARCHAR},
+      </if>
+      <if test="chairCushion != null" >
+        #{chairCushion,jdbcType=VARCHAR},
+      </if>
+      <if test="stew != null" >
+        #{stew,jdbcType=VARCHAR},
+      </if>
+      <if test="chopsticks != null" >
+        #{chopsticks,jdbcType=VARCHAR},
+      </if>
+      <if test="spoon != null" >
+        #{spoon,jdbcType=VARCHAR},
+      </if>
+      <if test="glassWatercup != null" >
+        #{glassWatercup,jdbcType=VARCHAR},
+      </if>
+      <if test="blackPorcelaincup != null" >
+        #{blackPorcelaincup,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteControl != null" >
+        #{remoteControl,jdbcType=VARCHAR},
+      </if>
+      <if test="conditionerControl != null" >
+        #{conditionerControl,jdbcType=VARCHAR},
+      </if>
+      <if test="lactationClothes != null" >
+        #{lactationClothes,jdbcType=VARCHAR},
+      </if>
+      <if test="lactationPillow != null" >
+        #{lactationPillow,jdbcType=VARCHAR},
+      </if>
+      <if test="waterTreasure != null" >
+        #{waterTreasure,jdbcType=VARCHAR},
+      </if>
+      <if test="showerSeats != null" >
+        #{showerSeats,jdbcType=VARCHAR},
+      </if>
+      <if test="humidifier != null" >
+        #{humidifier,jdbcType=VARCHAR},
+      </if>
+      <if test="soapBox != null" >
+        #{soapBox,jdbcType=VARCHAR},
+      </if>
+      <if test="tabletopFrame != null" >
+        #{tabletopFrame,jdbcType=VARCHAR},
+      </if>
+      <if test="paringKnife != null" >
+        #{paringKnife,jdbcType=VARCHAR},
+      </if>
+      <if test="hairDrier != null" >
+        #{hairDrier,jdbcType=VARCHAR},
+      </if>
+      <if test="bathMat != null" >
+        #{bathMat,jdbcType=VARCHAR},
+      </if>
+      <if test="dndSign != null" >
+        #{dndSign,jdbcType=VARCHAR},
+      </if>
+      <if test="wirelessRouter != null" >
+        #{wirelessRouter,jdbcType=VARCHAR},
+      </if>
+      <if test="tissue != null" >
+        #{tissue,jdbcType=VARCHAR},
+      </if>
+      <if test="toothpaste != null" >
+        #{toothpaste,jdbcType=VARCHAR},
+      </if>
+      <if test="shampoo != null" >
+        #{shampoo,jdbcType=VARCHAR},
+      </if>
+      <if test="soap != null" >
+        #{soap,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCard != null" >
+        #{roomCard,jdbcType=VARCHAR},
+      </if>
+      <if test="downQuilt != null" >
+        #{downQuilt,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingPermit != null" >
+        #{parkingPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="entranceCard != null" >
+        #{entranceCard,jdbcType=VARCHAR},
+      </if>
+      <if test="storeid != null" >
+        #{storeid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.storemanager.bean.CheckInExample" resultType="java.lang.Integer" >
+    select count(*) from check_in
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update check_in
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerId != null" >
+        customer_id = #{record.customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractId != null" >
+        contract_id = #{record.contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginTime != null" >
+        begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.towel != null" >
+        towel = #{record.towel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.washcloth != null" >
+        washcloth = #{record.washcloth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mattowel != null" >
+        mattowel = #{record.mattowel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.washbasin != null" >
+        washbasin = #{record.washbasin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chairCushion != null" >
+        chair_cushion = #{record.chairCushion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stew != null" >
+        stew = #{record.stew,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chopsticks != null" >
+        chopsticks = #{record.chopsticks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spoon != null" >
+        spoon = #{record.spoon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.glassWatercup != null" >
+        glass_watercup = #{record.glassWatercup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blackPorcelaincup != null" >
+        black_porcelaincup = #{record.blackPorcelaincup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remoteControl != null" >
+        remote_control = #{record.remoteControl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conditionerControl != null" >
+        conditioner_control = #{record.conditionerControl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lactationClothes != null" >
+        lactation_clothes = #{record.lactationClothes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lactationPillow != null" >
+        lactation_pillow = #{record.lactationPillow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.waterTreasure != null" >
+        water_treasure = #{record.waterTreasure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showerSeats != null" >
+        shower_seats = #{record.showerSeats,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humidifier != null" >
+        humidifier = #{record.humidifier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soapBox != null" >
+        soap_box = #{record.soapBox,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tabletopFrame != null" >
+        tabletop_frame = #{record.tabletopFrame,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paringKnife != null" >
+        paring_knife = #{record.paringKnife,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hairDrier != null" >
+        hair_drier = #{record.hairDrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bathMat != null" >
+        bath_mat = #{record.bathMat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dndSign != null" >
+        DND_sign = #{record.dndSign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wirelessRouter != null" >
+        wireless_router = #{record.wirelessRouter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tissue != null" >
+        tissue = #{record.tissue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toothpaste != null" >
+        toothpaste = #{record.toothpaste,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shampoo != null" >
+        shampoo = #{record.shampoo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soap != null" >
+        soap = #{record.soap,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomCard != null" >
+        room_card = #{record.roomCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downQuilt != null" >
+        down_quilt = #{record.downQuilt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkingPermit != null" >
+        parking_permit = #{record.parkingPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entranceCard != null" >
+        entrance_card = #{record.entranceCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeid != null" >
+        storeid = #{record.storeid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update check_in
+    set id = #{record.id,jdbcType=VARCHAR},
+      customer_id = #{record.customerId,jdbcType=VARCHAR},
+      contract_id = #{record.contractId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      room_id = #{record.roomId,jdbcType=VARCHAR},
+      begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=VARCHAR},
+      towel = #{record.towel,jdbcType=VARCHAR},
+      washcloth = #{record.washcloth,jdbcType=VARCHAR},
+      mattowel = #{record.mattowel,jdbcType=VARCHAR},
+      washbasin = #{record.washbasin,jdbcType=VARCHAR},
+      chair_cushion = #{record.chairCushion,jdbcType=VARCHAR},
+      stew = #{record.stew,jdbcType=VARCHAR},
+      chopsticks = #{record.chopsticks,jdbcType=VARCHAR},
+      spoon = #{record.spoon,jdbcType=VARCHAR},
+      glass_watercup = #{record.glassWatercup,jdbcType=VARCHAR},
+      black_porcelaincup = #{record.blackPorcelaincup,jdbcType=VARCHAR},
+      remote_control = #{record.remoteControl,jdbcType=VARCHAR},
+      conditioner_control = #{record.conditionerControl,jdbcType=VARCHAR},
+      lactation_clothes = #{record.lactationClothes,jdbcType=VARCHAR},
+      lactation_pillow = #{record.lactationPillow,jdbcType=VARCHAR},
+      water_treasure = #{record.waterTreasure,jdbcType=VARCHAR},
+      shower_seats = #{record.showerSeats,jdbcType=VARCHAR},
+      humidifier = #{record.humidifier,jdbcType=VARCHAR},
+      soap_box = #{record.soapBox,jdbcType=VARCHAR},
+      tabletop_frame = #{record.tabletopFrame,jdbcType=VARCHAR},
+      paring_knife = #{record.paringKnife,jdbcType=VARCHAR},
+      hair_drier = #{record.hairDrier,jdbcType=VARCHAR},
+      bath_mat = #{record.bathMat,jdbcType=VARCHAR},
+      DND_sign = #{record.dndSign,jdbcType=VARCHAR},
+      wireless_router = #{record.wirelessRouter,jdbcType=VARCHAR},
+      tissue = #{record.tissue,jdbcType=VARCHAR},
+      toothpaste = #{record.toothpaste,jdbcType=VARCHAR},
+      shampoo = #{record.shampoo,jdbcType=VARCHAR},
+      soap = #{record.soap,jdbcType=VARCHAR},
+      room_card = #{record.roomCard,jdbcType=VARCHAR},
+      down_quilt = #{record.downQuilt,jdbcType=VARCHAR},
+      parking_permit = #{record.parkingPermit,jdbcType=VARCHAR},
+      entrance_card = #{record.entranceCard,jdbcType=VARCHAR},
+      storeid = #{record.storeid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.CheckIn" >
+    update check_in
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="towel != null" >
+        towel = #{towel,jdbcType=VARCHAR},
+      </if>
+      <if test="washcloth != null" >
+        washcloth = #{washcloth,jdbcType=VARCHAR},
+      </if>
+      <if test="mattowel != null" >
+        mattowel = #{mattowel,jdbcType=VARCHAR},
+      </if>
+      <if test="washbasin != null" >
+        washbasin = #{washbasin,jdbcType=VARCHAR},
+      </if>
+      <if test="chairCushion != null" >
+        chair_cushion = #{chairCushion,jdbcType=VARCHAR},
+      </if>
+      <if test="stew != null" >
+        stew = #{stew,jdbcType=VARCHAR},
+      </if>
+      <if test="chopsticks != null" >
+        chopsticks = #{chopsticks,jdbcType=VARCHAR},
+      </if>
+      <if test="spoon != null" >
+        spoon = #{spoon,jdbcType=VARCHAR},
+      </if>
+      <if test="glassWatercup != null" >
+        glass_watercup = #{glassWatercup,jdbcType=VARCHAR},
+      </if>
+      <if test="blackPorcelaincup != null" >
+        black_porcelaincup = #{blackPorcelaincup,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteControl != null" >
+        remote_control = #{remoteControl,jdbcType=VARCHAR},
+      </if>
+      <if test="conditionerControl != null" >
+        conditioner_control = #{conditionerControl,jdbcType=VARCHAR},
+      </if>
+      <if test="lactationClothes != null" >
+        lactation_clothes = #{lactationClothes,jdbcType=VARCHAR},
+      </if>
+      <if test="lactationPillow != null" >
+        lactation_pillow = #{lactationPillow,jdbcType=VARCHAR},
+      </if>
+      <if test="waterTreasure != null" >
+        water_treasure = #{waterTreasure,jdbcType=VARCHAR},
+      </if>
+      <if test="showerSeats != null" >
+        shower_seats = #{showerSeats,jdbcType=VARCHAR},
+      </if>
+      <if test="humidifier != null" >
+        humidifier = #{humidifier,jdbcType=VARCHAR},
+      </if>
+      <if test="soapBox != null" >
+        soap_box = #{soapBox,jdbcType=VARCHAR},
+      </if>
+      <if test="tabletopFrame != null" >
+        tabletop_frame = #{tabletopFrame,jdbcType=VARCHAR},
+      </if>
+      <if test="paringKnife != null" >
+        paring_knife = #{paringKnife,jdbcType=VARCHAR},
+      </if>
+      <if test="hairDrier != null" >
+        hair_drier = #{hairDrier,jdbcType=VARCHAR},
+      </if>
+      <if test="bathMat != null" >
+        bath_mat = #{bathMat,jdbcType=VARCHAR},
+      </if>
+      <if test="dndSign != null" >
+        DND_sign = #{dndSign,jdbcType=VARCHAR},
+      </if>
+      <if test="wirelessRouter != null" >
+        wireless_router = #{wirelessRouter,jdbcType=VARCHAR},
+      </if>
+      <if test="tissue != null" >
+        tissue = #{tissue,jdbcType=VARCHAR},
+      </if>
+      <if test="toothpaste != null" >
+        toothpaste = #{toothpaste,jdbcType=VARCHAR},
+      </if>
+      <if test="shampoo != null" >
+        shampoo = #{shampoo,jdbcType=VARCHAR},
+      </if>
+      <if test="soap != null" >
+        soap = #{soap,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCard != null" >
+        room_card = #{roomCard,jdbcType=VARCHAR},
+      </if>
+      <if test="downQuilt != null" >
+        down_quilt = #{downQuilt,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingPermit != null" >
+        parking_permit = #{parkingPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="entranceCard != null" >
+        entrance_card = #{entranceCard,jdbcType=VARCHAR},
+      </if>
+      <if test="storeid != null" >
+        storeid = #{storeid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.CheckIn" >
+    update check_in
+    set customer_id = #{customerId,jdbcType=VARCHAR},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      room_id = #{roomId,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=VARCHAR},
+      towel = #{towel,jdbcType=VARCHAR},
+      washcloth = #{washcloth,jdbcType=VARCHAR},
+      mattowel = #{mattowel,jdbcType=VARCHAR},
+      washbasin = #{washbasin,jdbcType=VARCHAR},
+      chair_cushion = #{chairCushion,jdbcType=VARCHAR},
+      stew = #{stew,jdbcType=VARCHAR},
+      chopsticks = #{chopsticks,jdbcType=VARCHAR},
+      spoon = #{spoon,jdbcType=VARCHAR},
+      glass_watercup = #{glassWatercup,jdbcType=VARCHAR},
+      black_porcelaincup = #{blackPorcelaincup,jdbcType=VARCHAR},
+      remote_control = #{remoteControl,jdbcType=VARCHAR},
+      conditioner_control = #{conditionerControl,jdbcType=VARCHAR},
+      lactation_clothes = #{lactationClothes,jdbcType=VARCHAR},
+      lactation_pillow = #{lactationPillow,jdbcType=VARCHAR},
+      water_treasure = #{waterTreasure,jdbcType=VARCHAR},
+      shower_seats = #{showerSeats,jdbcType=VARCHAR},
+      humidifier = #{humidifier,jdbcType=VARCHAR},
+      soap_box = #{soapBox,jdbcType=VARCHAR},
+      tabletop_frame = #{tabletopFrame,jdbcType=VARCHAR},
+      paring_knife = #{paringKnife,jdbcType=VARCHAR},
+      hair_drier = #{hairDrier,jdbcType=VARCHAR},
+      bath_mat = #{bathMat,jdbcType=VARCHAR},
+      DND_sign = #{dndSign,jdbcType=VARCHAR},
+      wireless_router = #{wirelessRouter,jdbcType=VARCHAR},
+      tissue = #{tissue,jdbcType=VARCHAR},
+      toothpaste = #{toothpaste,jdbcType=VARCHAR},
+      shampoo = #{shampoo,jdbcType=VARCHAR},
+      soap = #{soap,jdbcType=VARCHAR},
+      room_card = #{roomCard,jdbcType=VARCHAR},
+      down_quilt = #{downQuilt,jdbcType=VARCHAR},
+      parking_permit = #{parkingPermit,jdbcType=VARCHAR},
+      entrance_card = #{entranceCard,jdbcType=VARCHAR},
+      storeid = #{storeid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

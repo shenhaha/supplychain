@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.NurseRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.NurseRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_basic_id" property="customerBasicId" jdbcType="VARCHAR" />
+    <result column="productionDate" property="productiondate" jdbcType="TIMESTAMP" />
+    <result column="modeProduction" property="modeproduction" jdbcType="VARCHAR" />
+    <result column="feeding" property="feeding" jdbcType="VARCHAR" />
+    <result column="customerName" property="customername" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, customer_basic_id, productionDate, modeProduction, feeding, customerName, store_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.NurseRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from nurse_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from nurse_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from nurse_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.NurseRecordExample" >
+    delete from nurse_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.NurseRecord" >
+    insert into nurse_record (id, customer_basic_id, productionDate, 
+      modeProduction, feeding, customerName, 
+      store_id)
+    values (#{id,jdbcType=VARCHAR}, #{customerBasicId,jdbcType=VARCHAR}, #{productiondate,jdbcType=TIMESTAMP}, 
+      #{modeproduction,jdbcType=VARCHAR}, #{feeding,jdbcType=VARCHAR}, #{customername,jdbcType=VARCHAR}, 
+      #{storeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.NurseRecord" >
+    insert into nurse_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerBasicId != null" >
+        customer_basic_id,
+      </if>
+      <if test="productiondate != null" >
+        productionDate,
+      </if>
+      <if test="modeproduction != null" >
+        modeProduction,
+      </if>
+      <if test="feeding != null" >
+        feeding,
+      </if>
+      <if test="customername != null" >
+        customerName,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBasicId != null" >
+        #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="productiondate != null" >
+        #{productiondate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modeproduction != null" >
+        #{modeproduction,jdbcType=VARCHAR},
+      </if>
+      <if test="feeding != null" >
+        #{feeding,jdbcType=VARCHAR},
+      </if>
+      <if test="customername != null" >
+        #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.NurseRecordExample" resultType="java.lang.Integer" >
+    select count(*) from nurse_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nurse_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBasicId != null" >
+        customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productiondate != null" >
+        productionDate = #{record.productiondate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modeproduction != null" >
+        modeProduction = #{record.modeproduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeding != null" >
+        feeding = #{record.feeding,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customername != null" >
+        customerName = #{record.customername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nurse_record
+    set id = #{record.id,jdbcType=VARCHAR},
+      customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      productionDate = #{record.productiondate,jdbcType=TIMESTAMP},
+      modeProduction = #{record.modeproduction,jdbcType=VARCHAR},
+      feeding = #{record.feeding,jdbcType=VARCHAR},
+      customerName = #{record.customername,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.NurseRecord" >
+    update nurse_record
+    <set >
+      <if test="customerBasicId != null" >
+        customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="productiondate != null" >
+        productionDate = #{productiondate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modeproduction != null" >
+        modeProduction = #{modeproduction,jdbcType=VARCHAR},
+      </if>
+      <if test="feeding != null" >
+        feeding = #{feeding,jdbcType=VARCHAR},
+      </if>
+      <if test="customername != null" >
+        customerName = #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.NurseRecord" >
+    update nurse_record
+    set customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      productionDate = #{productiondate,jdbcType=TIMESTAMP},
+      modeProduction = #{modeproduction,jdbcType=VARCHAR},
+      feeding = #{feeding,jdbcType=VARCHAR},
+      customerName = #{customername,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--根据门店id查询妈妈护理记录表-->
+  <select id="selectNurseRecordsBystoreId"  resultMap="BaseResultMap">
+    select n.id, n.customer_basic_id, n.productionDate,n.modeProduction, n.feeding,n.store_id,c.name as customerName
+    from nurse_record n LEFT JOIN customer_basic c ON n.customer_basic_id=c.id
+    where n.store_id = #{storeId}
+  </select>
+</mapper>

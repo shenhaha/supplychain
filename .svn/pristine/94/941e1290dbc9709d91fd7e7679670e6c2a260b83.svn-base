@@ -1,0 +1,31 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.WorryEvaluate;
+import com.luer.servicecenter.bean.WorryProblem;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/17.
+ */
+@Component
+public interface WorryEvaluateService {
+    void addWorryProblem(WorryProblem worryProblem);
+
+    void deleteWorryProblem(String id);
+
+    List<WorryProblem> getWorryProblem(WorryProblem worryProblem);
+
+    void updateWorryProblem(WorryProblem worryProblem);
+
+    void addWorryEvaluate(WorryEvaluate worryEvaluate);
+
+    void updateWorryEvaluate(WorryEvaluate worryEvaluate);
+
+    void deleteWorryEvaluate(String id);
+
+    List<WorryEvaluate> getListEvaluate(String storeid);
+
+    List<WorryProblem> getWorryProblemByMotherId(String customerBasicId);
+}

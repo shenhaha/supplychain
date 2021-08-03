@@ -1,0 +1,32 @@
+package com.luer.comm.utils;
+
+import com.luer.servicecenter.bean.SocialSupport;
+
+public class CountSocialSupport {
+
+    public static String  getScore(SocialSupport socialSupport){
+        int i = 0;
+        i += count(socialSupport.getAnswerone());
+        i += count(socialSupport.getAnswertwo());
+        i += count(socialSupport.getAnswerthree());
+        i += count(socialSupport.getAnswerfour());
+        i += count(socialSupport.getAnswerfive());
+        i += count(socialSupport.getAnswersix());
+        return String.valueOf(i);
+    }
+    public static  int count(String question) {
+        switch (question) {
+            case "从没有":
+                return 1;
+            case "很少":
+                return 2;
+            case "偶尔":
+                return 3;
+            case "时常":
+                return 4;
+            case "总是":
+                return 5;
+        }
+        return 0;
+    }
+}

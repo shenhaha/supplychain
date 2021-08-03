@@ -1,0 +1,156 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="goodsName" class="col-md-4 control-label">商品名称</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="goodsName"
+                           name="goodsName" placeholder="商品名称">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="serialnum" class="col-md-4 control-label">商品编号</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="serialnum"
+                           name="serialnum" placeholder="商品编号">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="form-group col-md-5">
+                <label for="supplierId" class="col-md-4 control-label">供应商名称</label>
+                <div class="col-md-5">
+                    <select type="text" id="supplierId" name="supplierId" class="form-control"
+                            placeholder="supplierId">
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group col-md-5">
+                <label for="specifications"
+                       class="col-md-4 control-label">规格</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="specifications"
+                           name="specifications" placeholder="规格">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="form-group col-md-5">
+                <label for="alliasname" class="col-md-4 control-label">别名</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="alliasname"
+                           name="alliasname" placeholder="别名">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="unit" class="col-md-4 control-label">商品单位</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="unit" name="unit"
+                           placeholder="商品单位">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="form-group col-md-5">
+                <label for="minpurchaseQuantityone" class="col-md-4 control-label">最小进货量</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="minpurchaseQuantityone" name="minpurchaseQuantityone" placeholder="最小进货量">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="supplierPrice" class="col-md-4 control-label">进货价</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="supplierPrice" name="supplierPrice" placeholder="进货价">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="priceOne" class="col-md-4 control-label">分公司单价</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="priceOne"
+                           name="priceOne" placeholder="分公司单价">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="priceTwo" class="col-md-4 control-label">门店单价</label>
+                <DIV CLASS="col-md-5">
+                    <input type="text" class="form-control" id="priceTwo"
+                           name="priceTwo" placeholder="门店单价">
+                </DIV>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="form-group col-md-5">
+                <label for="remark" class="col-md-4 control-label">备注</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="remark"
+                           name="remark" placeholder="备注">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+
+    $(function () {
+
+        //动态查询供应商信息
+        $.ajax({
+            url: "${ctx}/supplier/selectSupplier",
+            type: "post",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#supplierId").append("<option  value='" + data[i].id + "'>" + data[i].supplierName + "</option>");
+                }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

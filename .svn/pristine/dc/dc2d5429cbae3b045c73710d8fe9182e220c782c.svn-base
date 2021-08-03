@@ -1,0 +1,23 @@
+package com.luer.businessmanager.bean;
+
+public class QuestionSort {
+    private String id;
+
+    private String classification;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification == null ? null : classification.trim();
+    }
+}

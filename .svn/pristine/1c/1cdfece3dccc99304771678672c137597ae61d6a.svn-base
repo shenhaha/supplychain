@@ -1,0 +1,1024 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<html>
+<head>
+    <title>宝宝入住评估</title>
+    <!--滚动条样式-->
+    <style type="text/css">
+        html, body { width: 100%; height: 100%; overflow:hidden;}
+        .column { display: inline-block; width: 100%; height: 58%;}
+         .login-dialog .modal-dialog {
+             width: 1300px;
+         }
+    </style>
+</head>
+<body>
+<!--Main Content-->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+                    <li id="babybasic"><a  href="${ctx}/servicecenter/babybasic?motherid=${motherid}">宝宝基本信息</a></li>
+                    <li id="babyEvaluate"><a  href="${ctx}/servicecenter/babyEvaluate?motherid=${motherid}">宝宝入住评估</a></li>
+                    <li  id="showBabyNursing"><a href="${ctx}/babynursing/showBabyNursing?motherid=${motherid}">宝宝护理记录</a></li>
+                    <li id="showGrowth"><a  href="${ctx}/growth/showGrowth?motherid=${motherid}">宝宝成长记录</a></li>
+                    <li id="showNeonatalrounds"><a  href="${ctx}/neonatalrounds/showNeonatalrounds?motherid=${motherid}">儿科医生查房</a></li>
+                    <li id="doctorcheck"><a  href="${ctx}/doctorcheck?motherid=${motherid}">Physicians's Record Newborn Infant</a></li>
+                    <%--    <li id="showSwimming"><a  href="${ctx}/swimming/showSwimming?motherid=${motherid}">宝宝游泳</a></li>
+                        <li id="babywash" ><a href="${ctx}/swimming/babywash?motherid=${motherid}">洗澡记录</a></li>
+                        <li id="showPavilionassessment"><a href="${ctx}/pavilionassessment/showPavilionassessment?motherid=${motherid}">出馆身体评估</a></li>--%>
+                    <li id="showPavilioneducation"><a href="${ctx}/pavilioneducation/showPavilioneducation?motherid=${motherid}">宝宝出馆卫教</a></li>
+                    <div style="margin-left: 70%">
+                        <input type="button" id="type2" class='btn block btn-outline btn-rounded btn-primary' onclick="find()" value="妈妈信息" >
+                    </div>
+                </ul>
+                <div id="repairdiv">
+
+                    <div class="panel-body" >
+                        <div class="table-responsive">
+                            <table id="babyevaluates" class="table" data-paging="true" data-filtering="true" data-sorting="true" style="width:200%">
+                            </table>
+                        </div>
+                        <!--底部滚动条    结束-->
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+</div>
+<script>
+    $(function () {
+        $('#babyEvaluate').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'babybasic':
+                $('#babybasic').addClass("active");
+                break;
+            case 'babyEvaluate':
+                $('#babyEvaluate').addClass("active");
+                break;
+            case 'showBabyNursing':
+                $('#showBabyNursing').addClass("active");
+                break;
+            case 'showGrowth':
+                $('#showGrowth').addClass("active");
+                break;
+            case 'showNeonatalrounds':
+                $('#showNeonatalrounds').addClass("active");
+                break;
+            case 'babywash':
+                $('#babywash').addClass("active");
+                break;
+            case 'showPavilionassessment':
+                $('#showPavilionassessment').addClass("active");
+                break;
+            case 'doctorcheck':
+                $('#doctorcheck').addClass("active");
+                break;
+            case 'showPavilioneducation':
+                $('#showPavilioneducation').addClass("active");
+                break;
+        }
+        var pavilioneducationTitle = [
+            {"name":"id","title":"ID","breakpoints":"xs sm",visible:false},
+            {"name":"babyname","title":"宝宝姓名"},
+            {"name":"hospitalsummary","title":"有无出院小结"},
+            {"name":"childBirthWay","title":"出生方式"},
+            {"name":"updatetime","title":"出生日期"},
+            {"name":"weight","title":"体重(g)"},
+            {"name":"height","title":"身高(cm)"},
+            {"name":"temperature","title":"体温(℃)"},
+            {"name":"heartbeat","title":"心跳(次/min)"},
+            {"name":"breathing","title":"呼吸(次/min)"},
+            {"name":"scalp","title":"头皮",visible:false},
+            {"name":"eye","title":"眼",visible:false},
+            {"name":"ear","title":"耳朵",visible:false},
+            {"name":"oral","title":"口腔",visible:false},
+            {"name":"nose","title":"鼻子",visible:false},
+            {"name":"neck","title":"颈部",visible:false},
+            {"name":"chest","title":"胸部",visible:false},
+            {"name":"abdomen","title":"腹部",visible:false},
+            {"name":"umbilicalCord","title":"脐带",visible:false},
+            {"name":"back","title":"背部",visible:false},
+            {"name":"upperLimb","title":"上肢",visible:false},
+            {"name":"lowerLimbs","title":"下肢",visible:false},
+            {"name":"skin","title":"皮肤",visible:false},
+            {"name":"appearance","title":"外观",visible:false},
+            {"name":"secretions","title":"分泌物",visible:false},
+            {"name":"moveBowels","title":"大便",visible:false},
+            {"name":"urinate","title":"小便",visible:false},
+            {"name":"assessment","title":"评估人",visible:false},
+            {"name":"assessmentTime","title":"评估时间",visible:false},
+            {"name":"note","title":"备注",visible:false},
+            {"name":"jaundice","title":"黄疸",visible:false},
+            {"name":"plantarBlood","title":"足底血",visible:false},
+            {"name":"detail","title":"查看详情"}
+        ];
+        function find(id) {
+            window.location.href='${ctx}/servicecenter/motherEvaluate?motherType=1&motherid=${motherid}';
+        }
+        window.find = find;
+        function detail(values) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title : "<span style=\"color: #ab8ce4\">修改一条数据</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'login-dialog',
+                message:$('<div></div>').load('${ctx}/template/servicecenter/babyEvaluate.jsp'),//加载弹出页面
+                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                //数据回显
+                onshown:function(dialogRef){
+                    $('#id').val(values.id);
+                    $('#babyname').append("<option>"+values.babyname+"</option>").attr("disabled","disabled");
+                    $('#roomId').val(values.roomId);
+                    $('#hospitalsummary').val(values.hospitalsummary);
+                    $('#childBirthWay').val(values.childBirthWay);
+                    $('#updatetime').val(values.updatetime);
+                    $('#weight').val(values.weight);
+                    $('#height').val(values.height);
+                    $('#temperature').val(values.temperature);
+                    $('#heartbeat').val(values.heartbeat);
+                    $('#breathing').val(values.breathing);
+                    $('#scalp').val(values.scalp);
+                    $('#eye').val(values.eye);
+                    $('#ear').val(values.ear);
+                    $('#oral').val(values.oral);
+                    $('#nose').val(values.nose);
+                    //$('#neck').val(values.neck);
+                    //$('#neck').val(values.neck);//颈部
+                    if(values.neck=='正常'){
+                        $('input[type="check"],input[name="neck"]').attr('checked','checked');
+                    }else if(values.neck=='畸形'){
+                        $('#inlineCheckbox1').attr('checked','checked');
+                    }else {
+                        $('#inlineCheckbox1').attr('checked','checked');
+                        $('#neckid').show();
+                        $('#neckid').children(':first').val(values.neck);
+                    }
+                    $('#chest').val(values.chest);
+                    $('#abdomen').val(values.abdomen);
+                   // $('#umbilicalCord').val(values.umbilicalCord);
+                    //$('#umbilicalCord').val(values.umbilicalCord);//脐带
+                    if(values.umbilicalCord.split('?').length==1){
+                        var list = values.umbilicalCord.split(',');
+                        $(list).each(function () {
+                            if(this=='脱落'){
+                                $('input[value="脱落"]').attr('checked','checked');
+                            }
+                            if(this=='未脱落'){
+                                $('input[value="未脱落"]').attr('checked','checked');
+                            }
+                            if(this=='干燥'){
+                                $('input[value="干燥"]').attr('checked','checked');
+                            }
+                            if(this=='分泌物'){
+                                $('input[value="分泌物"]').attr('checked','checked');
+                            }
+                            if(this=='红肿'){
+                                $('input[value="红肿"]').attr('checked','checked');
+                            }
+                        })
+                    }
+                    else {
+                        var list = values.umbilicalCord.split('?')[0].split(',');
+                        $(list).each(function () {
+                            if(this=='脱落'){
+                                $('input[value="脱落"]').attr('checked','checked');
+                            }
+                            if(this=='未脱落'){
+                                $('input[value="未脱落"]').attr('checked','checked');
+                            }
+                            if(this=='干燥'){
+                                $('input[value="干燥"]').attr('checked','checked');
+                            }
+                            if(this=='分泌物'){
+                                $('input[value="分泌物"]').attr('checked','checked');
+                            }
+                            if(this=='红肿'){
+                                $('input[value="红肿"]').attr('checked','checked');
+                            }
+                        })
+                        $('#fornote').attr('checked','checked');
+                        $('#umbilicalCordnote').show();
+                        $('#umbilicalCordnote').children('input').val(values.umbilicalCord.split('?')[1]);
+                    }
+                    $('#back').val(values.back);
+                    $('#upperLimb').val(values.upperLimb);
+                    $('#lowerLimbs').val(values.lowerLimbs);
+                    //$('#skin').val(values.skin);
+                    //$('#skin').val(values.skin);//皮肤
+                    if(values.skin.split('?').length==1){
+                        var list = values.skin.split(',');
+                        $(list).each(function () {
+                            if(this=='红润'){
+                                $('input[value="红润"]').attr('checked','checked');
+                            }
+                            if(this=='黄'){
+                                $('input[value="黄"]').attr('checked','checked');
+                            }
+                            if(this=='苍白'){
+                                $('input[value="苍白"]').attr('checked','checked');
+                            }
+                            if(this=='青铜'){
+                                $('input[value="青铜"]').attr('checked','checked');
+                            }
+                            if(this=='发钳'){
+                                $('input[value="发钳"]').attr('checked','checked');
+                            }
+                            if(this=='红臀'){
+                                $('input[value="红臀"]').attr('checked','checked');
+                            }
+                            if(this=='红疹'){
+                                $('input[value="红疹"]').attr('checked','checked');
+                            }
+                            if(this=='毒性红斑'){
+                                $('input[value="毒性红斑"]').attr('checked','checked');
+                            }
+                            if(this=='粟粒疹'){
+                                $('input[value="粟粒疹"]').attr('checked','checked');
+                            }
+                            if(this=='血管瘤'){
+                                $('input[value="血管瘤"]').attr('checked','checked');
+                            }
+                            if(this=='蒙古斑'){
+                                $('input[value="蒙古斑"]').attr('checked','checked');
+                            }
+                            if(this=='皮下淤血'){
+                                $('input[value="皮下淤血"]').attr('checked','checked');
+                            }
+                            if(this=='干燥脱皮'){
+                                $('input[value="干燥脱皮"]').attr('checked','checked');
+                            }
+                        })
+                    }
+                    else {
+                        var list = values.skin.split('?')[0].split(',');
+                        $(list).each(function () {
+                            if(this=='红润'){
+                                $('input[value="红润"]').attr('checked','checked');
+                            }
+                            if(this=='黄'){
+                                $('input[value="黄"]').attr('checked','checked');
+                            }
+                            if(this=='苍白'){
+                                $('input[value="苍白"]').attr('checked','checked');
+                            }
+                            if(this=='青铜'){
+                                $('input[value="青铜"]').attr('checked','checked');
+                            }
+                            if(this=='发钳'){
+                                $('input[value="发钳"]').attr('checked','checked');
+                            }
+                            if(this=='红臀'){
+                                $('input[value="红臀"]').attr('checked','checked');
+                            }
+                            if(this=='红疹'){
+                                $('input[value="红疹"]').attr('checked','checked');
+                            }
+                            if(this=='毒性红斑'){
+                                $('input[value="毒性红斑"]').attr('checked','checked');
+                            }
+                            if(this=='粟粒疹'){
+                                $('input[value="粟粒疹"]').attr('checked','checked');
+                            }
+                            if(this=='血管瘤'){
+                                $('input[value="血管瘤"]').attr('checked','checked');
+                            }
+                            if(this=='蒙古斑'){
+                                $('input[value="蒙古斑"]').attr('checked','checked');
+                            }
+                            if(this=='皮下淤血'){
+                                $('input[value="皮下淤血"]').attr('checked','checked');
+                            }
+                            if(this=='干燥脱皮'){
+                                $('input[value="干燥脱皮"]').attr('checked','checked');
+                            }
+                        })
+                        $('#skinnote').val(values.skin.split('?')[1]);
+                    }
+                    //$('#appearance').val(values.appearance);
+                    //$('#secretions').val(values.secretions);
+                    if(values.secretions==null||values.secretions==''){//男
+                        $('#appearance option[value='+values.appearance+']').attr('selected','selected')
+                    }
+                    else if(values.secretions=='无'){//
+                        $('#nv').show();
+                        $('#nan').hide()
+                        $('#sex option[value="女"]').attr('selected','selected')
+                        $('#secretions option[value="无"]').attr('selected','selected')
+                    }
+                    else {
+                        $('#nv').show();
+                        $('#nan').hide()
+                        $('#sex option[value="女"]').attr('selected','selected');
+                        $('#secretions option[value="有"]').attr('selected','selected')
+                        $('#secretionsnote').show();
+                        $('#secretionsnote').children('input').val(values.secretions);
+                    }
+                    $('#urinate').val(values.urinate);
+                    $('#moveBowels').val(values.moveBowels);
+                    $('#assessmentTime').val(values.assessmentTime);
+                    $('#assessment').val(values.assessment);
+                    $('#confirmSignature').val(values.confirmSignature);
+                    $('#note').val(values.note);
+                    $('#jaundice').val(values.jaundice);
+                    $('#plantarBlood').val(values.plantarBlood);
+
+                    $("#myform").find("select,input,label").attr("disabled","disabled");
+                },
+                buttons:[{
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                }],
+            });
+        }
+        window.detail = detail;
+        function myonshown() {//动态连接
+            $('#sex').change(function () {
+                if($('#sex').val()=="男"){
+                    $('#nan').show();
+                    $('#nv').hide();
+                }
+                if($('#sex').val()=="女"){
+                    $('#nan').hide();
+                    $('#nv').show();
+                }
+            })
+            $('#inlineCheckbox1').click(function () {
+                if($('#inlineCheckbox1').is(':checked')){
+                    $('#neckid').show();
+                }else {
+                    $('#neckid').hide();
+                }
+            })
+            //分泌物 有无
+            $('#secretions').change(function () {
+                if($('#secretions').val()=="有"){
+                    $('#secretionsnote').show()
+                }else {
+                    $('#secretionsnote').hide()
+                }
+            })
+            //交付妈妈
+            $('#fornote').click(function () {
+                if($('#fornote').is(':checked')){
+                    $('#umbilicalCordnote').show()
+                }else {
+                    $('#umbilicalCordnote').hide()
+                }
+            })
+        }
+        //启动footable
+        var ft = FooTable.init('#babyevaluates',{
+            "columns": pavilioneducationTitle,
+            "rows": $.get("${ctx}/babyEvaluate/getBymotherId?customerBasicId="+'${motherid}',function (data) {
+                $(data).each(function () {
+                    this.detail = "<button class='btn btn-primary btn-sm' onclick='detail("+JSON.stringify(this)+")'>查看详情</button>";
+                })
+            }),
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog =  BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\">新增一条数据</span>",
+                        cssClass: 'login-dialog',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/babyEvaluate.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+
+                        onshown:function () {
+                            $.get("${ctx}/customerBasic/getBabyBasics?motherId="+'<%=request.getParameter("motherid")%>',function (data) {
+                                $(data).each(function () {
+                                    $("#babyname").append("<option value='"+this.name+"'>"+this.name+"</option>")
+                                })
+                            })
+                            myonshown();
+                        },
+                        onhide:function(){
+                            $that.removeAttr("disabled");
+                        },
+                        buttons:[{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action:function(){
+                                //颈部
+                                var neck = null;//颈部数据获取
+                                if($('#neckid').is(':visible')){
+                                    neck =$('#neckid :input[name="neck"]').val();
+                                    if(neck==''||neck==null){
+                                        neck='畸形';
+                                    }
+                                }else {
+                                    neck = "正常"
+                                }
+                                //颈部
+                                //脐带
+                                var umbilicalCord = null;
+                                $('input[type="check"]:checked,input[name="umbilicalCord"]:checked').each(function (index) {
+                                        if(index==0){
+                                            umbilicalCord = $(this).val()
+                                        }else {
+                                            umbilicalCord += ','+$(this).val()
+                                        }
+                                })
+                                if($('#umbilicalCordnote').is(':visible')){
+                                    umbilicalCord = umbilicalCord+"?"+$('#umbilicalCordnote').children(':first').val();
+                                }
+                                //脐带
+                                //皮肤
+                                var skin = null;
+                                $('input[type="check"]:checked,input[name="skin"]:checked').each(function (index) {
+                                    if(index==0){
+                                        skin = $(this).val()
+                                    }else {
+                                        skin += ','+$(this).val()
+                                    }
+                                })
+                                if($('#skinnote').val()!=''||$('#skinnote').val()!=''){
+                                    skin = skin +'?'+$('#skinnote').val();
+                                }
+                                //皮肤
+                                //性别
+                                var secretions = null;
+                                if($('#nv').is(':visible')){//是女
+                                    if($('#secretionsnote').is(':visible')){//有分泌物
+                                        secretions = $('#secretionsnote').children('input').val();
+                                    }else {
+                                        secretions = $('#secretions').val();
+                                    }
+                                }
+                                var appearance = null;
+                                if($('#nan').is(':visible')){//是男
+                                    appearance = $('#appearance').val()
+                                }
+                                //性别
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'babyname':$('#babyname').val(),
+                                    'roomId':$('#roomId').val(),
+                                    'hospitalsummary':$('#hospitalsummary').val(),
+                                    'childBirthWay':$('#childBirthWay').val(),
+                                    'updatetime':$('#updatetime').val(),
+                                    'weight':$('#weight').val(),
+                                    'height':$('#height').val(),
+                                    'temperature':$('#temperature').val(),
+                                    'heartbeat':$('#heartbeat').val(),
+                                    'breathing':$('#breathing').val(),
+                                    'scalp':$('#scalp').val(),
+                                    'eye':$('#eye').val(),
+                                    'ear':$('#ear').val(),
+                                    'oral':$('#oral').val(),
+                                    'nose':$('#nose').val(),
+                                    'neck':neck,
+                                    'chest':$('#chest').val(),
+                                    'abdomen':$('#abdomen').val(),
+                                    'umbilicalCord':umbilicalCord,
+                                    'back':$('#back').val(),
+                                    'upperLimb':$('#upperLimb').val(),
+                                    'lowerLimbs':$('#lowerLimbs').val(),
+                                    'skin':skin,
+                                    'appearance':appearance,
+                                    'secretions':secretions,
+                                    'urinate':$('#urinate').val(),
+                                    'moveBowels':$('#moveBowels').val(),
+                                    'assessmentTime':$('#assessmentTime').val(),
+                                    'assessment':$('#assessment').val(),
+                                    'confirmSignature':$('#confirmSignature').val(),
+                                    'note':$('#note').val(),
+                                    'customerBasicId':'${motherid}',
+                                    'jaundice':$('#jaundice').val(),
+                                    'plantarBlood':$('#plantarBlood').val(),
+                                    'storeId':'<%=session.getAttribute("storeId")%>',
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields:{ //需要验证的字段
+                                        /*confirmSignature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        babyname: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝宝姓名为空！'
+                                                },
+                                            }
+                                        },*/
+
+                                        scalp: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '头皮不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        oral: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '口腔不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        chest: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '胸部不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        back: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '背部不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        skin: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '皮肤不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        appearance: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '外观不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        assessment: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '评估人不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()) { //新增
+                                    $.post("${ctx}/babyEvaluate/addBabyEvaluate",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label:'关闭',
+                            icon:'fa fa-close',
+                            action:function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\">修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'login-dialog',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/babyEvaluate.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown:function(dialogRef){
+                            myonshown();
+                            $('#id').val(values.id);
+                            $('#babyname').append("<option>"+values.babyname+"</option>").attr("disabled","disabled");
+                            $('#roomId').val(values.roomId);
+                            $('#hospitalsummary').val(values.hospitalsummary);
+                            $('#childBirthWay').val(values.childBirthWay);
+                            $('#updatetime').val(values.updatetime);
+                            $('#weight').val(values.weight);
+                            $('#height').val(values.height);
+                            $('#temperature').val(values.temperature);
+                            $('#heartbeat').val(values.heartbeat);
+                            $('#breathing').val(values.breathing);
+                            $('#scalp').val(values.scalp);
+                            $('#eye').val(values.eye);
+                            $('#ear').val(values.ear);
+                            $('#oral').val(values.oral);
+                            $('#nose').val(values.nose);
+                            //$('#neck').val(values.neck);//颈部
+                            if(values.neck=='正常'){
+                                $('input[type="check"],input[name="neck"]').attr('checked','checked');
+                            }else if(values.neck=='畸形'){
+                                $('#inlineCheckbox1').attr('checked','checked');
+                            }else {
+                                $('#inlineCheckbox1').attr('checked','checked');
+                                $('#neckid').show();
+                                $('#neckid').children(':first').val(values.neck);
+                            }
+                            $('#chest').val(values.chest);
+                            $('#abdomen').val(values.abdomen);
+                            //$('#umbilicalCord').val(values.umbilicalCord);//脐带
+                            if(values.umbilicalCord.split('?').length==1){
+                                var list = values.umbilicalCord.split(',');
+                                $(list).each(function () {
+                                    if(this=='脱落'){
+                                        $('input[value="脱落"]').attr('checked','checked');
+                                    }
+                                    if(this=='未脱落'){
+                                        $('input[value="未脱落"]').attr('checked','checked');
+                                    }
+                                    if(this=='干燥'){
+                                        $('input[value="干燥"]').attr('checked','checked');
+                                    }
+                                    if(this=='分泌物'){
+                                        $('input[value="分泌物"]').attr('checked','checked');
+                                    }
+                                    if(this=='红肿'){
+                                        $('input[value="红肿"]').attr('checked','checked');
+                                    }
+                                })
+                            }
+                            else {
+                                var list = values.umbilicalCord.split('?')[0].split(',');
+                                $(list).each(function () {
+                                    if(this=='脱落'){
+                                        $('input[value="脱落"]').attr('checked','checked');
+                                    }
+                                    if(this=='未脱落'){
+                                        $('input[value="未脱落"]').attr('checked','checked');
+                                    }
+                                    if(this=='干燥'){
+                                        $('input[value="干燥"]').attr('checked','checked');
+                                    }
+                                    if(this=='分泌物'){
+                                        $('input[value="分泌物"]').attr('checked','checked');
+                                    }
+                                    if(this=='红肿'){
+                                        $('input[value="红肿"]').attr('checked','checked');
+                                    }
+                                })
+                                $('#fornote').attr('checked','checked');
+                                $('#umbilicalCordnote').show();
+                                $('#umbilicalCordnote').children('input').val(values.umbilicalCord.split('?')[1]);
+                            }
+                            //脐带回显
+                            $('#back').val(values.back);
+                            $('#upperLimb').val(values.upperLimb);
+                            $('#lowerLimbs').val(values.lowerLimbs);
+                            //$('#skin').val(values.skin);//皮肤
+                            if(values.skin.split('?').length==1){
+                                var list = values.skin.split(',');
+                                $(list).each(function () {
+                                    if(this=='红润'){
+                                        $('input[value="红润"]').attr('checked','checked');
+                                    }
+                                    if(this=='黄'){
+                                        $('input[value="黄"]').attr('checked','checked');
+                                    }
+                                    if(this=='苍白'){
+                                        $('input[value="苍白"]').attr('checked','checked');
+                                    }
+                                    if(this=='青铜'){
+                                        $('input[value="青铜"]').attr('checked','checked');
+                                    }
+                                    if(this=='发钳'){
+                                        $('input[value="发钳"]').attr('checked','checked');
+                                    }
+                                    if(this=='红臀'){
+                                        $('input[value="红臀"]').attr('checked','checked');
+                                    }
+                                    if(this=='红疹'){
+                                        $('input[value="红疹"]').attr('checked','checked');
+                                    }
+                                    if(this=='毒性红斑'){
+                                        $('input[value="毒性红斑"]').attr('checked','checked');
+                                    }
+                                    if(this=='粟粒疹'){
+                                        $('input[value="粟粒疹"]').attr('checked','checked');
+                                    }
+                                    if(this=='血管瘤'){
+                                        $('input[value="血管瘤"]').attr('checked','checked');
+                                    }
+                                    if(this=='蒙古斑'){
+                                        $('input[value="蒙古斑"]').attr('checked','checked');
+                                    }
+                                    if(this=='皮下淤血'){
+                                        $('input[value="皮下淤血"]').attr('checked','checked');
+                                    }
+                                    if(this=='干燥脱皮'){
+                                        $('input[value="干燥脱皮"]').attr('checked','checked');
+                                    }
+                                })
+                            }
+                            else {
+                                var list = values.skin.split('?')[0].split(',');
+                                $(list).each(function () {
+                                    if(this=='红润'){
+                                        $('input[value="红润"]').attr('checked','checked');
+                                    }
+                                    if(this=='黄'){
+                                        $('input[value="黄"]').attr('checked','checked');
+                                    }
+                                    if(this=='苍白'){
+                                        $('input[value="苍白"]').attr('checked','checked');
+                                    }
+                                    if(this=='青铜'){
+                                        $('input[value="青铜"]').attr('checked','checked');
+                                    }
+                                    if(this=='发钳'){
+                                        $('input[value="发钳"]').attr('checked','checked');
+                                    }
+                                    if(this=='红臀'){
+                                        $('input[value="红臀"]').attr('checked','checked');
+                                    }
+                                    if(this=='红疹'){
+                                        $('input[value="红疹"]').attr('checked','checked');
+                                    }
+                                    if(this=='毒性红斑'){
+                                        $('input[value="毒性红斑"]').attr('checked','checked');
+                                    }
+                                    if(this=='粟粒疹'){
+                                        $('input[value="粟粒疹"]').attr('checked','checked');
+                                    }
+                                    if(this=='血管瘤'){
+                                        $('input[value="血管瘤"]').attr('checked','checked');
+                                    }
+                                    if(this=='蒙古斑'){
+                                        $('input[value="蒙古斑"]').attr('checked','checked');
+                                    }
+                                    if(this=='皮下淤血'){
+                                        $('input[value="皮下淤血"]').attr('checked','checked');
+                                    }
+                                    if(this=='干燥脱皮'){
+                                        $('input[value="干燥脱皮"]').attr('checked','checked');
+                                    }
+                                })
+                                $('#skinnote').val(values.skin.split('?')[1]);
+                            }
+                            //$('#appearance').val(values.appearance);//男
+                            //$('#secretions').val(values.secretions);//女
+                            if(values.secretions==null||values.secretions==''){//男
+                                $('#appearance option[value='+values.appearance+']').attr('selected','selected')
+                            }
+                            else if(values.secretions=='无'){//
+                                $('#nv').show();
+                                $('#nan').hide()
+                                $('#sex option[value="女"]').attr('selected','selected')
+                                $('#secretions option[value="无"]').attr('selected','selected')
+                            }
+                            else {
+                                $('#nv').show();
+                                $('#nan').hide()
+                                $('#sex option[value="女"]').attr('selected','selected');
+                                $('#secretions option[value="有"]').attr('selected','selected')
+                                $('#secretionsnote').show();
+                                $('#secretionsnote').children('input').val(values.secretions);
+                            }
+                            $('#urinate').val(values.urinate);
+                            $('#moveBowels').val(values.moveBowels);
+                            $('#assessmentTime').val(values.assessmentTime);
+                            $('#assessment').val(values.assessment);
+                            $('#confirmSignature').val(values.confirmSignature);
+                            $('#jaundice').val(values.jaundice);
+                            $('#plantarBlood').val(values.plantarBlood);
+                            $('#note').val(values.note);
+                        },
+                        buttons:[{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action:function(){
+                                //颈部
+                                var neck = null;//颈部数据获取
+                                if($('#neckid').is(':visible')){
+                                    neck =$('#neckid :input[name="neck"]').val();
+                                    if(neck==''||neck==null){
+                                        neck='畸形';
+                                    }
+                                }else {
+                                    neck = "正常"
+                                }
+                                //颈部
+                                //脐带
+                                var umbilicalCord = null;
+                                $('input[type="check"]:checked,input[name="umbilicalCord"]:checked').each(function (index) {
+                                    if(index==0){
+                                        umbilicalCord = $(this).val()
+                                    }else {
+                                        umbilicalCord += ','+$(this).val()
+                                    }
+                                })
+                                if($('#umbilicalCordnote').is(':visible')){
+                                    umbilicalCord = umbilicalCord+"?"+$('#umbilicalCordnote').children(':first').val();
+                                }
+                                //脐带
+                                //皮肤
+                                var skin = null;
+                                $('input[type="check"]:checked,input[name="skin"]:checked').each(function (index) {
+                                    if(index==0){
+                                        skin = $(this).val()
+                                    }else {
+                                        skin += ','+$(this).val()
+                                    }
+                                })
+                                if($('#skinnote').val()!=''||$('#skinnote').val()!=''){
+                                    skin = skin +'?'+$('#skinnote').val();
+                                }
+                                //皮肤
+                                //性别
+                                var secretions = null;
+                                if($('#nv').is(':visible')){//是女
+                                    if($('#secretionsnote').is(':visible')){//有分泌物
+                                        secretions = $('#secretionsnote').children('input').val();
+                                    }else {
+                                        secretions = $('#secretions').val();
+                                    }
+                                }
+                                var appearance = null;
+                                if($('#nan').is(':visible')){//是男
+                                    appearance = $('#appearance').val()
+                                }
+                                //性别
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'babyname':$('#babyname').val(),
+                                    'roomId':$('#roomId').val(),
+                                    'hospitalsummary':$('#hospitalsummary').val(),
+                                    'childBirthWay':$('#childBirthWay').val(),
+                                    'updatetime':$('#updatetime').val(),
+                                    'weight':$('#weight').val(),
+                                    'height':$('#height').val(),
+                                    'temperature':$('#temperature').val(),
+                                    'heartbeat':$('#heartbeat').val(),
+                                    'breathing':$('#breathing').val(),
+                                    'scalp':$('#scalp').val(),
+                                    'eye':$('#eye').val(),
+                                    'ear':$('#ear').val(),
+                                    'oral':$('#oral').val(),
+                                    'nose':$('#nose').val(),
+                                    'neck':neck,
+                                    'chest':$('#chest').val(),
+                                    'abdomen':$('#abdomen').val(),
+                                    'umbilicalCord':umbilicalCord,
+                                    'back':$('#back').val(),
+                                    'upperLimb':$('#upperLimb').val(),
+                                    'lowerLimbs':$('#lowerLimbs').val(),
+                                    'skin':skin,
+                                    'appearance':appearance,
+                                    'secretions':secretions,
+                                    'urinate':$('#urinate').val(),
+                                    'moveBowels':$('#moveBowels').val(),
+                                    'assessmentTime':$('#assessmentTime').val(),
+                                    'assessment':$('#assessment').val(),
+                                    'confirmSignature':$('#confirmSignature').val(),
+                                    'note':$('#note').val(),
+                                    'customerBasicId':'${motherid}',
+                                    'jaundice':$('#jaundice').val(),
+                                    'plantarBlood':$('#plantarBlood').val(),
+                                    'storeId':'<%=session.getAttribute("storeId")%>',
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        /*confirmSignature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        babyname: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝宝姓名为空！'
+                                                },
+                                            }
+                                        },*/
+
+                                        scalp: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '头皮不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        oral: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '口腔不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        chest: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '胸部不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        back: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '背部不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        skin: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '皮肤不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        appearance: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '外观不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        assessment: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '评估人不能为空！'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/babyEvaluate/updateBabyEvaluate",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+                                    setTimeout("window.location.reload();",1000);
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }],
+                    });
+                },
+                //删除操作
+                deleteRow: function(row){
+                    myConfirm("${ctx}/babyEvaluate/deteleBabyEvaluate",row);
+                }
+            }
+        });
+        uid = 10;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.bean.CustomerBasicExample;
+import com.luer.servicecenter.bean.Nursingeducation;
+import com.luer.servicecenter.bean.NursingeducationExample;
+import com.luer.servicecenter.dao.CustomerBasicMapper;
+import com.luer.servicecenter.dao.NursingeducationMapper;
+import com.luer.servicecenter.service.NursingEducationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+
+@Service
+@Transactional
+/**
+ * @author 张路明
+ */
+public class NursingEducationServiceImpl implements NursingEducationService {
+
+    @Autowired
+    NursingeducationMapper nursingeducationMapper;
+
+    @Autowired
+    private CustomerBasicMapper cb;
+
+    @Override
+    public List<Nursingeducation> getNursingEducation(Nursingeducation nursingeducation) {
+        NursingeducationExample nursingeducationExample = new NursingeducationExample();
+        NursingeducationExample.Criteria criteria = nursingeducationExample.createCriteria();
+        if (nursingeducation.getStoreId() != null) {
+            criteria.andStoreIdLike(nursingeducation.getStoreId());
+        }
+        List<Nursingeducation> list = nursingeducationMapper.selectByExample(nursingeducationExample);
+        return list;
+    }
+
+    @Override
+    public int updateNursingEducation(Nursingeducation nursingeducation) {
+        NursingeducationExample nursingeducationExample = new NursingeducationExample();
+        NursingeducationExample.Criteria criteria = nursingeducationExample.createCriteria();
+        criteria.andIdLike(nursingeducation.getId());
+        int i = nursingeducationMapper.updateByExampleSelective(nursingeducation, nursingeducationExample);
+        return i;
+    }
+
+    @Override
+    public int deleteNursingEducation(String id) {
+        int i = nursingeducationMapper.deleteByPrimaryKey(id);
+        return i;
+    }
+
+    @Override
+    public int insertNursingEducation(Nursingeducation nursingeducation) {
+        nursingeducation.setId(UUIDUtils.getUUID());
+        int i = nursingeducationMapper.insertSelective(nursingeducation);
+        return i;
+    }
+
+    @Override
+    public List<Nursingeducation> getEducationByMotherId(String customerBasicId) {
+        List<Nursingeducation> list = nursingeducationMapper.getEducationByMotherId(customerBasicId);
+
+        return list;
+    }
+
+    //初始化数据
+    @Override
+    public void initNursingEducation(String customerBasicId) {
+
+        List<Nursingeducation> nursingeducationList = new ArrayList<Nursingeducation>();
+        CustomerBasic customerBasic = cb.selectByPrimaryKey(customerBasicId);
+        Nursingeducation nursingeducation = null;
+
+
+        for (int i = 0; i < 38; i++) {
+            nursingeducation = new Nursingeducation();
+            nursingeducation.setId(UUIDUtils.getUUID());
+            nursingeducation.setCustomerBasicId(customerBasicId);
+            nursingeducation.setCustomername(customerBasic.getName());
+            nursingeducation.setStoreId(customerBasic.getStoreId());
+            if(i<28){
+                nursingeducation.setWeek("第一周");
+            }
+            if (i < 6) {
+                nursingeducation.setProject("亲子同室安全指导");
+
+                switch (i) {
+                    case 0:
+                        nursingeducation.setNum(0);
+                        nursingeducation.setBehaviorobjectives("1.告知婴儿被盖覆盖于颈部以下，以维护呼吸道通畅");
+                        break;
+                    case 1:
+                        nursingeducation.setNum(1);
+                        nursingeducation.setBehaviorobjectives("2.告知婴儿正常口鼻肤色及处置");
+                        break;
+                    case 2:
+                        nursingeducation.setNum(2);
+                        nursingeducation.setBehaviorobjectives("3.告知勿让婴儿趴睡");
+                        break;
+                    case 3:
+                        nursingeducation.setNum(3);
+                        nursingeducation.setBehaviorobjectives("4.告知勿让婴儿单独留置在房间内");
+                        break;
+                    case 4:
+                        nursingeducation.setNum(4);
+                        nursingeducation.setBehaviorobjectives("5.告知床上哺喂时应注意婴儿安全");
+                        break;
+                    default:
+                        nursingeducation.setNum(5);
+                        nursingeducation.setBehaviorobjectives("6.告知亲子同室期间家属照护与注意事项");
+                        break;
+                }
+            } else if (i < 16) {
+                nursingeducation.setProject("哺喂母乳");
+
+                switch (i) {
+                    case 6:
+                        nursingeducation.setNum(6);
+                        nursingeducation.setBehaviorobjectives("1.哺喂前能确实洗手以及清洁乳房");
+                        break;
+                    case 7:
+                        nursingeducation.setNum(7);
+                        nursingeducation.setBehaviorobjectives("2.能够说出哺喂母乳的好处");
+                        break;
+                    case 8:
+                        nursingeducation.setNum(8);
+                        nursingeducation.setBehaviorobjectives("3.能采取适当喂奶姿势");
+                        break;
+                    case 9:
+                        nursingeducation.setNum(9);
+                        nursingeducation.setBehaviorobjectives("4.能让宝宝正确含住乳房");
+                        break;
+                    case 10:
+                        nursingeducation.setNum(10);
+                        nursingeducation.setBehaviorobjectives("5.能说出判断宝宝吸吮量是否足够的方法");
+                        break;
+                    case 11:
+                        nursingeducation.setNum(11);
+                        nursingeducation.setBehaviorobjectives("6.能正确为宝宝拍背排气");
+                        break;
+                    case 12:
+                        nursingeducation.setNum(12);
+                        nursingeducation.setBehaviorobjectives("7.能说出涨奶处理办法");
+                        break;
+                    case 13:
+                        nursingeducation.setNum(13);
+                        nursingeducation.setBehaviorobjectives("8.能说出如何预防乳头破裂及处理办法");
+                        break;
+                    case 14:
+                        nursingeducation.setNum(14);
+                        nursingeducation.setBehaviorobjectives("9.能说出如何促进乳汁分泌");
+                        break;
+                    default:
+                        nursingeducation.setNum(15);
+                        nursingeducation.setBehaviorobjectives("10.能说出如何储存母乳及使用办法");
+                        break;
+
+                }
+            } else if (i < 19) {
+                nursingeducation.setProject("会阴伤口");
+                nursingeducation.setNum(2);
+                switch (i) {
+                    case 16:
+                        nursingeducation.setNum(16);
+                        nursingeducation.setBehaviorobjectives("1.能说出会阴清洁的方法");
+                        break;
+                    case 17:
+                        nursingeducation.setNum(17);
+                        nursingeducation.setBehaviorobjectives("2.能够说更换产垫的正确方法");
+                        break;
+                    default:
+                        nursingeducation.setNum(18);
+                        nursingeducation.setBehaviorobjectives("3.能说出会阴伤口的自我照顾办法");
+                        break;
+
+                }
+            } else if (i < 20) {
+                nursingeducation.setNum(19);
+
+                nursingeducation.setProject("腹部伤口");
+
+                nursingeducation.setBehaviorobjectives("1.能说出腹部伤口的自我照顾办法");
+
+
+            } else if (i < 22) {
+                nursingeducation.setProject("子宫");
+
+                switch (i) {
+                    case 21:
+                        nursingeducation.setNum(21);
+                        nursingeducation.setBehaviorobjectives("1.能说出子宫环形按摩以及注意事项");
+                        break;
+
+                    default:
+                        nursingeducation.setNum(22);
+                        nursingeducation.setBehaviorobjectives("2.能说出判断正常的子宫收缩");
+                        break;
+                }
+
+            } else if (i < 24) {
+                nursingeducation.setProject("恶露");
+                nursingeducation.setNum(5);
+                switch (i) {
+                    case 23:
+                        nursingeducation.setNum(23);
+                        nursingeducation.setBehaviorobjectives("1.能说出产后恶露的变化");
+                        break;
+
+                    default:
+                        nursingeducation.setNum(24);
+                        nursingeducation.setBehaviorobjectives("2.能说出异常恶露的辨别");
+                        break;
+                }
+
+            } else if (i < 26) {
+                nursingeducation.setProject("身体清洁");
+                nursingeducation.setNum(6);
+                switch (i) {
+                    case 25:
+                        nursingeducation.setNum(25);
+                        nursingeducation.setBehaviorobjectives("1.能说出清洁的目的（口腔清洁以及沐浴）");
+                        break;
+
+                    default:
+                        nursingeducation.setNum(26);
+                        nursingeducation.setBehaviorobjectives("2.能说出清洁过程中要注意的事项");
+                        break;
+                }
+
+            } else if (i < 28) {
+                nursingeducation.setProject("脐带护理");
+                nursingeducation.setNum(7);
+                switch (i) {
+                    case 27:
+                        nursingeducation.setNum(27);
+                        nursingeducation.setBehaviorobjectives("1.能分辨宝宝脐带异常情形");
+                        break;
+
+                    default:
+                        nursingeducation.setNum(28);
+                        nursingeducation.setBehaviorobjectives("2.能说出或实地操作脐带护理步骤及方法");
+                        break;
+                }
+
+            } else if (i < 30) {
+                nursingeducation.setWeek("第二周");
+                nursingeducation.setProject("更换尿布");
+                nursingeducation.setNum(8);
+                switch (i) {
+                    case 29:
+                        nursingeducation.setNum(29);
+                        nursingeducation.setBehaviorobjectives("1.能说出宝宝臀部清洁方法");
+                        break;
+
+                    default:
+                        nursingeducation.setNum(30);
+                        nursingeducation.setBehaviorobjectives("2.能说出宝宝穿着尿不湿注意事项");
+                        break;
+                }
+            } else if (i < 32) {
+                nursingeducation.setWeek("第二周");
+                nursingeducation.setProject("基本手法");
+                nursingeducation.setNum(9);
+                switch (i) {
+                    case 31:
+                        nursingeducation.setNum(31);
+                        nursingeducation.setBehaviorobjectives("1.能说出抱宝宝的几种抱法及注意事项");
+                        break;
+
+                    default:
+                        nursingeducation.setNum(32);
+                        nursingeducation.setBehaviorobjectives("2.能说出几种给宝宝拍嗝姿势及注意事项");
+                        break;
+                }
+            } else if (i < 35) {
+                nursingeducation.setWeek("第三周");
+                nursingeducation.setProject("产后运动");
+                nursingeducation.setNum(10);
+                switch (i) {
+                    case 33:
+                        nursingeducation.setNum(33);
+                        nursingeducation.setBehaviorobjectives("1.能说出产后运动的好处");
+                        break;
+                    case 34:
+                        nursingeducation.setNum(34);
+                        nursingeducation.setBehaviorobjectives("2.能说出执行产后运动要注意的事项");
+                        break;
+                    default:
+                        nursingeducation.setNum(35);
+                        nursingeducation.setBehaviorobjectives("3.能说出常见的产后运动");
+                        break;
+
+                }
+            } else {
+                nursingeducation.setWeek("第四周");
+                nursingeducation.setProject("婴儿沐浴");
+                nursingeducation.setNum(11);
+                switch (i) {
+                    case 36:
+                        nursingeducation.setNum(36);
+                        nursingeducation.setBehaviorobjectives("1.能说出婴儿沐浴应准备的用物");
+                        break;
+                    case 37:
+                        nursingeducation.setNum(37);
+                        nursingeducation.setBehaviorobjectives("2.能说出婴儿沐浴时应注意事项");
+                        break;
+                    default:
+                        nursingeducation.setNum(38);
+                        nursingeducation.setBehaviorobjectives("3.能说出或实际操作婴儿沐浴步骤及办法");
+                        break;
+
+                }
+            }
+            nursingeducationList.add(nursingeducation);
+            System.out.println(nursingeducation);
+        }
+        nursingeducationMapper.insertNursingeducationList(nursingeducationList);
+
+
+    }
+
+}

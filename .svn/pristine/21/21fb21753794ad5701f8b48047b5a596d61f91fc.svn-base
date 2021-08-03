@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.stockandsales.dao.GoodsMapper">
+    <resultMap id="BaseResultMap" type="com.luer.stockandsales.bean.Goods">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="price_one" property="priceOne" jdbcType="DOUBLE"/>
+        <result column="goods_one_id" property="goodsOneId" jdbcType="VARCHAR"/>
+        <result column="goods_two_id" property="goodsTwoId" jdbcType="VARCHAR"/>
+        <result column="supplier_id" property="supplierId" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="serialnum" property="serialnum" jdbcType="INTEGER"/>
+        <result column="price_two" property="priceTwo" jdbcType="DOUBLE"/>
+        <result column="alliasname" property="alliasname" jdbcType="VARCHAR"/>
+        <result column="specifications" property="specifications" jdbcType="VARCHAR"/>
+        <result column="minpurchase_quantityone" property="minpurchaseQuantityone" jdbcType="DOUBLE" />
+        <result column="minpurchase_quantitytwo" property="minpurchaseQuantitytwo" jdbcType="DOUBLE" />
+        <result column="supplier_price" property="supplierPrice" jdbcType="DOUBLE" />
+        <result column="classify_id" property="classifyId" jdbcType="VARCHAR" />
+        <result column="classifyName" property="classifyName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        id, goods_name, unit, goods_one_id, goods_two_id, supplier_id, remark, serialnum,
+        price_one, price_two, alliasname, specifications, minpurchase_quantityone, minpurchase_quantitytwo,
+        supplier_price, classify_id
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.stockandsales.bean.GoodsExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from goods
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from goods
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from goods
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.stockandsales.bean.GoodsExample" >
+        delete from goods
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.stockandsales.bean.Goods" >
+        insert into goods (id, goods_name, unit,
+        goods_one_id, goods_two_id, supplier_id,
+        remark, serialnum, price_one,
+        price_two, alliasname, specifications,
+        minpurchase_quantityone, minpurchase_quantitytwo,
+        supplier_price, classify_id)
+        values (#{id,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR},
+        #{goodsOneId,jdbcType=VARCHAR}, #{goodsTwoId,jdbcType=VARCHAR}, #{supplierId,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR}, #{serialnum,jdbcType=INTEGER}, #{priceOne,jdbcType=DOUBLE},
+        #{priceTwo,jdbcType=DOUBLE}, #{alliasname,jdbcType=VARCHAR}, #{specifications,jdbcType=VARCHAR},
+        #{minpurchaseQuantityone,jdbcType=DOUBLE}, #{minpurchaseQuantitytwo,jdbcType=DOUBLE},
+        #{supplierPrice,jdbcType=DOUBLE}, #{classifyId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.stockandsales.bean.Goods" >
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="goodsName != null" >
+                goods_name,
+            </if>
+            <if test="unit != null" >
+                unit,
+            </if>
+            <if test="goodsOneId != null" >
+                goods_one_id,
+            </if>
+            <if test="goodsTwoId != null" >
+                goods_two_id,
+            </if>
+            <if test="supplierId != null" >
+                supplier_id,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="serialnum != null" >
+                serialnum,
+            </if>
+            <if test="priceOne != null" >
+                price_one,
+            </if>
+            <if test="priceTwo != null" >
+                price_two,
+            </if>
+            <if test="alliasname != null" >
+                alliasname,
+            </if>
+            <if test="specifications != null" >
+                specifications,
+            </if>
+            <if test="minpurchaseQuantityone != null" >
+                minpurchase_quantityone,
+            </if>
+            <if test="minpurchaseQuantitytwo != null" >
+                minpurchase_quantitytwo,
+            </if>
+            <if test="supplierPrice != null" >
+                supplier_price,
+            </if>
+            <if test="classifyId != null" >
+                classify_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null" >
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null" >
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsOneId != null" >
+                #{goodsOneId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsTwoId != null" >
+                #{goodsTwoId,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null" >
+                #{supplierId,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="serialnum != null" >
+                #{serialnum,jdbcType=INTEGER},
+            </if>
+            <if test="priceOne != null" >
+                #{priceOne,jdbcType=DOUBLE},
+            </if>
+            <if test="priceTwo != null" >
+                #{priceTwo,jdbcType=DOUBLE},
+            </if>
+            <if test="alliasname != null" >
+                #{alliasname,jdbcType=VARCHAR},
+            </if>
+            <if test="specifications != null" >
+                #{specifications,jdbcType=VARCHAR},
+            </if>
+            <if test="minpurchaseQuantityone != null" >
+                #{minpurchaseQuantityone,jdbcType=DOUBLE},
+            </if>
+            <if test="minpurchaseQuantitytwo != null" >
+                #{minpurchaseQuantitytwo,jdbcType=DOUBLE},
+            </if>
+            <if test="supplierPrice != null" >
+                #{supplierPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="classifyId != null" >
+                #{classifyId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.stockandsales.bean.GoodsExample" resultType="java.lang.Integer" >
+        select count(*) from goods
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update goods
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goodsName != null" >
+                goods_name = #{record.goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.unit != null" >
+                unit = #{record.unit,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goodsOneId != null" >
+                goods_one_id = #{record.goodsOneId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goodsTwoId != null" >
+                goods_two_id = #{record.goodsTwoId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.supplierId != null" >
+                supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remark != null" >
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.serialnum != null" >
+                serialnum = #{record.serialnum,jdbcType=INTEGER},
+            </if>
+            <if test="record.priceOne != null" >
+                price_one = #{record.priceOne,jdbcType=DOUBLE},
+            </if>
+            <if test="record.priceTwo != null" >
+                price_two = #{record.priceTwo,jdbcType=DOUBLE},
+            </if>
+            <if test="record.alliasname != null" >
+                alliasname = #{record.alliasname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.specifications != null" >
+                specifications = #{record.specifications,jdbcType=VARCHAR},
+            </if>
+            <if test="record.minpurchaseQuantityone != null" >
+                minpurchase_quantityone = #{record.minpurchaseQuantityone,jdbcType=DOUBLE},
+            </if>
+            <if test="record.minpurchaseQuantitytwo != null" >
+                minpurchase_quantitytwo = #{record.minpurchaseQuantitytwo,jdbcType=DOUBLE},
+            </if>
+            <if test="record.supplierPrice != null" >
+                supplier_price = #{record.supplierPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="record.classifyId != null" >
+                classify_id = #{record.classifyId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update goods
+        set id = #{record.id,jdbcType=VARCHAR},
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+        unit = #{record.unit,jdbcType=VARCHAR},
+        goods_one_id = #{record.goodsOneId,jdbcType=VARCHAR},
+        goods_two_id = #{record.goodsTwoId,jdbcType=VARCHAR},
+        supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        serialnum = #{record.serialnum,jdbcType=INTEGER},
+        price_one = #{record.priceOne,jdbcType=DOUBLE},
+        price_two = #{record.priceTwo,jdbcType=DOUBLE},
+        alliasname = #{record.alliasname,jdbcType=VARCHAR},
+        specifications = #{record.specifications,jdbcType=VARCHAR},
+        minpurchase_quantityone = #{record.minpurchaseQuantityone,jdbcType=DOUBLE},
+        minpurchase_quantitytwo = #{record.minpurchaseQuantitytwo,jdbcType=DOUBLE},
+        supplier_price = #{record.supplierPrice,jdbcType=DOUBLE},
+        classify_id = #{record.classifyId,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.stockandsales.bean.Goods" >
+        update goods
+        <set >
+            <if test="goodsName != null" >
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null" >
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsOneId != null" >
+                goods_one_id = #{goodsOneId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsTwoId != null" >
+                goods_two_id = #{goodsTwoId,jdbcType=VARCHAR},
+            </if>
+            <if test="supplierId != null" >
+                supplier_id = #{supplierId,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="serialnum != null" >
+                serialnum = #{serialnum,jdbcType=INTEGER},
+            </if>
+            <if test="priceOne != null" >
+                price_one = #{priceOne,jdbcType=DOUBLE},
+            </if>
+            <if test="priceTwo != null" >
+                price_two = #{priceTwo,jdbcType=DOUBLE},
+            </if>
+            <if test="alliasname != null" >
+                alliasname = #{alliasname,jdbcType=VARCHAR},
+            </if>
+            <if test="specifications != null" >
+                specifications = #{specifications,jdbcType=VARCHAR},
+            </if>
+            <if test="minpurchaseQuantityone != null" >
+                minpurchase_quantityone = #{minpurchaseQuantityone,jdbcType=DOUBLE},
+            </if>
+            <if test="minpurchaseQuantitytwo != null" >
+                minpurchase_quantitytwo = #{minpurchaseQuantitytwo,jdbcType=DOUBLE},
+            </if>
+            <if test="supplierPrice != null" >
+                supplier_price = #{supplierPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="classifyId != null" >
+                classify_id = #{classifyId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.stockandsales.bean.Goods" >
+    update goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      goods_one_id = #{goodsOneId,jdbcType=VARCHAR},
+      goods_two_id = #{goodsTwoId,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      serialnum = #{serialnum,jdbcType=INTEGER},
+      price_one = #{priceOne,jdbcType=DOUBLE},
+      price_two = #{priceTwo,jdbcType=DOUBLE},
+      alliasname = #{alliasname,jdbcType=VARCHAR},
+      specifications = #{specifications,jdbcType=VARCHAR},
+      minpurchase_quantityone = #{minpurchaseQuantityone,jdbcType=DOUBLE},
+      minpurchase_quantitytwo = #{minpurchaseQuantitytwo,jdbcType=DOUBLE},
+      supplier_price = #{supplierPrice,jdbcType=DOUBLE},
+      classify_id = #{classifyId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select * from goods
+    </select>
+    <select id="selectBySupplierId" resultMap="BaseResultMap">
+
+
+     select g.id,g.goods_name,g.goods_one_id,g.goods_two_id,g.alliasname,
+        g.price_one,g.price_two,g.remark,g.serialnum,
+        g.supplier_price,g.minpurchase_quantityone,g.minpurchase_quantitytwo,
+        g.specifications,g.supplier_id,g.unit,s.supplier_name as supplierName,
+        g.classify_id,cl.classify_name as classifyName
+        from goods g
+        left join supplier s on g.supplier_id=s.id
+        left join classify  cl on g.classify_id=cl.id
+        where g.supplier_id= #{supplierId}
+    </select>
+
+    <!--通过商品编号获取商品对象-->
+    <select id="selectBySerialnum" resultMap="BaseResultMap">
+         select * from goods where serialnum=#{serialnum}
+    </select>
+    <!--根据供应商查询对应的商品-->
+    <select id="selectBySupplierIdList" resultMap="BaseResultMap">
+        select g.id,g.goods_name,g.goods_one_id,g.goods_two_id,g.alliasname,
+        g.price_one,g.price_two,g.remark,g.serialnum,
+        g.supplier_price,g.minpurchase_quantityone,g.minpurchase_quantitytwo,
+        g.specifications,g.supplier_id,g.unit,s.supplier_name as supplierName,
+        g.classify_id,cl.classify_name as classifyName
+        from goods g
+        left join supplier s on g.supplier_id=s.id
+        left join classify  cl on g.classify_id=cl.id
+        where g.supplier_id in
+        <foreach collection="supplierIdList" open="(" close=")" separator="," item="supplierId">
+            #{supplierId}
+        </foreach>
+
+    </select>
+
+    <select id="selectSupplierIdsByIds" resultType="java.lang.String">
+        select DISTINCT supplier_id from goods where id in
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
+        select DISTINCT * from goods where id in
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+    <delete id="deleteBySupplierId" parameterType="java.lang.String">
+        delete from goods where supplier_id = #{supplierId}
+    </delete>
+
+    <select id="selectHeadOfficeGoodsByClassifyId" resultMap="BaseResultMap">
+        select g.id,g.goods_name,g.goods_one_id,g.goods_two_id,g.alliasname,
+        g.price_one,g.price_two,g.remark,g.serialnum,
+        g.supplier_price,g.minpurchase_quantityone,g.minpurchase_quantitytwo,
+        g.specifications,g.supplier_id,g.unit,s.supplier_name as supplierName,
+        g.classify_id,cl.classify_name as classifyName
+        from goods g
+        left join supplier s on g.supplier_id=s.id
+        left join classify  cl on g.classify_id=cl.id
+        where g.classify_id=#{classifyId} and g.supplier_id in
+        <foreach collection="supplierIdList" open="(" close=")" separator="," item="supplierId">
+            #{supplierId}
+        </foreach>
+
+    </select>
+
+
+
+
+    <select id="selectBySupplierIdListAndClassifyId" resultMap="BaseResultMap">
+        select g.id,g.goods_name,g.goods_one_id,g.goods_two_id,g.alliasname,
+        g.price_one,g.price_two,g.remark,g.serialnum,
+        g.supplier_price,g.minpurchase_quantityone,g.minpurchase_quantitytwo,
+        g.specifications,g.supplier_id,g.unit,s.supplier_name as supplierName,
+        g.classify_id,cl.classify_name as classifyName
+        from goods g
+        left join supplier s on g.supplier_id=s.id
+        left join classify  cl on g.classify_id=cl.id
+        where g.classify_id=#{classifyId}  and g.supplier_id in
+        <foreach collection="supplierIdList" open="(" close=")" separator="," item="supplierId">
+            #{supplierId}
+        </foreach>
+    </select>
+
+</mapper>

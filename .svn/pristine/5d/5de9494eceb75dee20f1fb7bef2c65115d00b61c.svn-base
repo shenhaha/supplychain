@@ -1,0 +1,276 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.Schedule;
+import com.luer.storemanager.bean.ScheduleList;
+import com.luer.storemanager.dao.ScheduleMapper;
+import com.luer.storemanager.service.ScheduleService;
+import com.luer.storesdata.bean.Employer;
+import com.luer.storesdata.dao.EmployerMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+/**
+ * 排班服务实现类
+ *
+ * @ClassName ScheduleServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/14 11:29.
+ */
+@Service
+@Transactional
+public class ScheduleServiceImpl implements ScheduleService {
+    @Autowired
+    private ScheduleMapper scheduleMapper;
+    @Autowired
+    private EmployerMapper employerMapper;
+
+    //查询所有
+    @Override
+    public List<ScheduleList> selectSchedule() {
+        return scheduleMapper.selectSchedules();
+    }
+
+    //添加
+    @Override
+    public int insert(Schedule record,String date) throws ParseException {
+        record.setId(UUIDUtils.getUUID());
+        record.setCreatedate(new Date());
+        //如果日期不为null,则默认开始时间和结束时间为当前日期的开始结束时间
+        if (null !=date  || "" !=date) {
+            //定义格式化时间
+            SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+            SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sf3 = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+            Date s=sf2.parse(sf1.format(new SimpleDateFormat("yyyy-MM-dd").parse(date)));
+            Date e=sf2.parse(sf3.format(new SimpleDateFormat("yyyy-MM-dd").parse(date)));
+            //通过开始时间、结束时间、员工id去查询,如果存在记录了,则不添加
+            int count=scheduleMapper.selectScheduleByTimeAndName(s,e,record.getEmployid());
+            if(count>0){
+                return 0;
+            }
+            record.setStarttime(s);
+            record.setEndtime(e);
+        }
+
+        //如果部门为null,则默认用员工信息里的部门
+        if (record.getDepartment() == null) {
+            Employer employer = employerMapper.selectByPrimaryKey(record.getEmployid());
+            record.setDepartment(employer.getDepartment());
+        }
+        return scheduleMapper.insert(record);
+    }
+
+    //修改
+    @Override
+    public int updateByPrimaryKeySelective(Schedule record) {
+        return scheduleMapper.updateByPrimaryKeySelective(record);
+    }
+
+    //删除
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return scheduleMapper.deleteByPrimaryKey(id);
+    }
+
+
+    //根据员工id、所在部门和班次类型查询
+    @Override
+    public List<Schedule> selectScheduleByType(String employId, String department, String type) {
+        return scheduleMapper.selectScheduleByType(employId, department, type);
+    }
+
+    //根据开始时间、结束时间、员工id、所在部门和班次类型查询
+    @Override
+    public List<Schedule> selectScheduleByTime(Date startTime, Date endTime, String employId, String department, String type) {
+        return scheduleMapper.selectScheduleByTime(startTime, endTime, employId, department, type);
+    }
+
+    //查询所有的排班信息
+    @Override
+    public List selectScheduleAllList(String storeId) {
+        //定义一个List用来接收与返回
+        List resultScheduleList = new ArrayList<>();
+        List<Schedule> schedules = scheduleMapper.selectSchedule(storeId);
+        //循环遍历，把相关信息放入Map
+        for (Schedule schedule : schedules) {
+            Map map = new HashMap<>();
+            map.put("id", schedule.getId());
+            map.put("start", schedule.getStarttime());//开始时间
+            map.put("end", schedule.getEndtime());//结束时间
+            map.put("title", schedule.getType());//班次
+            map.put("resourceId", schedule.getEmployid()); //员工id
+            resultScheduleList.add(map);
+        }
+        return resultScheduleList;
+    }
+
+    //根据id修改排班信息
+    public int updateScheduleById(String id, String starttime, String endtime, String employid) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //new一个排班对象，把参数放入对象里
+        Schedule schedule = new Schedule();
+        try {
+            schedule.setId(id);
+            schedule.setStarttime(sdf.parse(starttime));
+            schedule.setEndtime(sdf.parse(endtime));
+            schedule.setEmployid(employid);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return scheduleMapper.updateByPrimaryKeySelective(schedule);
+    }
+
+    /**
+     * 系统默认的排班规则,循环遍历员工表,在需要排班的日期内，根据排班人数，每天都生成相应的排班信息
+     *
+     * @param startTime 排班开始日期
+     * @param endTime   排班结束日期
+     * @param number    每天排班总人数
+     * @return int
+     * @author GavinJiang
+     * @params
+     */
+    @Override
+    public int defaultSchedule(Date startTime, Date endTime, int number) throws ParseException {
+        //定义格式化时间，用来保存排班信息里的结束时间字段
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+        //定义格式化时间
+        SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //定义累加日期，用来判断总排班天数，以便每天按根据排班人数生成对应的排班信息，初始为传入进来的排班开始时间参数
+        Date scheduleDate = startTime;
+
+        //班次，默认白班
+        String type = "白班";
+        //定义排班次数，用来判断，此时是当天的第几次排班人数,
+        // 当次数大于排班总人数时，表示当天排完,continue;
+        int scheduleNumber = 1;
+
+        //根据排班开始日期，得到当天的开始时间和结束时间，去查询排班表当天有没有对应的员工排班记录,
+        //如果有记录,则排班次数需从查出的数量+1开始计算
+        int selectCount = scheduleMapper.selectScheduleByTimeCount(scheduleDate, sf2.parse(sf.format(scheduleDate)));
+        //判断如果没有此员工的排班信息时
+        if (selectCount > 0) {
+            scheduleNumber = selectCount + 1;
+        }
+
+        //查询所有的员工信息
+        List<Employer> employerList = employerMapper.selectAll();
+        if (employerList.size() > 0) {
+            for (Employer employer : employerList) {
+                //员工名称
+                String employerID = employer.getId();
+
+                //根据排班开始日期，得到当天的时间，与员工去查询排班表有没有对应的员工排班记录,
+                //如果有记录，则跳出当前循环
+                int count = scheduleMapper.selectScheduleByTimeAndName(scheduleDate, sf2.parse(sf.format(scheduleDate)), employerID);
+                if (count > 0) {
+                    continue;
+                }
+
+
+                //判断定义,每天的第一次为白班,第二次为晚班,第三次为白班...以此类推
+                if (scheduleNumber % 2 == 0) {
+                    type = "晚班";
+                } else {
+                    type = "白班";
+                }
+                //创建排班对象,且添加对应的信息
+                Schedule schedule = new Schedule();
+                schedule.setId(UUIDUtils.getUUID());
+                schedule.setEmployid(employerID);
+                schedule.setStarttime(scheduleDate);
+                schedule.setEndtime(sf2.parse(sf.format(scheduleDate)));
+                schedule.setCreatedate(sf2.parse(sf2.format(new Date())));
+                schedule.setType(type);
+                schedule.setDepartment(employer.getDepartment());
+                int result = scheduleMapper.insert(schedule);
+
+                if (result > 0) {
+                    //累加
+                    scheduleNumber++;
+                    //如果排班次数大于每天排班总人数时,跳出当前循环
+                    if (scheduleNumber > number) {
+                        //把当天日期加1,即第二天
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(scheduleDate);
+                        c.add(Calendar.DAY_OF_MONTH, 1);// 今天+1天
+                        scheduleDate = c.getTime();
+                        //把排班次数初始为1
+                        scheduleNumber = 1;
+
+                        //如果当前累加日期大于排班结束日期参数时,表示排班完了，循环结束
+                        if (scheduleDate.after(endTime)) {
+                            return 1;
+                        }
+                        continue;
+                    }
+
+                }
+
+            }
+        }
+        return 1;
+    }
+    //预排班
+    @Override
+    public void advanceSchedule(String storeId) {
+        //先获取本门店员工
+        List<Employer> employerList = employerMapper.selectEmployersBystoreFileId(storeId);
+        List<Schedule> schedules=new ArrayList<>();
+        //根据门店员工获取上月排班信息
+        if(employerList!=null){
+            for(Employer employer:employerList){
+                List<Schedule> scheduleList=scheduleMapper.selectScheduleByMonth(employer.getId());
+
+                if(scheduleList!=null){
+                    for(Schedule schedule:scheduleList){
+                        schedules.add(schedule);
+                    }
+                }
+
+            }
+            //判断上月排班是否为空，不为空则进行预排班
+        if(schedules!=null){
+                for(Schedule schedule:schedules){
+
+                    Calendar c1 = Calendar.getInstance();
+                    Calendar c2 = Calendar.getInstance();
+                    c1.setTime(new Date());
+                    c2.setTime(schedule.getStarttime());
+                    c2.add(Calendar.DAY_OF_YEAR,c2.getActualMaximum(Calendar.DAY_OF_MONTH));
+                    if(c1.get(Calendar.MONTH)-c2.get(Calendar.MONTH)==0){
+
+                        Calendar calendar1 = Calendar.getInstance();
+                        Calendar calendar2 = Calendar.getInstance();
+                        calendar1.setTime(schedule.getStarttime());
+                        calendar1.add(Calendar.DAY_OF_YEAR,calendar1.getActualMaximum(Calendar.DAY_OF_MONTH));
+                        schedule.setStarttime(calendar1.getTime());
+                        calendar2.setTime(schedule.getEndtime());
+                        calendar2.add(Calendar.DAY_OF_YEAR,calendar2.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+                        schedule.setEndtime(calendar2.getTime());
+                        //通过开始时间、结束时间、员工id去查询,如果存在记录了,则不添加
+                        int count=scheduleMapper.selectScheduleByTimeAndName(schedule.getStarttime(),schedule.getEndtime(),schedule.getEmployid());
+                        if(count==0){
+                            schedule.setId(UUIDUtils.getUUID());
+                            schedule.setCreatedate(new Date());
+                            scheduleMapper.insert(schedule);
+                        }
+
+                    }
+
+
+                }
+            }
+
+        }
+
+        }
+    }
+

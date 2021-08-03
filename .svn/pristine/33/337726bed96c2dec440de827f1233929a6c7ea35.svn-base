@@ -1,0 +1,18 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Babywash;
+
+import java.util.List;
+
+public interface WashService {
+
+    List<Babywash> getAll(Babywash babywash);
+
+    int add(Babywash babywash);
+
+    int delete(Babywash babywash);
+
+    int update(Babywash babywash);
+
+    List<Babywash> getBabywashByMotherId(String motherid);
+}

@@ -1,0 +1,37 @@
+package com.luer.businessmanager.dao;
+
+import com.luer.businessmanager.bean.Visit;
+import com.luer.businessmanager.bean.VisitExample;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@MapperScan
+@Component
+public interface VisitMapper {
+    int countByExample(VisitExample example);
+
+    int deleteByExample(VisitExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Visit record);
+
+    int insertSelective(Visit record);
+
+    List<Visit> selectByExample(VisitExample example);
+
+    Visit selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Visit record, @Param("example") VisitExample example);
+
+    int updateByExample(@Param("record") Visit record, @Param("example") VisitExample example);
+
+    int updateByPrimaryKeySelective(Visit record);
+
+    int updateByPrimaryKey(Visit record);
+//根据门店id，参访人类别（预约客户，维修人员，家属），状态查询参访信息
+    List<Visit> selectByLevel(@Param("storeId")String storeId,@Param("classification") String classification, @Param("level")String level);
+}

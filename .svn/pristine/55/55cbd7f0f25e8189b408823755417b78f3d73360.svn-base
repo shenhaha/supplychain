@@ -1,0 +1,53 @@
+package com.luer.businessmanager.service.impl;
+
+import com.luer.businessmanager.bean.SendCar;
+import com.luer.businessmanager.bean.SendCarExample;
+import com.luer.businessmanager.dao.SendCarMapper;
+import com.luer.businessmanager.service.SendCarService;
+import com.luer.comm.utils.UUIDUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+@Service
+@Transactional
+public class SendCarServiceImpl implements SendCarService {
+    @Autowired
+    private SendCarMapper sendCarMapper;
+
+    @Override
+    public int insert(SendCar sendCar) {
+        sendCar.setId(UUIDUtils.getUUID());
+        return sendCarMapper.insert(sendCar);
+    }
+
+    @Override
+    public List<SendCar> selectAllLIst() {
+        SendCarExample sendCarExample = new SendCarExample();
+        SendCarExample.Criteria criteria = sendCarExample.createCriteria();
+        return sendCarMapper.selectByExample(sendCarExample);
+    }
+
+    @Override
+    public int updateSendCar(SendCar sendCar) {
+        SendCarExample sendCarExample = new SendCarExample();
+        SendCarExample.Criteria criteria = sendCarExample.createCriteria();
+        criteria.andIdEqualTo(sendCar.getId());
+        return sendCarMapper.updateByExampleSelective(sendCar,sendCarExample);
+    }
+
+    @Override
+    public int deleteSendCar(String id) {
+        return sendCarMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<SendCar> getAllList(String storeId) {
+        return sendCarMapper.getAllList(storeId);
+    }
+}

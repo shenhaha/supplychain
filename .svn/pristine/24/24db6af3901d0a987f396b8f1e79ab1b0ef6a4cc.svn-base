@@ -1,0 +1,199 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-3 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="assessmenttime" class="col-md-3 control-label">评估时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+                    <input class="form-control" size="16" type="text" value="" name="assessmenttime" id="assessmenttime"placeholder="评估时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="paviliondate" class="col-md-3 control-label">出馆时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-6 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+                    <input class="form-control" size="16" type="text" value="" name="paviliondate" id="paviliondate"placeholder="出馆时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5 ">
+                <label for="status" class="col-sm-3 control-label">进食情形</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="status" name="status" placeholder="进食情形" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="scalp" class="col-sm-3 control-label">头部</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="scalp" name="scalp" placeholder="头部" tabindex="1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5 ">
+                <label for="eye" class="col-sm-3 control-label">眼部</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="eye" name="eye" placeholder="眼部" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="ear" class="col-sm-3 control-label">耳朵</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="ear" name="ear" placeholder="耳朵" tabindex="1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5 ">
+                <label for="oral" class="col-sm-3 control-label">口腔</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="oral" name="oral" placeholder="口腔" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="nose" class="col-sm-3 control-label">鼻子</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="nose" name="nose" placeholder="鼻子" tabindex="1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="cheek" class="col-sm-3 control-label">面颊</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="cheek" name="cheek" placeholder="面颊" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="chest" class="col-sm-3 control-label">胸部</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="chest" name="chest" placeholder="胸部" tabindex="1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="abdomen" class="col-sm-3 control-label">腹部</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="abdomen" name="abdomen" placeholder="腹部" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="umbilicalcord" class="col-sm-3 control-label">脐带</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="umbilicalcord" name="umbilicalcord" placeholder="脐带" tabindex="1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="genital" class="col-sm-3 control-label">生殖器</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="genital" name="genital" placeholder="生殖器" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="limbs" class="col-sm-3 control-label">四肢</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="limbs" name="limbs" placeholder="四肢" tabindex="1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="informobjece" class="col-sm-3 control-label">告知对象</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="informobjece" name="informobjece" placeholder="告知对象" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="father" class="col-sm-3 control-label">宝爸</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="father" name="father" placeholder="宝爸" tabindex="1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="babyname" class="col-sm-3 control-label">告知对象</label>
+                <div class="col-sm-6">
+                    <select id="babyname" class="form-control"></select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    /*$(function () {
+        //动态查询宝宝信息
+        $.ajax({
+            url:"/customerBasic/selectCustomerBasicByStoreId?type=1&storeId="+'<%=session.getAttribute("storeId")%>',
+            type:"post",
+            success:function(data){
+                for(var i=0;i<data.length;i++){
+                    $("#babyname").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                }
+            }
+        });
+        //动态查询妈妈信息
+        $.ajax({
+            url:/customerBasic/selectCustomerBasicByStoreId?type=0&storeId="+'<%=session.getAttribute("storeId")%>',
+            type:"post",
+            success:function(data){
+                for(var i=0;i<data.length;i++){
+                    $("#mother").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                }
+            }
+        });
+
+    });*/
+</script>
+</body>
+</html>
+

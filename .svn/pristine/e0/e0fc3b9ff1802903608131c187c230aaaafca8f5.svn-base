@@ -1,0 +1,100 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal"role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="name" class="col-sm-4 control-label">姓名：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="姓名">
+                </div>
+            </div>
+            <div class="form-group col-md-5 col-lg-offset-1">
+                <label for="birthDate" class="col-md-4 control-label">出生时间：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-7 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+                    <input class="form-control" size="16" type="text" value="" name="birthDate" id="birthDate"placeholder="出生时间" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="sex" class="col-sm-4 control-label">性别：</label>
+                <div class="col-sm-5">
+                    <select class="form-control" id="sex"name="sex" placeholder="性别">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="bornHospital" class="col-sm-4 control-label">出生医院：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="bornHospital" name="bornHospital" placeholder="出生医院">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="weight" class="col-sm-4 control-label">体重(g)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="weight" name="weight" placeholder="体重">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="height" class="col-sm-4 control-label">身高(cm)：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="height" name="height" placeholder="身高">
+                </div>
+            </div>
+        </div>
+        <%--<div class="row">
+            <div class="form-group col-md-5">
+                <label for="jaundice" class="col-sm-4 control-label">黄疸：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="jaundice" name="jaundice" placeholder="黄疸">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="plantarBlood" class="col-sm-4 control-label">足底血：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="plantarBlood" name="plantarBlood" placeholder="足底血">
+                </div>
+            </div>
+        </div>--%>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

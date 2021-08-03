@@ -1,0 +1,111 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+	<link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+	<link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="${ctx}/static/template/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+	<%--日期时间插件--%>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="stayform" >
+	<div class="form-group required" hidden="hidden">
+		<label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" id="id" name="id" placeholder="id" >
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<!--前缀-->
+			<div class="form-group col-md-5 ">
+				<label for="firstParty" class="col-sm-4 control-label">甲方：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="firstParty" name="firstParty" placeholder="甲方">
+				</div>
+			</div>
+			<div class="form-group col-md-5 ">
+				<label for="address" class="col-sm-4 control-label">地址：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="address" name="address" placeholder="地址">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<!--前缀-->
+			<div class="form-group col-md-5 ">
+				<label for="tell" class="col-sm-4 control-label">电话：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="tell" name="tell" placeholder="电话">
+				</div>
+			</div>
+			<div class="form-group col-md-5 ">
+				<label for="medicalHistory" class="col-sm-4 control-label">请选择有无病史：</label>
+				<div class="col-sm-5">
+					<select  type="text" class="form-control" id="medicalHistory" name="medicalHistory" placeholder="有无病史"  tabindex="1">
+						<option selected="selected">请输入有无病史</option>
+						<option value="有">有</option>
+						<option value="无">无</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+
+			<div class="form-group col-md-5">
+				<label for="intime" class="col-sm-4 control-label">预计入住时间：</label>
+				<div style="padding-left: 7.5px;padding-right: 25.0px" class="input-group date form_datetime col-md-7 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+
+					<input class="form-control" size="16" type="text" value="" name="intime" id="intime" placeholder="入住时间" readonly>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				</div>
+			</div>
+			<div class="form-group col-md-5 ">
+				<label for="operator" class="col-sm-4 control-label">经办人：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="operator" name="operator" placeholder="经办人">
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="row">
+			<div class="form-group col-md-5 col-lg-offset-1">
+				<label for="remark" class="col-sm-4 control-label">备注：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="remark" name="remark" placeholder="备注">
+				</div>
+			</div>
+			<div class="form-group col-md-5 ">
+				<label for="days" class="col-sm-4 control-label">天数：</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="days" name="days" placeholder="天数">
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</form>
+<script>
+	$('.form_datetime').datetimepicker({
+		language: 'zh-CN',
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+	});
+</script>
+</body>
+</html>

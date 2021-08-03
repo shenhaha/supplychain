@@ -1,0 +1,107 @@
+package com.luer.businessmanager.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class SendCar {
+    private String id;
+
+    private String storeId;
+
+    private String name;
+
+    private String department;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+
+    private String passenger;
+
+    private String route;
+
+    private String originator;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date time;
+
+    private String remark;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department == null ? null : department.trim();
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(String passenger) {
+        this.passenger = passenger == null ? null : passenger.trim();
+    }
+
+    public String getRoute() {
+        return route;
+    }
+
+    public void setRoute(String route) {
+        this.route = route == null ? null : route.trim();
+    }
+
+    public String getOriginator() {
+        return originator;
+    }
+
+    public void setOriginator(String originator) {
+        this.originator = originator == null ? null : originator.trim();
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+}

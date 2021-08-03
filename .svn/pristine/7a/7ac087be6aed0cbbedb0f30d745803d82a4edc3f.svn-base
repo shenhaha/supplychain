@@ -1,0 +1,60 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.Goods;
+import com.luer.stockandsales.bean.GoodsExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface GoodsMapper {
+    int countByExample(GoodsExample example);
+
+    int deleteByExample(GoodsExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Goods record);
+
+    int insertSelective(Goods record);
+
+    List<Goods> selectByExample(GoodsExample example);
+
+    Goods selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Goods record, @Param("example") GoodsExample example);
+
+    int updateByExample(@Param("record") Goods record, @Param("example") GoodsExample example);
+
+    int updateByPrimaryKeySelective(Goods record);
+
+    int updateByPrimaryKey(Goods record);
+
+    //查询所有商品信息
+    List<Goods> selectAll();
+
+    //查询供应商对应商品信息
+    List<Goods> selectBySupplierId(String supplierId);
+
+    //通过商品编号获取商品对象
+    Goods selectBySerialnum(int serialnum);
+
+    //根据供应商查询对应的商品
+    List<Goods> selectBySupplierIdList(@Param("supplierIdList") List<String> supplierIdList);
+
+
+    List<String> selectSupplierIdsByIds(@Param("ids") List<String> ids);
+
+    List<Goods> selectByPrimaryKeys(@Param("ids") List<String> ids);
+
+    //通过供应商id删除对应的商品
+    void deleteBySupplierId(String supplierId);
+
+    List<Goods> selectHeadOfficeGoodsByClassifyId(@Param("supplierIdList")List<String> supplierIdList, @Param("classifyId")String classifyId);
+
+    List<Goods> selectBySupplierIdListAndClassifyId(@Param("supplierIdList") List<String> supplierIdList,@Param("classifyId")String classifyId);
+}

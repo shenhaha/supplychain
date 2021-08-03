@@ -1,0 +1,86 @@
+package com.luer.users.service;
+
+import com.luer.users.bean.Users;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * 用户管理服务类
+ *
+ * @ClassName UserService
+ * @Author GavinJiang
+ * @Date 2018/8/16 14:18.
+ */
+public interface UsersService {
+    List<Users> selectUsers(String pass,String username);
+
+    int updatepass(String pass,String id);
+
+    int deleteUser(String username);
+
+    int insertPerssion(String username,String auths);
+
+    List<Users> getUserByStoreId(String storeId);
+
+    int addAll(Users users, HttpServletRequest request);
+
+    List<String> getAuthByUser(String username);
+
+    //通过用户名和角色查询相关的角色id
+    String getUserroleId( String username, String roledesc);
+
+    /**
+     * 查询所有的用户信息
+     *
+     * @return java.util.List<User>
+     * @author GavinJiang
+     * @date 2018/8/16 14:21
+     * @params
+     */
+    List<Users> selectUsers();
+
+    /**
+     * 添加用户信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/16 14:40
+     * @params
+     */
+    int insert(Users record);
+
+    /**
+     * 修改用户信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/16 14:40
+     * @params
+     */
+    int updateByPrimaryKeySelective(Users record);
+
+    /**
+     * 根据id删除用户信息
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/16 14:40
+     * @params
+     */
+    int deleteByPrimaryKey(String id);
+
+    /**
+     * 根据名称查询对应的用户信息
+     *
+     * @param name
+     * @return com.luer.users.bean.Users
+     * @author GavinJiang
+     * @date 2018/8/16 14:44
+     * @params
+     */
+    Users selectUsersByName(String name);
+}

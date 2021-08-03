@@ -1,0 +1,68 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.CountWorryScore;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.Motherworryquestion;
+import com.luer.servicecenter.bean.MotherworryquestionExample;
+import com.luer.servicecenter.dao.MotherworryquestionMapper;
+import com.luer.servicecenter.service.WorryQuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.util.Date;
+import java.util.List;
+
+@Service
+@Transactional
+public class WorryQuestionServiceImpl implements WorryQuestionService {
+    @Autowired
+    MotherworryquestionMapper motherworryquestionMapper;
+    @Override
+    public List<Motherworryquestion> select(Motherworryquestion Motherworryquestion) {
+        MotherworryquestionExample motherworryquestionExample = new MotherworryquestionExample();
+        MotherworryquestionExample.Criteria criteria = motherworryquestionExample.createCriteria();
+        if(!StringUtils.isEmpty(Motherworryquestion.getStoreid())){
+            criteria.andStoreidEqualTo(Motherworryquestion.getStoreid());
+        }
+        return motherworryquestionMapper.selectByExample(motherworryquestionExample);
+    }
+
+    @Override
+    public int add(Motherworryquestion motherworryquestion) {
+        motherworryquestion.setId(UUIDUtils.getUUID());
+        motherworryquestion.setUpdatetime(new Date());
+        int i = CountWorryScore.count(motherworryquestion);
+        motherworryquestion.setStore(String.valueOf(i));
+        motherworryquestionMapper.insertSelective(motherworryquestion);
+        return 0;
+    }
+    @Override
+    public int delete(Motherworryquestion motherworryquestion) {
+        motherworryquestionMapper.deleteByPrimaryKey(motherworryquestion.getId());
+        return 0;
+
+    }
+
+    @Override
+    public int update(Motherworryquestion motherworryquestion) {
+        MotherworryquestionExample m = new MotherworryquestionExample();
+        MotherworryquestionExample.Criteria criteria = m.createCriteria();
+
+        if(!StringUtils.isEmpty(motherworryquestion.getStoreid())){
+            criteria.andStoreidEqualTo(motherworryquestion.getStoreid());
+        }
+        criteria.andIdEqualTo(motherworryquestion.getId());
+        int i = CountWorryScore.count(motherworryquestion);
+        motherworryquestion.setStore(String.valueOf(i));
+        motherworryquestionMapper.updateByExampleSelective(motherworryquestion,m);
+        return 0;
+    }
+
+    @Override
+    public List<Motherworryquestion> getByMotherId(String motherid) {
+        return motherworryquestionMapper.getByMotherId(motherid);
+    }
+
+}

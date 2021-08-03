@@ -1,0 +1,26 @@
+package com.luer.stockandsales.bean;
+
+import lombok.Data;
+
+@Data
+public class HeadSumOrder {
+    String goodsId;
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public double getSumNum() {
+        return sumNum;
+    }
+
+    double sumNum;
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public void setSumNum(double sumNum) {
+        this.sumNum = sumNum;
+    }
+}

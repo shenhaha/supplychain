@@ -1,0 +1,33 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Neonatalrounds;
+import com.luer.servicecenter.bean.NeonatalroundsExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface NeonatalroundsMapper {
+    int countByExample(NeonatalroundsExample example);
+
+    int deleteByExample(NeonatalroundsExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Neonatalrounds record);
+
+    int insertSelective(Neonatalrounds record);
+
+    List<Neonatalrounds> selectByExample(NeonatalroundsExample example);
+
+    Neonatalrounds selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Neonatalrounds record, @Param("example") NeonatalroundsExample example);
+
+    int updateByExample(@Param("record") Neonatalrounds record, @Param("example") NeonatalroundsExample example);
+
+    int updateByPrimaryKeySelective(Neonatalrounds record);
+
+    int updateByPrimaryKey(Neonatalrounds record);
+
+    List<Neonatalrounds> getNeonatalroundsByMotherId(@Param("mother_id") String motherId);
+}

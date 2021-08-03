@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.warehouse.dao.WarehousematerialMapper" >
+    <resultMap id="BaseResultMap" type="com.luer.warehouse.bean.Warehousematerial" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="warehouse_time" property="warehouseTime" jdbcType="TIMESTAMP" />
+        <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+        <result column="warehouse_status" property="warehouseStatus" jdbcType="VARCHAR" />
+        <result column="submit_status" property="submitStatus" jdbcType="VARCHAR" />
+        <result column="audit_status" property="auditStatus" jdbcType="VARCHAR" />
+        <result column="category" property="category" jdbcType="VARCHAR" />
+        <result column="introduce_number" property="introduceNumber" jdbcType="VARCHAR" />
+        <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+        <result column="supplier" property="supplier" jdbcType="VARCHAR" />
+        <result column="company" property="company" jdbcType="VARCHAR" />
+        <result column="logistics_number" property="logisticsNumber" jdbcType="VARCHAR" />
+        <result column="freight" property="freight" jdbcType="DOUBLE" />
+        <result column="expenses" property="expenses" jdbcType="DOUBLE" />
+        <result column="expenses_share" property="expensesShare" jdbcType="DOUBLE" />
+        <result column="expenses_mode" property="expensesMode" jdbcType="VARCHAR" />
+        <result column="warehouse_number" property="warehouseNumber" jdbcType="INTEGER" />
+        <result column="warehouse_number1" property="warehouseNumber1" jdbcType="INTEGER" />
+        <result column="warehouse_number2" property="warehouseNumber2" jdbcType="INTEGER" />
+        <result column="warehouse_amount" property="warehouseAmount" jdbcType="DOUBLE" />
+        <result column="warehouse_taxamount" property="warehouseTaxamount" jdbcType="DOUBLE" />
+        <result column="good_quality" property="goodQuality" jdbcType="INTEGER" />
+        <result column="mode" property="mode" jdbcType="VARCHAR" />
+        <result column="freight_share" property="freightShare" jdbcType="VARCHAR" />
+        <result column="odd_number" property="oddNumber" jdbcType="VARCHAR" />
+        <result column="person_charge" property="personCharge" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+    id, create_time, update_time, warehouse_time, audit_time, warehouse_status, submit_status,
+    audit_status, category, introduce_number, factory_name, supplier, company, logistics_number,
+    freight, expenses, expenses_share, expenses_mode, warehouse_number, warehouse_number1,
+    warehouse_number2, warehouse_amount, warehouse_taxamount, good_quality, mode, freight_share,
+    odd_number, person_charge, remark
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.warehouse.bean.WarehousematerialExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from warehousematerial
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from warehousematerial
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from warehousematerial
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.luer.warehouse.bean.WarehousematerialExample" >
+        delete from warehousematerial
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.warehouse.bean.Warehousematerial" >
+    insert into warehousematerial (id, create_time, update_time,
+      warehouse_time, audit_time, warehouse_status,
+      submit_status, audit_status, category,
+      introduce_number, factory_name, supplier,
+      company, logistics_number, freight,
+      expenses, expenses_share, expenses_mode,
+      warehouse_number, warehouse_number1, warehouse_number2,
+      warehouse_amount, warehouse_taxamount, good_quality,
+      mode, freight_share, odd_number,
+      person_charge, remark)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{warehouseTime,jdbcType=TIMESTAMP}, #{auditTime,jdbcType=TIMESTAMP}, #{warehouseStatus,jdbcType=VARCHAR},
+      #{submitStatus,jdbcType=VARCHAR}, #{auditStatus,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR},
+      #{introduceNumber,jdbcType=VARCHAR}, #{factoryName,jdbcType=VARCHAR}, #{supplier,jdbcType=VARCHAR},
+      #{company,jdbcType=VARCHAR}, #{logisticsNumber,jdbcType=VARCHAR}, #{freight,jdbcType=DOUBLE},
+      #{expenses,jdbcType=DOUBLE}, #{expensesShare,jdbcType=DOUBLE}, #{expensesMode,jdbcType=VARCHAR},
+      #{warehouseNumber,jdbcType=INTEGER}, #{warehouseNumber1,jdbcType=INTEGER}, #{warehouseNumber2,jdbcType=INTEGER},
+      #{warehouseAmount,jdbcType=DOUBLE}, #{warehouseTaxamount,jdbcType=DOUBLE}, #{goodQuality,jdbcType=INTEGER},
+      #{mode,jdbcType=VARCHAR}, #{freightShare,jdbcType=VARCHAR}, #{oddNumber,jdbcType=VARCHAR},
+      #{personCharge,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.luer.warehouse.bean.Warehousematerial" >
+        insert into warehousematerial
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+            <if test="warehouseTime != null" >
+                warehouse_time,
+            </if>
+            <if test="auditTime != null" >
+                audit_time,
+            </if>
+            <if test="warehouseStatus != null" >
+                warehouse_status,
+            </if>
+            <if test="submitStatus != null" >
+                submit_status,
+            </if>
+            <if test="auditStatus != null" >
+                audit_status,
+            </if>
+            <if test="category != null" >
+                category,
+            </if>
+            <if test="introduceNumber != null" >
+                introduce_number,
+            </if>
+            <if test="factoryName != null" >
+                factory_name,
+            </if>
+            <if test="supplier != null" >
+                supplier,
+            </if>
+            <if test="company != null" >
+                company,
+            </if>
+            <if test="logisticsNumber != null" >
+                logistics_number,
+            </if>
+            <if test="freight != null" >
+                freight,
+            </if>
+            <if test="expenses != null" >
+                expenses,
+            </if>
+            <if test="expensesShare != null" >
+                expenses_share,
+            </if>
+            <if test="expensesMode != null" >
+                expenses_mode,
+            </if>
+            <if test="warehouseNumber != null" >
+                warehouse_number,
+            </if>
+            <if test="warehouseNumber1 != null" >
+                warehouse_number1,
+            </if>
+            <if test="warehouseNumber2 != null" >
+                warehouse_number2,
+            </if>
+            <if test="warehouseAmount != null" >
+                warehouse_amount,
+            </if>
+            <if test="warehouseTaxamount != null" >
+                warehouse_taxamount,
+            </if>
+            <if test="goodQuality != null" >
+                good_quality,
+            </if>
+            <if test="mode != null" >
+                mode,
+            </if>
+            <if test="freightShare != null" >
+                freight_share,
+            </if>
+            <if test="oddNumber != null" >
+                odd_number,
+            </if>
+            <if test="personCharge != null" >
+                person_charge,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="warehouseTime != null" >
+                #{warehouseTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditTime != null" >
+                #{auditTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="warehouseStatus != null" >
+                #{warehouseStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="submitStatus != null" >
+                #{submitStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="auditStatus != null" >
+                #{auditStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null" >
+                #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="introduceNumber != null" >
+                #{introduceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="factoryName != null" >
+                #{factoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="supplier != null" >
+                #{supplier,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null" >
+                #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsNumber != null" >
+                #{logisticsNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="freight != null" >
+                #{freight,jdbcType=DOUBLE},
+            </if>
+            <if test="expenses != null" >
+                #{expenses,jdbcType=DOUBLE},
+            </if>
+            <if test="expensesShare != null" >
+                #{expensesShare,jdbcType=DOUBLE},
+            </if>
+            <if test="expensesMode != null" >
+                #{expensesMode,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseNumber != null" >
+                #{warehouseNumber,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseNumber1 != null" >
+                #{warehouseNumber1,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseNumber2 != null" >
+                #{warehouseNumber2,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseAmount != null" >
+                #{warehouseAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="warehouseTaxamount != null" >
+                #{warehouseTaxamount,jdbcType=DOUBLE},
+            </if>
+            <if test="goodQuality != null" >
+                #{goodQuality,jdbcType=INTEGER},
+            </if>
+            <if test="mode != null" >
+                #{mode,jdbcType=VARCHAR},
+            </if>
+            <if test="freightShare != null" >
+                #{freightShare,jdbcType=VARCHAR},
+            </if>
+            <if test="oddNumber != null" >
+                #{oddNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="personCharge != null" >
+                #{personCharge,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.warehouse.bean.WarehousematerialExample" resultType="java.lang.Integer" >
+        select count(*) from warehousematerial
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update warehousematerial
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null" >
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null" >
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.warehouseTime != null" >
+                warehouse_time = #{record.warehouseTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.auditTime != null" >
+                audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.warehouseStatus != null" >
+                warehouse_status = #{record.warehouseStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="record.submitStatus != null" >
+                submit_status = #{record.submitStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditStatus != null" >
+                audit_status = #{record.auditStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="record.category != null" >
+                category = #{record.category,jdbcType=VARCHAR},
+            </if>
+            <if test="record.introduceNumber != null" >
+                introduce_number = #{record.introduceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.factoryName != null" >
+                factory_name = #{record.factoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.supplier != null" >
+                supplier = #{record.supplier,jdbcType=VARCHAR},
+            </if>
+            <if test="record.company != null" >
+                company = #{record.company,jdbcType=VARCHAR},
+            </if>
+            <if test="record.logisticsNumber != null" >
+                logistics_number = #{record.logisticsNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.freight != null" >
+                freight = #{record.freight,jdbcType=DOUBLE},
+            </if>
+            <if test="record.expenses != null" >
+                expenses = #{record.expenses,jdbcType=DOUBLE},
+            </if>
+            <if test="record.expensesShare != null" >
+                expenses_share = #{record.expensesShare,jdbcType=DOUBLE},
+            </if>
+            <if test="record.expensesMode != null" >
+                expenses_mode = #{record.expensesMode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.warehouseNumber != null" >
+                warehouse_number = #{record.warehouseNumber,jdbcType=INTEGER},
+            </if>
+            <if test="record.warehouseNumber1 != null" >
+                warehouse_number1 = #{record.warehouseNumber1,jdbcType=INTEGER},
+            </if>
+            <if test="record.warehouseNumber2 != null" >
+                warehouse_number2 = #{record.warehouseNumber2,jdbcType=INTEGER},
+            </if>
+            <if test="record.warehouseAmount != null" >
+                warehouse_amount = #{record.warehouseAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="record.warehouseTaxamount != null" >
+                warehouse_taxamount = #{record.warehouseTaxamount,jdbcType=DOUBLE},
+            </if>
+            <if test="record.goodQuality != null" >
+                good_quality = #{record.goodQuality,jdbcType=INTEGER},
+            </if>
+            <if test="record.mode != null" >
+                mode = #{record.mode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.freightShare != null" >
+                freight_share = #{record.freightShare,jdbcType=VARCHAR},
+            </if>
+            <if test="record.oddNumber != null" >
+                odd_number = #{record.oddNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.personCharge != null" >
+                person_charge = #{record.personCharge,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remark != null" >
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update warehousematerial
+        set id = #{record.id,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        warehouse_time = #{record.warehouseTime,jdbcType=TIMESTAMP},
+        audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+        warehouse_status = #{record.warehouseStatus,jdbcType=VARCHAR},
+        submit_status = #{record.submitStatus,jdbcType=VARCHAR},
+        audit_status = #{record.auditStatus,jdbcType=VARCHAR},
+        category = #{record.category,jdbcType=VARCHAR},
+        introduce_number = #{record.introduceNumber,jdbcType=VARCHAR},
+        factory_name = #{record.factoryName,jdbcType=VARCHAR},
+        supplier = #{record.supplier,jdbcType=VARCHAR},
+        company = #{record.company,jdbcType=VARCHAR},
+        logistics_number = #{record.logisticsNumber,jdbcType=VARCHAR},
+        freight = #{record.freight,jdbcType=DOUBLE},
+        expenses = #{record.expenses,jdbcType=DOUBLE},
+        expenses_share = #{record.expensesShare,jdbcType=DOUBLE},
+        expenses_mode = #{record.expensesMode,jdbcType=VARCHAR},
+        warehouse_number = #{record.warehouseNumber,jdbcType=INTEGER},
+        warehouse_number1 = #{record.warehouseNumber1,jdbcType=INTEGER},
+        warehouse_number2 = #{record.warehouseNumber2,jdbcType=INTEGER},
+        warehouse_amount = #{record.warehouseAmount,jdbcType=DOUBLE},
+        warehouse_taxamount = #{record.warehouseTaxamount,jdbcType=DOUBLE},
+        good_quality = #{record.goodQuality,jdbcType=INTEGER},
+        mode = #{record.mode,jdbcType=VARCHAR},
+        freight_share = #{record.freightShare,jdbcType=VARCHAR},
+        odd_number = #{record.oddNumber,jdbcType=VARCHAR},
+        person_charge = #{record.personCharge,jdbcType=VARCHAR},
+        remark = #{record.remark,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.warehouse.bean.Warehousematerial" >
+        update warehousematerial
+        <set >
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="warehouseTime != null" >
+                warehouse_time = #{warehouseTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditTime != null" >
+                audit_time = #{auditTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="warehouseStatus != null" >
+                warehouse_status = #{warehouseStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="submitStatus != null" >
+                submit_status = #{submitStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="auditStatus != null" >
+                audit_status = #{auditStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null" >
+                category = #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="introduceNumber != null" >
+                introduce_number = #{introduceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="factoryName != null" >
+                factory_name = #{factoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="supplier != null" >
+                supplier = #{supplier,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null" >
+                company = #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsNumber != null" >
+                logistics_number = #{logisticsNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="freight != null" >
+                freight = #{freight,jdbcType=DOUBLE},
+            </if>
+            <if test="expenses != null" >
+                expenses = #{expenses,jdbcType=DOUBLE},
+            </if>
+            <if test="expensesShare != null" >
+                expenses_share = #{expensesShare,jdbcType=DOUBLE},
+            </if>
+            <if test="expensesMode != null" >
+                expenses_mode = #{expensesMode,jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseNumber != null" >
+                warehouse_number = #{warehouseNumber,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseNumber1 != null" >
+                warehouse_number1 = #{warehouseNumber1,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseNumber2 != null" >
+                warehouse_number2 = #{warehouseNumber2,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseAmount != null" >
+                warehouse_amount = #{warehouseAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="warehouseTaxamount != null" >
+                warehouse_taxamount = #{warehouseTaxamount,jdbcType=DOUBLE},
+            </if>
+            <if test="goodQuality != null" >
+                good_quality = #{goodQuality,jdbcType=INTEGER},
+            </if>
+            <if test="mode != null" >
+                mode = #{mode,jdbcType=VARCHAR},
+            </if>
+            <if test="freightShare != null" >
+                freight_share = #{freightShare,jdbcType=VARCHAR},
+            </if>
+            <if test="oddNumber != null" >
+                odd_number = #{oddNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="personCharge != null" >
+                person_charge = #{personCharge,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.warehouse.bean.Warehousematerial" >
+    update warehousematerial
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      warehouse_time = #{warehouseTime,jdbcType=TIMESTAMP},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      warehouse_status = #{warehouseStatus,jdbcType=VARCHAR},
+      submit_status = #{submitStatus,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      introduce_number = #{introduceNumber,jdbcType=VARCHAR},
+      factory_name = #{factoryName,jdbcType=VARCHAR},
+      supplier = #{supplier,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      logistics_number = #{logisticsNumber,jdbcType=VARCHAR},
+      freight = #{freight,jdbcType=DOUBLE},
+      expenses = #{expenses,jdbcType=DOUBLE},
+      expenses_share = #{expensesShare,jdbcType=DOUBLE},
+      expenses_mode = #{expensesMode,jdbcType=VARCHAR},
+      warehouse_number = #{warehouseNumber,jdbcType=INTEGER},
+      warehouse_number1 = #{warehouseNumber1,jdbcType=INTEGER},
+      warehouse_number2 = #{warehouseNumber2,jdbcType=INTEGER},
+      warehouse_amount = #{warehouseAmount,jdbcType=DOUBLE},
+      warehouse_taxamount = #{warehouseTaxamount,jdbcType=DOUBLE},
+      good_quality = #{goodQuality,jdbcType=INTEGER},
+      mode = #{mode,jdbcType=VARCHAR},
+      freight_share = #{freightShare,jdbcType=VARCHAR},
+      odd_number = #{oddNumber,jdbcType=VARCHAR},
+      person_charge = #{personCharge,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+      /**查询全部可用数据*/
+    select * from warehousematerial
+  </select>
+
+  <select id="selectIntroduceNumberById"  resultType="java.lang.String" parameterType="java.lang.String">
+        select  introduce_number from warehousematerial where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+    delete from warehousematerial where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="selectMaxCreateTime"  resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from warehousematerial where create_time=(select max(create_time) from warehousematerial)
+    </select>
+
+    <select id="selectById"  resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from warehousematerial  where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByFName"  resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from warehousematerial  where factory_name = #{factoryName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByFNameAndCategory"  resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from warehousematerial where factory_name = #{factoryName,jdbcType=VARCHAR} and category = #{category,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByFNameAndCategoryAndOddNumber"  resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from warehousematerial where factory_name = #{factoryName,jdbcType=VARCHAR} and category = #{category,jdbcType=VARCHAR} and odd_number = #{oddNumber,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByOddNumber"  resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from warehousematerial where odd_number = #{oddNumber,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="seclectByCategory"  resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from warehousematerial where category = #{category,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

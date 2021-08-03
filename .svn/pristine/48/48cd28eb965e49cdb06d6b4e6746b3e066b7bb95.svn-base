@@ -1,0 +1,147 @@
+package com.luer.storemanager.bean;
+
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.storesdata.bean.Room;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+@Data
+public class CheckOut {
+    private String id;
+    private String storeId;
+    private String customerId;
+    private String customerName;
+    private String roomId;
+    private String roomNum;
+    private double allCost;
+    private double balance;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date outTime;
+    private String createrId;
+    private double mealFee;
+    private double addServiceFee;
+    private double profits;
+    private double shoppingFee;
+    private double coupons;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getRoomNum() {
+        return roomNum;
+    }
+
+    public void setRoomNum(String roomNum) {
+        this.roomNum = roomNum;
+    }
+
+    public double getAllCost() {
+        return allCost;
+    }
+
+    public void setAllCost(double allCost) {
+        this.allCost = allCost;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public Date getOutTime() {
+        return outTime;
+    }
+
+    public void setOutTime(Date outTime) {
+        this.outTime = outTime;
+    }
+
+    public String getCreaterId() {
+        return createrId;
+    }
+
+    public void setCreaterId(String createrId) {
+        this.createrId = createrId;
+    }
+
+    public double getMealFee() {
+        return mealFee;
+    }
+
+    public void setMealFee(double mealFee) {
+        this.mealFee = mealFee;
+    }
+
+    public double getAddServiceFee() {
+        return addServiceFee;
+    }
+
+    public void setAddServiceFee(double addServiceFee) {
+        this.addServiceFee = addServiceFee;
+    }
+
+    public double getShoppingFee() {
+        return shoppingFee;
+    }
+
+    public void setShoppingFee(double shoppingFee) {
+        this.shoppingFee = shoppingFee;
+    }
+
+    public double getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(double coupons) {
+        this.coupons = coupons;
+    }
+
+    public double getProfits() {
+        return profits;
+    }
+
+    public void setProfits(double profits) {
+        this.profits = profits;
+    }
+}

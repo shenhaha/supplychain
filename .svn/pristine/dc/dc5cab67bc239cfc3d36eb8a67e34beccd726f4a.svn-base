@@ -1,0 +1,98 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.Schedule;
+import com.luer.storemanager.bean.ScheduleExample;
+
+import java.util.Date;
+import java.util.List;
+
+import com.luer.storemanager.bean.ScheduleList;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface ScheduleMapper {
+    int countByExample(ScheduleExample example);
+
+    int deleteByExample(ScheduleExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Schedule record);
+
+    int insertSelective(Schedule record);
+
+    List<Schedule> selectByExample(ScheduleExample example);
+
+    Schedule selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Schedule record, @Param("example") ScheduleExample example);
+
+    int updateByExample(@Param("record") Schedule record, @Param("example") ScheduleExample example);
+
+    int updateByPrimaryKeySelective(Schedule record);
+
+    int updateByPrimaryKey(Schedule record);
+
+    /**
+     * @return java.util.List<ScheduleList>
+     * @description 查询所有的排班信息(联表)
+     * @author GavinJiang
+     * @date 2018/8/14 11:31
+     * @params []
+     */
+    List<Schedule> selectSchedule(@Param("store_id") String storeId);
+    List<ScheduleList> selectSchedules();
+
+    /**
+     * 根据员工id、所在部门和班次类型查询对应的排班信息
+     *
+     * @param employId   员工id
+     * @param department 所在部门
+     * @param type       班次类型
+     * @return
+     */
+    List<Schedule> selectScheduleByType(@Param("employId") String employId, @Param("department") String department, @Param("type") String type);
+
+    /**
+     * 根据开始时间、结束时间、员工id、所在部门和班次类型查询对应的排班信息(条件可为null)
+     *
+     * @param startTime  开始时间
+     * @param endTime    结束时间
+     * @param employId   员工id
+     * @param department 所在部门
+     * @param type       班次类型
+     * @return java.util.List<com.luer.storemanager.bean.Schedule>
+     * @author GavinJiang
+     * @date 2018/8/14 15:35
+     * @params
+     */
+    List<Schedule> selectScheduleByTime(@Param("startTime") Date startTime,
+                                        @Param("endTime") Date endTime, @Param("employId") String employId,
+                                        @Param("department") String department, @Param("type") String type);
+
+    /** 
+     * 根据开始时间、结束时间和员工id查询排班信息数量
+     * @author GavinJiang
+     * @params 
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param employerID 员工id
+     * @return int  
+     */
+    int selectScheduleByTimeAndName(@Param("startTime") Date startTime,@Param("endTime") Date endTime,@Param("employerID") String employerID);
+
+    /**
+     * 根据开始时间、结束时间查询排班信息数量
+     * @author GavinJiang
+     * @params
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @return int
+     */
+    int selectScheduleByTimeCount(@Param("startTime") Date startTime,@Param("endTime") Date endTime);
+
+    List<Schedule> selectScheduleByMonth(@Param("employid") String employid);
+}

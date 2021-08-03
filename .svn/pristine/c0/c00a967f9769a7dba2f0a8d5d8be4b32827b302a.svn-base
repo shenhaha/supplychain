@@ -1,0 +1,150 @@
+package com.luer.storesdata.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storesdata.bean.Department;
+import com.luer.storesdata.bean.Employer;
+import com.luer.storesdata.dao.DepartmentMapper;
+import com.luer.storesdata.dao.EmployerMapper;
+import com.luer.storesdata.service.EmployerService;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Transactional
+@Service
+public class EmployerServiceImpl implements EmployerService {
+    @Autowired
+    private EmployerMapper employerMapper;
+    @Autowired
+    private DepartmentMapper departmentMapper;
+    @Autowired
+    private StoreFileService storeFileService;
+
+    //添加门店人员基本信息
+    @Override
+    public void saveEmployer(Employer employer) {
+
+        employer.setId(UUIDUtils.getUUID());
+        employerMapper.insert(employer);
+    }
+
+    //删除门店人员基本信息
+    @Override
+    public void deleteEmployerById(String employerId) {
+        employerMapper.deleteByPrimaryKey(employerId);
+    }
+
+    //修改门店人员基本信息
+    @Override
+    public void updateEmployer(Employer employer) {
+
+        employerMapper.updateByPrimaryKeySelective(employer);
+    }
+
+    @Override
+    public List<Employer> selectEmployersBystoreFileId(String storeFileId) {
+        List<Employer> employerList = employerMapper.selectEmployersBystoreFileId(storeFileId);
+        return employerList;
+    }
+
+    @Override
+    public List<Employer> selectEmployersByStoreFileIdandDept(String storeFileId, String dept) {
+        List<Employer> employerList = employerMapper.selectEmployersByStoreFileIdandDept(storeFileId,dept);
+        return employerList;
+    }
+
+    @Override
+    public List<Employer> selectEmployers() {
+        return employerMapper.selectAll();
+    }
+
+    @Override
+    public void deleteEmployerByIds(String employerIds) {
+
+        employerIds = employerIds.replace("\"", "");
+        employerIds = employerIds.replace("\"", "");
+        String[] ids = employerIds.split(",");
+        for (String id : ids) {
+            employerMapper.deleteByPrimaryKey(id);
+        }
+
+    }
+
+    //查询所有派遣人员信息
+    // @Override
+    public List<Employer> selectDispached() {
+
+        return employerMapper.selectDispached();
+    }
+
+    //查询门店派遣人员信息
+    // @Override
+    public List<Employer> selectBydispachedId(String storeFileId) {
+        return employerMapper.selectBydispachedId(storeFileId);
+    }
+
+
+    //排班管理查询所有员工信息
+    @Override
+    public List selectemployersByScale(String storeId) {
+        //定义一个List用来接收和返回
+        List resultList = new ArrayList<>();
+
+
+        //根据店铺id查询所有的部门信息
+        List<Department> departmentList = departmentMapper.getDepartments(storeId);
+        for (Department department : departmentList) {
+            //定义一个List用来接收员工信息
+            List resultEmployerList = new ArrayList<>();
+            //通过部门名称查询门店人员基本信息
+
+            List<Employer> employerList = employerMapper.selectEmployersByDepartment(department.getName(), storeId);
+            //循环遍历，把id和name信息放入Map
+            for (Employer employer : employerList) {
+
+                Map employerMap = new HashMap<>();
+                employerMap.put("id", employer.getId());
+                employerMap.put("title", employer.getName());
+                resultEmployerList.add(employerMap);
+            }
+            Map map = new HashMap<>();
+            map.put("id", department.getId());
+            map.put("title", department.getName());
+            map.put("children", resultEmployerList);
+            resultList.add(map);
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<Employer> selectemployerBystoreId(String storeId, String type) {
+        if ("2".equals(type)) {
+            type = null;
+        }
+        return employerMapper.selectemployerBystoreId(storeId, type);
+    }
+
+    @Override
+    public Employer selectById(String id) {
+        return employerMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Employer> selectEmployersBystoreId() {
+        String storeId = storeFileService.getStoreFileId();
+        return employerMapper.selectEmployersBystoreFileId(storeId);
+    }
+
+
+    @Override
+    public Employer selectEmployersById(String vid) {
+        return employerMapper.selectByPrimaryKey(vid);
+    }
+
+}

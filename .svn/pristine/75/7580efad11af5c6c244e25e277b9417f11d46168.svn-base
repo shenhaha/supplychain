@@ -1,0 +1,90 @@
+package com.luer.businessmanager.controller;
+
+import com.luer.businessmanager.bean.Callrecord;
+import com.luer.businessmanager.service.CallrecordService;
+import com.luer.comm.utils.ResultSet;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * Created by  2018/8/13.
+ * 顾客管理
+ * * 电话追踪
+ */
+@RequestMapping("/businessmanager")
+@Controller
+public class CallrecordController {
+
+
+    @Autowired
+    private CallrecordService callrecordService;
+
+
+    //电话追踪登记
+    @ResponseBody
+    @RequestMapping(value="/addCallrecord",method = RequestMethod.POST)
+    public ResultSet addCallrecord(@NonNull Callrecord callrecord){
+        callrecordService.insert(callrecord);
+        return ResultSet.getSuccess();
+    }
+
+
+    //单个信息删除
+    @ResponseBody
+    @RequestMapping(value="/deleteCallrecord")
+    public ResultSet deleteCallrecord(@NonNull String id){
+        callrecordService.deleteById(id);
+        return ResultSet.getSuccess();
+
+    }
+
+
+    //批量信息删除
+    @ResponseBody
+    @RequestMapping(value="/deleteListCallrecord")
+    public ResultSet deleteLCallrecord(@NonNull String ids){
+        callrecordService.deleteListById(ids);
+        return ResultSet.getSuccess();
+    }
+
+
+    //修改信息
+    @ResponseBody
+    @RequestMapping(value="/updateCallrecord")
+    public ResultSet updateCallrecord(@NonNull Callrecord callrecord){
+        callrecordService.updateById(callrecord.getId(),callrecord);
+        return ResultSet.getSuccess();
+    }
+
+
+    //根据用户名模糊查询信息
+    @ResponseBody
+    @RequestMapping(value="/selectListCallrecord")
+    public  ResultSet  selectListCallrecord(@NonNull String name){
+        List<Callrecord> callrecords = callrecordService.selectByName(name);
+        return ResultSet.getSuccess(callrecords);
+    }
+
+    //根据门店id查询相关信息
+    @ResponseBody
+    @RequestMapping(value="/selectListCallrecordBySoreId")
+    public  List  selectListCallrecordBySoreId(@NonNull String storeId){
+        List<Callrecord> callrecords = callrecordService.selectByStoreId(storeId);
+        return callrecords;
+    }
+
+
+    //查询所有信息
+    @ResponseBody
+    @RequestMapping(value="/selectList")
+    public  List<Callrecord> selectList(){
+        List<Callrecord> callrecords = callrecordService.selectAllList();
+        return callrecords;
+    }
+}

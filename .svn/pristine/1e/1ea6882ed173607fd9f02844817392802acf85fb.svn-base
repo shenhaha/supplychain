@@ -1,0 +1,154 @@
+package com.luer.stockandsales.bean;
+
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class Stock {
+    private String id;
+
+    private String goodsId;
+
+    private String storeId;
+
+    private String supplierId;
+
+    private Double stockNum;
+
+    private Double stockWarn;
+
+    private String remark;
+
+    private Double purchaseNum;
+
+    private Double shipmentsNum;
+
+    private String goodsName;
+
+    private String serialnum;
+
+    private Double lastStockNum;
+
+    private Double inventoryLoss;
+    //最后修改时间
+    private Date updateTime;
+    //最后入库时间
+    private Date purchaseTime;
+    //最后出库时间
+    private Date shipmentsTime;
+
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+
+    public String getSerialnum() {
+        return serialnum;
+    }
+
+    public void setSerialnum(String serialnum) {
+        this.serialnum = serialnum;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId == null ? null : goodsId.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId == null ? null : supplierId.trim();
+    }
+
+    public Double getStockNum() {
+        return stockNum;
+    }
+
+    public void setStockNum(Double stockNum) {
+        this.stockNum = stockNum;
+    }
+
+    public Double getStockWarn() {
+        return stockWarn;
+    }
+
+    public void setStockWarn(Double stockWarn) {
+        this.stockWarn = stockWarn;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Double getPurchaseNum() {
+        return purchaseNum;
+    }
+
+    public void setPurchaseNum(Double purchaseNum) {
+        this.purchaseNum = purchaseNum;
+    }
+
+    public Double getShipmentsNum() {
+        return shipmentsNum;
+    }
+
+    public void setShipmentsNum(Double shipmentsNum) {
+        this.shipmentsNum = shipmentsNum;
+    }
+
+    public Double getLastStockNum() {
+        return lastStockNum;
+    }
+
+    public void setLastStockNum(Double lastStockNum) {
+        this.lastStockNum = lastStockNum;
+    }
+
+    public Double getInventoryLoss() {
+        return inventoryLoss;
+    }
+
+    public void setInventoryLoss(Double inventoryLoss) {
+        this.inventoryLoss = inventoryLoss;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+}

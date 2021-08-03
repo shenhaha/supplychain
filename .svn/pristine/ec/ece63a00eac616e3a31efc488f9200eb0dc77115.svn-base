@@ -1,0 +1,132 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <title>客诉管理</title>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="department" class="col-sm-5 control-label">投诉部门</label>
+                <div class="col-sm-7">
+                    <select  type="text" class="form-control" id="department" name="department" tabindex="1">
+                        <option value="医护部">医护部</option>
+                        <option value="护理部">护理部</option>
+                        <option value="房务部">房务部</option>
+                        <option value="厨房部">厨房部</option>
+                        <option value="客服部">客服部</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="reporter" class="col-sm-5 control-label">投诉人</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="reporter" name="reporter" placeholder="投诉人">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="employer_id" class="col-sm-5 control-label">被投诉人</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="employer_id" name="employer_id" placeholder="被投诉人">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="customerReback" cols="30" class="col-sm-5 control-label">客户反馈</label>
+                <div class="col-sm-6">
+                    <textarea type="text" class="form-control"id="customerReback" name="customerReback" placeholder="客户反馈" ></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+                <div class="form-group col-md-4 col-lg-offset-1">
+                    <label for="reporttime" class="col-md-5 control-label">报告时间</label>
+                    <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-7 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+                        <input class="form-control" size="16" type="text" value="" name="reporttime" id="reporttime" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                </div>
+            <div class="form-group col-md-5">
+                <label for="reporttile" class="col-sm-5 control-label">事件报告标题</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="reporttile" name="reporttile" placeholder="事件报告标题">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+               <div class="form-group col-md-4 col-lg-offset-1">
+                   <label for="eventtime" class="col-md-5 control-label">事件发生时间</label>
+                   <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-md-7 " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+                       <input class="form-control" size="16" type="text" value="" name="eventtime" id="eventtime"placeholder="事件发生时间" readonly>
+                       <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                   </div>
+            </div>
+               <div class="form-group col-md-5">
+                   <label for="detail" class="col-sm-5 control-label">过程描述及原因</label>
+                   <div class="col-sm-6">
+                        <textarea type="text" cols="30" class="form-control" id="detail" name="detail" placeholder="过程描述及原因" ></textarea>
+                   </div>
+               </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="cause" class="col-sm-5 control-label">事件原因</label>
+                <div class="col-sm-7">
+                    <textarea type="text" cols="30" class="form-control" id="cause" name="cause" placeholder="事件原因" ></textarea>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="solution" cols="30" class="col-sm-5 control-label">解决方案</label>
+                <div class="col-sm-6">
+                    <textarea type="text" class="form-control"id="solution" name="solution" placeholder="解决方案" ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="leaderidea" cols="30" class="col-sm-5 control-label">领导处理意见</label>
+                <div class="col-sm-7">
+                    <textarea type="text" class="form-control"id="leaderidea" name="leaderidea" placeholder="领导处理意见" ></textarea>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="result" cols="30" class="col-sm-5 control-label">处理结果</label>
+                <div class="col-sm-6">
+                    <textarea type="text" class="form-control"id="result" name="result" placeholder="处理结果" ></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</html>

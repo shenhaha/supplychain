@@ -1,0 +1,71 @@
+package com.luer.storemanager.controller;
+
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storemanager.bean.GuestCount;
+import com.luer.storemanager.bean.GuestRecord;
+import com.luer.storemanager.bean.GuestRecordTable;
+import com.luer.storemanager.service.GuestRecordService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/guestRecord")
+public class GuestRecordController {
+    //客诉
+    @Autowired
+    private GuestRecordService guestRecordService;
+
+
+
+    //添加客诉信息
+    @RequestMapping(value = "/saveGuestRecord")
+    @ResponseBody
+    public ResultSet saveGuestRecord(@NonNull GuestRecord guestRecord) {
+
+       guestRecordService.saveGuestRecord(guestRecord);
+        return ResultSet.getSuccess();
+    }
+    //删除客诉信息
+    @RequestMapping("/deleteGuestRecord")
+    @ResponseBody
+    public ResultSet deleteGuestRecordById(@NonNull String id) {
+      guestRecordService.deleteGuestRecordById(id);
+        return ResultSet.getSuccess();
+
+
+    }
+
+    //修改客诉资料
+    @RequestMapping("/updateGuestRecord")
+    @ResponseBody
+    public ResultSet updateGuestRecordDetail(@NonNull GuestRecord guestRecord) {
+guestRecordService.updateGuestRecord(guestRecord);
+
+        return ResultSet.getSuccess();
+    }
+
+    //通过门店id查询客诉资料
+    @ResponseBody
+    @RequestMapping("/selectGuestRecords")
+    public List<GuestRecord> selectGuestRecords(@NonNull String storeFileId) {
+        return guestRecordService.selectGuestRecords(storeFileId);
+    }
+
+    //查询客诉资料
+    @ResponseBody
+    @RequestMapping("/selectAll")
+    public List<GuestRecord> selectAll() {
+        return guestRecordService.selectAll();
+    }
+
+    @GetMapping("/selectGuestCount")
+    @ResponseBody
+    public List<GuestCount> selectGuestCount(String storeId){
+        return  guestRecordService.selectGuestCount(storeId);
+    }
+}

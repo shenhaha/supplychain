@@ -1,0 +1,23 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.BabyEvaluate;
+import com.luer.servicecenter.bean.MotherEvaluate;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/14.
+ */
+public interface BabyEvaluateService {
+    void addBabyEvaluate(BabyEvaluate babyEvaluate);
+
+    void updateBabyEvaluate(BabyEvaluate babyEvaluate);
+
+    void deteleBabyEvaluate(BabyEvaluate babyEvaluate);
+
+    List<BabyEvaluate> getList(BabyEvaluate babyEvaluate);
+
+    List<BabyEvaluate> selectBabyEvaluate(String storeId);
+
+    List<BabyEvaluate> getBymotherId(String customerBasicId);
+}

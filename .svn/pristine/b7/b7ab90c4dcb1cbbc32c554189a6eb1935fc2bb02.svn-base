@@ -1,0 +1,525 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<html>
+<head>
+    <title>Physicians's Record Newborn Infant</title>
+</head>
+<body>
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+                <li id="babybasic"><a  href="${ctx}/servicecenter/babybasic?motherid=${motherid}">宝宝基本信息</a></li>
+                <li id="babyEvaluate"><a  href="${ctx}/servicecenter/babyEvaluate?motherid=${motherid}">宝宝入住评估</a></li>
+                <li  id="showBabyNursing"><a href="${ctx}/babynursing/showBabyNursing?motherid=${motherid}">宝宝护理记录</a></li>
+                <li id="showGrowth"><a  href="${ctx}/growth/showGrowth?motherid=${motherid}">宝宝成长记录</a></li>
+                <li id="showNeonatalrounds"><a  href="${ctx}/neonatalrounds/showNeonatalrounds?motherid=${motherid}">儿科医生查房</a></li>
+                <li id="doctorcheck"><a  href="${ctx}/doctorcheck?motherid=${motherid}">Physicians's Record Newborn Infant</a></li>
+                <%--    <li id="showSwimming"><a  href="${ctx}/swimming/showSwimming?motherid=${motherid}">宝宝游泳</a></li>
+                    <li id="babywash" ><a href="${ctx}/swimming/babywash?motherid=${motherid}">洗澡记录</a></li>
+                    <li id="showPavilionassessment"><a href="${ctx}/pavilionassessment/showPavilionassessment?motherid=${motherid}">出馆身体评估</a></li>--%>
+                <li id="showPavilioneducation"><a href="${ctx}/pavilioneducation/showPavilioneducation?motherid=${motherid}">宝宝出馆卫教</a></li>
+                    <div style="margin-left: 70%">
+                        <input type="button" id="type2" class='btn block btn-outline btn-rounded btn-primary' onclick="find()" value="妈妈信息" >
+                    </div>
+            </ul>
+                <!--儿科医生查房表开始-->
+                <div id="repairdiv">
+                    <div class="panel-body" >
+                        <div class="table-responsive">
+                                <table id="checkout" class="table" data-paging="true" data-filtering="true" data-sorting="true" style="width:200%">
+                                </table>
+                        </div>
+                    </div>
+                </div>
+                <!--儿科医生查房表结束-->
+
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script >
+    $(function () {
+        $('#doctorcheck').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'babybasic':
+                $('#babybasic').addClass("active");
+                break;
+            case 'babyEvaluate':
+                $('#babyEvaluate').addClass("active");
+                break;
+            case 'showBabyNursing':
+                $('#showBabyNursing').addClass("active");
+                break;
+            case 'showGrowth':
+                $('#showGrowth').addClass("active");
+                break;
+            case 'showNeonatalrounds':
+                $('#showNeonatalrounds').addClass("active");
+                break;
+            case 'babywash':
+                $('#babywash').addClass("active");
+                break;
+            case 'showPavilionassessment':
+                $('#showPavilionassessment').addClass("active");
+                break;
+            case 'doctorcheck':
+                $('#doctorcheck').addClass("active");
+                break;
+            case 'showPavilioneducation':
+                $('#showPavilioneducation').addClass("active");
+                break;
+        }
+        var checkoutTitle = [
+            {"name":"id","title":"ID","breakpoints":"xs sm",visible:false},
+            /*{"name":"mothername","title":"宝妈姓名"},
+            {"name":"roomnum","title":"房间号"},*/
+
+            {"name":"name","title":"NAME"},
+            {"name":"ap","title":"AP(week/Birth)"},
+            {"name":"generalApprarence","title":"GENERAL_APPRARENCE"},
+            {"name":"skin","title":"SKIN"},
+            {"name":"headNeek","title":"HEAD,NEEK"},
+            {"name":"eyes","title":"EYES"},
+            {"name":"earsNoseThroat","title":"EARS,NOSE,THROAT"},
+            {"name":"thorax","title":"THORAX"},
+            {"name":"lungs","title":"LUNGS"},
+            {"name":"heart","title":"HEART"},
+            {"name": "abdomen", "title": "ABDOMEN"},
+            {"name":"genitalia","title":"GENITALIA",visible:false},
+            {"name":"anus","title":"ANUS",visible:false},
+            {"name":"trunkAndSpine","title":"TRUNK_AND_SPINE",visible:false},
+            {"name":"extremities","title":"EXTREMITIES",visible:false},
+            {"name":"reflexs","title":"REFLEXS",visible:false},
+            {"name":"remark","title":"REMARK",visible:false},
+            {"name":"description","title":"DESCRIPTION_OF_ABNORMAL_FINDINGS",visible:false},
+            {"name": "detail", "title": "DETAIL"},
+        ];
+        function find(id) {
+            window.location.href='${ctx}/servicecenter/motherEvaluate?motherType=1&motherid=${motherid}';
+        }
+        window.find = find;
+        function detail(values) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title : "<span style=\"color: #ab8ce4\">修改一条数据</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'api-blacklist-form-add',
+                message:$('<div></div>').load('${ctx}/template/servicecenter/doctorcheckout.jsp'),//加载弹出页面
+                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                //数据回显
+                onshown: function(dialogRef){
+
+                    $('#id').val(values.id);
+                    $('#name').val(values.name);
+                    $('#operationDate').val(values.operationDate);
+                    $('#mothername').val(values.mothername);
+                    $('#roomnum').val(values.roomnum);
+                    $('#bornway').val(values.bornway);
+                    $('#pregnancy').val(values.pregnancy);
+                    $('#feedingway').val(values.feedingway);
+                    $('#milkeveryday').val(values.milkeveryday);
+                    $('#reaction').val(values.reaction);
+                    $('#baby').append("<option>"+values.baby+"</option>")
+                    $('#skin').val(values.skin);
+                    $('#headfeatures').val(values.headfeatures);
+                    $('#cardiopulmonary').val(values.cardiopulmonary);
+                    $('#abdomen').val(values.abdomen);
+                    $('#umbilical').val(values.umbilical);
+                    $('#extremities').val(values.extremities);
+                    $('#nervereflex').val(values.nervereflex);
+                    $('#fecal').val(values.fecal);
+                    $('#otherSituations').val(values.otherSituations);
+                    $('#advice').val(values.advice);
+                    $('#signature').val(values.signature);
+                    $("#myform").find("input,select,textarea").attr("disabled","disabled");
+                },
+                buttons : [{
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        }
+        window.detail = detail;
+        //启动footable
+        var ft = FooTable.init('#checkout',{
+            "columns": checkoutTitle,
+            "rows": $.get("${ctx}/doctorCheckout/getDoctorCheckout?motherId="+'${motherid}',function (data) {
+                $(data).each(function () {
+                    this.detail = "<button class='btn btn-primary btn-sm' onclick='detail("+JSON.stringify(this)+")'>查看详情</button>";
+                })
+            }),
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    var $that = $(this);
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\">新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        onshown:function () {
+                            $.get("${ctx}/customerBasic/getBabyBasics?motherId="+'<%=request.getParameter("motherid")%>',function (data) {
+                                $(data).each(function () {
+                                    $("#name").append("<option value='"+this.name+"'>"+this.name+"</option>")
+                                })
+                            })
+                        },
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/doctorcheckout.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onhide:function(){
+                            $that.removeAttr("disabled");
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'name':$('#name').val(),
+                                    'ap':$('#ap').val(),
+                                    'generalApprarence':$('#generalApprarence').val(),
+                                    'skin':$('#skin').val(),
+                                    'headNeek':$('#headNeek').val(),
+                                    'eyes':$('#eyes').val(),
+                                    'earsNoseThroat':$('#earsNoseThroat').val(),
+                                    'thorax':$('#thorax').val(),
+                                    'lungs':$('#lungs').val(),
+                                    'heart':$('#heart').val(),
+                                    'abdomen':$('#abdomen').val(),
+                                    'genitalia':$('#genitalia').val(),
+                                    'anus':$('#anus').val(),
+                                    'trunkAndSpine':$('#trunkAndSpine').val(),
+                                    'extremities':$('#extremities').val(),
+                                    'reflexs':$('#reflexs').val(),
+                                    'remark':$('#remark').val(),
+                                    'description':$('#description').val(),
+                                    'motherId':'${motherid}',
+                                    'storeId':'<%=session.getAttribute("storeId")%>'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        /*mothername :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈姓名不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        baby :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝宝姓名不能为空！'
+                                                },
+                                            }
+                                        },*/
+
+                                        /*pregnancy :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '孕周不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        milkeveryday :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '每日奶量不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        skin :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '皮肤不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        cardiopulmonary :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '心肺不能为空！'
+                                                },
+                                            }
+                                        },
+                                        umbilical :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '脐带不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        nervereflex :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '神经反射不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        otherSituations :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '其它情况不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        signature :{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '医师签字不能为空！'
+                                                },
+                                            }
+                                        },*/
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/doctorCheckout/addDoctorCheckout",json).
+                                    done(function(data){getCode(data)}).
+                                    fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\">修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/doctorcheckout.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown: function(dialogRef){
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getBabyBasics?motherId="+'<%=request.getParameter("motherid")%>',
+                                type:"get",
+                                success:function(data){/*<option value="1">姓名</option>*/
+                                    for(var i=0;i<data.length;i++){
+                                        if(data[i].name==values.name){
+                                            $("#name").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+
+                                        }else {
+
+                                            $("#name").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }
+                                    }
+                                }
+                            });
+                            $('#id').val(values.id);
+                            $('#name').val(values.name);
+                            $('#ap').val(values.ap);
+                            $('#generalApprarence').val(values.generalApprarence);
+                            $('#skin').val(values.skin);
+                            $('#headNeek').val(values.headNeek);
+                            $('#eyes').val(values.eyes);
+                            $('#earsNoseThroat').val(values.earsNoseThroat);
+                            $('#thorax').val(values.thorax);
+                            $('#lungs').val(values.lungs);
+                            $('#heart').val(values.heart);
+                            $('#abdomen').val(values.abdomen);
+                            $('#genitalia').val(values.genitalia);
+                            $('#anus').val(values.anus);
+                            $('#trunkAndSpine').val(values.trunkAndSpine);
+                            $('#extremities').val(values.extremities);
+                            $('#reflexs').val(values.reflexs);
+                            $('#remark').val(values.remark);
+                            $('#description').val(values.description);
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'name':$('#name').val(),
+                                    'ap':$('#ap').val(),
+                                    'generalApprarence':$('#generalApprarence').val(),
+                                    'skin':$('#skin').val(),
+                                    'headNeek':$('#headNeek').val(),
+                                    'eyes':$('#eyes').val(),
+                                    'earsNoseThroat':$('#earsNoseThroat').val(),
+                                    'thorax':$('#thorax').val(),
+                                    'lungs':$('#lungs').val(),
+                                    'heart':$('#heart').val(),
+                                    'abdomen':$('#abdomen').val(),
+                                    'genitalia':$('#genitalia').val(),
+                                    'anus':$('#anus').val(),
+                                    'trunkAndSpine':$('#trunkAndSpine').val(),
+                                    'extremities':$('#extremities').val(),
+                                    'reflexs':$('#reflexs').val(),
+                                    'remark':$('#remark').val(),
+                                    'description':$('#description').val(),
+                                    'motherId':'${motherid}',
+                                    'storeId':'<%=session.getAttribute("storeId")%>',
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        /*mothername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈姓名不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        baby: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝宝姓名不能为空！'
+                                                },
+                                            }
+                                        },*/
+
+                                        /*pregnancy: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '孕周不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        milkeveryday: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '每日奶量不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        skin: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '皮肤不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        cardiopulmonary: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '心肺不能为空！'
+                                                },
+                                            }
+                                        },
+                                        umbilical: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '脐带不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        nervereflex: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '神经反射不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        otherSituations: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '其它情况不能为空！'
+                                                },
+                                            }
+                                        },
+
+                                        signature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '医师签字不能为空！'
+                                                },
+                                            }
+                                        },*/
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/doctorCheckout/updateDoctorCheckout",json).
+                                    done(function(data){getCode(data)}).
+                                    fail(function(data){getCode(data)});
+                                    //修改一条记录  url  服务器地址
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //删除操作
+                deleteRow: function(row){
+                    myConfirm("${ctx}/doctorCheckout/deleteDoctorCheckout",row);
+                }
+            }
+        });
+        uid = 10;
+    });
+</script>
+<script src="${ctx}/static/js/jquery-1.10.2/jquery.min.js"></script>
+<script src="${ctx}/static/js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
+</body>
+</html>

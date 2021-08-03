@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.PatientroundsMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Patientrounds" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_basic_id" property="customerBasicId" jdbcType="VARCHAR" />
+    <result column="operationDate" property="operationdate" jdbcType="TIMESTAMP" />
+    <result column="shrinkage" property="shrinkage" jdbcType="VARCHAR" />
+    <result column="cesareanSection" property="cesareansection" jdbcType="VARCHAR" />
+    <result column="sideCutter" property="sidecutter" jdbcType="VARCHAR" />
+    <result column="lochiaColor" property="lochiacolor" jdbcType="VARCHAR" />
+    <result column="lochiaSmell" property="lochiasmell" jdbcType="VARCHAR" />
+    <result column="leucorrhea" property="leucorrhea" jdbcType="VARCHAR" />
+    <result column="fever" property="fever" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="otherSituations" property="othersituations" jdbcType="VARCHAR" />
+    <result column="customerName" property="customername" jdbcType="VARCHAR" />
+    <result column="motherId" property="motherid" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="getPatientRoundsByMotherId" resultMap="BaseResultMap">
+        SELECT * FROM patientrounds WHERE motherId=#{motherId}
+
+    </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, customer_basic_id, operationDate, shrinkage, cesareanSection, sideCutter, lochiaColor, 
+    lochiaSmell, leucorrhea, fever, signature, otherSituations, customerName, motherId, 
+    store_id, type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.PatientroundsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from patientrounds
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from patientrounds
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from patientrounds
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.PatientroundsExample" >
+    delete from patientrounds
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Patientrounds" >
+    insert into patientrounds (id, customer_basic_id, operationDate, 
+      shrinkage, cesareanSection, sideCutter, 
+      lochiaColor, lochiaSmell, leucorrhea, 
+      fever, signature, otherSituations, 
+      customerName, motherId, store_id, 
+      type)
+    values (#{id,jdbcType=VARCHAR}, #{customerBasicId,jdbcType=VARCHAR}, #{operationdate,jdbcType=TIMESTAMP}, 
+      #{shrinkage,jdbcType=VARCHAR}, #{cesareansection,jdbcType=VARCHAR}, #{sidecutter,jdbcType=VARCHAR}, 
+      #{lochiacolor,jdbcType=VARCHAR}, #{lochiasmell,jdbcType=VARCHAR}, #{leucorrhea,jdbcType=VARCHAR}, 
+      #{fever,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, #{othersituations,jdbcType=VARCHAR}, 
+      #{customername,jdbcType=VARCHAR}, #{motherid,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Patientrounds" >
+    insert into patientrounds
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerBasicId != null" >
+        customer_basic_id,
+      </if>
+      <if test="operationdate != null" >
+        operationDate,
+      </if>
+      <if test="shrinkage != null" >
+        shrinkage,
+      </if>
+      <if test="cesareansection != null" >
+        cesareanSection,
+      </if>
+      <if test="sidecutter != null" >
+        sideCutter,
+      </if>
+      <if test="lochiacolor != null" >
+        lochiaColor,
+      </if>
+      <if test="lochiasmell != null" >
+        lochiaSmell,
+      </if>
+      <if test="leucorrhea != null" >
+        leucorrhea,
+      </if>
+      <if test="fever != null" >
+        fever,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="othersituations != null" >
+        otherSituations,
+      </if>
+      <if test="customername != null" >
+        customerName,
+      </if>
+      <if test="motherid != null" >
+        motherId,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBasicId != null" >
+        #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationdate != null" >
+        #{operationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shrinkage != null" >
+        #{shrinkage,jdbcType=VARCHAR},
+      </if>
+      <if test="cesareansection != null" >
+        #{cesareansection,jdbcType=VARCHAR},
+      </if>
+      <if test="sidecutter != null" >
+        #{sidecutter,jdbcType=VARCHAR},
+      </if>
+      <if test="lochiacolor != null" >
+        #{lochiacolor,jdbcType=VARCHAR},
+      </if>
+      <if test="lochiasmell != null" >
+        #{lochiasmell,jdbcType=VARCHAR},
+      </if>
+      <if test="leucorrhea != null" >
+        #{leucorrhea,jdbcType=VARCHAR},
+      </if>
+      <if test="fever != null" >
+        #{fever,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="othersituations != null" >
+        #{othersituations,jdbcType=VARCHAR},
+      </if>
+      <if test="customername != null" >
+        #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.PatientroundsExample" resultType="java.lang.Integer" >
+    select count(*) from patientrounds
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update patientrounds
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBasicId != null" >
+        customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationdate != null" >
+        operationDate = #{record.operationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shrinkage != null" >
+        shrinkage = #{record.shrinkage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cesareansection != null" >
+        cesareanSection = #{record.cesareansection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sidecutter != null" >
+        sideCutter = #{record.sidecutter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lochiacolor != null" >
+        lochiaColor = #{record.lochiacolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lochiasmell != null" >
+        lochiaSmell = #{record.lochiasmell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leucorrhea != null" >
+        leucorrhea = #{record.leucorrhea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fever != null" >
+        fever = #{record.fever,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signature != null" >
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.othersituations != null" >
+        otherSituations = #{record.othersituations,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customername != null" >
+        customerName = #{record.customername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherid != null" >
+        motherId = #{record.motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update patientrounds
+    set id = #{record.id,jdbcType=VARCHAR},
+      customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      operationDate = #{record.operationdate,jdbcType=TIMESTAMP},
+      shrinkage = #{record.shrinkage,jdbcType=VARCHAR},
+      cesareanSection = #{record.cesareansection,jdbcType=VARCHAR},
+      sideCutter = #{record.sidecutter,jdbcType=VARCHAR},
+      lochiaColor = #{record.lochiacolor,jdbcType=VARCHAR},
+      lochiaSmell = #{record.lochiasmell,jdbcType=VARCHAR},
+      leucorrhea = #{record.leucorrhea,jdbcType=VARCHAR},
+      fever = #{record.fever,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      otherSituations = #{record.othersituations,jdbcType=VARCHAR},
+      customerName = #{record.customername,jdbcType=VARCHAR},
+      motherId = #{record.motherid,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Patientrounds" >
+    update patientrounds
+    <set >
+      <if test="customerBasicId != null" >
+        customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationdate != null" >
+        operationDate = #{operationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shrinkage != null" >
+        shrinkage = #{shrinkage,jdbcType=VARCHAR},
+      </if>
+      <if test="cesareansection != null" >
+        cesareanSection = #{cesareansection,jdbcType=VARCHAR},
+      </if>
+      <if test="sidecutter != null" >
+        sideCutter = #{sidecutter,jdbcType=VARCHAR},
+      </if>
+      <if test="lochiacolor != null" >
+        lochiaColor = #{lochiacolor,jdbcType=VARCHAR},
+      </if>
+      <if test="lochiasmell != null" >
+        lochiaSmell = #{lochiasmell,jdbcType=VARCHAR},
+      </if>
+      <if test="leucorrhea != null" >
+        leucorrhea = #{leucorrhea,jdbcType=VARCHAR},
+      </if>
+      <if test="fever != null" >
+        fever = #{fever,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="othersituations != null" >
+        otherSituations = #{othersituations,jdbcType=VARCHAR},
+      </if>
+      <if test="customername != null" >
+        customerName = #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        motherId = #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Patientrounds" >
+    update patientrounds
+    set customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      operationDate = #{operationdate,jdbcType=TIMESTAMP},
+      shrinkage = #{shrinkage,jdbcType=VARCHAR},
+      cesareanSection = #{cesareansection,jdbcType=VARCHAR},
+      sideCutter = #{sidecutter,jdbcType=VARCHAR},
+      lochiaColor = #{lochiacolor,jdbcType=VARCHAR},
+      lochiaSmell = #{lochiasmell,jdbcType=VARCHAR},
+      leucorrhea = #{leucorrhea,jdbcType=VARCHAR},
+      fever = #{fever,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      otherSituations = #{othersituations,jdbcType=VARCHAR},
+      customerName = #{customername,jdbcType=VARCHAR},
+      motherId = #{motherid,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--根据门店id查询妈妈医师查房记录表-->
+  <select id="selectPatientroundsBystoreId"  resultMap="BaseResultMap">
+    select p.id, p.customer_basic_id, p.operationDate,p.shrinkage, p.cesareanSection, p.sideCutter,
+      p.lochiaColor, p.lochiaSmell, p.leucorrhea,p.fever, p.signature, p.otherSituations,
+      p.motherId, p.store_id,p.type,c.name as customerName
+    from patientrounds p LEFT JOIN customer_basic c ON p.customer_basic_id=c.id
+    where p.store_id = #{storeId}
+  </select>
+</mapper>

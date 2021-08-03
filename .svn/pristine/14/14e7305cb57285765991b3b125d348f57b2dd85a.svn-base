@@ -1,0 +1,93 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.CustomerException;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.ServiceAccount;
+import com.luer.servicecenter.bean.ServiceDetail;
+import com.luer.servicecenter.bean.Storeservice;
+import com.luer.servicecenter.bean.StoreserviceExample;
+import com.luer.servicecenter.dao.StoreserviceMapper;
+import com.luer.servicecenter.service.StoreServiceService;
+import com.luer.storemanager.bean.ExtraService;
+import com.luer.storemanager.service.ExtraServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+@Transactional
+@Service
+public class StoreServiceServiceImpl implements StoreServiceService {
+
+    @Autowired
+    StoreserviceMapper storeserviceMapper;
+
+    @Autowired
+    private ExtraServiceService extraServiceService;
+
+    @Override
+    public List<ServiceDetail> getServiceDetail(String motherId) {
+        return storeserviceMapper.getServiceDetail(motherId);
+    }
+
+    @Override
+    public List<Storeservice> selectall(Storeservice storeservice) {
+        StoreserviceExample storeserviceExample = new StoreserviceExample();
+        StoreserviceExample.Criteria criteria = storeserviceExample.createCriteria();
+        if(storeservice.getStoreid()!=null){
+            criteria.andStoreidEqualTo(storeservice.getStoreid());
+        }
+        List<Storeservice> list = storeserviceMapper.selectByExample(storeserviceExample);
+
+        return list ;
+    }
+
+    @Override
+    public List<ServiceAccount> getAccount(String storeid) {
+        List<ServiceAccount> account = storeserviceMapper.getAccount(storeid);
+        return account;
+    }
+
+    @Override
+    public int update(Storeservice storeservice) {
+        storeserviceMapper.updateTime(storeservice.getId(),storeservice.getTime());
+        return 0;
+    }
+
+    @Override
+    public int insert(Storeservice storeservice) throws CustomerException{
+
+        storeservice.setId(UUIDUtils.getUUID());
+        ExtraService extraService = extraServiceService.selectById(storeservice.getServiceid());
+        storeservice.setPrice(extraService.getPrice());
+        storeservice.setProfit(extraService.getProfit());
+
+        return storeserviceMapper.insert(storeservice);
+    }
+
+    @Override
+    public int delete(Storeservice storeservice) {
+        storeserviceMapper.deleteByPrimaryKey(storeservice.getId());
+        return 0;
+    }
+
+    @Override
+    public List<Storeservice> getAllByMotherId(String motherid) {
+        /*return storeserviceMapper.getAllByMotherId(motherid);*/
+        return  null;
+    }
+
+    /**更新单价
+    * @author 张路明
+    */
+    @Override
+    public int updatePrice(String serviceid, String price, String profit) {
+        return storeserviceMapper.updatePrice(serviceid,price,profit);
+    }
+
+    @Override
+    public ServiceAccount getCountByMotherId(String motherId) {
+        return storeserviceMapper.getAccountByMotherId(motherId);
+    }
+}

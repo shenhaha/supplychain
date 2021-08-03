@@ -1,0 +1,221 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.dao.CustomerBasicMapper;
+import com.luer.storemanager.bean.Preview;
+import com.luer.storemanager.bean.PreviewEvents;
+import com.luer.storemanager.bean.PreviewManager;
+import com.luer.storemanager.bean.PreviewRoomResource;
+import com.luer.storemanager.dao.PreviewMapper;
+import com.luer.storemanager.service.PreviewService;
+import com.luer.storesdata.bean.Room;
+import com.luer.storesdata.bean.RoomResources;
+import com.luer.storesdata.bean.RoomStyles;
+import com.luer.storesdata.dao.RoomMapper;
+import com.luer.storesdata.dao.RoomStylesMapper;
+import com.luer.storesdata.service.RoomService;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+/**
+ * 房间预览服务类实现
+ *
+ * @ClassName PreviewServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/14 18:42.
+ */
+@Service
+@Transactional
+public class PreviewServiceImpl implements PreviewService {
+    @Autowired
+    private PreviewMapper previewMapper;
+    @Autowired
+    private RoomService roomService;
+    @Autowired
+    private RoomMapper roomMapper;
+    @Autowired
+    private CustomerBasicMapper customerBasicMapper;
+    @Autowired
+    private RoomStylesMapper roomStylesMapper;
+
+    public List<Preview> getRoomsBymotherId(String motherid){
+
+        return previewMapper.getRoomsBymotherId(motherid);
+    }
+    //查询所有的房间预览信息
+    @Override
+    public List<Preview> selectPreview() {
+        return previewMapper.selectPreview();
+    }
+
+    @Override
+    //添加
+    public int insert(Preview record) {
+        record.setId(UUIDUtils.getUUID());
+        return previewMapper.insert(record);
+    }
+
+    @Override
+    //修改
+    public int updateByPrimaryKeySelective(Preview record) {
+        Room room = new Room();
+        room = roomService.selectByPrimaryKey(record.getRoomId());
+        record.setRoomStyle(room.getClassify());
+        return previewMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    //删除
+    public int deleteByPrimaryKey(String id) {
+        return previewMapper.deleteByPrimaryKey(id);
+    }
+
+
+    @Override
+    public List<PreviewEvents> selectPreviewByTime(@Param("begin_time") Date begin_time, String storeid) {
+        begin_time = new Date();
+        Date end_time = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(begin_time);
+        calendar.add(Calendar.DAY_OF_YEAR, +5);
+        calendar.add(Calendar.MONTH, +1);
+        end_time = calendar.getTime();
+        calendar.setTime(begin_time);
+        calendar.add(Calendar.DAY_OF_YEAR, -5);
+        begin_time = calendar.getTime();
+        //SimpleDateFormat f=new SimpleDateFormat("yyyy年MM月dd日 E kk点mm分")
+        List<PreviewEvents> previewEvents = new ArrayList<>();
+        List<Preview> previewList = previewMapper.selectPreviewByTime(begin_time, end_time, storeid);
+        for (Preview preview : previewList) {
+            PreviewEvents pe = new PreviewEvents();
+            pe.setId(preview.getId());
+            pe.setTitle(preview.getMotherName());
+            pe.setStart(preview.getBeginTime());
+            pe.setEnd(preview.getEndTime());
+            pe.setResourceId(preview.getRoomId());
+            pe.setStoreId(preview.getStoreId());
+            pe.setOrderCustomerId(preview.getOrderCustomerId());
+            pe.setRoomStyle(preview.getRoomStyle());
+            pe.setStatus(preview.getStatus());
+            previewEvents.add(pe);
+        }
+
+        return previewEvents;
+    }
+
+    /**
+     * 按房型分组查询其所有房间
+     * @author EVEA
+     */
+    @Override
+    public List<PreviewRoomResource> selectPreRomRes(String storeid) {
+        List<PreviewRoomResource> prrList = new ArrayList<PreviewRoomResource>();
+        List<RoomStyles> stylesList = previewMapper.selectAllStyle(storeid);
+        for (RoomStyles rs : stylesList) {
+            List<RoomResources> roomList = previewMapper.selectPreEveBySty(rs.getId(),storeid);
+            PreviewRoomResource prr = new PreviewRoomResource();
+            prr.setTitle(rs.getRoomStyle());
+            prr.setChildren(roomList);
+            prrList.add(prr);
+        }
+        return prrList;
+    }
+
+    /**
+     * @author EVEA
+     * 查询所有房间日程条
+     */
+    @Override
+    public List<PreviewEvents> selectAllEve(String storeid) {
+        return previewMapper.selectAllEve(storeid);
+    }
+
+    /**
+     * 查询房间类型
+     * @param storeid
+     * @return
+     */
+    @Override
+    public List<PreviewEvents> selectAllMother(String storeid) {
+        List<PreviewEvents> previewEvents=previewMapper.selectAllMother(storeid);
+        for (PreviewEvents previewevents:previewEvents){
+            Room room=roomMapper.selectByPrimaryKey(previewevents.getRoomId());
+            previewevents.setTitle(room.getClassify()+room.getNum());
+
+        }
+        return previewEvents;
+    }
+
+    @Override
+    public List<RoomResources> getAllMotherEve(String storeId) {
+        List<Preview> previews=previewMapper.getAllMotherEve(storeId);
+        List<RoomResources> resources=new ArrayList<>();
+        for(Preview preview:previews){
+            RoomResources roomResources=new RoomResources();
+            roomResources.setId(preview.getOrderCustomerId());
+            roomResources.setTitle(preview.getMotherName());
+            resources.add(roomResources);
+        }
+        return resources;
+    }
+
+    @Override
+    public List<PreviewManager> selectPreviewByStoreId(String storeId) {
+        List<CustomerBasic> customerBasics=customerBasicMapper.getMothers(storeId);
+        List<PreviewManager> previewManagers= new ArrayList<>();
+        System.out.println("-----------------");
+        System.out.println(customerBasics.size());
+        for(CustomerBasic customerBasic:customerBasics){
+
+            System.out.println(customerBasic.getName());
+            List<Preview> previews=previewMapper.getPreviewByMotherId(customerBasic.getId());
+            for(Preview preview:previews){
+                PreviewManager previewManager=new PreviewManager();
+                previewManager.setId(preview.getId());
+                previewManager.setMotherName(preview.getMotherName());
+                previewManager.setBeginTime(preview.getBeginTime());
+                previewManager.setEndTime(preview.getEndTime());
+                previewManager.setRoomStyle(preview.getRoomStyle());
+                Room room= roomService.selectByPrimaryKey(preview.getRoomId());
+                previewManager.setRoomNum(room.getNum());
+                previewManagers.add(previewManager);
+            }
+        }
+
+        return previewManagers;
+    }
+
+    @Override
+    public void updatePreview(PreviewManager previewManager) {
+        Preview preview=new Preview();
+        preview.setId(previewManager.getId());
+        preview.setRoomId(previewManager.getRoomNum());
+        preview.setRoomStyle(roomStylesMapper.selectByPrimaryKey(previewManager.getRoomStyle()).getRoomStyle());
+        preview.setBeginTime(previewManager.getBeginTime());
+        preview.setEndTime(previewManager.getEndTime());
+        previewMapper.updateByPrimaryKeySelective(preview);
+    }
+
+    @Override
+    public void addOnePreview(PreviewManager previewManager) {
+        Preview preview=new Preview();
+        CustomerBasic customerBasic=customerBasicMapper.selectByPrimaryKey(previewManager.getMotherName());
+        preview.setId(UUIDUtils.getUUID());
+        preview.setStoreId(previewManager.getStoreId());
+        preview.setOrderCustomerId(previewManager.getMotherName());
+        preview.setRoomId(previewManager.getRoomNum());
+        preview.setMotherName(customerBasic.getName());
+        preview.setStatus("0");
+        preview.setRoomStyle(roomStylesMapper.selectByPrimaryKey(previewManager.getRoomStyle()).getRoomStyle());
+        preview.setBeginTime(previewManager.getBeginTime());
+        preview.setEndTime(previewManager.getEndTime());
+        previewMapper.insert(preview);
+    }
+
+}

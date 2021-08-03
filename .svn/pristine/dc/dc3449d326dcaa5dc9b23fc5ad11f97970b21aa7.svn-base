@@ -1,0 +1,83 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+    <div class="row">
+        <div class="form-group col-md-5">
+            <label for="project" class="col-sm-5 control-label">增值服务项目名</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="project" name="project" placeholder="Project" >
+            </div>
+        </div>
+        <div class="form-group col-md-5">
+            <label for="vendor" class="col-sm-5 control-label">提供厂商</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="vendor" name="vendor" placeholder="endor">
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="unit" class="col-sm-5 control-label">单位</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="unit" name="unit" placeholder="unit" >
+                </div>
+            </div>
+            <div class="form-group col-md-5" hidden="hidden">
+                <label for="charges" class="col-sm-5 control-label">加值服务费用</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="charges" name="charges" placeholder="Charges" >
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="phone" class="col-sm-5 control-label">厂商联系方式</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="price" class="col-sm-5 control-label">单价(元)</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="price" name="price" placeholder="price" >
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="profit" class="col-sm-5 control-label">门店抽成(元)</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="profit" name="profit" placeholder="profit">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

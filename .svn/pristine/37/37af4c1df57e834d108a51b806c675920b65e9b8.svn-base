@@ -1,0 +1,143 @@
+package com.luer.servicecenter.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+@Getter
+@Setter
+public class Mealmanager {
+    private String id;
+
+    private String motherid;
+
+    private Integer familymealcount;
+
+    private Integer breakfast;
+
+    private Integer lunch;
+
+    private Integer dinner;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date mealdate;
+
+    private String roomid;
+
+    private Integer midnight_snack;
+    private Integer reveille;
+    private Integer snack;
+
+    private String storeid;
+
+    public Integer getMidnight_snack() {
+        return midnight_snack;
+    }
+
+    public void setMidnight_snack(Integer midnight_snack) {
+        this.midnight_snack = midnight_snack;
+    }
+
+    public Integer getReveille() {
+        return reveille;
+    }
+
+    public void setReveille(Integer reveille) {
+        this.reveille = reveille;
+    }
+
+    public Integer getSnack() {
+        return snack;
+    }
+
+    public void setSnack(Integer snack) {
+        this.snack = snack;
+    }
+
+    public String getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(String storeid) {
+        this.storeid = storeid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public Integer getFamilymealcount() {
+        return familymealcount;
+    }
+
+    public void setFamilymealcount(Integer familymealcount) {
+        this.familymealcount = familymealcount;
+    }
+
+    public Integer getBreakfast() {
+        return breakfast;
+    }
+
+    public void setBreakfast(Integer breakfast) {
+        this.breakfast = breakfast;
+    }
+
+    public Integer getLunch() {
+        return lunch;
+    }
+
+    public void setLunch(Integer lunch) {
+        this.lunch = lunch;
+    }
+
+    public Integer getDinner() {
+        return dinner;
+    }
+
+    public void setDinner(Integer dinner) {
+        this.dinner = dinner;
+    }
+
+    public Date getMealdate() {
+        return mealdate;
+    }
+
+    public void setMealdate(Date mealdate) {
+        this.mealdate = mealdate;
+    }
+
+    public String getRoomid() {
+        return roomid;
+    }
+
+    public void setRoomid(String roomid) {
+        this.roomid = roomid == null ? null : roomid.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Mealmanager{" +
+                "id='" + id + '\'' +
+                ", motherid='" + motherid + '\'' +
+                ", familymealcount=" + familymealcount +
+                ", breakfast=" + breakfast +
+                ", lunch=" + lunch +
+                ", dinner=" + dinner +
+                ", mealdate=" + mealdate +
+                ", roomid='" + roomid + '\'' +
+                '}';
+    }
+}

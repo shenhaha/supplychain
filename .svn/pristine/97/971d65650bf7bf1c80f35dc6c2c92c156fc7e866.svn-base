@@ -1,0 +1,53 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.CountSocialSupport;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.SocialSupport;
+import com.luer.servicecenter.bean.SocialSupportExample;
+import com.luer.servicecenter.dao.SocialSupportMapper;
+import com.luer.servicecenter.service.SocialSupportService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@Transactional
+public class SocialSupportServiceImpl implements SocialSupportService{
+    @Autowired
+    SocialSupportMapper socialSupportMapper;
+
+    @Override
+    public List<SocialSupport> selectBymotherId(String motherid) {
+        SocialSupportExample socialSupportExample = new SocialSupportExample();
+        SocialSupportExample.Criteria criteria = socialSupportExample.createCriteria();
+        criteria.andMotheridEqualTo(motherid);
+        return socialSupportMapper.selectByExample(socialSupportExample);
+    }
+
+    @Override
+    public int delete(String id) {
+        socialSupportMapper.deleteByPrimaryKey(id);
+        return 0;
+    }
+
+    @Override
+    public int update(SocialSupport socialSupport) {
+        SocialSupportExample socialSupportExample = new SocialSupportExample();
+        SocialSupportExample.Criteria criteria = socialSupportExample.createCriteria();
+        criteria.andIdEqualTo(socialSupport.getId());
+        socialSupport.setScore(CountSocialSupport.getScore(socialSupport));
+        socialSupportMapper.updateByExample(socialSupport,socialSupportExample);
+        return 0;
+    }
+
+    @Override
+    public int insert(SocialSupport socialSupport) {
+        socialSupport.setId(UUIDUtils.getUUID());
+        socialSupport.setScore(CountSocialSupport.getScore(socialSupport));
+        socialSupportMapper.insert(socialSupport);
+        return 0;
+    }
+}

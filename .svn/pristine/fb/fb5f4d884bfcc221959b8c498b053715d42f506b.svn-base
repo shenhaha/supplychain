@@ -1,0 +1,44 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.storemanager.bean.ItemsUse;
+import com.luer.storemanager.dao.ItemsUseMapper;
+import com.luer.storemanager.service.ItemsUseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * 物品使用服务实现类
+ *
+ * @ClassName ItemsUseServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/16 18:42.
+ */
+@Service
+@Transactional
+public class ItemsUseServiceImpl implements ItemsUseService {
+    @Autowired
+    private ItemsUseMapper itemsUseMapper;
+
+    @Override
+    public List<ItemsUse> selectItemsUse() {
+        return itemsUseMapper.selectItemsUse();
+    }
+
+    @Override
+    public int insert(ItemsUse record) {
+        return itemsUseMapper.insert(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(ItemsUse record) {
+        return itemsUseMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return itemsUseMapper.deleteByPrimaryKey(id);
+    }
+}

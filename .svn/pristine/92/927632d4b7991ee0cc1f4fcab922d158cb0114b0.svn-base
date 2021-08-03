@@ -1,0 +1,21 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.Deadline;
+
+import java.util.Date;
+import java.util.List;
+
+public interface DeadlineService {
+
+    void saveDeadline(Deadline deadline);
+
+    void deleteDeadlineById(String id);
+
+    void updateDeadline(Deadline deadline);
+
+    List<Deadline> selectDeadlineList();
+
+    List<Date> selectEndTime();
+
+    Deadline selectDeadline();
+}

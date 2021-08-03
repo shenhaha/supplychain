@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.SwimmingMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Swimming" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_basic_id" property="customerBasicId" jdbcType="VARCHAR" />
+    <result column="swim_time" property="swimTime" jdbcType="TIMESTAMP" />
+    <result column="weekday" property="weekday" jdbcType="VARCHAR" />
+    <result column="swim_way" property="swimWay" jdbcType="VARCHAR" />
+    <result column="Identify" property="identify" jdbcType="VARCHAR" />
+    <result column="motherId" property="motherid" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="babyname" property="babyname" jdbcType="VARCHAR" />
+    <result column="mothername" property="mothername" jdbcType="VARCHAR" />
+  </resultMap>
+
+    <select id="getSwimmingByMotherId" resultMap="BaseResultMap">
+
+        SELECT * FROM swimming WHERE motherId=#{motherId}
+    </select>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, customer_basic_id, swim_time, weekday, swim_way, Identify, motherId, store_id, 
+    babyname, mothername
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.SwimmingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from swimming
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from swimming
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from swimming
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.SwimmingExample" >
+    delete from swimming
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Swimming" >
+    insert into swimming (id, customer_basic_id, swim_time, 
+      weekday, swim_way, Identify, 
+      motherId, store_id, babyname, 
+      mothername)
+    values (#{id,jdbcType=VARCHAR}, #{customerBasicId,jdbcType=VARCHAR}, #{swimTime,jdbcType=TIMESTAMP}, 
+      #{weekday,jdbcType=VARCHAR}, #{swimWay,jdbcType=VARCHAR}, #{identify,jdbcType=VARCHAR}, 
+      #{motherid,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{babyname,jdbcType=VARCHAR}, 
+      #{mothername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Swimming" >
+    insert into swimming
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerBasicId != null" >
+        customer_basic_id,
+      </if>
+      <if test="swimTime != null" >
+        swim_time,
+      </if>
+      <if test="weekday != null" >
+        weekday,
+      </if>
+      <if test="swimWay != null" >
+        swim_way,
+      </if>
+      <if test="identify != null" >
+        Identify,
+      </if>
+      <if test="motherid != null" >
+        motherId,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="babyname != null" >
+        babyname,
+      </if>
+      <if test="mothername != null" >
+        mothername,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBasicId != null" >
+        #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="swimTime != null" >
+        #{swimTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weekday != null" >
+        #{weekday,jdbcType=VARCHAR},
+      </if>
+      <if test="swimWay != null" >
+        #{swimWay,jdbcType=VARCHAR},
+      </if>
+      <if test="identify != null" >
+        #{identify,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="babyname != null" >
+        #{babyname,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        #{mothername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.SwimmingExample" resultType="java.lang.Integer" >
+    select count(*) from swimming
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update swimming
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBasicId != null" >
+        customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.swimTime != null" >
+        swim_time = #{record.swimTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.weekday != null" >
+        weekday = #{record.weekday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.swimWay != null" >
+        swim_way = #{record.swimWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identify != null" >
+        Identify = #{record.identify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherid != null" >
+        motherId = #{record.motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.babyname != null" >
+        babyname = #{record.babyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mothername != null" >
+        mothername = #{record.mothername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update swimming
+    set id = #{record.id,jdbcType=VARCHAR},
+      customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      swim_time = #{record.swimTime,jdbcType=TIMESTAMP},
+      weekday = #{record.weekday,jdbcType=VARCHAR},
+      swim_way = #{record.swimWay,jdbcType=VARCHAR},
+      Identify = #{record.identify,jdbcType=VARCHAR},
+      motherId = #{record.motherid,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      babyname = #{record.babyname,jdbcType=VARCHAR},
+      mothername = #{record.mothername,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Swimming" >
+    update swimming
+    <set >
+      <if test="customerBasicId != null" >
+        customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="swimTime != null" >
+        swim_time = #{swimTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weekday != null" >
+        weekday = #{weekday,jdbcType=VARCHAR},
+      </if>
+      <if test="swimWay != null" >
+        swim_way = #{swimWay,jdbcType=VARCHAR},
+      </if>
+      <if test="identify != null" >
+        Identify = #{identify,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        motherId = #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="babyname != null" >
+        babyname = #{babyname,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        mothername = #{mothername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Swimming" >
+    update swimming
+    set customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      swim_time = #{swimTime,jdbcType=TIMESTAMP},
+      weekday = #{weekday,jdbcType=VARCHAR},
+      swim_way = #{swimWay,jdbcType=VARCHAR},
+      Identify = #{identify,jdbcType=VARCHAR},
+      motherId = #{motherid,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      babyname = #{babyname,jdbcType=VARCHAR},
+      mothername = #{mothername,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

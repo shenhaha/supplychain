@@ -1,0 +1,98 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.MealDayAccount;
+import com.luer.servicecenter.bean.MealManagerTable;
+import com.luer.servicecenter.bean.Mealmanager;
+import com.luer.servicecenter.bean.MealmanagerCount;
+import com.luer.servicecenter.service.MealmanagerService;
+import lombok.NonNull;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+/**
+ * @author：EVEA
+ * @date：2018/8/21 14:21
+ * 月子餐管理controller
+ **/
+@Controller
+@RequestMapping("/mealmanager")
+public class MealmanagerController {
+    @Autowired
+    private MealmanagerService ms;
+
+    //根据妈妈ID获取信息
+    @RequestMapping("/queryAllMealByMotherid")
+    @ResponseBody
+    public List<MealManagerTable> queryAllMealByMotherid(@Param("motherid") @NonNull String motherid) {
+        List<MealManagerTable> list = ms.selectAllbyMotherid(motherid);
+
+        return ms.selectAllbyMotherid(motherid);
+    }
+
+
+    @RequestMapping("/insertMeal")
+    @ResponseBody
+    public ResultSet insertMeal(Mealmanager mealmanager) {
+        ms.insert(mealmanager);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/delMeal")
+    @ResponseBody
+    public ResultSet delMeal(@NonNull String id) {
+        ms.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/updateMeal")
+    @ResponseBody
+    public ResultSet updateMeal(Mealmanager record) {
+        ms.updateByPrimaryKey(record);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/queryOneMeal")
+    @ResponseBody
+    public Mealmanager queryOneMeal(@NonNull String id) {
+        return ms.selectByPrimaryKey(id);
+    }
+
+    @RequestMapping("/queryAllMeal")
+    @ResponseBody//查询所有（需求X）
+    public List<MealManagerTable> queryAllMeal() {
+        return ms.selectAllbyPage();
+    }
+
+    @RequestMapping("/queryMealGroupByMotherid")
+    @ResponseBody//统计所有（无条件直接查）
+    public List<MealmanagerCount> queryMealGroupByMotherid(HttpSession session) {
+        String store_id = (String) session.getAttribute("storeId");
+        return ms.selectCountByMotherId(store_id);
+    }
+
+
+    @RequestMapping("/getmealAccount")
+    @ResponseBody
+    public List<MealDayAccount> getmealAccount(@NonNull String storeId, HttpServletRequest request) {
+        storeId = (String) request.getSession().getAttribute("storeId");
+        List<MealDayAccount> list = ms.getmealAccount(storeId);
+        return ms.getmealAccount(storeId);
+    }
+
+    //统计妈妈的月子餐
+    @RequestMapping("/getmealAccountByMotherId")
+    @ResponseBody
+    public List<MealmanagerCount> getmealAccountByMotherId(@NonNull String motherId) {
+
+        List<MealmanagerCount> list = ms.getmealAccountByMotherId(motherId);
+        return list;
+    }
+}

@@ -1,0 +1,105 @@
+package com.luer.storemanager.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storemanager.bean.CheckOut;
+import com.luer.storemanager.service.CheckOutService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * 退房记录控制层
+ *
+ * @ClassName CheckOutController
+ * @Author GavinJiang
+ * @Date 2018/8/21 10:20.
+ */
+@Controller
+@RequestMapping("/checkOut")
+public class CheckOutController {
+    @Autowired
+    private CheckOutService checkOutService;
+
+    /**
+     * 查询所有的退房记录
+     *
+     * @return java.util.List<com.luer.storemanager.bean.Shopping>
+     * @author GavinJiang
+     * @date
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("selectCheckOutAll")
+    public List<CheckOut> selectCheckOutAll(@NonNull String storeId) {
+        List<CheckOut> selectCheckOutAll = checkOutService.selectCheckOut(storeId);
+        return selectCheckOutAll;
+    }
+
+    /**
+     * 添加退房记录信息
+     *
+     * @param checkOut
+     * @return com.luer.comm.utils.ResultSet
+     * @author GavinJiang
+     * @date
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("addShopping")
+    public ResultSet addShopping(CheckOut checkOut) {
+        checkOutService.insert(checkOut);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 修改退房记录信息
+     *
+     * @param checkOut
+     * @return com.luer.comm.utils.ResultSet
+     * @author GavinJiang
+     * @date
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("updateShopping")
+    public ResultSet updateShopping(CheckOut checkOut) {
+        checkOutService.insert(checkOut);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * @return
+     * @description 根据id删除退房记录信息
+     * @author GavinJiang
+     * @date
+     * @params [id]
+     */
+    @ResponseBody
+    @RequestMapping("daleteShoppig")
+    public ResultSet daleteShoppig(@NonNull String id) {
+        checkOutService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+
+    /**
+     * @return
+     * @description 根据id批量删除退房记录信息
+     * @author GavinJiang
+     * @date
+     * @params [ids]
+     */
+    @ResponseBody
+    @RequestMapping("daleteShoppigs")
+    public ResultSet daleteShoppigs(@NonNull String ids) {
+        String[] id = ids.split(",");
+        for (int i = 0; i < id.length; i++) {
+            checkOutService.deleteByPrimaryKey(id[i]);
+        }
+        return ResultSet.getSuccess();
+    }
+}

@@ -1,0 +1,16 @@
+package com.luer.springsecurity.service;
+
+import com.luer.springsecurity.bean.UserRole;
+
+/**
+ * Created by 小强 on 2018/9/12.
+ */
+public interface UserRoleService {
+
+
+    int deleteByRolrId(String roleId);
+
+    int insert(UserRole userRole);
+
+    String getByUserId(String userId);
+}

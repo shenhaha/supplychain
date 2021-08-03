@@ -1,0 +1,36 @@
+package com.luer.storesdata.bean;
+
+import lombok.Data;
+
+@Data
+public class RoomStyles {
+    private String id;
+
+    private String storeId;
+
+    private String roomStyle;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getRoomStyle() {
+        return roomStyle;
+    }
+
+    public void setRoomStyle(String roomStyle) {
+        this.roomStyle = roomStyle == null ? null : roomStyle.trim();
+    }
+}

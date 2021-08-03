@@ -1,0 +1,72 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.Pavilionassessment;
+import com.luer.servicecenter.bean.PavilionassessmentExample;
+import com.luer.servicecenter.dao.PavilionassessmentMapper;
+import com.luer.servicecenter.service.PavilionAssessmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * @author EVEA
+ * 出馆评估表service
+ */
+@Transactional
+@Service
+public class PavilionAssessmentServiceImpl implements PavilionAssessmentService {
+    @Autowired
+    private PavilionassessmentMapper pavilionassessmentMapper;
+
+    @Override
+    public int insert(Pavilionassessment record) {
+        record.setId(UUIDUtils.getUUID());
+        return pavilionassessmentMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return pavilionassessmentMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Pavilionassessment record) {
+        return pavilionassessmentMapper.updateByPrimaryKey(record);
+    }
+
+    /**
+     *
+     * @param pavilionassessment 出馆评估表对象
+     * (可传入并根据Motherid或StoreId查询，都不传则默认查询所有，两者or连接)
+     * @return
+     */
+    @Override
+    public List<Pavilionassessment> selectByExample(Pavilionassessment pavilionassessment) {
+        PavilionassessmentExample example = new PavilionassessmentExample();
+        if(pavilionassessment.getMotherid()!=null&&pavilionassessment.getMotherid().trim()!=""){
+            PavilionassessmentExample.Criteria c1 = example.createCriteria();
+            c1.andMotheridEqualTo(pavilionassessment.getMotherid());
+        }
+        if(pavilionassessment.getStoreId()!=null&&pavilionassessment.getStoreId().trim()!=""){
+            PavilionassessmentExample.Criteria c2 = example.createCriteria();
+            c2.andStoreIdEqualTo(pavilionassessment.getStoreId());
+            example.or(c2);
+        }
+        return pavilionassessmentMapper.selectByExample(example);
+    }
+
+    @Override
+    public Pavilionassessment selectByPrimaryKey(String id) {
+        return pavilionassessmentMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Pavilionassessment> getPavilionByMotherId(String motherid) {
+        return pavilionassessmentMapper.getPavilionByMotherId( motherid);
+    }
+}

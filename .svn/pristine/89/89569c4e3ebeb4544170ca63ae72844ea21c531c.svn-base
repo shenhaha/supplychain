@@ -1,0 +1,33 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Pavilionassessment;
+import com.luer.servicecenter.bean.PavilionassessmentExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface PavilionassessmentMapper {
+    int countByExample(PavilionassessmentExample example);
+
+    int deleteByExample(PavilionassessmentExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Pavilionassessment record);
+
+    int insertSelective(Pavilionassessment record);
+
+    List<Pavilionassessment> selectByExample(PavilionassessmentExample example);
+
+    Pavilionassessment selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Pavilionassessment record, @Param("example") PavilionassessmentExample example);
+
+    int updateByExample(@Param("record") Pavilionassessment record, @Param("example") PavilionassessmentExample example);
+
+    int updateByPrimaryKeySelective(Pavilionassessment record);
+
+    int updateByPrimaryKey(Pavilionassessment record);
+
+    List<Pavilionassessment> getPavilionByMotherId(@Param("motherId") String motherid);
+}

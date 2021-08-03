@@ -1,0 +1,661 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>创建同级</title>
+</head>
+<body>
+<ul class="nav nav-tabs" style="margin-top: 5px">
+    <li role="presentation"><a href="javascript:(0)" id="li1" class="text-muted">用户权限管理</a></li>
+    <li role="presentation"><a href="javascript:(0)" id="li2" class="text-muted" data-toggle="">新增用户</a></li>
+    <li role="presentation"><a href="javascript:(0)" id="li3" class="text-muted">删除用户</a></li>
+</ul>
+<%--新增门店--%>
+<%--删除用户--%>
+<form id="form3" class="form-inline">
+    <div style="margin-left: 20px;margin-top: 10px">
+        <div class="row">
+            <div class="form-group">
+                <label for="username3">用户选择：</label>
+                <select class="form-control" id="username3">
+                </select>
+            </div>
+            <div class="form-group" style="margin-left: 10px">
+                <button class="btn btn-primary" id="btn4" type="button">删除用户</button>
+            </div>
+        </div>
+    </div>
+</form>
+<%--新增用户--%>
+<form id="form2" class="form-horizontal" style="margin-left: 100px">
+    <div class="form-group" style="margin-top: 10px">
+        <label class="control-label col-sm-2" for="username2">用户名</label>
+        <div class="col-sm-4" id="user">
+            <input type="text" class="form-control" id="username2" name="username" placeholder="用户名">
+        </div>
+    </div>
+    <div class="form-group" style="margin-top: 10px">
+        <label class="control-label col-sm-2" for="password2">密码</label>
+        <div class="col-sm-4">
+            <input type="password" class="form-control" id="password2" name="password" placeholder="密码">
+        </div>
+    </div>
+    <div class="form-group" id="forpassword" style="margin-top: 10px">
+        <label class="control-label col-sm-2" for="password2">确认密码</label>
+        <div class="col-sm-4">
+            <input type="password" class="form-control" id="repassword2" name="password" placeholder="密码">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary" id="btn2" type="button">确定新增</button>
+        </div>
+    </div>
+
+</form>
+<%--修改权限--%>
+<form id="form1" class="form-horizontal" style="margin-left: 100px">
+    <div class="row" style="margin-left: 5px;margin-bottom: 0px">
+        <h3 style="">权限修改</h3>
+        <div class="form-group" style="margin-bottom: 0px">
+            <label class="control-label col-sm-1" for="userselect">用户选择</label>
+            <div class="col-sm-5">
+                <select class="form-control" style="width: 200px" id="userselect">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="treeview-checkable" class="col-sm-3 col-sm-offset-4 form-group" style="margin-top: 50px">
+        </div>
+        <div class="form-group" style="margin-top: 50px">
+            <button id="btn1" class="btn btn-primary">确定修改</button>
+        </div>
+    </div>
+</form>
+<script src="${ctx}/static/js/bootstrap-treeview.js"></script>
+<script>
+    $(function () {
+        $('#btn1').click(function () {
+            var arr = $('#treeview-checkable').treeview('getChecked');
+            var nodeIds = '';
+            $(arr).each(function (index) {
+                if (index == 0) {
+                    nodeIds += this.nodeId;
+                } else {
+                    nodeIds += ',' + this.nodeId;
+                }
+            })
+            $.post('${ctx}/addAuths', {'auths': nodeIds, 'username': $('#userselect').val()}, function (data) {
+                   getCode(data);
+            });
+            return false;
+        })
+        $('#btn4').click(function () {
+            $.post('${ctx}/deleteUser', {'username': $('#username3').val()}, function (data) {
+                getCode(data);
+            });
+            //alert($('#username3').val()+"已经被删除了");
+            return false;
+        })
+        //用户与角色新增
+        $('#btn2').click(function () {
+
+            })
+        $('#form2').hide();
+        $('#form3').hide();
+        $('#li1').click(function () {
+            $('#form1').show()
+            $('#form2').hide()
+            $('#form3').hide()
+        });
+        $('#li2').click(function () {
+            $('#form1').hide()
+            $('#form2').show()
+            $('#form3').hide()
+        })
+        $('#li3').click(function () {
+            $('#form1').hide()
+            $('#form2').hide()
+            $('#form3').show()
+        })
+        $.get("${ctx}/getUsersByStoreID", function (data) {
+            $(data).each(function (index) {
+                //alert(this.username)
+                $('#userselect').append('<option value="' + this.username + '">' + this.username + '</option>');
+                $('#username3').append('<option value="' + this.username + '">' + this.username + '</option>');
+            })
+        })
+        var defaultData = [
+            {
+                text: '资料管理',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: '总公司基本资料',
+                        tags: ['2'],
+                    },
+                    {
+                        text: '下级分公司',
+                        tags: ['2'],
+                    },
+                    {
+                        text: '总部加盟',
+                        tags: ['2'],
+                    },
+                    {
+                        text: '区域代理',
+                        tags: ['2'],
+                    },
+                    {
+                        text: '分公司基本资料',
+                        tags: ['2'],
+                    },
+                    {
+                        text: '门店基本资料',
+                        tags: ['2'],
+                    },
+                    {
+                        text: '部门基本资料',
+                        tags: ['2'],
+                    },
+                    {
+                        text: '员工基本资料',
+                        tags: ['0']
+                    },
+                     {
+                        text: '房间类型',
+                        tags: ['0']
+                    },
+                    {
+                        text: '房间基本资料',
+                        tags: ['0']
+                    }, {
+                        text: '酒店资料',
+                        tags: ['0']
+                    }
+                ]
+            },
+            {
+                text: '门店管理',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: '排班管理',
+                        tags: ['0'],
+                    },
+                    {
+                        text: '排房管理',
+                        tags: ['0'],
+                        nodes: [
+                            {
+                                text: '查询预览',
+                                tags: ['0']
+                            },
+                            {
+                                text: '排房预览',
+                                tags: ['0']
+                            },
+                            {
+                                text: '入住核实',
+                                tags: ['0']
+                            },
+                            {
+                                text: '换房调整',
+                                tags: ['0']
+                            }
+                        ]
+                    }, {
+                        text: '客诉管理',
+                        tags: ['0'],
+                        nodes:[
+                            {
+                                text: '客诉记录',
+                                tags: ['0']
+                            },{
+                                text: '客诉统计',
+                                tags: ['0']
+                            }
+                        ]
+                    },
+                    {
+                        text: '加值服务内容设定',
+                        tags: ['0']
+                    },
+                    {
+                        text: '满意度调查',
+                        tags: ['0'],
+                    },
+                    {
+                        text: '退房管理',
+                        tags: ['0'],
+                        nodes: [
+                            {
+                                text: '退房结算',
+                                tags: ['0']
+                            },
+                            {
+                                text: '购物明细',
+                                tags: ['0']
+                            },
+                            {
+                                text: '优惠券结算',
+                                tags: ['0']
+                            }
+                        ]
+                    },
+                    {
+                        text: '会员管理',
+                        tags: ['0']
+                    }
+                ]
+            },
+            {
+                text: '业务管理',
+                href: '#parent1',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: '顾客管理',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '常见问题Q&A',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '顾客咨询记录',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '预约客户登记',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    },
+                    {
+                        text: '参访人员管理',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '维修人员登记',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '家属信息登记',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '预约客户登记',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    },
+                    {
+                        text: '订单入住管理',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '订单信息输入',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            }, {
+                                text: '入住小贴士',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            }, {
+                                text: '入住提醒',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '生产联络单',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '派车单',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                text: '服务中心',
+                href: '#parent1',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: '预住妈妈信息',
+                        href: '#child1',
+                        tags: ['2'],
+                    },
+                    {
+                        text: '馆内妈妈信息',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '妈妈信息',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            }
+                        ]
+                    },
+                    {
+                        text: '离馆妈妈信息',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '妈妈信息',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '小产妈妈信息',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '妈妈护理详细登记',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    }, {
+                        text: '月子餐管理',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '订餐管理',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '每日统计',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    }, {
+                        text: '加值服务统计',
+                        href: '#child1',
+                        tags: ['2'],
+                    }
+                ]
+            },
+            {
+                text: '进销存管理',
+                href: '#parent1',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: '库存管理',
+                        href: '#child1',
+                        tags: ['2'],
+                    }, {
+                        text: '供应商管理',
+                        href: '#child1',
+                        tags: ['2'],
+                    }, {
+                        text: '商品管理',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '总部商品管理',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '总采购商品管理',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '自采商品管理',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    }, {
+                        text: '订单管理',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '显示所有门店订单',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '查看汇总订单',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '门店订单查看',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '总采订单',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '自采订单',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    }, {
+                        text: '入库管理',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '总部商品入库',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '总采入库',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '自采入库',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    }, {
+                        text: '出库管理',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: '门店出库',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: '领用出库',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            },
+                            {
+                                text: '销售出库',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                text: '报表中心',
+                href: '#parent1',
+            },
+            {
+                text: '系统管理',
+                href: '#parent1',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: '权限管理',
+                        href: '#child2',
+                        tags: ['0'],
+                        nodes:[
+                            {
+                                text: '创建同级',
+                                href: '#parent1',
+                            },{
+                                text: '创建下级',
+                                href: '#parent1',
+                            },
+                        ]
+                    },
+                    {
+                        text: '账号管理',
+                        href: '#child2',
+                        tags: ['0'],
+                        nodes:[
+                            {
+                                text: '创建同级',
+                                href: '#parent1',
+                            },{
+                                text: '创建下级',
+                                href: '#parent1',
+                            },
+                        ]
+                    },{
+                        text: '参数管理',
+                        href: '#parent1',
+                    }
+                ]
+            },
+        ];
+
+        var $checkableTree = $('#treeview-checkable').treeview({
+            levels: 1,
+            data: defaultData,
+            showIcon: false,
+            showCheckbox: true,
+            onNodeChecked: function (event, node) {
+
+                if (node.parentId == undefined) {//没有父节点
+                    if (node.nodes == undefined) {//没有子节点
+
+                    } else {//有子节点
+                        $(node.nodes).each(function () {
+                            if (this.state.checked == false) {//父节点没有选中
+                                $('#treeview-checkable').treeview('toggleNodeChecked', [this.nodeId, {silent: true}])
+                                if (this.nodes != undefined) {
+                                    $(this.nodes).each(function () {
+                                        if (this.state.checked == false) {
+                                            $('#treeview-checkable').treeview('toggleNodeChecked', [this.nodeId, {silent: true}])
+                                        }
+                                    })
+                                }
+                            } else {
+                            }
+                        })
+                    }
+                } else {//有父节点
+                    var parent = $('#treeview-checkable').treeview('getParent', node.nodeId);
+
+                    var grandparent = $('#treeview-checkable').treeview('getParent', parent.nodeId);
+                    if (grandparent.nodeId != undefined) {
+                        grandparent.state.checked = true;
+                    }
+                    if (parent.state.checked == false) {//选中时选中也父节点
+                        $('#treeview-checkable').treeview('toggleNodeChecked', [parent.nodeId, {silent: true}])
+                    }
+                    if (node.nodes == undefined) {//没有子节点
+
+                    } else {//有子节点
+                        $(node.nodes).each(function () {
+                            $('#treeview-checkable').treeview('toggleNodeChecked', [this.nodeId, {silent: true}])
+                        })
+                    }
+                }
+                //去除禁用的选中
+                var list = $('#treeview-checkable').treeview('getDisabled');
+                $(list).each(function () {
+                    //alert(this);
+                    if(this.state.checked == true) {
+                        $('#treeview-checkable').treeview('toggleNodeChecked', [this.nodeId, {silent: true}]);
+                    }
+                })
+            },
+            onNodeUnchecked: function (event, node) {
+                var brothers = $('#treeview-checkable').treeview('getSiblings', node.nodeId);//获取兄弟节点数组
+                var flag = false;
+                $(brothers).each(function () {
+                    if ($(this)[0].state.checked == true) {//其他兄弟有一个选中的，则父节点选中
+                        flag = true;
+                    }
+                });
+                if (node.nodes != undefined) {
+                    $(node.nodes).each(function () {
+                        if (this.state.checked == true) {
+                            $('#treeview-checkable').treeview('toggleNodeChecked', [this.nodeId, {silent: true}]);
+                            if (this.nodes != undefined) {
+                                $(this.nodes).each(function () {
+                                    if (this.state.checked == true) {
+                                        $('#treeview-checkable').treeview('toggleNodeChecked', [this.nodeId, {silent: true}]);
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+                var parent = $('#treeview-checkable').treeview('getParent', node.nodeId);//undefined
+                if (parent != 'undefined') {
+                    if (flag == false) {
+                        if (parent.state != undefined) {
+                            if (parent.state.checked == true) {
+                                $('#treeview-checkable').treeview('toggleNodeChecked', [parent.nodeId, {silent: true}])
+                            }
+                        }
+                    }
+                }
+                //去除禁用的选中
+                var list = $('#treeview-checkable').treeview('getDisabled');
+                $(list).each(function () {
+                    if(this.state.checked == true) {
+                        $('#treeview-checkable').treeview('toggleNodeChecked', [this.nodeId, {silent: true}]);
+                    }
+                })
+            }
+        });
+
+        $('#treeview-checkable').treeview('disableAll');
+
+        $.post('${ctx}/getAuth', function (date) {
+            $(date.data).each(function () {
+                /// alert(this);
+                $('#treeview-checkable').treeview('enableNode', [0, {silent: true}]);
+                $('#treeview-checkable').treeview('enableNode', [parseInt(this), {silent: true}]);
+            })
+        })
+    })
+</script>
+</body>
+</html>

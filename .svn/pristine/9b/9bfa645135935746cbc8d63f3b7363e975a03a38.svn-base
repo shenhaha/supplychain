@@ -1,0 +1,42 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.Supplier;
+import com.luer.stockandsales.bean.SupplierExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface SupplierMapper {
+    int countByExample(SupplierExample example);
+
+    int deleteByExample(SupplierExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Supplier record);
+
+    int insertSelective(Supplier record);
+
+    List<Supplier> selectByExample(SupplierExample example);
+
+    Supplier selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Supplier record, @Param("example") SupplierExample example);
+
+    int updateByExample(@Param("record") Supplier record, @Param("example") SupplierExample example);
+
+    int updateByPrimaryKeySelective(Supplier record);
+
+    int updateByPrimaryKey(Supplier record);
+
+    List<Supplier> selectAll();
+    //查询商品对应供应商信息
+    List<Supplier> selectByGoodsName(String goodsName);
+    //查询门店对应供应商
+    List<Supplier> selectByStoreId(String storeId);
+    //查询门店对应的供应商de
+    List<String> selectSupplierIdByStoreId(String storeId);
+}

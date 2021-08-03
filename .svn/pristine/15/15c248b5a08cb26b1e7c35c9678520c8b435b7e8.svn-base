@@ -1,0 +1,86 @@
+package com.luer.systemmanager.service.impl;
+
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.storesdata.service.StoreFileService;
+import com.luer.systemmanager.bean.ParameterSet;
+import com.luer.systemmanager.dao.ParameterSetMapper;
+import com.luer.systemmanager.service.ParameterSetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/9/29.
+ */
+@Service
+@Transactional
+public class ParameterSetServiceImpl implements ParameterSetService {
+
+
+    @Autowired
+    private ParameterSetMapper parameterSetMapper;
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+
+    @Override
+    public ParameterSet getParameterSet2(String storeId, String name) {
+        return parameterSetMapper.getParameterSet2(storeId, name);
+    }
+
+    @Override
+    public void addParameterSet(ParameterSet parameterSet) {
+        parameterSetMapper.insert(parameterSet);
+    }
+
+    @Override
+    public void updateParameterSet(ParameterSet parameterSet) {
+        if (parameterSet.getStoreId().equals("7921b98b-bdae-450d-ae3f-3794593a0925") && parameterSet.getParameterName().equals("endday")) {
+
+            parameterSetMapper.updateEndDays(parameterSet.getIntParameter(), new Date());
+
+        } else if (parameterSet.getParameterName().equals("endday")) {
+
+        } else {
+            parameterSet.setLastDate(new Date());
+            parameterSetMapper.updateByPrimaryKeySelective(parameterSet);
+        }
+
+    }
+
+    @Override
+    public List<ParameterSet> getParameterSet(String storeId) {
+        return parameterSetMapper.getParameterSet(storeId);
+    }
+
+    @Override
+    public Date getEndday() {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String storeId = storeFileMapper.selectIdBySort();
+        Integer intParameter = parameterSetMapper.getEndday(storeId);
+        //intParameter =10;
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        cal.set(year,month,intParameter);
+       /* String str=""+year + " 年 " + month + "月"+intParameter;*/
+
+        Date date=cal.getTime();
+
+        String str2=sdf.format(date);
+
+        Date date2=null;
+        try {
+             date2=sdf.parse(str2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date2;
+    }
+}

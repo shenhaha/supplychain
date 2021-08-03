@@ -1,0 +1,59 @@
+package com.luer.springsecurity.service.Impl;
+
+import com.luer.springsecurity.bean.Permission;
+import com.luer.users.bean.Users;
+import com.luer.users.dao.UsersMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 通过用户名查询用户信息
+ * 储存用户所有角色
+ */
+@Service
+public class MyUserDetailService implements UserDetailsService {
+
+    @Autowired
+    private UsersMapper usersMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //登陆验证时，通过username获取用户的所有权限信息，
+        //并返回User放到spring的全局缓存SecurityContextHolder中，以供授权器使用
+        // 根据用户名查询用户信息
+        Users users = usersMapper.getByName(username);
+        if(users!=null){
+            List<Permission> permList = usersMapper.findPermissionByUsername(username);
+            //authorities ：存放所有用户权限
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            if(permList.size() >1){
+                for (Permission perm : permList) {
+                    GrantedAuthority authority = new SimpleGrantedAuthority(perm.getPermtag());
+               /* GrantedAuthority authority = new SimpleGrantedAuthority(perm.getPermname());*/
+                    authorities.add(authority);
+                }
+            }else{
+                GrantedAuthority authority = new SimpleGrantedAuthority("/index");
+                authorities.add(authority);
+            }
+
+            // 把所有权限赋值给 user
+            users.setAuthorities(authorities);
+            return new User(users.getUsername(),users.getPassword(),authorities);
+        }else{
+            throw new UsernameNotFoundException("admin: " + username + " do not exist!");
+        }
+    }
+}

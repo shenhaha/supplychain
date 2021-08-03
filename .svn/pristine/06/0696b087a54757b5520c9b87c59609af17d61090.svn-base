@@ -1,0 +1,96 @@
+package com.luer.stockandsales.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.stockandsales.bean.Goods;
+import com.luer.stockandsales.service.GoodsService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/goods")
+public class GoodsController {
+    //商品
+    @Autowired
+    private GoodsService goodsService;
+
+
+    //新增商品信息
+    @ResponseBody
+    @RequestMapping(value = "/saveGoods")
+    public ResultSet saveGoods(@NonNull Goods goods) {
+
+        goodsService.saveGoods(goods);
+        return ResultSet.getSuccess();
+    }
+
+
+    //删除商品信息
+    @ResponseBody
+    @RequestMapping(value = "/deleteGoodsById")
+    public ResultSet deleteGoodsById(@NonNull String id) {
+        goodsService.deleteGoodsById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改商品信息
+    @ResponseBody
+    @RequestMapping(value = "/updateGoods")
+    public ResultSet updateGoods(@NonNull Goods goods) {
+
+        goodsService.updateGoods(goods);
+        return ResultSet.getSuccess();
+    }
+
+    //查询门店供应商和总部所有商品信息
+    @ResponseBody
+    @RequestMapping(value = "/selectStoreGoods")
+    public List<Goods> selectStoreGoods() {
+        List<Goods> goodsList = goodsService.selectStoreGoods();
+        return goodsList;
+    }
+
+    //查询门店所有供应商提供的商品信息
+    @ResponseBody
+    @RequestMapping(value = "/selectStoreGoodsBysupplier")
+    public List<Goods> selectStoreGoodsBysupplier(@NonNull String classifyId) {
+        List<Goods> goodsList = goodsService.selectStoreGoodsBysupplier(classifyId);
+        return goodsList;
+    }
+
+    //查询供应商提供的商品
+    @ResponseBody
+    @RequestMapping("/selectGoodsBySupplierId")
+    public List<Goods> selectGoodsBySupplierId(@NonNull String supplierId) {
+        List<Goods> goodsList = goodsService.selectSupplierGoods(supplierId);
+        return goodsList;
+    }
+
+    //查询总部提供的商品
+    @ResponseBody
+    @RequestMapping("/selectHeadOfficeGoods")
+    public List<Goods> selectHeadOfficeGoods() {
+        List<Goods> goodsList = goodsService.selectHeadOfficGoods();
+
+        return goodsList;
+    }
+    //查询总部提供的商品
+    @ResponseBody
+    @RequestMapping("/selectHeadOfficeGoodsByClassifyId")
+    public List<Goods> selectHeadOfficeGoodsByClassifyId(@NonNull String classifyId) {
+        System.out.println(classifyId);
+        List<Goods> goodsList = goodsService.selectHeadOfficeGoodsByClassifyId(classifyId);
+
+        return goodsList;
+    }
+    @RequestMapping("/test")
+    public ModelAndView test() {
+        ModelAndView mv=new ModelAndView();
+        mv.setViewName("storesandsales/test");
+        return mv;
+    }
+}

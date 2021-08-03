@@ -1,0 +1,70 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.service.StoreServiceService;
+import com.luer.storemanager.bean.ExtraService;
+import com.luer.storemanager.bean.ExtraServiceExample;
+import com.luer.storemanager.dao.ExtraServiceMapper;
+import com.luer.storemanager.service.ExtraServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+
+@Service
+public class ExtraServiceServiceImpl implements ExtraServiceService {
+
+    @Autowired
+    private ExtraServiceMapper extraServiceMapper;
+    @Autowired
+    private StoreServiceService storeServiceService;
+    @Override
+    public void saveExtraService(ExtraService extraService) {
+        extraService.setId(UUIDUtils.getUUID());
+       extraServiceMapper.insert(extraService);
+    }
+
+    @Override
+    public void deleteExtraServiceById(String extraServiceId) {
+       extraServiceMapper.deleteByPrimaryKey(extraServiceId);
+    }
+
+    @Override
+    public void updateExtraService(ExtraService extraService) {
+        storeServiceService.updatePrice(extraService.getId(),extraService.getPrice(),extraService.getProfit());
+      extraServiceMapper.updateByPrimaryKey(extraService);
+    }
+
+    @Override
+    public List<ExtraService> selectExtraServices(String storeId) {
+        ExtraServiceExample extraServiceExample = new ExtraServiceExample();
+        ExtraServiceExample.Criteria criteria = extraServiceExample.createCriteria();
+        if(!StringUtils.isEmpty(storeId)){
+            criteria.andStoreIdEqualTo(storeId);
+        }
+        return extraServiceMapper.selectByExample(extraServiceExample);
+    }
+//通过门店id查询增值服务基本资料
+   /* @Override
+    public List<ExtraService> selectExtraServices(String storeFileId) {
+
+        List<ExtraService> extraServiceList=extraServiceMapper.selectByStoreFileId(storeFileId);
+        return extraServiceList;
+    }*/
+
+    @Override
+    public List<ExtraService> selectAll(String storeId) {
+        ExtraServiceExample extraServiceExample = new ExtraServiceExample();
+        ExtraServiceExample.Criteria criteria = extraServiceExample.createCriteria();
+        if(!StringUtils.isEmpty(storeId)){
+            criteria.andStoreIdEqualTo(storeId);
+        }
+        return extraServiceMapper.selectByExample(extraServiceExample);
+    }
+
+    @Override
+    public ExtraService selectById(String id) {
+        return extraServiceMapper.selectByPrimaryKey(id);
+    }
+}

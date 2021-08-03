@@ -1,0 +1,131 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-5 " hidden="hidden">
+                <label for="week" class="col-sm-3 control-label">周数 :</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="week" name="week" placeholder="周数">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="project" class="col-sm-4 control-label">卫教项目 :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="project" name="project" placeholder="卫教项目" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="behaviorobjectives" class="col-sm-4 control-label">个别行为目标 :</label>
+                <div class="col-sm-6">
+                    <textarea type="text" class="form-control col-sm-6" id="behaviorobjectives" name="behaviorobjectives"
+                              placeholder="个别行为目标" tabindex="1"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="guidedate" class="col-sm-4 control-label">指导日期：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-sm-6"
+                     data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" name="guidedate" id="guidedate" placeholder="指导日期"
+                           readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="evaluationdate" class="col-sm-4 control-label">评量日期：</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-sm-6"
+                     data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" name="evaluationdate" id="evaluationdate"
+                           placeholder="评量日期" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-5 ">
+                <label for="familysignature" class="col-sm-4 control-label">家属签名 :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="familysignature" name="familysignature"
+                           placeholder="家属签名" tabindex="1">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="mentorsignature" class="col-sm-4 control-label">指导者签名 :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="mentorsignature" name="mentorsignature"
+                           placeholder="指导者签名" tabindex="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+
+            <div class="form-group col-md-5 ">
+                <label for="evaluationresult" class="col-sm-4 control-label">评量结果 :</label>
+                <div class="col-sm-6">
+                    <select type="text" class="form-control" id="evaluationresult"
+                            name="evaluationresult" placeholder="evaluationresult" tabindex="1">
+                        <option value="达到" selected="selected">达到</option>
+                        <option value="未达到" selected="selected">未达到</option>
+                        <option value="不需要" selected="selected">不需要</option>
+
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group col-md-5 ">
+                <label for="note" class="col-sm-4 control-label">备注 :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="note" name="note" placeholder="备注" tabindex="1">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>
+

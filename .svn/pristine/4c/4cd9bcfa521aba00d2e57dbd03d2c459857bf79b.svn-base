@@ -1,0 +1,228 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Pavilionassessment {
+    private String id;
+
+    private String customerId;
+
+    private String mother;
+
+    private String father;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date paviliondate;
+
+    private String status;
+
+    private String scalp;
+
+    private String eye;
+
+    private String ear;
+
+    private String oral;
+
+    private String nose;
+
+    private String cheek;
+
+    private String chest;
+
+    private String abdomen;
+
+    private String umbilicalcord;
+
+    private String genital;
+
+    private String limbs;
+
+    private String informobjece;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date assessmenttime;
+
+    private String motherid;
+
+    private String storeId;
+
+    private String babyname;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId == null ? null : customerId.trim();
+    }
+
+    public String getMother() {
+        return mother;
+    }
+
+    public void setMother(String mother) {
+        this.mother = mother == null ? null : mother.trim();
+    }
+
+    public String getFather() {
+        return father;
+    }
+
+    public void setFather(String father) {
+        this.father = father == null ? null : father.trim();
+    }
+
+    public Date getPaviliondate() {
+        return paviliondate;
+    }
+
+    public void setPaviliondate(Date paviliondate) {
+        this.paviliondate = paviliondate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getScalp() {
+        return scalp;
+    }
+
+    public void setScalp(String scalp) {
+        this.scalp = scalp == null ? null : scalp.trim();
+    }
+
+    public String getEye() {
+        return eye;
+    }
+
+    public void setEye(String eye) {
+        this.eye = eye == null ? null : eye.trim();
+    }
+
+    public String getEar() {
+        return ear;
+    }
+
+    public void setEar(String ear) {
+        this.ear = ear == null ? null : ear.trim();
+    }
+
+    public String getOral() {
+        return oral;
+    }
+
+    public void setOral(String oral) {
+        this.oral = oral == null ? null : oral.trim();
+    }
+
+    public String getNose() {
+        return nose;
+    }
+
+    public void setNose(String nose) {
+        this.nose = nose == null ? null : nose.trim();
+    }
+
+    public String getCheek() {
+        return cheek;
+    }
+
+    public void setCheek(String cheek) {
+        this.cheek = cheek == null ? null : cheek.trim();
+    }
+
+    public String getChest() {
+        return chest;
+    }
+
+    public void setChest(String chest) {
+        this.chest = chest == null ? null : chest.trim();
+    }
+
+    public String getAbdomen() {
+        return abdomen;
+    }
+
+    public void setAbdomen(String abdomen) {
+        this.abdomen = abdomen == null ? null : abdomen.trim();
+    }
+
+    public String getUmbilicalcord() {
+        return umbilicalcord;
+    }
+
+    public void setUmbilicalcord(String umbilicalcord) {
+        this.umbilicalcord = umbilicalcord == null ? null : umbilicalcord.trim();
+    }
+
+    public String getGenital() {
+        return genital;
+    }
+
+    public void setGenital(String genital) {
+        this.genital = genital == null ? null : genital.trim();
+    }
+
+    public String getLimbs() {
+        return limbs;
+    }
+
+    public void setLimbs(String limbs) {
+        this.limbs = limbs == null ? null : limbs.trim();
+    }
+
+    public String getInformobjece() {
+        return informobjece;
+    }
+
+    public void setInformobjece(String informobjece) {
+        this.informobjece = informobjece == null ? null : informobjece.trim();
+    }
+
+    public Date getAssessmenttime() {
+        return assessmenttime;
+    }
+
+    public void setAssessmenttime(Date assessmenttime) {
+        this.assessmenttime = assessmenttime;
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getBabyname() {
+        return babyname;
+    }
+
+    public void setBabyname(String babyname) {
+        this.babyname = babyname == null ? null : babyname.trim();
+    }
+}

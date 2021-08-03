@@ -1,0 +1,22 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.Announce;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/9/3.
+ */
+public interface AnnounceService {
+    List<Announce> getAnnounce();
+
+  
+
+    void addAnnounce(Announce announce);
+
+    void deleteAnnounce(String id);
+
+    void updateAnnounce(Announce announce);
+
+    Announce getOneAnnounce(String id);
+}

@@ -1,0 +1,134 @@
+package com.luer.storesdata.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storesdata.bean.AccountInfo;
+import com.luer.storesdata.bean.Credentials;
+import com.luer.storesdata.bean.StoreFile;
+import com.luer.storesdata.bean.StoreFileExample;
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.storesdata.service.StoreFileService;
+import com.luer.systemmanager.bean.ParameterSet;
+import com.luer.systemmanager.dao.ParameterSetMapper;
+import com.luer.users.bean.Users;
+import com.luer.users.dao.UsersMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Transactional
+@Service
+public class StoreFileServiceImpl implements StoreFileService {
+
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+
+    @Autowired
+    private UsersMapper usersMapper;
+    @Autowired
+    private ParameterSetMapper parameterSetMapper;
+
+    @Override
+    public List<StoreFile> getStoreBySort(StoreFile storeFile) {
+        StoreFileExample storeFileExample = new StoreFileExample();
+        StoreFileExample.Criteria criteria = storeFileExample.createCriteria();
+        if(storeFile.getSort()!=null){
+            criteria.andSortEqualTo(storeFile.getSort());
+        }
+        if(storeFile.getStoreId()!=null){
+            criteria.andStoreIdEqualTo(storeFile.getStoreId());
+        }
+
+        return storeFileMapper.selectByExample(storeFileExample);
+    }
+
+    @Override
+    public List<StoreFile> getAllBranch() {
+
+        return  storeFileMapper.selectBranch();
+    }
+
+    @Override
+    public String getStoreFileId() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        Users users = usersMapper.getByName(userDetails.getUsername());
+        return users.getStoreId();
+    }
+
+    @Override
+    public void saveStoreFile(StoreFile storeFile) {
+
+
+        storeFile.setId(UUIDUtils.getUUID());
+
+        storeFileMapper.insert(storeFile);
+    }
+
+
+    @Override
+    public void deleteStoreFile(String storeFileId) {
+        // //删除门店基本资料
+        storeFileMapper.deleteByPrimaryKey(storeFileId);
+        //删除当前（门店/分公司）的所有用户
+        List<Users> users = usersMapper.getByStoreId(storeFileId);
+        users.forEach(user->{
+            usersMapper.deleteByUserName(user.getUsername());
+        });
+        //判断当前（门店/分公司）是门店还是分公司
+        List<StoreFile> storeFiles = storeFileMapper.selectByBranchId(storeFileId);
+        if(storeFiles.size()>0){//是分公司
+            storeFiles.forEach(store->{
+                List<Users> userForBranch = usersMapper.getByStoreId(store.getId());//获取分公司门店的用户
+                userForBranch.forEach(user->{
+                    usersMapper.deleteByUserName(user.getUsername());
+                });
+            });
+        }
+    }
+
+    @Override
+    public void updateStoreFile(StoreFile storeFile) {
+        storeFileMapper.updateByPrimaryKeySelective(storeFile);
+    }
+
+    @Override
+    public List<StoreFile> selectStoreFiles() {
+
+        List<StoreFile> storeFileList = storeFileMapper.selectAll();
+        return storeFileList;
+    }
+
+    //根据门店id获取门店资料
+    @Override
+    public List<StoreFile> selectByStoreFileId(String storeFileId) {
+        List<StoreFile> storeFilelist = storeFileMapper.selectByPrimaryKey(storeFileId);
+        return storeFilelist;
+    }
+
+    @Override
+    public List<StoreFile> selectStoreFileBySortIdAndName(String id) {
+        return storeFileMapper.selectStoreFileBySortIdAndName(id);
+    }
+
+    @Override
+    public List<StoreFile> selectStoreFilesByHeadquarters() {
+        return storeFileMapper.selectStoreFilesByHeadquarters();
+    }
+
+    @Override
+    public List<StoreFile> selectByStoreFileIdAll(String storeId,String sort) {
+        return storeFileMapper.selectByStoreFileIdAll(storeId,sort);
+    }
+
+    @Override
+    public List<AccountInfo> selectAdmin(String storeId) {
+        return storeFileMapper.selectAdmin(storeId);
+    }
+}

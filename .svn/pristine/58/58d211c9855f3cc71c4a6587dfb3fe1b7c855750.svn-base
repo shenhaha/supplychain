@@ -1,0 +1,57 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.BabyNurseTable;
+import com.luer.servicecenter.bean.Babynursingrecord;
+import com.luer.servicecenter.bean.Babynursingrecorddetail;
+import com.luer.servicecenter.bean.BabynursingrecorddetailExample;
+import com.luer.servicecenter.dao.BabynursingrecordMapper;
+import com.luer.servicecenter.dao.BabynursingrecorddetailMapper;
+import com.luer.servicecenter.service.BabyNursingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+
+/**
+ * @author EVEA
+ * 宝宝护理表service
+ */
+@Service
+@Transactional
+public class BabyNursingServiceImpl implements BabyNursingService {
+
+    @Autowired
+    private BabynursingrecorddetailMapper bd;
+    @Override
+    public int insert(Babynursingrecorddetail babynursingrecorddetail) {
+        babynursingrecorddetail.setId(UUIDUtils.getUUID());
+        return bd.insert(babynursingrecorddetail);
+    }
+
+    @Override
+    public int deleteByPrimaryKeyDetail(String id) {
+        return bd.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void updateBabyNursingRecord(Babynursingrecorddetail babynursingrecorddetail) {
+         bd.updateByPrimaryKeySelective(babynursingrecorddetail);
+    }
+
+    @Override
+    public List<Babynursingrecorddetail> getBabyNursingRecord(String motherId) {
+        return bd.getBabyNursingRecord(motherId);
+    }
+
+    @Override
+    public Babynursingrecorddetail selectOneBabyNursingRecord(String storeId) {
+        return bd.selectOneBabyNursingRecord(storeId);
+    }
+
+    @Override
+    public List<Babynursingrecorddetail> selectBabyNursingRecord(String storeId) {
+        return null;
+    }
+}

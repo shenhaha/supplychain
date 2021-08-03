@@ -1,0 +1,17 @@
+package com.luer.businessmanager.service;
+
+import com.luer.businessmanager.bean.QuestionSort;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+public interface Question_sortService {
+    int insert(QuestionSort questionSort);
+    int deleteById(String id);
+    boolean deleteListById(String id);
+    int updateById(String id, QuestionSort questionSoArt);
+    List<QuestionSort> selectAllList();
+    QuestionSort selectSortId();
+}

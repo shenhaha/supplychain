@@ -1,0 +1,91 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.Growthrecord;
+import com.luer.servicecenter.bean.GrowthrecordExample;
+import com.luer.servicecenter.dao.GrowthrecordMapper;
+import com.luer.servicecenter.service.GrowthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ *  @author EVEA
+ *  成长记录表service
+ */
+@Service
+@Transactional
+public class GrowthServiceImpl implements GrowthService{
+    @Autowired
+    private GrowthrecordMapper growthrecordMapper;
+
+    /**成长记录
+    * @author 张路明
+    */
+    @Override
+    public int insert(Growthrecord record) {
+        record.setId(UUIDUtils.getUUID());
+        Growthrecord growthrecord = null;
+        if(record.getProject()==null&&record.getJaundice()==null){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            growthrecord =  growthrecordMapper.getGrowthByMatherIdanddata(record.getMotherid(),record.getBabyname(),simpleDateFormat.format(record.getRecorddate())).get(0);
+        }if(growthrecord!=null){
+            record.setJaundice(growthrecord.getJaundice());
+            record.setProject(growthrecord.getProject());
+            record.setTemperature(growthrecord.getTemperature());
+            record.setWeight(growthrecord.getWeight());
+        }
+        return growthrecordMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return growthrecordMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Growthrecord record) {
+        return growthrecordMapper.updateByPrimaryKey(record);
+    }
+
+    /**
+     *
+     * @param growthrecord 宝宝成长记录表对象
+     *        (可传入并根据Motherid或StoreId查询，都不传则默认查询所有，两者or连接)
+     * @return
+     */
+    @Override
+    public List<Growthrecord> selectByExample(Growthrecord growthrecord) {
+        GrowthrecordExample example = new GrowthrecordExample();
+        if(growthrecord.getMotherid()!=null&&growthrecord.getMotherid().trim()!=""){
+            GrowthrecordExample.Criteria c1 = example.createCriteria();
+            c1.andMotheridEqualTo(growthrecord.getMotherid());
+        }
+        if(growthrecord.getStoreId()!=null&&growthrecord.getStoreId().trim()!=""){
+            GrowthrecordExample.Criteria c2 = example.createCriteria();
+            c2.andStoreIdEqualTo(growthrecord.getStoreId());
+            example.or(c2);
+        }
+        return growthrecordMapper.selectByExample(example);
+    }
+
+    @Override
+    public Growthrecord selectByPrimaryKey(String id) {
+        return growthrecordMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Growthrecord> getGrowthByMatherId(String motherid) {
+        return growthrecordMapper.getGrowthByMatherId(motherid);
+    }
+
+    @Override
+    public List<Growthrecord> getGrowthByMatherIdanddata(String motherid, String babaname, String recorddate) {
+        return growthrecordMapper.getGrowthByMatherIdanddata(motherid,babaname,recorddate);
+    }
+}

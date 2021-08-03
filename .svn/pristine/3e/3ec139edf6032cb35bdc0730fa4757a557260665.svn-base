@@ -1,0 +1,12 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.FamilyFunction;
+
+import java.util.List;
+
+public interface FamilyFunctionService {
+    List<FamilyFunction> selectBymotherId(String motherid);
+    int delete(String id);
+    int update(FamilyFunction familyFunction);
+    int insert(FamilyFunction familyFunction);
+}

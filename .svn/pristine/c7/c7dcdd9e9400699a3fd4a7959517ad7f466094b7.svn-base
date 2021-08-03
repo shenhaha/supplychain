@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.MotherEvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.MotherEvaluate" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="Store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="customer_basic_id" property="customerBasicId" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+    <result column="bad_no" property="badNo" jdbcType="VARCHAR" />
+    <result column="child_time" property="childTime" jdbcType="VARCHAR" />
+    <result column="weight_increase" property="weightIncrease" jdbcType="INTEGER" />
+    <result column="pregnancy" property="pregnancy" jdbcType="VARCHAR" />
+    <result column="child_birth_way" property="childBirthWay" jdbcType="VARCHAR" />
+    <result column="pph" property="pph" jdbcType="VARCHAR" />
+    <result column="tear" property="tear" jdbcType="VARCHAR" />
+    <result column="t" property="t" jdbcType="VARCHAR" />
+    <result column="p" property="p" jdbcType="VARCHAR" />
+    <result column="r" property="r" jdbcType="VARCHAR" />
+    <result column="bp" property="bp" jdbcType="VARCHAR" />
+    <result column="uterus_height" property="uterusHeight" jdbcType="VARCHAR" />
+    <result column="uterus_hardness" property="uterusHardness" jdbcType="VARCHAR" />
+    <result column="lochia" property="lochia" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="character1" property="character1" jdbcType="VARCHAR" />
+    <result column="taste" property="taste" jdbcType="VARCHAR" />
+    <result column="perineum_wound" property="perineumWound" jdbcType="VARCHAR" />
+    <result column="cesarean_wound" property="cesareanWound" jdbcType="VARCHAR" />
+    <result column="breast" property="breast" jdbcType="VARCHAR" />
+    <result column="nipple" property="nipple" jdbcType="VARCHAR" />
+    <result column="mastitis" property="mastitis" jdbcType="VARCHAR" />
+    <result column="secretion" property="secretion" jdbcType="VARCHAR" />
+    <result column="hemorrhoids" property="hemorrhoids" jdbcType="VARCHAR" />
+    <result column="defecation" property="defecation" jdbcType="VARCHAR" />
+    <result column="infectious_diseases" property="infectiousDiseases" jdbcType="VARCHAR" />
+    <result column="extra_medications" property="extraMedications" jdbcType="VARCHAR" />
+    <result column="mental_state" property="mentalState" jdbcType="VARCHAR" />
+    <result column="edema_state" property="edemaState" jdbcType="VARCHAR" />
+    <result column="emotional_state" property="emotionalState" jdbcType="VARCHAR" />
+    <result column="assessment" property="assessment" jdbcType="VARCHAR" />
+    <result column="assessment_time" property="assessmentTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="mothername" property="mothername" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="getEvaluateByMotherId" resultMap="BaseResultMap">
+        SELECT * from mother_evaluate WHERE customer_basic_id=#{customer_basic_id}
+    </select>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, Store_id, customer_basic_id, room_id, bad_no, child_time, weight_increase, pregnancy, 
+    child_birth_way, pph, tear, t, p, r, bp, uterus_height, uterus_hardness, lochia, 
+    color, character1, taste, perineum_wound, cesarean_wound, breast, nipple, mastitis, 
+    secretion, hemorrhoids, defecation, infectious_diseases, extra_medications, mental_state, 
+    edema_state, emotional_state, assessment, assessment_time, update_time, note, mothername
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.MotherEvaluateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mother_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mother_evaluate
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mother_evaluate
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.MotherEvaluateExample" >
+    delete from mother_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.MotherEvaluate" >
+    insert into mother_evaluate (id, Store_id, customer_basic_id, 
+      room_id, bad_no, child_time, 
+      weight_increase, pregnancy, child_birth_way, 
+      pph, tear, t, p, 
+      r, bp, uterus_height, 
+      uterus_hardness, lochia, color, 
+      character1, taste, perineum_wound, 
+      cesarean_wound, breast, nipple, 
+      mastitis, secretion, hemorrhoids, 
+      defecation, infectious_diseases, extra_medications, 
+      mental_state, edema_state, emotional_state, 
+      assessment, assessment_time, update_time, 
+      note, mothername)
+    values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{customerBasicId,jdbcType=VARCHAR}, 
+      #{roomId,jdbcType=VARCHAR}, #{badNo,jdbcType=VARCHAR}, #{childTime,jdbcType=VARCHAR}, 
+      #{weightIncrease,jdbcType=INTEGER}, #{pregnancy,jdbcType=VARCHAR}, #{childBirthWay,jdbcType=VARCHAR}, 
+      #{pph,jdbcType=VARCHAR}, #{tear,jdbcType=VARCHAR}, #{t,jdbcType=VARCHAR}, #{p,jdbcType=VARCHAR}, 
+      #{r,jdbcType=VARCHAR}, #{bp,jdbcType=VARCHAR}, #{uterusHeight,jdbcType=VARCHAR}, 
+      #{uterusHardness,jdbcType=VARCHAR}, #{lochia,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
+      #{character1,jdbcType=VARCHAR}, #{taste,jdbcType=VARCHAR}, #{perineumWound,jdbcType=VARCHAR}, 
+      #{cesareanWound,jdbcType=VARCHAR}, #{breast,jdbcType=VARCHAR}, #{nipple,jdbcType=VARCHAR}, 
+      #{mastitis,jdbcType=VARCHAR}, #{secretion,jdbcType=VARCHAR}, #{hemorrhoids,jdbcType=VARCHAR}, 
+      #{defecation,jdbcType=VARCHAR}, #{infectiousDiseases,jdbcType=VARCHAR}, #{extraMedications,jdbcType=VARCHAR}, 
+      #{mentalState,jdbcType=VARCHAR}, #{edemaState,jdbcType=VARCHAR}, #{emotionalState,jdbcType=VARCHAR}, 
+      #{assessment,jdbcType=VARCHAR}, #{assessmentTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{note,jdbcType=VARCHAR}, #{mothername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.MotherEvaluate" >
+    insert into mother_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="storeId != null" >
+        Store_id,
+      </if>
+      <if test="customerBasicId != null" >
+        customer_basic_id,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="badNo != null" >
+        bad_no,
+      </if>
+      <if test="childTime != null" >
+        child_time,
+      </if>
+      <if test="weightIncrease != null" >
+        weight_increase,
+      </if>
+      <if test="pregnancy != null" >
+        pregnancy,
+      </if>
+      <if test="childBirthWay != null" >
+        child_birth_way,
+      </if>
+      <if test="pph != null" >
+        pph,
+      </if>
+      <if test="tear != null" >
+        tear,
+      </if>
+      <if test="t != null" >
+        t,
+      </if>
+      <if test="p != null" >
+        p,
+      </if>
+      <if test="r != null" >
+        r,
+      </if>
+      <if test="bp != null" >
+        bp,
+      </if>
+      <if test="uterusHeight != null" >
+        uterus_height,
+      </if>
+      <if test="uterusHardness != null" >
+        uterus_hardness,
+      </if>
+      <if test="lochia != null" >
+        lochia,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="character1 != null" >
+        character1,
+      </if>
+      <if test="taste != null" >
+        taste,
+      </if>
+      <if test="perineumWound != null" >
+        perineum_wound,
+      </if>
+      <if test="cesareanWound != null" >
+        cesarean_wound,
+      </if>
+      <if test="breast != null" >
+        breast,
+      </if>
+      <if test="nipple != null" >
+        nipple,
+      </if>
+      <if test="mastitis != null" >
+        mastitis,
+      </if>
+      <if test="secretion != null" >
+        secretion,
+      </if>
+      <if test="hemorrhoids != null" >
+        hemorrhoids,
+      </if>
+      <if test="defecation != null" >
+        defecation,
+      </if>
+      <if test="infectiousDiseases != null" >
+        infectious_diseases,
+      </if>
+      <if test="extraMedications != null" >
+        extra_medications,
+      </if>
+      <if test="mentalState != null" >
+        mental_state,
+      </if>
+      <if test="edemaState != null" >
+        edema_state,
+      </if>
+      <if test="emotionalState != null" >
+        emotional_state,
+      </if>
+      <if test="assessment != null" >
+        assessment,
+      </if>
+      <if test="assessmentTime != null" >
+        assessment_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="mothername != null" >
+        mothername,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBasicId != null" >
+        #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="badNo != null" >
+        #{badNo,jdbcType=VARCHAR},
+      </if>
+      <if test="childTime != null" >
+        #{childTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weightIncrease != null" >
+        #{weightIncrease,jdbcType=INTEGER},
+      </if>
+      <if test="pregnancy != null" >
+        #{pregnancy,jdbcType=VARCHAR},
+      </if>
+      <if test="childBirthWay != null" >
+        #{childBirthWay,jdbcType=VARCHAR},
+      </if>
+      <if test="pph != null" >
+        #{pph,jdbcType=VARCHAR},
+      </if>
+      <if test="tear != null" >
+        #{tear,jdbcType=VARCHAR},
+      </if>
+      <if test="t != null" >
+        #{t,jdbcType=VARCHAR},
+      </if>
+      <if test="p != null" >
+        #{p,jdbcType=VARCHAR},
+      </if>
+      <if test="r != null" >
+        #{r,jdbcType=VARCHAR},
+      </if>
+      <if test="bp != null" >
+        #{bp,jdbcType=VARCHAR},
+      </if>
+      <if test="uterusHeight != null" >
+        #{uterusHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="uterusHardness != null" >
+        #{uterusHardness,jdbcType=VARCHAR},
+      </if>
+      <if test="lochia != null" >
+        #{lochia,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="character1 != null" >
+        #{character1,jdbcType=VARCHAR},
+      </if>
+      <if test="taste != null" >
+        #{taste,jdbcType=VARCHAR},
+      </if>
+      <if test="perineumWound != null" >
+        #{perineumWound,jdbcType=VARCHAR},
+      </if>
+      <if test="cesareanWound != null" >
+        #{cesareanWound,jdbcType=VARCHAR},
+      </if>
+      <if test="breast != null" >
+        #{breast,jdbcType=VARCHAR},
+      </if>
+      <if test="nipple != null" >
+        #{nipple,jdbcType=VARCHAR},
+      </if>
+      <if test="mastitis != null" >
+        #{mastitis,jdbcType=VARCHAR},
+      </if>
+      <if test="secretion != null" >
+        #{secretion,jdbcType=VARCHAR},
+      </if>
+      <if test="hemorrhoids != null" >
+        #{hemorrhoids,jdbcType=VARCHAR},
+      </if>
+      <if test="defecation != null" >
+        #{defecation,jdbcType=VARCHAR},
+      </if>
+      <if test="infectiousDiseases != null" >
+        #{infectiousDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="extraMedications != null" >
+        #{extraMedications,jdbcType=VARCHAR},
+      </if>
+      <if test="mentalState != null" >
+        #{mentalState,jdbcType=VARCHAR},
+      </if>
+      <if test="edemaState != null" >
+        #{edemaState,jdbcType=VARCHAR},
+      </if>
+      <if test="emotionalState != null" >
+        #{emotionalState,jdbcType=VARCHAR},
+      </if>
+      <if test="assessment != null" >
+        #{assessment,jdbcType=VARCHAR},
+      </if>
+      <if test="assessmentTime != null" >
+        #{assessmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        #{mothername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.MotherEvaluateExample" resultType="java.lang.Integer" >
+    select count(*) from mother_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mother_evaluate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        Store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBasicId != null" >
+        customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.badNo != null" >
+        bad_no = #{record.badNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.childTime != null" >
+        child_time = #{record.childTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weightIncrease != null" >
+        weight_increase = #{record.weightIncrease,jdbcType=INTEGER},
+      </if>
+      <if test="record.pregnancy != null" >
+        pregnancy = #{record.pregnancy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.childBirthWay != null" >
+        child_birth_way = #{record.childBirthWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pph != null" >
+        pph = #{record.pph,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tear != null" >
+        tear = #{record.tear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.t != null" >
+        t = #{record.t,jdbcType=VARCHAR},
+      </if>
+      <if test="record.p != null" >
+        p = #{record.p,jdbcType=VARCHAR},
+      </if>
+      <if test="record.r != null" >
+        r = #{record.r,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bp != null" >
+        bp = #{record.bp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uterusHeight != null" >
+        uterus_height = #{record.uterusHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uterusHardness != null" >
+        uterus_hardness = #{record.uterusHardness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lochia != null" >
+        lochia = #{record.lochia,jdbcType=VARCHAR},
+      </if>
+      <if test="record.color != null" >
+        color = #{record.color,jdbcType=VARCHAR},
+      </if>
+      <if test="record.character1 != null" >
+        character1 = #{record.character1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taste != null" >
+        taste = #{record.taste,jdbcType=VARCHAR},
+      </if>
+      <if test="record.perineumWound != null" >
+        perineum_wound = #{record.perineumWound,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cesareanWound != null" >
+        cesarean_wound = #{record.cesareanWound,jdbcType=VARCHAR},
+      </if>
+      <if test="record.breast != null" >
+        breast = #{record.breast,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nipple != null" >
+        nipple = #{record.nipple,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mastitis != null" >
+        mastitis = #{record.mastitis,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secretion != null" >
+        secretion = #{record.secretion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hemorrhoids != null" >
+        hemorrhoids = #{record.hemorrhoids,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defecation != null" >
+        defecation = #{record.defecation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infectiousDiseases != null" >
+        infectious_diseases = #{record.infectiousDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extraMedications != null" >
+        extra_medications = #{record.extraMedications,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mentalState != null" >
+        mental_state = #{record.mentalState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.edemaState != null" >
+        edema_state = #{record.edemaState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emotionalState != null" >
+        emotional_state = #{record.emotionalState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assessment != null" >
+        assessment = #{record.assessment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assessmentTime != null" >
+        assessment_time = #{record.assessmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mothername != null" >
+        mothername = #{record.mothername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mother_evaluate
+    set id = #{record.id,jdbcType=VARCHAR},
+      Store_id = #{record.storeId,jdbcType=VARCHAR},
+      customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      room_id = #{record.roomId,jdbcType=VARCHAR},
+      bad_no = #{record.badNo,jdbcType=VARCHAR},
+      child_time = #{record.childTime,jdbcType=VARCHAR},
+      weight_increase = #{record.weightIncrease,jdbcType=INTEGER},
+      pregnancy = #{record.pregnancy,jdbcType=VARCHAR},
+      child_birth_way = #{record.childBirthWay,jdbcType=VARCHAR},
+      pph = #{record.pph,jdbcType=VARCHAR},
+      tear = #{record.tear,jdbcType=VARCHAR},
+      t = #{record.t,jdbcType=VARCHAR},
+      p = #{record.p,jdbcType=VARCHAR},
+      r = #{record.r,jdbcType=VARCHAR},
+      bp = #{record.bp,jdbcType=VARCHAR},
+      uterus_height = #{record.uterusHeight,jdbcType=VARCHAR},
+      uterus_hardness = #{record.uterusHardness,jdbcType=VARCHAR},
+      lochia = #{record.lochia,jdbcType=VARCHAR},
+      color = #{record.color,jdbcType=VARCHAR},
+      character1 = #{record.character1,jdbcType=VARCHAR},
+      taste = #{record.taste,jdbcType=VARCHAR},
+      perineum_wound = #{record.perineumWound,jdbcType=VARCHAR},
+      cesarean_wound = #{record.cesareanWound,jdbcType=VARCHAR},
+      breast = #{record.breast,jdbcType=VARCHAR},
+      nipple = #{record.nipple,jdbcType=VARCHAR},
+      mastitis = #{record.mastitis,jdbcType=VARCHAR},
+      secretion = #{record.secretion,jdbcType=VARCHAR},
+      hemorrhoids = #{record.hemorrhoids,jdbcType=VARCHAR},
+      defecation = #{record.defecation,jdbcType=VARCHAR},
+      infectious_diseases = #{record.infectiousDiseases,jdbcType=VARCHAR},
+      extra_medications = #{record.extraMedications,jdbcType=VARCHAR},
+      mental_state = #{record.mentalState,jdbcType=VARCHAR},
+      edema_state = #{record.edemaState,jdbcType=VARCHAR},
+      emotional_state = #{record.emotionalState,jdbcType=VARCHAR},
+      assessment = #{record.assessment,jdbcType=VARCHAR},
+      assessment_time = #{record.assessmentTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      note = #{record.note,jdbcType=VARCHAR},
+      mothername = #{record.mothername,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.MotherEvaluate" >
+    update mother_evaluate
+    <set >
+      <if test="storeId != null" >
+        Store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBasicId != null" >
+        customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="badNo != null" >
+        bad_no = #{badNo,jdbcType=VARCHAR},
+      </if>
+      <if test="childTime != null" >
+        child_time = #{childTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weightIncrease != null" >
+        weight_increase = #{weightIncrease,jdbcType=INTEGER},
+      </if>
+      <if test="pregnancy != null" >
+        pregnancy = #{pregnancy,jdbcType=VARCHAR},
+      </if>
+      <if test="childBirthWay != null" >
+        child_birth_way = #{childBirthWay,jdbcType=VARCHAR},
+      </if>
+      <if test="pph != null" >
+        pph = #{pph,jdbcType=VARCHAR},
+      </if>
+      <if test="tear != null" >
+        tear = #{tear,jdbcType=VARCHAR},
+      </if>
+      <if test="t != null" >
+        t = #{t,jdbcType=VARCHAR},
+      </if>
+      <if test="p != null" >
+        p = #{p,jdbcType=VARCHAR},
+      </if>
+      <if test="r != null" >
+        r = #{r,jdbcType=VARCHAR},
+      </if>
+      <if test="bp != null" >
+        bp = #{bp,jdbcType=VARCHAR},
+      </if>
+      <if test="uterusHeight != null" >
+        uterus_height = #{uterusHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="uterusHardness != null" >
+        uterus_hardness = #{uterusHardness,jdbcType=VARCHAR},
+      </if>
+      <if test="lochia != null" >
+        lochia = #{lochia,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="character1 != null" >
+        character1 = #{character1,jdbcType=VARCHAR},
+      </if>
+      <if test="taste != null" >
+        taste = #{taste,jdbcType=VARCHAR},
+      </if>
+      <if test="perineumWound != null" >
+        perineum_wound = #{perineumWound,jdbcType=VARCHAR},
+      </if>
+      <if test="cesareanWound != null" >
+        cesarean_wound = #{cesareanWound,jdbcType=VARCHAR},
+      </if>
+      <if test="breast != null" >
+        breast = #{breast,jdbcType=VARCHAR},
+      </if>
+      <if test="nipple != null" >
+        nipple = #{nipple,jdbcType=VARCHAR},
+      </if>
+      <if test="mastitis != null" >
+        mastitis = #{mastitis,jdbcType=VARCHAR},
+      </if>
+      <if test="secretion != null" >
+        secretion = #{secretion,jdbcType=VARCHAR},
+      </if>
+      <if test="hemorrhoids != null" >
+        hemorrhoids = #{hemorrhoids,jdbcType=VARCHAR},
+      </if>
+      <if test="defecation != null" >
+        defecation = #{defecation,jdbcType=VARCHAR},
+      </if>
+      <if test="infectiousDiseases != null" >
+        infectious_diseases = #{infectiousDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="extraMedications != null" >
+        extra_medications = #{extraMedications,jdbcType=VARCHAR},
+      </if>
+      <if test="mentalState != null" >
+        mental_state = #{mentalState,jdbcType=VARCHAR},
+      </if>
+      <if test="edemaState != null" >
+        edema_state = #{edemaState,jdbcType=VARCHAR},
+      </if>
+      <if test="emotionalState != null" >
+        emotional_state = #{emotionalState,jdbcType=VARCHAR},
+      </if>
+      <if test="assessment != null" >
+        assessment = #{assessment,jdbcType=VARCHAR},
+      </if>
+      <if test="assessmentTime != null" >
+        assessment_time = #{assessmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        mothername = #{mothername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.MotherEvaluate" >
+    update mother_evaluate
+    set Store_id = #{storeId,jdbcType=VARCHAR},
+      customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      room_id = #{roomId,jdbcType=VARCHAR},
+      bad_no = #{badNo,jdbcType=VARCHAR},
+      child_time = #{childTime,jdbcType=VARCHAR},
+      weight_increase = #{weightIncrease,jdbcType=INTEGER},
+      pregnancy = #{pregnancy,jdbcType=VARCHAR},
+      child_birth_way = #{childBirthWay,jdbcType=VARCHAR},
+      pph = #{pph,jdbcType=VARCHAR},
+      tear = #{tear,jdbcType=VARCHAR},
+      t = #{t,jdbcType=VARCHAR},
+      p = #{p,jdbcType=VARCHAR},
+      r = #{r,jdbcType=VARCHAR},
+      bp = #{bp,jdbcType=VARCHAR},
+      uterus_height = #{uterusHeight,jdbcType=VARCHAR},
+      uterus_hardness = #{uterusHardness,jdbcType=VARCHAR},
+      lochia = #{lochia,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      character1 = #{character1,jdbcType=VARCHAR},
+      taste = #{taste,jdbcType=VARCHAR},
+      perineum_wound = #{perineumWound,jdbcType=VARCHAR},
+      cesarean_wound = #{cesareanWound,jdbcType=VARCHAR},
+      breast = #{breast,jdbcType=VARCHAR},
+      nipple = #{nipple,jdbcType=VARCHAR},
+      mastitis = #{mastitis,jdbcType=VARCHAR},
+      secretion = #{secretion,jdbcType=VARCHAR},
+      hemorrhoids = #{hemorrhoids,jdbcType=VARCHAR},
+      defecation = #{defecation,jdbcType=VARCHAR},
+      infectious_diseases = #{infectiousDiseases,jdbcType=VARCHAR},
+      extra_medications = #{extraMedications,jdbcType=VARCHAR},
+      mental_state = #{mentalState,jdbcType=VARCHAR},
+      edema_state = #{edemaState,jdbcType=VARCHAR},
+      emotional_state = #{emotionalState,jdbcType=VARCHAR},
+      assessment = #{assessment,jdbcType=VARCHAR},
+      assessment_time = #{assessmentTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR},
+      mothername = #{mothername,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

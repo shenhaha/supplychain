@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.NeonatalroundsMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Neonatalrounds" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_basic_id" property="customerBasicId" jdbcType="VARCHAR" />
+    <result column="operation_date" property="operationDate" jdbcType="TIMESTAMP" />
+    <result column="roomnum" property="roomnum" jdbcType="VARCHAR" />
+    <result column="bornway" property="bornway" jdbcType="VARCHAR" />
+    <result column="pregnancy" property="pregnancy" jdbcType="VARCHAR" />
+    <result column="feedingway" property="feedingway" jdbcType="VARCHAR" />
+    <result column="milkeveryday" property="milkeveryday" jdbcType="VARCHAR" />
+    <result column="reaction" property="reaction" jdbcType="VARCHAR" />
+    <result column="skin" property="skin" jdbcType="VARCHAR" />
+    <result column="headfeatures" property="headfeatures" jdbcType="VARCHAR" />
+    <result column="cardiopulmonary" property="cardiopulmonary" jdbcType="VARCHAR" />
+    <result column="abdomen" property="abdomen" jdbcType="VARCHAR" />
+    <result column="umbilical" property="umbilical" jdbcType="VARCHAR" />
+    <result column="extremities" property="extremities" jdbcType="VARCHAR" />
+    <result column="nervereflex" property="nervereflex" jdbcType="VARCHAR" />
+    <result column="fecal" property="fecal" jdbcType="VARCHAR" />
+    <result column="other_situations" property="otherSituations" jdbcType="VARCHAR" />
+    <result column="advice" property="advice" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="mother_id" property="motherId" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="baby" property="baby" jdbcType="VARCHAR" />
+    <result column="mothername" property="mothername" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="getNeonatalroundsByMotherId" resultMap="BaseResultMap">
+        SELECT * FROM neonatalrounds WHERE mother_id =#{mother_id}
+
+    </select>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, customer_basic_id, operation_date, roomnum, bornway, pregnancy, feedingway, milkeveryday, 
+    reaction, skin, headfeatures, cardiopulmonary, abdomen, umbilical, extremities, nervereflex, 
+    fecal, other_situations, advice, signature, mother_id, store_id, baby, mothername
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.NeonatalroundsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from neonatalrounds
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from neonatalrounds
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from neonatalrounds
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.NeonatalroundsExample" >
+    delete from neonatalrounds
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Neonatalrounds" >
+    insert into neonatalrounds (id, customer_basic_id, operation_date, 
+      roomnum, bornway, pregnancy, 
+      feedingway, milkeveryday, reaction, 
+      skin, headfeatures, cardiopulmonary, 
+      abdomen, umbilical, extremities, 
+      nervereflex, fecal, other_situations, 
+      advice, signature, mother_id, 
+      store_id, baby, mothername
+      )
+    values (#{id,jdbcType=VARCHAR}, #{customerBasicId,jdbcType=VARCHAR}, #{operationDate,jdbcType=TIMESTAMP}, 
+      #{roomnum,jdbcType=VARCHAR}, #{bornway,jdbcType=VARCHAR}, #{pregnancy,jdbcType=VARCHAR}, 
+      #{feedingway,jdbcType=VARCHAR}, #{milkeveryday,jdbcType=VARCHAR}, #{reaction,jdbcType=VARCHAR}, 
+      #{skin,jdbcType=VARCHAR}, #{headfeatures,jdbcType=VARCHAR}, #{cardiopulmonary,jdbcType=VARCHAR}, 
+      #{abdomen,jdbcType=VARCHAR}, #{umbilical,jdbcType=VARCHAR}, #{extremities,jdbcType=VARCHAR}, 
+      #{nervereflex,jdbcType=VARCHAR}, #{fecal,jdbcType=VARCHAR}, #{otherSituations,jdbcType=VARCHAR}, 
+      #{advice,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, #{motherId,jdbcType=VARCHAR}, 
+      #{storeId,jdbcType=VARCHAR}, #{baby,jdbcType=VARCHAR}, #{mothername,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Neonatalrounds" >
+    insert into neonatalrounds
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerBasicId != null" >
+        customer_basic_id,
+      </if>
+      <if test="operationDate != null" >
+        operation_date,
+      </if>
+      <if test="roomnum != null" >
+        roomnum,
+      </if>
+      <if test="bornway != null" >
+        bornway,
+      </if>
+      <if test="pregnancy != null" >
+        pregnancy,
+      </if>
+      <if test="feedingway != null" >
+        feedingway,
+      </if>
+      <if test="milkeveryday != null" >
+        milkeveryday,
+      </if>
+      <if test="reaction != null" >
+        reaction,
+      </if>
+      <if test="skin != null" >
+        skin,
+      </if>
+      <if test="headfeatures != null" >
+        headfeatures,
+      </if>
+      <if test="cardiopulmonary != null" >
+        cardiopulmonary,
+      </if>
+      <if test="abdomen != null" >
+        abdomen,
+      </if>
+      <if test="umbilical != null" >
+        umbilical,
+      </if>
+      <if test="extremities != null" >
+        extremities,
+      </if>
+      <if test="nervereflex != null" >
+        nervereflex,
+      </if>
+      <if test="fecal != null" >
+        fecal,
+      </if>
+      <if test="otherSituations != null" >
+        other_situations,
+      </if>
+      <if test="advice != null" >
+        advice,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="motherId != null" >
+        mother_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="baby != null" >
+        baby,
+      </if>
+      <if test="mothername != null" >
+        mothername,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBasicId != null" >
+        #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null" >
+        #{operationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomnum != null" >
+        #{roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bornway != null" >
+        #{bornway,jdbcType=VARCHAR},
+      </if>
+      <if test="pregnancy != null" >
+        #{pregnancy,jdbcType=VARCHAR},
+      </if>
+      <if test="feedingway != null" >
+        #{feedingway,jdbcType=VARCHAR},
+      </if>
+      <if test="milkeveryday != null" >
+        #{milkeveryday,jdbcType=VARCHAR},
+      </if>
+      <if test="reaction != null" >
+        #{reaction,jdbcType=VARCHAR},
+      </if>
+      <if test="skin != null" >
+        #{skin,jdbcType=VARCHAR},
+      </if>
+      <if test="headfeatures != null" >
+        #{headfeatures,jdbcType=VARCHAR},
+      </if>
+      <if test="cardiopulmonary != null" >
+        #{cardiopulmonary,jdbcType=VARCHAR},
+      </if>
+      <if test="abdomen != null" >
+        #{abdomen,jdbcType=VARCHAR},
+      </if>
+      <if test="umbilical != null" >
+        #{umbilical,jdbcType=VARCHAR},
+      </if>
+      <if test="extremities != null" >
+        #{extremities,jdbcType=VARCHAR},
+      </if>
+      <if test="nervereflex != null" >
+        #{nervereflex,jdbcType=VARCHAR},
+      </if>
+      <if test="fecal != null" >
+        #{fecal,jdbcType=VARCHAR},
+      </if>
+      <if test="otherSituations != null" >
+        #{otherSituations,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null" >
+        #{advice,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="motherId != null" >
+        #{motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="baby != null" >
+        #{baby,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        #{mothername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.NeonatalroundsExample" resultType="java.lang.Integer" >
+    select count(*) from neonatalrounds
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update neonatalrounds
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBasicId != null" >
+        customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationDate != null" >
+        operation_date = #{record.operationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.roomnum != null" >
+        roomnum = #{record.roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bornway != null" >
+        bornway = #{record.bornway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pregnancy != null" >
+        pregnancy = #{record.pregnancy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedingway != null" >
+        feedingway = #{record.feedingway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.milkeveryday != null" >
+        milkeveryday = #{record.milkeveryday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reaction != null" >
+        reaction = #{record.reaction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skin != null" >
+        skin = #{record.skin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headfeatures != null" >
+        headfeatures = #{record.headfeatures,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardiopulmonary != null" >
+        cardiopulmonary = #{record.cardiopulmonary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abdomen != null" >
+        abdomen = #{record.abdomen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.umbilical != null" >
+        umbilical = #{record.umbilical,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extremities != null" >
+        extremities = #{record.extremities,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nervereflex != null" >
+        nervereflex = #{record.nervereflex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fecal != null" >
+        fecal = #{record.fecal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherSituations != null" >
+        other_situations = #{record.otherSituations,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advice != null" >
+        advice = #{record.advice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signature != null" >
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherId != null" >
+        mother_id = #{record.motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baby != null" >
+        baby = #{record.baby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mothername != null" >
+        mothername = #{record.mothername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update neonatalrounds
+    set id = #{record.id,jdbcType=VARCHAR},
+      customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      operation_date = #{record.operationDate,jdbcType=TIMESTAMP},
+      roomnum = #{record.roomnum,jdbcType=VARCHAR},
+      bornway = #{record.bornway,jdbcType=VARCHAR},
+      pregnancy = #{record.pregnancy,jdbcType=VARCHAR},
+      feedingway = #{record.feedingway,jdbcType=VARCHAR},
+      milkeveryday = #{record.milkeveryday,jdbcType=VARCHAR},
+      reaction = #{record.reaction,jdbcType=VARCHAR},
+      skin = #{record.skin,jdbcType=VARCHAR},
+      headfeatures = #{record.headfeatures,jdbcType=VARCHAR},
+      cardiopulmonary = #{record.cardiopulmonary,jdbcType=VARCHAR},
+      abdomen = #{record.abdomen,jdbcType=VARCHAR},
+      umbilical = #{record.umbilical,jdbcType=VARCHAR},
+      extremities = #{record.extremities,jdbcType=VARCHAR},
+      nervereflex = #{record.nervereflex,jdbcType=VARCHAR},
+      fecal = #{record.fecal,jdbcType=VARCHAR},
+      other_situations = #{record.otherSituations,jdbcType=VARCHAR},
+      advice = #{record.advice,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      mother_id = #{record.motherId,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      baby = #{record.baby,jdbcType=VARCHAR},
+      mothername = #{record.mothername,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Neonatalrounds" >
+    update neonatalrounds
+    <set >
+      <if test="customerBasicId != null" >
+        customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null" >
+        operation_date = #{operationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomnum != null" >
+        roomnum = #{roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="bornway != null" >
+        bornway = #{bornway,jdbcType=VARCHAR},
+      </if>
+      <if test="pregnancy != null" >
+        pregnancy = #{pregnancy,jdbcType=VARCHAR},
+      </if>
+      <if test="feedingway != null" >
+        feedingway = #{feedingway,jdbcType=VARCHAR},
+      </if>
+      <if test="milkeveryday != null" >
+        milkeveryday = #{milkeveryday,jdbcType=VARCHAR},
+      </if>
+      <if test="reaction != null" >
+        reaction = #{reaction,jdbcType=VARCHAR},
+      </if>
+      <if test="skin != null" >
+        skin = #{skin,jdbcType=VARCHAR},
+      </if>
+      <if test="headfeatures != null" >
+        headfeatures = #{headfeatures,jdbcType=VARCHAR},
+      </if>
+      <if test="cardiopulmonary != null" >
+        cardiopulmonary = #{cardiopulmonary,jdbcType=VARCHAR},
+      </if>
+      <if test="abdomen != null" >
+        abdomen = #{abdomen,jdbcType=VARCHAR},
+      </if>
+      <if test="umbilical != null" >
+        umbilical = #{umbilical,jdbcType=VARCHAR},
+      </if>
+      <if test="extremities != null" >
+        extremities = #{extremities,jdbcType=VARCHAR},
+      </if>
+      <if test="nervereflex != null" >
+        nervereflex = #{nervereflex,jdbcType=VARCHAR},
+      </if>
+      <if test="fecal != null" >
+        fecal = #{fecal,jdbcType=VARCHAR},
+      </if>
+      <if test="otherSituations != null" >
+        other_situations = #{otherSituations,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null" >
+        advice = #{advice,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="motherId != null" >
+        mother_id = #{motherId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="baby != null" >
+        baby = #{baby,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        mothername = #{mothername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Neonatalrounds" >
+    update neonatalrounds
+    set customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      operation_date = #{operationDate,jdbcType=TIMESTAMP},
+      roomnum = #{roomnum,jdbcType=VARCHAR},
+      bornway = #{bornway,jdbcType=VARCHAR},
+      pregnancy = #{pregnancy,jdbcType=VARCHAR},
+      feedingway = #{feedingway,jdbcType=VARCHAR},
+      milkeveryday = #{milkeveryday,jdbcType=VARCHAR},
+      reaction = #{reaction,jdbcType=VARCHAR},
+      skin = #{skin,jdbcType=VARCHAR},
+      headfeatures = #{headfeatures,jdbcType=VARCHAR},
+      cardiopulmonary = #{cardiopulmonary,jdbcType=VARCHAR},
+      abdomen = #{abdomen,jdbcType=VARCHAR},
+      umbilical = #{umbilical,jdbcType=VARCHAR},
+      extremities = #{extremities,jdbcType=VARCHAR},
+      nervereflex = #{nervereflex,jdbcType=VARCHAR},
+      fecal = #{fecal,jdbcType=VARCHAR},
+      other_situations = #{otherSituations,jdbcType=VARCHAR},
+      advice = #{advice,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      mother_id = #{motherId,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      baby = #{baby,jdbcType=VARCHAR},
+      mothername = #{mothername,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

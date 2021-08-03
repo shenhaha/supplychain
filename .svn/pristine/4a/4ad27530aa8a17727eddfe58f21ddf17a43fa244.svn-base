@@ -1,0 +1,98 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.Preview;
+import com.luer.storemanager.bean.PreviewEvents;
+import com.luer.storemanager.bean.PreviewManager;
+import com.luer.storemanager.bean.PreviewRoomResource;
+import com.luer.storesdata.bean.RoomResources;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 房间预览服务类
+ *
+ * @ClassName PreviewService
+ * @Author GavinJiang
+ * @Date 2018/8/14 18:41
+ */
+@Service
+public interface PreviewService {
+     List<Preview> getRoomsBymotherId(String motherid);
+
+    /** 
+     * 查询所有的房间预览信息
+     * @author GavinJiang
+     */
+    List<Preview> selectPreview();
+    /**
+     * 通过开始时间和结束时间查询所有的房间的房态状况
+     * @return java.util.List<com.luer.storemanager.bean.Preview>
+     * @author GavinJiang
+     * @date 2018/8/15 15:53
+     * @params
+     */
+    List<PreviewEvents> selectPreviewByTime(@Param("begin_time") Date begin_time, String storeid);
+
+    /**
+     * 添加房间预览信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 18:42
+     * @params
+     */
+    int insert(Preview record);
+
+    /**
+     * 修改房间预览信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 18:43
+     * @params
+     */
+    int updateByPrimaryKeySelective(Preview record);
+
+    /**
+     * 删除房间预览
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/15 18:43
+     * @params
+     */
+    int deleteByPrimaryKey(String id);
+
+    /**
+     * 按房型分组查询所有房间
+     * @author EVEA
+     */
+    List<PreviewRoomResource> selectPreRomRes(String storeid);
+
+    /**
+     * @author EVEA
+     * 查询所有房间日程条
+     */
+    List<PreviewEvents> selectAllEve(String storeid);
+
+    /**
+     * 查询房间类型
+     * @param storeid
+     * @return
+     */
+    List<PreviewEvents> selectAllMother(String storeid);
+
+    List<RoomResources> getAllMotherEve(String storeId);
+
+    List<PreviewManager> selectPreviewByStoreId(String storeId);
+
+    void updatePreview(PreviewManager previewManager);
+
+    void addOnePreview(PreviewManager previewManager);
+}

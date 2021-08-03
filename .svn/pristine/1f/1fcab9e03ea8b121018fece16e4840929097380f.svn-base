@@ -1,0 +1,28 @@
+package com.luer.springsecurity.service.Impl;
+
+import com.luer.springsecurity.bean.Role;
+import com.luer.springsecurity.dao.RoleMapper;
+import com.luer.springsecurity.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ */
+@Service
+public class RoleServiceImpl implements RoleService {
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Override
+    public int deleteByRoleId(String roleId) {
+        roleMapper.deleteByPrimaryKey(roleId);
+        return 0;
+    }
+
+    @Override
+    public int insert(Role role) {
+
+        return roleMapper.insert(role);
+    }
+}

@@ -1,0 +1,45 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.SocialSupport;
+import com.luer.servicecenter.service.SocialSupportService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/SocialSupport")
+public class SocialSupportController {
+    @Autowired
+    SocialSupportService socialSupportService;
+
+    /**
+     * 根据妈妈id获取
+    * @author 张路明
+    */
+    @GetMapping("/getBymotherId")
+    public List<SocialSupport> getBymotherId(String motherid){
+        List<SocialSupport> socialSupports = socialSupportService.selectBymotherId(motherid);
+        return socialSupports;
+    }
+    @PostMapping("/delete")
+    public ResultSet delete(String id){
+        socialSupportService.delete(id);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/insert")
+    public ResultSet insert(SocialSupport socialSupport){
+        socialSupportService.insert(socialSupport);
+        return ResultSet.getSuccess();
+    }
+
+    @PostMapping("/update")
+    public ResultSet update(SocialSupport socialSupport){
+        socialSupportService.update(socialSupport);
+        return ResultSet.getSuccess();
+    }
+}

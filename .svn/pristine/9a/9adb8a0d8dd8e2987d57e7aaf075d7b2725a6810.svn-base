@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.PreviewMapper" >
+    <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.Preview" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+        <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+        <result column="order_customer_id" property="orderCustomerId" jdbcType="VARCHAR" />
+        <result column="mother_name" property="motherName" jdbcType="VARCHAR" />
+        <result column="room_style" property="roomStyle" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <update id="updateStatus">
+        UPDATE preview set status="1" WHERE order_customer_id=#{order_customer_id}
+    </update>
+
+    <delete id="deleteByMotherId" >
+        DELETE from preview WHERE order_customer_id=#{order_customer_id}
+    </delete>
+
+    <select id="getPreviewByMotherId" resultMap="BaseResultMap">
+        SELECT * FROM preview WHERE order_customer_id=#{order_customer_id}
+
+    </select>
+
+    <!--设置关联房间表查询 -->
+    <resultMap id="BaseResultMapAndRoom" type="com.luer.storemanager.bean.Preview" extends="BaseResultMap">
+        <!--column:指外键值， property: 指的是属性的值, javaType：指的是属性的类型-->
+        <association property="room" javaType="com.luer.storesdata.bean.Room">
+            <id column="id" property="id" jdbcType="VARCHAR" />
+            <result column="room_styles_id" property="roomStylesId" jdbcType="VARCHAR" />
+            <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+            <result column="classify" property="classify" jdbcType="VARCHAR" />
+            <result column="position" property="position" jdbcType="VARCHAR" />
+            <result column="num" property="num" jdbcType="VARCHAR" />
+            <result column="area" property="area" jdbcType="VARCHAR" />
+            <result column="charge" property="charge" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+
+    <select id="selectPreview" resultMap="BaseResultMap">
+        select * from preview
+    </select>
+
+    <!-- 通过开始时间和结束时间查询所有的房间的房态状况 -->
+    <select id="selectPreviewByTime" resultMap="BaseResultMap">
+        select *  from preview
+        where
+            begin_time &gt; #{begin_time}
+            or end_time &lt;= #{end_time} and store_id=#{store_id}
+
+    </select>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        id, room_id, store_id, order_customer_id, mother_name, room_style, status, begin_time,
+        end_time
+    </sql>
+    <select id="getRoomsBymotherId" resultMap="BaseResultMapAndRoom">
+        SELECT   room_id ,num FROM  preview INNER JOIN room ON room.id = preview.room_id
+        WHERE preview.order_customer_id = #{motherid}
+    </select>
+    <select id="getBymotherId" resultMap="BaseResultMapAndRoom">
+        SELECT   * FROM  preview
+        WHERE order_customer_id = #{order_customer_id}
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.PreviewExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from preview
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from preview
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from preview
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.PreviewExample" >
+        delete from preview
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.storemanager.bean.Preview" >
+        insert into preview (id, room_id, store_id,
+        order_customer_id, mother_name, room_style,
+        status, begin_time, end_time
+        )
+        values (#{id,jdbcType=VARCHAR}, #{roomId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR},
+        #{orderCustomerId,jdbcType=VARCHAR}, #{motherName,jdbcType=VARCHAR}, #{roomStyle,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.storemanager.bean.Preview" >
+        insert into preview
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="roomId != null" >
+                room_id,
+            </if>
+            <if test="storeId != null" >
+                store_id,
+            </if>
+            <if test="orderCustomerId != null" >
+                order_customer_id,
+            </if>
+            <if test="motherName != null" >
+                mother_name,
+            </if>
+            <if test="roomStyle != null" >
+                room_style,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="beginTime != null" >
+                begin_time,
+            </if>
+            <if test="endTime != null" >
+                end_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="roomId != null" >
+                #{roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null" >
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="orderCustomerId != null" >
+                #{orderCustomerId,jdbcType=VARCHAR},
+            </if>
+            <if test="motherName != null" >
+                #{motherName,jdbcType=VARCHAR},
+            </if>
+            <if test="roomStyle != null" >
+                #{roomStyle,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="beginTime != null" >
+                #{beginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null" >
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.storemanager.bean.PreviewExample" resultType="java.lang.Integer" >
+        select count(*) from preview
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update preview
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roomId != null" >
+                room_id = #{record.roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeId != null" >
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderCustomerId != null" >
+                order_customer_id = #{record.orderCustomerId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.motherName != null" >
+                mother_name = #{record.motherName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roomStyle != null" >
+                room_style = #{record.roomStyle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null" >
+                status = #{record.status,jdbcType=VARCHAR},
+            </if>
+            <if test="record.beginTime != null" >
+                begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.endTime != null" >
+                end_time = #{record.endTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update preview
+        set id = #{record.id,jdbcType=VARCHAR},
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+        order_customer_id = #{record.orderCustomerId,jdbcType=VARCHAR},
+        mother_name = #{record.motherName,jdbcType=VARCHAR},
+        room_style = #{record.roomStyle,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=VARCHAR},
+        begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+        end_time = #{record.endTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.Preview" >
+        update preview
+        <set >
+            <if test="roomId != null" >
+                room_id = #{roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null" >
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="orderCustomerId != null" >
+                order_customer_id = #{orderCustomerId,jdbcType=VARCHAR},
+            </if>
+            <if test="motherName != null" >
+                mother_name = #{motherName,jdbcType=VARCHAR},
+            </if>
+            <if test="roomStyle != null" >
+                room_style = #{roomStyle,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="beginTime != null" >
+                begin_time = #{beginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null" >
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.Preview" >
+        update preview
+        set room_id = #{roomId,jdbcType=VARCHAR},
+        store_id = #{storeId,jdbcType=VARCHAR},
+        order_customer_id = #{orderCustomerId,jdbcType=VARCHAR},
+        mother_name = #{motherName,jdbcType=VARCHAR},
+        room_style = #{roomStyle,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+        end_time = #{endTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectAllStyle" resultType="com.luer.storesdata.bean.RoomStyles" parameterType="string">
+        select id,store_id as storeId,room_style as roomStyle from room_styles where store_id = #{storeid}
+    </select>
+
+    <select id="selectPreEveBySty" parameterType="string" resultType="com.luer.storesdata.bean.RoomResources">
+        select id,concat(classify,num) as title from room where room_styles_id = #{room_styles_id} and store_id=#{store_id};
+    </select>
+
+    <select id="selectAllEve" parameterType="string" resultType="com.luer.storemanager.bean.PreviewEvents">
+      select id,mother_name as title,begin_time as start,end_time as end,room_id as resourceId,
+        store_id as storeId,order_customer_id as orderCustomerId,status,room_style as roomStyle
+        from preview where store_id = #{storeid} and status=0;
+    </select>
+
+    <select id="selectAllMother" parameterType="string" resultType="com.luer.storemanager.bean.PreviewEvents">
+        select id,room_style as title,begin_time as start,end_time as end,room_id as roomId,
+        store_id as storeId,order_customer_id as resourceId,status,mother_name as motherName
+        from preview where store_id = #{storeid} and status=0;
+    </select>
+    <select id="getAllMotherEve" resultMap="BaseResultMap">
+        select *  from preview where store_id = #{store_id} and status=0;
+    </select>
+
+</mapper>
+
+

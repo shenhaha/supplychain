@@ -1,0 +1,249 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <title>购物明细</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+                <%--<div class="panel-heading">
+                    <div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li class="active">购物明细</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>--%>
+
+                <!--购物明细开始-->
+                <div id="repairdiv">
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <%--<table id="shopping" class="table" data-paging="true" data-paging-position="right"></table>--%>
+                            <table id="shopping" class="table" data-paging="true" data-filtering="true" data-sorting="true"></table>
+                        </div>
+                    </div>
+                </div>
+                <!--购物明细结束-->
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<script>
+    $(function (){
+        var shoppingTitle = [
+            {   "name":"id",
+                "title":"ID",
+                "visible": false},
+            {"name":"customerId","title":"用户编号"},
+            {"name":"customerName","title":"用户名称"},
+            {"name":"createrId","title":"创建用户名称","visible": false},
+            {"name":"roomId","title":"房间id","visible": false},
+            {"name":"roomNum","title":"房间编号","visible": false},
+            {"name":"balance","title":"余额","visible": false},
+            {"name":"outTime","title":"退房时间","visible": false},
+            {"name":"shoppingFee","title":"购物费用"},
+            {"name":"details","title":"购物详情"}
+        ];
+
+        window.find = find;
+        function find(customerId) {
+
+            window.location.href='${ctx}/storemanager/shopdetails2?motherid='+customerId;
+        }
+        //启动footable
+        var ft = FooTable.init('#shopping',{
+            "columns": shoppingTitle,
+            "rows": $.get("${ctx}/checkOut/selectCheckOutAll?storeId="+'<%=session.getAttribute("storeId")%>',function (data) {
+                $(data).each(function () {
+                    this.details = "<button class='btn btn-primary btn-sm' onclick='find("+'"'+this.customerId+'"'+")'>点击查看</button>";
+
+                })
+            }),
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storemanager/shoppingList.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $that.removeAttr("disabled");
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'itemId':$('#itemId').val(),
+                                    'shoppingTime':$('#shoppingTime').val(),
+                                    'price':$('#price').val(),
+                                    'payStyle':$('#payStyle').val(),
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields:{
+                                        itemId: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '用户编号不能为空'
+                                                },
+                                            }
+                                        },
+                                        shoppingTime:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '购物时间不能为空！'
+                                                },
+                                            }
+                                        },price: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '价格不能为空！'
+                                                },
+                                            }
+                                        },payStyle: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '支付方式不能为空！'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/shopping/addShopping",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storemanager/shoppingList.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function (dialogRef) {
+                            $('#id').val(values.id);
+                            $('#itemId').val(values.itemId);
+                            $('#shoppingTime').val(values.shoppingTime);
+                            $('#price').val(values.price);
+                            $('#payStyle').val(values.payStyle);
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id': $('#id').val(),
+                                    'itemId':$('#itemId').val(),
+                                    'shoppingTime':$('#shoppingTime').val(),
+                                    'price':$('#price').val(),
+                                    'payStyle':$('#payStyle').val(),
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields:{
+                                        itemId: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '用户编号不能为空'
+                                                },
+                                            }
+                                        },
+                                        shoppingTime:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '购物时间不能为空！'
+                                                },
+                                            }
+                                        },price: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '价格不能为空！'
+                                                },
+                                            }
+                                        },payStyle: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '支付方式不能为空！'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/shopping/updateShopping",json).    //修改操作
+                                    done(function(data){getCode(data)}).
+                                    fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作  url  服务器地址
+                deleteRow: function(row){
+                    myConfirm("${ctx}/shopping/daleteShoppig",row); //删除操作
+                }
+            }
+        });
+        uid = 10;
+    });
+</script>
+</body>
+</html>

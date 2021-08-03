@@ -1,0 +1,247 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Neonatalrounds {
+    private String id;
+
+    private String customerBasicId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date operationDate;
+
+    private String roomnum;
+
+    private String bornway;
+
+    private String pregnancy;
+
+    private String feedingway;
+
+    private String milkeveryday;
+
+    private String reaction;
+
+    private String skin;
+
+    private String headfeatures;
+
+    private String cardiopulmonary;
+
+    private String abdomen;
+
+    private String umbilical;
+
+    private String extremities;
+
+    private String nervereflex;
+
+    private String fecal;
+
+    private String otherSituations;
+
+    private String advice;
+
+    private String signature;
+
+    private String motherId;
+
+    private String storeId;
+
+    private String baby;
+
+    private String mothername;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public Date getOperationDate() {
+        return operationDate;
+    }
+
+    public void setOperationDate(Date operationDate) {
+        this.operationDate = operationDate;
+    }
+
+    public String getRoomnum() {
+        return roomnum;
+    }
+
+    public void setRoomnum(String roomnum) {
+        this.roomnum = roomnum == null ? null : roomnum.trim();
+    }
+
+    public String getBornway() {
+        return bornway;
+    }
+
+    public void setBornway(String bornway) {
+        this.bornway = bornway == null ? null : bornway.trim();
+    }
+
+    public String getPregnancy() {
+        return pregnancy;
+    }
+
+    public void setPregnancy(String pregnancy) {
+        this.pregnancy = pregnancy == null ? null : pregnancy.trim();
+    }
+
+    public String getFeedingway() {
+        return feedingway;
+    }
+
+    public void setFeedingway(String feedingway) {
+        this.feedingway = feedingway == null ? null : feedingway.trim();
+    }
+
+    public String getMilkeveryday() {
+        return milkeveryday;
+    }
+
+    public void setMilkeveryday(String milkeveryday) {
+        this.milkeveryday = milkeveryday == null ? null : milkeveryday.trim();
+    }
+
+    public String getReaction() {
+        return reaction;
+    }
+
+    public void setReaction(String reaction) {
+        this.reaction = reaction == null ? null : reaction.trim();
+    }
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin == null ? null : skin.trim();
+    }
+
+    public String getHeadfeatures() {
+        return headfeatures;
+    }
+
+    public void setHeadfeatures(String headfeatures) {
+        this.headfeatures = headfeatures == null ? null : headfeatures.trim();
+    }
+
+    public String getCardiopulmonary() {
+        return cardiopulmonary;
+    }
+
+    public void setCardiopulmonary(String cardiopulmonary) {
+        this.cardiopulmonary = cardiopulmonary == null ? null : cardiopulmonary.trim();
+    }
+
+    public String getAbdomen() {
+        return abdomen;
+    }
+
+    public void setAbdomen(String abdomen) {
+        this.abdomen = abdomen == null ? null : abdomen.trim();
+    }
+
+    public String getUmbilical() {
+        return umbilical;
+    }
+
+    public void setUmbilical(String umbilical) {
+        this.umbilical = umbilical == null ? null : umbilical.trim();
+    }
+
+    public String getExtremities() {
+        return extremities;
+    }
+
+    public void setExtremities(String extremities) {
+        this.extremities = extremities == null ? null : extremities.trim();
+    }
+
+    public String getNervereflex() {
+        return nervereflex;
+    }
+
+    public void setNervereflex(String nervereflex) {
+        this.nervereflex = nervereflex == null ? null : nervereflex.trim();
+    }
+
+    public String getFecal() {
+        return fecal;
+    }
+
+    public void setFecal(String fecal) {
+        this.fecal = fecal == null ? null : fecal.trim();
+    }
+
+    public String getOtherSituations() {
+        return otherSituations;
+    }
+
+    public void setOtherSituations(String otherSituations) {
+        this.otherSituations = otherSituations == null ? null : otherSituations.trim();
+    }
+
+    public String getAdvice() {
+        return advice;
+    }
+
+    public void setAdvice(String advice) {
+        this.advice = advice == null ? null : advice.trim();
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
+    }
+
+    public String getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(String motherId) {
+        this.motherId = motherId == null ? null : motherId.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getBaby() {
+        return baby;
+    }
+
+    public void setBaby(String baby) {
+        this.baby = baby == null ? null : baby.trim();
+    }
+
+    public String getMothername() {
+        return mothername;
+    }
+
+    public void setMothername(String mothername) {
+        this.mothername = mothername == null ? null : mothername.trim();
+    }
+}

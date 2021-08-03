@@ -1,0 +1,137 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Growthrecord {
+    private String id;
+
+    private String customerBasicId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date recorddate;
+
+    private String project;
+
+    private String temperature;
+
+    private String weight;
+
+    private String breastMilk;
+
+    private String formulaMilk;
+
+    private String defecatefrequency;
+
+    private String jaundice;
+
+    private String motherid;
+
+    private String storeId;
+
+    private String babyname;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public Date getRecorddate() {
+        return recorddate;
+    }
+
+    public void setRecorddate(Date recorddate) {
+        this.recorddate = recorddate;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project == null ? null : project.trim();
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature == null ? null : temperature.trim();
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight == null ? null : weight.trim();
+    }
+
+    public String getBreastMilk() {
+        return breastMilk;
+    }
+
+    public void setBreastMilk(String breastMilk) {
+        this.breastMilk = breastMilk == null ? null : breastMilk.trim();
+    }
+
+    public String getFormulaMilk() {
+        return formulaMilk;
+    }
+
+    public void setFormulaMilk(String formulaMilk) {
+        this.formulaMilk = formulaMilk == null ? null : formulaMilk.trim();
+    }
+
+    public String getDefecatefrequency() {
+        return defecatefrequency;
+    }
+
+    public void setDefecatefrequency(String defecatefrequency) {
+        this.defecatefrequency = defecatefrequency == null ? null : defecatefrequency.trim();
+    }
+
+    public String getJaundice() {
+        return jaundice;
+    }
+
+    public void setJaundice(String jaundice) {
+        this.jaundice = jaundice == null ? null : jaundice.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getBabyname() {
+        return babyname;
+    }
+
+    public void setBabyname(String babyname) {
+        this.babyname = babyname == null ? null : babyname.trim();
+    }
+}

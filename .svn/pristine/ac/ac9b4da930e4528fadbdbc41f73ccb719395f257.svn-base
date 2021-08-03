@@ -1,0 +1,99 @@
+package com.luer.storemanager.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storemanager.bean.OrderRoom;
+import com.luer.storemanager.service.OrderRoomService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * 订房信息控制层
+ *
+ * @ClassName OrderRoomController
+ * @Author GavinJiang
+ * @Date 2018/8/20 19:42.
+ */
+@Controller
+@RequestMapping("/orderRoom")
+public class OrderRoomController {
+    @Autowired
+    private OrderRoomService orderRoomService;
+
+    /**
+     * 查询所有的订房信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.OrderRoom>
+     * @author GavinJiang
+     * @date 2018/8/20 19:45
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping("selectOrderRoomAll")
+    public List<OrderRoom> selectOrderRoomAll() {
+        List<OrderRoom> orderRoomAll = orderRoomService.selectOrderRoom();
+        return orderRoomAll;
+    }
+
+    /**
+     * 添加订房信息
+     *
+     * @param orderRoom
+     * @return com.luer.comm.utils.ResultSet
+     * @author GavinJiang
+     */
+    @ResponseBody
+    @RequestMapping("addOrderRoom")
+    public ResultSet addOrderRoom(OrderRoom orderRoom) {
+        orderRoomService.insert(orderRoom);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 添加订房信息
+     *
+     * @param orderRoom
+     * @return com.luer.comm.utils.ResultSet
+     * @author GavinJiang
+     */
+    @ResponseBody
+    @RequestMapping("updateOrderRoom")
+    public ResultSet updateOrderRoom(OrderRoom orderRoom) {
+        orderRoomService.updateByPrimaryKeySelective(orderRoom);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 根据id删除订房信息
+     *
+     * @param id
+     * @return com.luer.comm.utils.ResultSet
+     * @author GavinJiang
+     */
+    @ResponseBody
+    @RequestMapping("deleteOrderRoom")
+    public ResultSet deleteOrderRoom(String id) {
+        orderRoomService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 根据id删除订房信息
+     *
+     * @param ids
+     * @return com.luer.comm.utils.ResultSet
+     * @author GavinJiang
+     */
+    @ResponseBody
+    @RequestMapping("deleteOrderRooms")
+    public ResultSet deleteOrderRooms(String ids) {
+        String[] id = ids.split(",");
+        for (int i = 0; i < id.length; i++) {
+            orderRoomService.deleteByPrimaryKey(id[i]);
+        }
+        return ResultSet.getSuccess();
+    }
+}

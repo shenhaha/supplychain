@@ -1,0 +1,34 @@
+package com.luer.springsecurity.service.Impl;
+
+import com.luer.springsecurity.bean.UserRole;
+import com.luer.springsecurity.dao.UserRoleMapper;
+import com.luer.springsecurity.service.UserRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+@Service
+@Transactional
+public class UserRoleServiceImpl implements UserRoleService {
+
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+
+    @Override
+    public int deleteByRolrId(String roleId) {
+        userRoleMapper.deleteByRoleId(roleId);
+        return 0;
+    }
+
+    @Override
+    public int insert(UserRole userRole) {
+        return userRoleMapper.insert(userRole);
+    }
+
+    @Override
+    public String getByUserId(String userId) {
+        String roleId = userRoleMapper.getByUserId(userId);//根据用户id在role_user表中查找userId
+        return roleId;
+    }
+}

@@ -1,0 +1,232 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+	<%--日期时间插件--%>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+	<script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+	<style>
+		div{padding: 0 0 0 0;margin: 0 0 0 0}
+	</style>
+</head>
+<body>
+<form class="form-horizontal"role="form" id="myform"name="myform">
+	<div class="form-group required" hidden="hidden">
+		<label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" id="id" name="id" placeholder="id" >
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+                <div class="form-group col-md-3">
+                    <label for="name" class="col-sm-5 control-label">Name：</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="name" name="name">
+
+                        </select>
+                    </div>
+                </div>
+			<div class="form-group col-md-3">
+				<label for="ap" class="col-sm-5 control-label">AP(week/Birth)：</label>
+				<div class="col-sm-7">
+                    <input type="text"  class="form-control" id="ap" name="ap" placeholder="ap" >
+
+				</div>
+			</div>
+                <div class="form-group col-md-3">
+                    <label for="checktime" class="col-sm-4 control-label"style="padding-left: 0px;margin-left: 0px">Date：</label>
+                    <div  class="input-group date form_datetime " data-date="" data-date-format="yyyy-mm-dd hh:ii:ss">
+                        <input class="form-control" size="16" type="text" value="" name="checktime" id="checktime"placeholder="Date" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                </div>
+		</div>
+		<div class="row">
+            <div class="form-group col-md-3">
+                <label for="generalApprarence" class="col-sm-5 control-label">GENERAL APPRARENCE：</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="generalApprarence" name="generalApprarence">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="skin" class="col-sm-5 control-label">SKIN：</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="skin" name="skin">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="headNeek" class="col-sm-5 control-label">HEAD,NEEK：</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="headNeek" name="headNeek">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+		<div class="row">
+
+			<div class="form-group col-md-3">
+				<label for="eyes" class="col-sm-5 control-label">EYES：</label>
+					<div class="col-sm-7">
+                        <select class="form-control" id="eyes" name="eyes">
+                            <option value="normal">normal</option>
+                            <option value="unormal">unormal</option>
+                        </select>
+					</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="earsNoseThroat" class="col-sm-5 control-label">EARS,NOSE THROAT：</label>
+				<div class="col-sm-7">
+                    <select class="form-control" id="earsNoseThroat" name="earsNoseThroat">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+				</div>
+			</div>
+            <div class="form-group col-md-3">
+                <label for="thorax" class="col-sm-5 control-label">THORAX：</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="thorax" name="thorax">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+                </div>
+            </div>
+		</div>
+		<div class="row">
+
+			<div class="form-group col-md-3">
+				<label for="lungs" class="col-sm-5 control-label">LUNGS：</label>
+				<div class="col-sm-7">
+                    <select class="form-control" id="lungs" name="lungs">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="heart" class="col-sm-5 control-label">HEART：</label>
+				<div class="col-sm-7">
+                    <select class="form-control" id="heart" name="heart">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+				</div>
+			</div>
+            <div class="form-group col-md-3">
+                <label for="abdomen" class="col-sm-5 control-label">ABDOMEN：</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="abdomen" name="abdomen">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+                </div>
+            </div>
+		</div>
+		<div class="row">
+
+			<div class="form-group col-md-3">
+				<label for="genitalia" class="col-sm-5 control-label">GENITALIA：</label>
+					<div class="col-sm-7">
+                        <select class="form-control" id="genitalia" name="genitalia">
+                            <option value="normal">normal</option>
+                            <option value="unormal">unormal</option>
+                        </select>
+					</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="anus" class="col-sm-5 control-label">ANUS：</label>
+				<div class="col-sm-7">
+                    <select class="form-control" id="anus" name="anus">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+				</div>
+			</div>
+            <div class="form-group col-md-3">
+                <label for="trunkAndSpine" class="col-sm-5 control-label">TRUNK_AND SPINE：</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="trunkAndSpine" name="trunkAndSpine">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+                </div>
+            </div>
+		</div>
+		<div class="row">
+
+			<div class="form-group col-md-3">
+				<label for="extremities" class="col-sm-5 control-label">EXTREMITIES：</label>
+				<div class="col-sm-7">
+                    <select class="form-control" id="extremities" name="extremities">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+				</div>
+			</div>
+			<div class="form-group col-md-3">
+				<label for="reflexs" class="col-sm-5 control-label">REFLEXS：</label>
+				<div class="col-sm-7">
+                    <select class="form-control" id="reflexs" name="reflexs">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+				</div>
+			</div>
+            <div class="form-group col-md-3">
+                <label for="remark" class="col-sm-5 control-label">REMARK：</label>
+                <div class="col-sm-7">
+                    <select class="form-control" id="remark" name="remark">
+                        <option value="normal">normal</option>
+                        <option value="unormal">unormal</option>
+                    </select>
+                </div>
+            </div>
+		</div>
+		<div class="row">
+
+			<div class="form-group col-md-9">
+				<label for="description" class="col-sm-4 control-label">DESCRIPTION  OF ABNORMAL   FINDINGS：</label>
+				<div class="col-sm-8">
+                    <textarea type="text" class="form-control" id="description" name="description" placeholder="DESCRIPTION"></textarea>
+				</div>
+			</div>
+		</div>
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="signature" class="col-sm-5  control-label">Physician's Signature：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="signature" name="signature" placeholder="Signature">
+                </div>
+            </div>
+        </div>
+	</div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

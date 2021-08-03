@@ -1,0 +1,20 @@
+package com.luer.storesdata.service;
+
+import com.luer.storesdata.bean.RoomStyles;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/29.
+ */
+public interface RoomStylesService {
+    void addRoomStyles(RoomStyles roomStyles);
+
+    void updateRoomStyles(RoomStyles roomStyles);
+
+    void deleteRoomStyles(String id);
+
+    List<RoomStyles> getRoomStyles();
+
+    List<RoomStyles> getRoomStylesList(String storeId);
+}

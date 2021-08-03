@@ -1,0 +1,91 @@
+package com.luer.businessmanager.controller;
+
+import com.luer.businessmanager.bean.Question;
+import com.luer.businessmanager.bean.QuestionSort;
+import com.luer.businessmanager.service.QuestionService;
+import com.luer.businessmanager.service.Question_sortService;
+import com.luer.comm.utils.ResultSet;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storesdata.service.StoreFileService;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Created by  2018/8/13.
+ * 顾客管理
+ * *常见问题问答
+ */
+@RequestMapping("/businessmanager")
+@Controller
+public class QuestionController {
+
+    @Autowired
+    private QuestionService questionService;
+    @Autowired
+    public  Question_sortService question_sortService;
+    @Autowired
+    private StoreFileService storeFileService;
+    //添加问题信息
+    @ResponseBody
+    @RequestMapping(value ="/addQuestion")
+    public ResultSet addQuestion(Question question){
+        question.setId(UUIDUtils.getUUID());
+        questionService.insert(question);
+        return ResultSet.getSuccess();
+    }
+    //单个信息删除
+    @ResponseBody
+    @RequestMapping(value="/deleteQuestion")
+    public ResultSet deleteQuestion(String id){
+        questionService.deleteById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改信息
+    @ResponseBody
+    @RequestMapping(value="/updateQuestion")
+    public ResultSet updateQuestion(Question question){
+        questionService.updateById(question.getId(),question);
+        return ResultSet.getSuccess();
+    }
+    @ResponseBody
+    @RequestMapping(value="/selectSortId")
+    public QuestionSort selectSortId(Question question){
+        return question_sortService.selectSortId();
+    }
+    @ResponseBody
+    @RequestMapping(value="/selectListQuestion")
+    public List<Question> selectListQuestion(String sort_id,HttpServletResponse response){
+        List<Question> questions=null;
+        if(sort_id==""||sort_id==null){
+            QuestionSort questionSort =question_sortService.selectSortId();
+            questions = questionService.selectByQuestionsortId(questionSort.getId(),storeFileService.getStoreFileId());
+            response.addHeader("sort_id",questionSort.getId());
+        }else{
+            questions = questionService.selectByQuestionsortId(sort_id,storeFileService.getStoreFileId());
+        }
+        return questions;
+    }
+ /*   @RequestMapping(value="/getquestionList")
+    public ModelAndView getStorId(ModelAndView modelAndView, String sort_id, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setAttribute("sort_id",sort_id);
+        modelAndView.addObject("sort_id",sort_id);
+        modelAndView.setViewName("businessmanager/question");
+        return  modelAndView;
+    }*/
+ @ResponseBody
+ @RequestMapping(value="/selectAllQuestion")
+ public List<Question> selectAllQuestion(String storeId){
+     return questionService.selectAllQuestion(storeId);
+ }
+}

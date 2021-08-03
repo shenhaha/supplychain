@@ -1,0 +1,222 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="mentalState"
+                       class="col-sm-4 control-label">精神状态</label>
+                <div class="col-sm-7">
+                    <select type="text" class="form-control" id="mentalState" name="mentalState" tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="疲倦">疲倦</option>
+                        <option value="虚弱">虚弱</option>
+                        <option value="苍白">苍白</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="uterusHeight"
+                       class="col-sm-4 control-label">子宫底高度</label>
+                <div class="col-sm-7">
+                    <select type="text" class="form-control" id="uterusHeight" name="uterusHeight" tabindex="1">
+                        <option value="脐上1指">脐上1指(u+1/Fb)</option>
+                        <option value="脐平">脐平(u)</option>
+                        <option value="脐下1指">脐下1指(u-/Fb)</option>
+                        <option value="脐下2指">脐下2指(u-/2Fb)</option>
+                        <option value="脐下3指">脐下3指(u-/3Fb)</option>
+                        <option value="脐下4指">脐下4指(u-4Fb)</option>
+                        <option value="入盆">入盆</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="deliveryWay"
+                       class="col-sm-4 control-label">生产方式</label>
+                <div class="col-sm-8">
+                    <select type="text" class="form-control" id="deliveryWay" name="deliveryWay" tabindex="1">
+                        <option value="顺产">顺产</option>
+                        <option value="剖宫产">剖宫产</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="lochia"
+                       class="col-sm-4 control-label">恶露</label>
+                <div class="col-sm-7">
+                    <select type="text" class="form-control" id="lochia" name="lochia" tabindex="1">
+                        <option value="量多">量多</option>
+                        <option value="量中">量中</option>
+                        <option value="量少">量少</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label  class="col-sm-4 control-label" style="margin-left: 25px">有无血块：</label>
+                <label class="col-sm-2 checkbox-inline">
+                    <input type="checkbox"  value="有"  name="lochia"> 有
+                </label>
+                <label class="col-sm-2 checkbox-inline">
+                    <input type="checkbox"  value="无"  name="lochia"> 无
+                </label>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="color"
+                       class="col-sm-4 control-label">颜色</label>
+                <div class="col-sm-7">
+                    <select type="text" class="form-control" id="color" name="color" tabindex="1">
+                        <option value="鲜红">鲜红</option>
+                        <option value="暗红">暗红</option>
+                        <option value="褐色">褐色</option>
+                        <option value="浅褐色">浅褐色</option>
+                        <option value="黄白色">黄白色</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="taste"
+                       class="col-sm-4 control-label">味道</label>
+                <div class="col-sm-7">
+                    <select type="text" class="form-control" id="taste" name="taste" tabindex="1">
+                        <option value="无">无</option>
+                        <option value="腥味">腥味</option>
+                        <option value="臭味">臭味</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label  class="col-sm-1 control-label" style="margin-left: 28px">乳房</label>
+                <label class="col-sm-1 checkbox-inline" style="margin-left: 8px">
+                    <input type="checkbox"  value="柔软"  name="breast"> 柔软
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="充盈"  name="breast"> 充盈
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox" value="肿胀"  name="breast"> 肿胀
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="硬块"  name="breast"> 硬块
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="疼痛"  name="breast"> 疼痛
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="副乳"  name="breast"> 副乳
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="双侧"  name="breast"> 双侧
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="左侧"  name="breast"> 左侧
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="右侧"  name="breast"> 右侧
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label  class="col-sm-1 control-label" style="margin-left: 28px">乳头</label>
+                <label class="col-sm-1 checkbox-inline" style="margin-left: 8px">
+                    <input type="checkbox"  value="正常"  name="nipple"> 正常
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="凹陷"  name="nipple"> 凹陷
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox" value="短小"  name="nipple"> 短小
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="破裂"  name="nipple"> 破裂
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="双侧"  name="nipple"> 双侧
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="左侧"  name="nipple"> 左侧
+                </label>
+                <label class="col-sm-1 checkbox-inline">
+                    <input type="checkbox"  value="右侧"  name="nipple"> 右侧
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="hemorrhoids"
+                       class="col-sm-4 control-label">痔疮</label>
+                <div class="col-sm-7">
+                    <select type="text" class="form-control" id="hemorrhoids" name="hemorrhoids" tabindex="1">
+                        <option value="无">无</option>
+                        <option value="有">有</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="defecation"
+                       class="col-sm-4 control-label">排便情况</label>
+                <div class="col-sm-7">
+                    <select type="text" class="form-control" id="defecation" name="defecation" tabindex="1">
+                        <option value="正常">正常</option>
+                        <option value="不正常">不正常</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4 ">
+                <label for="other" class="col-sm-4 control-label">其他 :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="other" name="other" placeholder="其他" tabindex="1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4 ">
+                <label for="nursingdate" class="col-sm-4 control-label">护理时间</label>
+                <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime col-sm-7" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" name="nursingdate" id="nursingdate" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input1" value="" /><br/>
+            </div>
+
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+package com.luer.businessmanager.dao;
+
+import com.luer.businessmanager.bean.Callrecord;
+import com.luer.businessmanager.bean.CallrecordExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface CallrecordMapper {
+    int countByExample(CallrecordExample example);
+
+    int deleteByExample(CallrecordExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    boolean deleteListById(String[] arr);
+
+    int insert(Callrecord record);
+
+    int insertSelective(Callrecord record);
+
+    List<Callrecord> selectByExampleWithBLOBs(CallrecordExample example);
+
+    List<Callrecord> selectByExample(CallrecordExample example);
+
+    Callrecord selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Callrecord record, @Param("example") CallrecordExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") Callrecord record, @Param("example") CallrecordExample example);
+
+    int updateByExample(@Param("record") Callrecord record, @Param("example") CallrecordExample example);
+
+    int updateByPrimaryKeySelective(Callrecord record);
+
+    int updateByPrimaryKeyWithBLOBs(Callrecord record);
+
+    int updateByPrimaryKey(Callrecord record);
+}

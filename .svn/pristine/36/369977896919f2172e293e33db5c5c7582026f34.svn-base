@@ -1,0 +1,85 @@
+package com.luer.businessmanager.controller;
+
+import com.luer.businessmanager.bean.OrderCustomer;
+import com.luer.businessmanager.service.OrderCustomerService;
+import com.luer.comm.utils.ResultSet;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+/**
+ * Created by  2018/8/13.
+ * 订单入住管理
+ * *订单信息
+ */
+
+@RequestMapping("/businessmanager")
+@Controller
+public class OrderCustomerController {
+
+    @Autowired
+    private OrderCustomerService orderCustomerService;
+
+    //添加信息
+    @ResponseBody
+    @RequestMapping(value = "/addOrderCustomer")
+    public ResultSet addOrderCustomer(OrderCustomer orderCustomer) {
+        orderCustomerService.insert(orderCustomer);
+        return ResultSet.getSuccess();
+    }
+
+
+    //单个信息删除
+    @ResponseBody
+    @RequestMapping(value = "/deleteOrderCustomer")
+    public ResultSet deleteOrderCustomer(OrderCustomer orderCustomer) {
+       orderCustomerService.deleteByPrimaryKey(orderCustomer.getId());
+        return ResultSet.getSuccess();
+    }
+
+    //查询单个订单
+    @ResponseBody
+    @RequestMapping(value = "/selectOrderCustomer")
+    public ResultSet selectOrderCustomer() {
+        String id="1";
+        OrderCustomer orderCustomer = orderCustomerService.selectByPrimaryKey(id);
+        return ResultSet.getSuccess(orderCustomer);
+
+    }
+
+    //修改信息
+    @ResponseBody
+    @RequestMapping(value = "/updateOrderCustomer")
+    public ResultSet updateOrderCustomer(OrderCustomer orderCustomer) {
+       orderCustomerService.updateById(orderCustomer);
+        return ResultSet.getSuccess();
+    }
+
+    //查询所有的订单
+    @ResponseBody
+    @RequestMapping(value = "/selectListOrderCustomer")
+    public   List<OrderCustomer> selectListOrderCustomer() {
+        List<OrderCustomer> orderCustomerList = orderCustomerService.selectAllOrderCustomer();
+        return orderCustomerList;
+    }
+    //查询本门店所有的订单
+    @ResponseBody
+    @RequestMapping(value = "/getOrderCustomers")
+    public   List<OrderCustomer> getOrderCustomers(@NonNull String storeId) {
+        List<OrderCustomer> orderCustomerList = orderCustomerService.getOrderCustomers(storeId);
+        return orderCustomerList;
+    }
+
+    //在订单中获取入住提醒的订单
+    @ResponseBody
+    @RequestMapping(value = "/selectNotice")
+    public   List<OrderCustomer> selectNotice(OrderCustomer orderCustomer, HttpServletRequest request) {
+        orderCustomer.setStoreId((String)request.getSession().getAttribute("storeId"));
+        List<OrderCustomer> orderCustomerList = orderCustomerService.selectNotice(orderCustomer);
+        return orderCustomerList;
+    }
+}

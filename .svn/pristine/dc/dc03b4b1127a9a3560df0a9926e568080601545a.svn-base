@@ -1,0 +1,294 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <title>离馆妈妈基本信息表</title>
+</head>
+<body>
+<!--Main Content-->
+<div class="page-wrapper">
+    <div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+               <%-- <div class="panel-heading">
+                    <div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li class="active">离馆妈妈基本信息表</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix" ></div>
+                </div>--%>
+
+                <!--妈妈基本信息表开始-->
+                <div id="repairdiv">
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <table id="mathercustomer" class="table" data-paging="true" data-filtering="true"
+                                   data-sorting="true">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--妈妈基本信息表结束-->
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+</div>
+<script >
+    $(function () {
+        var mathercustTitle = [
+            {"name":"id","title":"会员号","breakpoints":"xs sm"},
+            {"name":"name","title":"宝妈姓名"},
+            {"name":"bornStyle","title":"生产方式"},
+            {"name":"birthDate","title":"出生日期"},
+            {"name":"bornHospital","title":"入住医院"},
+            {"name":"height","title":"身高(cm)","visible": false},
+            {"name":"weight","title":"体重(kg)","visible": false},
+            {"name":"contact","title":"联系方式"},
+            {"name":"detail","title":"妈妈信息"},
+            {"name":"babydetail","title":"宝宝信息"},
+
+        ];
+        function find(id,motherType) {
+            window.location.href='${ctx}/servicecenter/mothernursingrecorddetail?motherid='+id+'&motherType='+motherType;
+        }
+        function findbaby(id) {
+            window.location.href='${ctx}/servicecenter/babybasic?motherid='+id;
+        }
+        window.find = find;
+        window.findbaby = findbaby;
+        //启动模态框
+        //启动footable
+        var ft = FooTable.init('#mathercustomer',{
+            "columns": mathercustTitle,
+            "rows": $.get("${ctx}/customerBasic/getTwoCustomerBasics?type=0&checkStatus=2&motherType=1&storeId="+'<%=session.getAttribute("storeId")%>',
+                function (data) {
+                    $(data).each(function () {
+                        this.detail = "<button class='btn btn-primary btn-sm' onclick='find("+'"'+this.id+'"'+","+'"'+this.motherType+'"'+")'>查看详细</button>";
+                        this.babydetail = "<button class='btn btn-primary btn-sm' onclick='findbaby("+'"'+this.id+'"'+")'>宝宝信息</button>";
+                    })
+                }), //查询  服务器路径
+            //功能操作
+            editing: {
+                enabled: true,
+              /*  addRow: function(){
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('/template/servicecenter/mathercustomerBasic.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'name':$('#name').val(),
+                                    'age':$('#age').val(),
+                                    'birthDate':$('#birthDate').val(),
+                                    'bornHospital': $('#bornHospital').val(),
+                                    'weight':$('#weight').val(),
+                                    'height':$('#height').val(),
+                                    'contact':$('#contact').val(),
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        name: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈姓名不能为空'
+                                                },
+                                            }
+                                        },
+                                        age:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈年龄不能为空！'
+                                                },
+                                            }
+                                        },
+                                        bornHospital: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '入住医院不能为空！'
+                                                },
+                                            }
+                                        },
+                                        height: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '身高(不能为空！'
+                                                },
+                                            }
+                                        },
+                                        weight:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '体重(不能为空！'
+                                                },
+                                            }
+                                        },
+                                        contact:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '联系方式(不能为空！'
+                                                },
+                                            }
+                                        }
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    //新增一条记录   url服务器路径
+                                    $.post("/customerBasic/addCustomerBasic",json).done(function(data){
+                                        getCode(data)
+                                    }).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },*/
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/mathercustomerBasic.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown:function () {
+                            $('#status').hide()
+                            $('#id').val(values.id);
+                            $('#name').val(values.name);
+                            $('#sex').val(values.sex);
+                            $('#bornStyle').val(values.bornStyle);
+                            $('#birthDate').val(values.birthDate);
+                            $('#bornHospital').val(values.bornHospital);
+                            $('#type').val(values.type);
+
+                            $('#contact').val(values.contact);
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'name':$('#name').val(),
+                                    'birthDate':$('#birthDate').val(),
+                                    'bornHospital': $('#bornHospital').val(),
+                                    'bornStyle':$('#bornStyle').val(),
+                                    'contact':$('#contact').val(),
+                                    'type':'0',
+                                    'storeId':'<%=session.getAttribute("storeId")%>'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        name: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝妈姓名不能为空'
+                                                },
+                                            }
+                                        },
+
+                                        bornHospital: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '入住医院不能为空！'
+                                                },
+                                            }
+                                        },
+                                        bornStyle:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '生产方式不能为空！'
+                                                },
+                                            }
+                                        },
+                                        contact:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '联系方式(不能为空！'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                        $.post("${ctx}/customerBasic/updateCustomer",json).done(function(data){
+                                            getCode(data);
+                                        }).fail(function(data){getCode(data)});
+                                         //修改一条记录  url  服务器地址
+                                    }
+                                }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作    url  服务器路径
+                deleteRow: function(row){
+                    myConfirm("${ctx}/customerBasic/deleteCustomerBasic",row);
+                }
+            }
+        });
+        uid = 10;
+    });
+</script>
+<script src="${ctx}/static/js/jquery-1.10.2/jquery.min.js"></script>
+<script src="${ctx}/static/js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
+</body>
+</html>

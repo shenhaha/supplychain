@@ -1,0 +1,189 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <title>销售出库</title>
+</head>
+<body>
+<input style="display: none" type="hidden" id="storeId" value="${storeId}">
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                    <%--<div class="panel-heading">
+                        <div class="pull-left">
+                            <ol class="breadcrumb">
+                                <li><a href="${ctx}/index">首页</a></li>
+                                <li class="active">销售出库管理</li>
+                            </ol>
+                            </div>
+                        <div class="clearfix"></div>
+                    </div>--%>
+                    <div>
+                        <div class="panel-body" >
+                            <div class="table-wrap">
+                                <table id="footable_shipments" class="table" data-paging="true" data-filtering="true" data-sorting="true">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <!-- /Row -->
+
+    </div>
+</div>
+
+
+<script >
+    $(function () {
+        var shipmentsTitle = [
+            {"name":"id","title":"ID","breakpoints":"xs sm",visible:false},
+            {"name":"storeId","title":"门店id","visible":false},
+            {"name":"status","title":"状态","visible":false},
+            {"name":"employerId","title":"销售员工id","visible":false},
+            {"name":"employerName","title":"销售员工姓名"},
+            {"name":"receivable","title":"应收金额"},
+            {"name":"shippingTime","title":"销售时间","style":{"width":120,"maxWidth":240}},
+            {"name": "roomId", "title": "房间id","visible":false},
+            {"name": "roomNum", "title": "房间号"},
+            {"name": "motherId", "title": "妈妈id","visible":false},
+            {"name": "matherName", "title": "妈妈姓名"},
+            {"name": "details","title":"详情"}
+        ];
+
+
+
+    //启动footable
+    var ft = FooTable.init('#footable_shipments',{
+        "columns": shipmentsTitle,
+        "rows": $.get("${ctx}/shipments/selectSales", function (data) {
+            $(data).each(function () {
+                this.details = "<button id='cx' class='btn btn-primary btn-sm'  onclick='findDetails("+'"'+this.id+'"'+")'>点击查看</button>";
+
+            });
+            //
+            return data;
+        }),
+        //功能操作
+        editing: {
+            enabled: true,
+            addRow: function(){
+                //新增模态框
+                var $that = $(this);
+                var dialog = BootstrapDialog.show({
+                    type : BootstrapDialog.TYPE_DEFAULT,
+                    title : "<span style=\"color:#ab8ce4\">新增一条数据</span>",
+                    closable: false,
+                    draggable: true,
+                    cssClass: 'api-blacklist-form-add',
+                    message:$('<div></div>').load('${ctx}/template/storesandsales/salelist.jsp'),//加载弹出页面
+                    size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                    onhide:function(){
+                        $that.removeAttr("disabled");
+                    },
+                    buttons : [{
+                        id: 'btn-form-submit',
+                        label: '提交',
+                        icon: 'fa fa-check-circle',
+                        cssClass: 'btn-primary',
+                        action: function(){
+                            var json = {
+                                'storeId': $('#storeId').val(),
+                                'status': $('#status').val(),
+                                'employerId': $('#employerId').val(),
+                                'receivable': $('#receivable').val(),
+                                'shippingTime': $('#shippingTime').val(),
+                                'motherId': $('#motherId').val(),
+                                'roomId': $('#roomId').val(),
+
+                            };
+                            $.post("${ctx}/shipments/saveShipments",json).
+                            done(function(data){getCode(data)}).
+                            fail(function(data){getCode(data)});
+                        }
+                    },{
+                        label : '关闭',
+                        icon: 'fa fa-close',
+                        action : function(dialogItself) {
+                            dialogItself.close();
+                        }
+                    } ]
+                });
+            },
+            //这里是修改时绑定数据
+            editRow: function(row){
+                var values = row.val();
+                var $that = $(this);
+                //失效
+                $that.attr("disabled","disabled");
+                // 调用add方法
+                var dialog = BootstrapDialog.show({
+                    type : BootstrapDialog.TYPE_DEFAULT,
+                    title : "<span style=\"color:#ab8ce4\">修改一条数据</span>",
+                    closable: false,
+                    draggable: true,
+                    cssClass: 'api-blacklist-form-add',
+                    message:$('<div></div>').load('${ctx}/template/storesandsales/salelist.jsp'),//加载弹出页面
+                    size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                    //数据回显
+                    onshown: function(dialogRef){
+                        $('#id').val(values.id);
+                        $('#storeId').val(values.storeId);
+                        $('#status').val(values.status);
+                        $('#employerId').val(values.employerId);
+                        $('#receivable').val(values.receivable);
+                        $('#shippingTime').val(values.shippingTime);
+                        $('#motherId').val(values.motherId);
+                        $('#roomId').val(values.roomId);
+
+                    },
+                    buttons : [{
+                        id: 'btn-form-submit',
+                        label: '提交',
+                        icon: 'fa fa-check-circle',
+                        cssClass: 'btn-primary',
+                        action: function(){
+                            var json = {
+                                'id': $('#id').val(),
+                                'storeId': $('#storeId').val(),
+                                'status': $('#status').val(),
+                                'employerId': $('#employerId').val(),
+                                'receivable': $('#receivable').val(),
+                                'shippingTime': $('#shippingTime').val(),
+                                'motherId': $('#motherId').val(),
+                                'roomId': $('#roomId').val()
+
+                            };
+                            $.post("${ctx}/shipments/updateShipments",json).
+                            done(function(data){getCode(data)}).
+                            fail(function(data){getCode(data)});
+                        }
+                    },{
+                        label : '关闭',
+                        icon: 'fa fa-close',
+                        action : function(dialogItself) {
+                            dialogItself.close();
+                        }
+                    } ]
+                });
+            },
+            //删除操作
+            deleteRow: function(row){
+                myConfirm("${ctx}/shipments/deleteShipmentsById",row);
+            }
+        }
+    });
+        uid = 10;
+    });
+    //查询详情
+    function findDetails(id) {
+        window.location.href = "${ctx}/orderDetails/selectDetailsByShipmentsId?orderId="+id+"&detailstype="+2;
+    }
+</script>
+
+</body>
+</html>

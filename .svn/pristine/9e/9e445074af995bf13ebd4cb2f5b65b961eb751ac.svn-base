@@ -1,0 +1,31 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.ExtraService;
+import com.luer.storemanager.bean.ExtraServiceExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface ExtraServiceMapper {
+    int countByExample(ExtraServiceExample example);
+
+    int deleteByExample(ExtraServiceExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(ExtraService record);
+
+    int insertSelective(ExtraService record);
+
+    List<ExtraService> selectByExample(ExtraServiceExample example);
+
+    ExtraService selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") ExtraService record, @Param("example") ExtraServiceExample example);
+
+    int updateByExample(@Param("record") ExtraService record, @Param("example") ExtraServiceExample example);
+
+    int updateByPrimaryKeySelective(ExtraService record);
+
+    int updateByPrimaryKey(ExtraService record);
+}

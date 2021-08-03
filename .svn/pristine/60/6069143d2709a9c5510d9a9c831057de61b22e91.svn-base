@@ -1,0 +1,25 @@
+package com.luer.servicecenter.bean;
+
+import lombok.Data;
+
+import java.util.Date;
+
+/**
+ * @author：EVEA
+ * @date：2018/8/21 15:55
+ * 月子餐管理页面显示字段详细
+ **/
+@Data
+public class MealManagerTable {
+    private String id;
+    private String breakfast;//早餐
+    private String lunch;//午餐
+    private String dinner;//晚餐
+    private Integer familymeal;//家属
+    private String mothername;//妈妈姓名
+    private String roomnum;//房号
+    private Date mealdate;//时间
+    private String midnight_snack;
+    private String reveille;
+    private String snack;
+}

@@ -1,0 +1,79 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class NurseRecord {
+    private String id;
+
+    private String customerBasicId;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date productiondate;
+
+    private String modeproduction;
+
+    private String feeding;
+
+
+    private String customername;
+
+    private String storeId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public Date getProductiondate() {
+        return productiondate;
+    }
+
+    public void setProductiondate(Date productiondate) {
+        this.productiondate = productiondate;
+    }
+
+    public String getModeproduction() {
+        return modeproduction;
+    }
+
+    public void setModeproduction(String modeproduction) {
+        this.modeproduction = modeproduction == null ? null : modeproduction.trim();
+    }
+
+    public String getFeeding() {
+        return feeding;
+    }
+
+    public void setFeeding(String feeding) {
+        this.feeding = feeding == null ? null : feeding.trim();
+    }
+
+    public String getCustomername() {
+        return customername;
+    }
+
+    public void setCustomername(String customername) {
+        this.customername = customername == null ? null : customername.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+}

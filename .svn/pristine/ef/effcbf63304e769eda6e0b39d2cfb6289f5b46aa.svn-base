@@ -1,0 +1,37 @@
+package com.luer.servicecenter.bean;
+
+import lombok.Data;
+
+/**
+ * @author：EVEA
+ * @date：2018/8/21 13:57
+ * 月子餐管理统计（早中晚餐，家属餐）
+ **/
+@Data
+public class MealmanagerCount {
+    /*select store_id, id as motherid,name as mothername,
+    breakfastSum,lunchSum,dinner,familymealcount,reveille,snack,midnight_snack,roomnum
+     */
+    //妈妈id
+    private String motherid;
+    //妈妈姓名
+    private String mothername;
+    //家属餐总数
+    private Integer familymealcount;
+    //早餐总数
+    private Integer breakfastSum;
+    //午餐总数
+    private Integer lunchSum;
+    //晚餐总数
+    private Integer dinner;
+
+    private Integer reveille;
+
+    private Integer snack;
+
+    private Integer midnight_snack;
+    //房间号
+    private String roomnum;
+
+    private String avoid;
+}

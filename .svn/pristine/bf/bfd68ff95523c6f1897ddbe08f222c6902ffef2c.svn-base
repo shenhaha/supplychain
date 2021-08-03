@@ -1,0 +1,168 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>创建下级</title>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+</head>
+<body>
+<div>
+    <form class="form-horizontal" role="form" id="myform">
+        <div class="container">
+            <div class="row" style="margin-top: 10px">
+                <div class="form-group col-md-4">
+                    <label for="sort" class="col-sm-4 control-label">增加类型</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" id="sort" name="sort">
+                            <option value="总公司">分公司</option>
+                            <option value="总公司加盟">总部加盟</option>
+                            <option value="区域加盟">区域代理</option>
+                            <option value="门店">门店</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="name" class="col-sm-4 control-label">企业名称</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="企业名称">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="abbreviation" class="col-sm-4 control-label">机构简称</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="abbreviation" placeholder="机构简称" name="abbreviation">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="industry_nature" class="col-sm-4 control-label">行业性质</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="industry_nature" name="industry_nature" placeholder="行业性质">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="institution_num" class="col-sm-4 control-label">机构编号</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="institution_num"name="institution_num" placeholder="机构编号">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="established" class="col-sm-4 control-label">成立时间</label>
+                    <div class="col-sm-8">
+                        <div style="padding-left: 7.5px;padding-right: 7.5px" class="input-group date form_datetime"
+                             data-date="" data-date-format="yyyy-mm-dd hh:00:00">
+                            <input class="form-control" size="16" type="text" value="" id="established"
+                                   placeholder="成立时间" readonly>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="institution" class="col-sm-4 control-label">所属机构</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" id="institution" name="institution">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="property" class="col-sm-4 control-label">公司性质</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="property"name="property" placeholder="公司性质">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="branchLeader" class="col-sm-4 control-label">负责人</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="branchLeader" name="branchLeader" placeholder="负责人">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="phone" class="col-sm-4 control-label">电话</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="电话">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="email" class="col-sm-4 control-label">邮箱</label>
+                    <div class="col-sm-6">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="邮箱">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="address" class="col-sm-4 control-label">地址</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="地址">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="account_name" class="col-sm-4 control-label">银行开户名</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="account_name" name="account_name" placeholder="开户名">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="account_number" class="col-sm-4 control-label">银行账号</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="account_number" name="account_number" placeholder="账号">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="bankname" class="col-sm-4 control-label">银行开户行</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="bankname" name="bankname" placeholder="开户行">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="form-group col-md-4">
+                    <label for="branchLeader" class="col-sm-4 control-label">管理员账号</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="branchAdmin" name="branchAdmin" placeholder="管理员账号">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Password" class="col-sm-4 control-label">管理员密码</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" id="Password"  name="Password" placeholder="管理员密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-9">
+                        <button type="button" class="btn btn-default" id="btn">增加</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="${ctx}/static/template/bootstrap.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+<%--日期时间插件--%>
+<script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+<script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script>
+    $(function () {
+
+
+        $("#btn").click(function () {
+
+
+        })
+    })
+</script>
+</body>
+</html>

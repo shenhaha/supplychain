@@ -1,0 +1,24 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.GuestCount;
+import com.luer.storemanager.bean.GuestRecord;
+import com.luer.storemanager.bean.GuestRecordTable;
+
+import java.util.List;
+
+public interface GuestRecordService {
+
+    //添加加值服务信息
+    void saveGuestRecord(GuestRecord guestRecord);
+    //删除加值服务信息
+    void deleteGuestRecordById(String guestRecordId);
+    //修改加值服务信息
+    void updateGuestRecord(GuestRecord guestRecord);
+
+    //通过门店id查询加值服务信息
+    List<GuestRecord> selectGuestRecords(String storeFileId);
+    //查询所有客诉信息
+    List<GuestRecord> selectAll();
+    //统计投诉人员
+    List<GuestCount> selectGuestCount(String storeId);
+}

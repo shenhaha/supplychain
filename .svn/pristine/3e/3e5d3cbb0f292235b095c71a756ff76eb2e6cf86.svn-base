@@ -1,0 +1,215 @@
+package com.luer.stockandsales.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.Purchase;
+import com.luer.stockandsales.bean.Shipments;
+import com.luer.stockandsales.bean.Stock;
+import com.luer.stockandsales.dao.*;
+import com.luer.stockandsales.service.StockService;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+@Transactional
+@Service
+public class StockServiceImpl implements StockService {
+    @Autowired
+    private StockMapper stockMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
+    @Autowired
+    private GoodsOrderMapper orderMapper;
+    @Autowired
+    private OrderDetailsMapper orderDetailsMapper;
+    @Autowired
+    private PurchaseMapper purchaseMapper;
+    @Autowired
+    private ShipmentsMapper shipmentsMapper;
+    @Autowired
+    private StoreFileService storeFileService;
+
+    @Override
+    public List<Stock> selectAllStock() {
+        List<Stock> stocks = stockMapper.selectAll();
+        return stockMapper.selectAll();
+    }
+
+    @Override
+    public void saveStock(Stock stock) {
+        stock.setId(UUIDUtils.getUUID());
+        String storeId = storeFileService.getStoreFileId();
+        stock.setStoreId(storeId);
+        String supplierId = goodsMapper.selectByPrimaryKey(stock.getGoodsId()).getSupplierId();
+        stock.setSupplierId(supplierId);
+        stockMapper.insert(stock);
+    }
+
+    @Override
+    public void deleteStock(String stockId) {
+        stockMapper.deleteByPrimaryKey(stockId);
+    }
+
+    @Override
+    public void updateStock(Stock stock) {
+        String supplierId = goodsMapper.selectByPrimaryKey(stock.getGoodsId()).getSupplierId();
+        stock.setSupplierId(supplierId);
+        stockMapper.updateByPrimaryKey(stock);
+    }
+
+    //查询各门店的库存信息
+    @Override
+    public List<Stock> selectByStoreId(String classifyId) {
+
+
+        String storeId = storeFileService.getStoreFileId();
+        List<Stock> stockList = stockMapper.selectByStoreId(storeId,classifyId);
+        for (Stock stock : stockList
+                ) {
+            updateStockTime(stock.getStoreId(), stock.getGoodsId());
+        }
+        return stockList;
+    }
+
+    //通过入库单，出库单修改对应门店的库存数量
+    @Override
+    public void updateStock(String orderId, String goodsId, int detailstype) {
+
+        Date date = new Date();
+
+        Purchase purchase = null;
+        String storeId = null;
+        Shipments shipments = null;
+        String supplierId = null;
+        //如果是订单
+        if (detailstype == 0 || detailstype == 4) {
+            return;
+        }
+        //如果是入库单
+        if (detailstype == 1 || detailstype == 5) {
+            //获取入库单，得到门店id
+            purchase = purchaseMapper.selectByPrimaryKey(orderId);
+            storeId = purchase.getStoreId();
+            //如果是出库单
+        } else if (detailstype == 2 || detailstype == 6) {
+            //获取出库单，得到门店id
+            shipments = shipmentsMapper.selectByPrimaryKey(orderId);
+            storeId = shipments.getStoreId();
+        }
+        //获取本月门店商品的总进货量
+        Double purchaseNum = orderDetailsMapper.countPurchaseNum(storeId, goodsId);
+        //获取本月门店商品的总出货量
+        Double shipmentsNum = orderDetailsMapper.countShipmentsNum(storeId, goodsId);
+        if (purchaseNum == null) {
+            purchaseNum = 0.0;
+        }
+        if (shipmentsNum == null) {
+            shipmentsNum = 0.0;
+        }
+        //得到门店商品对应的的库存对象
+        Stock stock = stockMapper.selectByStoreIdAndGoodsId(storeId, goodsId);
+        //如果没有库存对象，新建该商品的库存对象
+        if (stock == null) {
+            stock = new Stock();
+            stock.setId(UUIDUtils.getUUID());
+            stock.setStockNum(0.0);
+            stock.setGoodsId(goodsId);
+            stock.setStoreId(storeId);
+            stock.setLastStockNum(0.0);
+            stock.setPurchaseNum(purchaseNum);
+            stock.setShipmentsNum(shipmentsNum);
+            stock.setStockWarn(0.0);
+            stock.setInventoryLoss(0.0);
+            //库存的入库时间
+            stock.setPurchaseTime(date);
+            //库存的出库时间
+            stock.setShipmentsTime(date);
+            //库存的最后修改时间
+            stock.setUpdateTime(date);
+            //stock.setSupplierId(supplierId);
+            stockMapper.insert(stock);
+        }
+        //库存=上月库存+本月进货量-本月出货量-本月库存损耗
+        double sum = stock.getLastStockNum()+purchaseNum - shipmentsNum-stock.getInventoryLoss();
+
+        stock.setStockNum(sum);
+        stock.setPurchaseNum(purchaseNum);
+        stock.setShipmentsNum(shipmentsNum);
+        stock.setUpdateTime(new Date());
+        updateStockTime(stock.getStoreId(), stock.getGoodsId());
+        stockMapper.updateByPrimaryKey(stock);
+    }
+
+    @Override
+    public void updateStockInventory(Stock stock1) {
+        Stock stock = stockMapper.selectByPrimaryKey(stock1.getId());
+        //修改库存损耗
+        stock.setInventoryLoss(stock1.getInventoryLoss());
+        //修改库存数量
+        stock.setStockNum(stock.getLastStockNum()+stock.getPurchaseNum()-stock.getShipmentsNum() - stock1.getInventoryLoss());
+        stock.setUpdateTime(new Date());
+        stockMapper.updateByPrimaryKey(stock);
+        updateStockTime(stock.getStoreId(), stock.getGoodsId());
+    }
+
+    //修改最小安全值
+    @Override
+    public void updateStockWarn(Stock stock1) {
+        Stock stock = stockMapper.selectByPrimaryKey(stock1.getId());
+        stock.setStockWarn(stock1.getStockWarn());
+        stockMapper.updateByPrimaryKey(stock);
+    }
+
+    @Override
+    public List<Stock> selectOnlyByStoreId() {
+        String storeId = storeFileService.getStoreFileId();
+        List<Stock> stockList = stockMapper.selectOnlyByStoreId(storeId);
+        for (Stock stock : stockList
+                ) {
+            updateStockTime(stock.getStoreId(), stock.getGoodsId());
+        }
+        return stockList;
+    }
+
+    //修改库存的入库时间和出库时间
+    public void updateStockTime(String storeId, String goodsId) {
+        //获取该商品的库存对象
+        Stock stock = stockMapper.selectByStoreIdAndGoodsId(storeId, goodsId);
+        Date date1 = stock.getUpdateTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String stockDate = sdf.format(date1);
+        String year = stockDate.substring(0, 4);
+        String month = stockDate.substring(4, 6);
+        String nowDate = sdf.format(new Date());
+        String nowYear = stockDate.substring(0, 4);
+        String nowMonth = stockDate.substring(4, 6);
+        //如果不是本月库存，修改库存内容
+        if (!(year.equals(nowYear) & month.equals(nowMonth))) {
+            Stock newStock = new Stock();
+            newStock.setGoodsId(stock.getGoodsId());
+            newStock.setStoreId(stock.getStoreId());
+            newStock.setId(stock.getId());
+            newStock.setUpdateTime(new Date());
+            newStock.setShipmentsTime(stock.getShipmentsTime());
+            newStock.setPurchaseTime(stock.getPurchaseTime());
+            newStock.setLastStockNum(stock.getStockNum());
+            newStock.setStockWarn(stock.getStockWarn());
+            newStock.setPurchaseNum(0.0);
+            newStock.setShipmentsNum(0.0);
+            newStock.setStockNum(stock.getStockNum());
+            newStock.setInventoryLoss(0.0);
+            if (stock.getRemark() != null) {
+                newStock.setRemark(stock.getRemark());
+            }
+
+            stockMapper.updateByPrimaryKey(newStock);
+        }
+
+
+    }
+
+}

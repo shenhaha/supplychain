@@ -1,0 +1,36 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.WorryProblem;
+import com.luer.servicecenter.bean.WorryProblemExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@Component
+@MapperScan
+public interface WorryProblemMapper {
+    int countByExample(WorryProblemExample example);
+
+    int deleteByExample(WorryProblemExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(WorryProblem record);
+
+    int insertSelective(WorryProblem record);
+
+    List<WorryProblem> selectByExample(WorryProblemExample example);
+
+    WorryProblem selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") WorryProblem record, @Param("example") WorryProblemExample example);
+
+    int updateByExample(@Param("record") WorryProblem record, @Param("example") WorryProblemExample example);
+
+    int updateByPrimaryKeySelective(WorryProblem record);
+
+    int updateByPrimaryKey(WorryProblem record);
+
+    List<WorryProblem> getList(@Param("store_id") String storeid);
+}

@@ -1,0 +1,106 @@
+package com.luer.comm.utils;
+
+import com.luer.servicecenter.bean.Motherworryquestion;
+
+public class CountWorryScore {
+    public static int  count(Motherworryquestion motherworryquestion){
+        Score score = new Score();
+        int i = 0;
+        if(motherworryquestion!=null){
+            i = i+score.getother(motherworryquestion.getAnswerfour());
+            i = i+ score.getother(motherworryquestion.getAnswersix());
+            i = i+ score.getScore1(motherworryquestion.getAnswerone());
+            i = i+ score.getScore2(motherworryquestion.getAnswertwo());
+            i = i+ score.getother(motherworryquestion.getAnswerthree());
+            i = i+ score.getother(motherworryquestion.getAnswerfive());
+            i = i+ score.getother(motherworryquestion.getAnswerseven());
+            i = i+ score.getother(motherworryquestion.getAnswereight());
+            i = i+ score.getother(motherworryquestion.getAnswernine());
+            i = i+ score.getother(motherworryquestion.getAnswerten());
+        }
+        return i;
+    }
+    static class Score{
+        public  int  getScore1(String s){
+            int i=0;
+            if(s.equals("同以前一样")){
+                i=0;
+            }
+            if(s.equals("没有产前那么多")){
+                i=1;
+            }
+            if(s.equals("肯定比产前少很多")){
+                i=2;
+            }
+            if(s.equals("现在完全不能")){
+                i=3;
+            }
+            return i;
+        }
+        public  int  getScore2(String s){
+            int i=0;
+            if(s.equals("同以前一样")){
+                i=0;
+            }
+            if(s.equals("没有产前那么多")){
+                i=1;
+            }
+            if(s.equals("肯定比产前少很多")){
+                i=2;
+            }
+            if(s.equals("现在完全没期待")){
+                i=3;
+            }
+            return i;
+
+        }
+        public  int getother(String s){
+            int i=0;
+            if(s.equals("从未如此")){
+                i=0;
+            }
+            if(s.equals("偶尔如此")){
+                i=1;
+            }
+            if(s.equals("时常如此")){
+                i=2;
+            }
+            if(s.equals("总是如此")){
+                i=3;
+            }
+            return i;
+        }
+        /*public int getScore4(String s){
+            int i=0;
+            if(s.equals("一点也没有")){
+                i=0;
+            }
+            if(s.equals("极少有")){
+                i=1;
+            }
+            if(s.equals("有时候这样")){
+                i=2;
+            }
+            if(s.equals("经常这样")){
+                i=3;
+            }
+            return i;
+        }
+        public int getScore6(String s){
+            int i=0;
+            if(s.equals("大多时候不能应付")){
+                i=3;
+            }
+            if(s.equals("有时候不象平常那样应付的好")){
+                i=2;
+            }
+            if(s.equals("大多时候和平常一样应付的好")){
+                i=1;
+            }
+            if(s.equals("一直都应付得好")){
+                i=0;
+            }
+            return i;
+        }*/
+    }
+}

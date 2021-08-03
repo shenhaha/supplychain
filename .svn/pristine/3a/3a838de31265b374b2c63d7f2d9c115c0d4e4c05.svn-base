@@ -1,0 +1,61 @@
+package com.luer.businessmanager.service.impl;
+
+import com.luer.businessmanager.bean.Question;
+import com.luer.businessmanager.bean.QuestionExample;
+import com.luer.businessmanager.dao.QuestionMapper;
+import com.luer.businessmanager.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 小强 on 2018/8/14.
+ */
+@Service
+@Transactional
+public class QuestionServiceImpl implements QuestionService {
+
+    @Autowired
+    private QuestionMapper questionMapper;
+
+    @Override
+    public int insert(Question question) {
+        return questionMapper.insert(question);
+    }
+
+    @Override
+    public int deleteById(String id) {
+        return questionMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public boolean deleteListById(String id) {
+        return false;
+    }
+
+    @Override
+    public int updateById(String id, Question question) {
+        QuestionExample questionExample = new QuestionExample();
+        QuestionExample.Criteria criteria = questionExample.createCriteria();
+        criteria.andIdEqualTo(id);
+        return questionMapper.updateByExampleSelective(question,questionExample);
+    }
+
+    @Override
+    public List<Question> selectByQuestionsortId(String sort_id,String storeId) {
+        QuestionExample questionExample = new QuestionExample();
+        QuestionExample.Criteria criteria = questionExample.createCriteria();
+        criteria.andSortIdEqualTo(sort_id);
+        criteria.andStoreIdEqualTo(storeId);
+        return questionMapper.selectByExample(questionExample);
+    }
+
+    @Override
+    public List<Question> selectAllQuestion(String storeId) {
+        return questionMapper.selectAllQuestion(storeId);
+    }
+
+
+}

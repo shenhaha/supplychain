@@ -1,0 +1,72 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Pavilionassessment;
+import com.luer.servicecenter.bean.PavilionassessmentExample;
+import com.luer.servicecenter.service.PavilionAssessmentService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * @author EVEA
+ * 出馆身体评估
+ */
+@Controller
+@RequestMapping("/pavilionassessment")
+public class PavilionAssessmentController {
+    @Autowired
+    private PavilionAssessmentService pavilionAssessmentService;
+
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getPavilionByMotherId")
+    @ResponseBody
+    public List<Pavilionassessment> getPavilionByMotherId(@NonNull String motherid){
+        List<Pavilionassessment> pavilionassessments = pavilionAssessmentService.getPavilionByMotherId(motherid);
+        return pavilionassessments;
+    }
+
+    @RequestMapping("/addPavilionAssessment")
+    @ResponseBody
+    public ResultSet addPavilionAssessment(Pavilionassessment pavilionassessment){
+        pavilionAssessmentService.insert(pavilionassessment);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping(value = "/delPavilionAssessment",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultSet delPavilionAssessment(@NonNull String id){
+        pavilionAssessmentService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/updatePavilionAssessment")
+    @ResponseBody
+    public ResultSet updatePavilionAssessment(Pavilionassessment pavilionassessment){
+        pavilionAssessmentService.updateByPrimaryKey(pavilionassessment);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/queryOnePavilionAssessment")
+    @ResponseBody
+    public Pavilionassessment queryOnePavilionAssessment(@NonNull String id){
+        Pavilionassessment pavilionassessment = pavilionAssessmentService.selectByPrimaryKey(id);
+        return pavilionassessment;
+    }
+
+    @RequestMapping("/queryAllPavilionAssessment")
+    @ResponseBody
+    public List<Pavilionassessment> queryAllPavilionAssessment(Pavilionassessment pavilionassessment){
+        List<Pavilionassessment> pavilionassessments = pavilionAssessmentService.selectByExample(pavilionassessment);
+        return pavilionassessments;
+    }
+}

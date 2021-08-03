@@ -1,0 +1,145 @@
+package com.luer.stockandsales.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.Classify;
+import com.luer.stockandsales.bean.ClassifyTree;
+import com.luer.stockandsales.dao.ClassifyMapper;
+import com.luer.stockandsales.service.ClassifyService;
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@Transactional
+public class ClassifyServiceImpl implements ClassifyService {
+    @Autowired
+    private ClassifyMapper classifyMapper;
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+    @Autowired
+    StoreFileService storeFileService;
+
+
+    @Override
+    public List<ClassifyTree> getHeadGoodsClassifyTree() {
+        //获取总部id
+        String storeId = storeFileMapper.selectIdBySort();
+        //获取总部分类
+        List<Classify> classifyList = classifyMapper.selectByStoreId(storeId);
+
+        List<ClassifyTree> classifyTreeList = changeClassifyList(classifyList);
+        return classifyTreeList;
+    }
+
+    @Override
+    public List<ClassifyTree> getStoreGoodsClassifyTree() {
+        String storeId = storeFileMapper.selectIdBySort();
+        //获取总部分类
+        List<Classify> classifyList = classifyMapper.selectByStoreId(storeId);
+        String storeFileId = storeFileService.getStoreFileId();
+        //如果是门店
+        if (!storeFileId.equals(storeId)) {
+            List<Classify> classifyList2 = classifyMapper.selectByStoreId(storeFileId);
+            classifyList.addAll(classifyList2);
+        }
+        List<ClassifyTree> classifyTreeList = changeClassifyList(classifyList);
+        return classifyTreeList;
+    }
+
+    @Override
+    public List<ClassifyTree> getStockGoodsClassifyTree() {
+        return null;
+    }
+
+    //添加分类节点
+    @Override
+    public void saveClassify(Classify classify) {
+        classify.setId(UUIDUtils.getUUID());
+        classify.setStatus("1");
+        classify.setClassifyNum("12");
+        classify.setStoreId(storeFileService.getStoreFileId());
+        if (classify.getParentId() == "" || classify.getParentId().equals(null)) {
+            classify.setLevel(1);
+
+        } else {
+            Classify classify1 = classifyMapper.selectByPrimaryKey(classify.getParentId());
+            classify.setLevel(classify1.getLevel() + 1);
+
+        }
+
+        classifyMapper.insert(classify);
+    }
+
+
+    @Override
+    public void updateClassifyName(Classify classify) {
+
+        classifyMapper.updateByPrimaryKeySelective(classify);
+    }
+
+    @Override
+    public void deleteClassifyName(String classifyId) {
+        List<String> idList = new ArrayList<String>();
+        //添加当前id
+        idList.add(classifyId);
+        //根据当前分类id获取下级分类集合
+        List<String> classifyIdList3 = classifyMapper.selectByParentId(classifyId);
+        //如果下级分类集合不为空
+        if (classifyIdList3.size() > 0) {
+            //循环获取所有下级分类
+
+            //添加一级分类id
+            idList.addAll(classifyIdList3);
+            //查询结果
+            List<String> classifyIdList2 = new ArrayList<String>();
+
+            List<String> classifyIdList = new ArrayList<String>();
+            boolean flag = true;
+            do {
+                if (flag) {
+                    classifyIdList.addAll(classifyIdList3);
+                    flag = false;
+                }
+                //清空结果集
+                classifyIdList2.clear();
+                classifyIdList2 = classifyMapper.selectByParentIdList(classifyIdList);
+                //将结果集添加到删除参数中
+                idList.addAll(classifyIdList2);
+                //清空参数集合
+                classifyIdList.clear();
+                classifyIdList.addAll(classifyIdList2);
+
+
+            } while (classifyIdList2.size() > 0);
+        }
+        classifyMapper.deleteByPrimaryKeyList(idList);
+    }
+
+    @Override
+    public void updateClassify(Classify classify) {
+        classifyMapper.updateByPrimaryKey(classify);
+    }
+
+
+    public List<ClassifyTree> changeClassifyList(List<Classify> classifyList) {
+        List<ClassifyTree> classifyTreeList = new ArrayList<ClassifyTree>();
+        ClassifyTree classifyTree;
+        String str;
+        for (Classify classify : classifyList) {
+            classifyTree = new ClassifyTree();
+            classifyTree.setId(classify.getId());
+            classifyTree.setName(classify.getClassifyName());
+            classifyTree.setStoreId(classify.getStoreId());
+            if (!(classify.getParentId() == null || classify.getParentId().equals(""))) {
+                classifyTree.setPId(classify.getParentId());
+            }
+            classifyTreeList.add(classifyTree);
+        }
+        return classifyTreeList;
+    }
+}

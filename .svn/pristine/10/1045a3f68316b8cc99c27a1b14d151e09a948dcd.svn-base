@@ -1,0 +1,231 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>查看汇总订单</title>
+</head>
+<body>
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "${ctx}/deadline/selectDeadline",
+            type: "post",
+
+            success:
+                function (data) {
+
+
+                    $("#beginday").val(data[0].begintime);
+                    $("#endday").val(data[0].endtime);
+                }
+        });
+    })
+</script>
+<input style="display: none" type="hidden" id="storeId" value="${storeId}">
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <form>
+                    <div data-date-format="yyyy-mm-dd">
+                        订单开始时间：<input size="6" type="text" value="" name="beginday" id="beginday"
+                                      readonly="readonly">
+                        订单截止时间：<input size="6" type="text" value="" name="endday" id="endday"
+                                      readonly="readonly">
+
+                    </div>
+                </form>
+                <%--<div class="panel-heading">
+                    <div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li class="active">总订单管理</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>--%>
+                <div>
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <table id="orderList" class="table" data-paging="true" data-filtering="true"
+                                   data-sorting="true">
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script>
+    $(function () {
+        var orderTitle = [
+            {
+                "name": "id",
+                "title": "ID",
+                "breakpoints": "xs sm",
+                "visible": false
+            },
+            {"name": "storeId", "title": "门店id", "visible": false},
+            {"name": "storeName", "title": "门店名称", "visible": false},
+            {"name": "supplierId", "title": "所属供应商id", "visible": false},
+            {"name": "num", "title": "订单编号"},
+            {"name": "supplierName", "title": "所属供应商名称"},
+            {"name": "status", "title": "订单状态(0:预订 1:下单 2:入库)"/*,"visible": false*/},
+            {"name": "employerId", "title": "申请员工id", "visible": false},
+            {"name": "employerName", "title": "申请员工姓名", "visible": false},
+            {"name": "ordertime", "title": "下单时间", "style": {"width": 120, "maxWidth": 240}},
+            {"name": "tell", "title": "联系方式", "visible": false},
+            {"name": "sumprice", "title": "总价"},
+            {"name": "type", "title": "类型", "visible": false},
+            {"name": "applicationtime", "title": "申请时间", "style": {"width": 120, "maxWidth": 240}},
+            {"name": "remark", "title": "备注"},
+            {"name": "update", "title": "修改状态"},
+            {"name": "details", "title": "详情"}
+        ];
+        //启动模态框
+        var $modal = $('#app-editor-modal'),
+            $editor = $('#editor'),
+            $editorTitle = $('#editor-title')
+        //启动footable
+
+
+        function updateStatus(values) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title: "<span style=\"color: #ab8ce4\">修改状态</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'api-blacklist-form-add',
+                message: $('<div></div>').load('${ctx}/template/storesandsales/totalorderlist.jsp'),//加载弹出页面
+                size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                //数据回显
+                onshown: function (dialogRef) {
+                    $('#id').val(values.id),
+                        $('#status').val(values.status)
+
+
+                },
+                buttons: [{
+                    id: 'btn-form-submit',
+                    label: '提交',
+                    icon: 'fa fa-check-circle',
+                    cssClass: 'btn-primary',
+                    action: function () {
+
+                        var beforeStatus=values.status;
+
+                        var afterStatus=$('#status').val();
+
+                        if (beforeStatus==1&&afterStatus==0) {
+                            PNotify.prototype.options.styling = "bootstrap3";
+                            var delay = 1000 * 2;
+                            new PNotify({
+                                title: 'Oh No!',
+                                text: '下单之后只能入库！',
+                                delay: delay,
+                                hide: true,
+                                type: 'error'
+                            });
+                            return;
+                        }
+                        if (beforeStatus==0&&afterStatus==2) {
+                            PNotify.prototype.options.styling = "bootstrap3";
+                            var delay = 1000 * 2;
+                            new PNotify({
+                                title: 'Oh No!',
+                                text: '入库之前必须下单！',
+                                delay: delay,
+                                hide: true,
+                                type: 'error'
+                            });
+                            return;
+                        }
+                        if (beforeStatus==2) {
+                            PNotify.prototype.options.styling = "bootstrap3";
+                            var delay = 1000 * 2;
+                            new PNotify({
+                                title: 'Oh No!',
+                                text: '入库之后不能操作！',
+                                delay: delay,
+                                hide: true,
+                                type: 'error'
+                            });
+                            return;
+                        }
+                        var json = {
+                            'id': values.id,
+                            'num': values.num,
+                            'storeId': values.storeId,
+                            'supplierId': values.supplierId,
+                            'status': $('#status').val(),
+
+                            'ordertime': values.ordertime,
+                            'type': values.type,
+                            'remark': values.remark,
+                            'sumprice': values.sumprice,
+                            'applicationtime': values.applicationtime
+
+                        };
+                        $.post("${ctx}/goodsOrder/updateOrder", json).done(function (data) {
+                            getCode(data)
+                        }).fail(function (data) {
+                            getCode(data)
+                        });
+                    }
+                }, {
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        }
+
+
+//查询详情
+        function findDetails(id,status) {
+            if (status==0) {
+
+                //总部查询订单详情
+                window.location.href = "${ctx}/orderDetails/selectHeadDetailsByOrderId?orderId=" + id + "&detailstype=" + 0;
+            }else if (status==1||status==2){
+                window.location.href = "${ctx}/orderDetails/selectheadReadDetailsByOrderId?orderId=" + id + "&detailstype=" + 0;
+            }
+
+        }
+        window.findDetails = findDetails;
+        window.updateStatus = updateStatus;
+
+        var ft = FooTable.init('#orderList', {
+            "columns": orderTitle,
+            "rows": $.get("${ctx}/goodsOrder/selectOrderByHeadOfficeId", function (data) {
+                $(data).each(function () {
+                    this.update = "<button  class='btn btn-primary btn-sm'  onclick='updateStatus("+JSON.stringify(this)+")'>修改状态</button>";
+                    this.details = "<button class='btn btn-primary btn-sm'  onclick='findDetails("+'"'+this.id+'"'+","+this.status+")'>点击查看</button>";
+
+                })
+                //
+                /*return data;*/
+            }),
+
+        }
+        );
+        uid = 10;
+    });
+
+
+
+</script>
+</body>
+</html>
+

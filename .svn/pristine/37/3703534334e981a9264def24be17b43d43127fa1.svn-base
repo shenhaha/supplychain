@@ -1,0 +1,43 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.FamilyFunction;
+import com.luer.servicecenter.service.FamilyFunctionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/FamilyFunction")
+public class FamilyFunctionController {
+
+    @Autowired
+    FamilyFunctionService familyFunctionService;
+    @GetMapping("/getBymotherId")
+    public List<FamilyFunction> getBymotherid(String motherid){
+        List<FamilyFunction> familyFunctions = familyFunctionService.selectBymotherId(motherid);
+
+        return familyFunctions;
+    }
+    @PostMapping("/delete")
+    public ResultSet delete(String id){
+        familyFunctionService.delete(id);
+        return ResultSet.getSuccess();
+    }
+
+    @PostMapping("/insert")
+    public ResultSet insert(FamilyFunction familyFunction){
+        familyFunctionService.insert(familyFunction);
+        return ResultSet.getSuccess();
+    }
+
+    @PostMapping("/update")
+    public ResultSet update(FamilyFunction familyFunction){
+        familyFunctionService.update(familyFunction);
+        return ResultSet.getSuccess();
+    }
+}

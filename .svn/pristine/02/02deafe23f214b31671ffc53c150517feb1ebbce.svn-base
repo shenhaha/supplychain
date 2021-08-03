@@ -1,0 +1,170 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.businessmanager.dao.OrderCustomerMapper;
+import com.luer.comm.utils.CustomerException;
+import com.luer.comm.utils.CustomerNum;
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.bean.CustomerBasicExample;
+import com.luer.servicecenter.dao.CustomerBasicMapper;
+import com.luer.servicecenter.service.CustomerBasicService;
+import com.luer.servicecenter.service.NursingEducationService;
+import com.luer.storemanager.dao.PreviewMapper;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/13.
+ */
+@Service
+@Transactional
+public class CustomerBasicServiceImpl implements CustomerBasicService {
+    @Autowired
+    private CustomerBasicMapper cb;
+    @Autowired
+    private StoreFileService storeFileService;
+    @Autowired
+    private PreviewMapper previewMapper;
+    @Autowired
+    OrderCustomerMapper orderCustomerMapper;
+    @Autowired
+    private NursingEducationService nursingEducationService;
+/**无用
+* @author 张路明
+*/
+    public void addCustomerBasic(CustomerBasic customerBasic) throws CustomerException {
+        CustomerBasicExample customerBasicExample = new CustomerBasicExample();
+        CustomerBasicExample.Criteria criteria = customerBasicExample.createCriteria();
+        if (!StringUtils.isEmpty(customerBasic.getName())) {
+            criteria.andNameEqualTo(customerBasic.getName());
+        }
+        List<CustomerBasic> s = cb.selectByExample(customerBasicExample);
+        if (s.size() > 0) {
+            throw new CustomerException(customerBasic.getName());
+        }
+        customerBasic.setId(CustomerNum.getCustomerNum(customerBasic.getStoreId()));
+        customerBasic.setUpdateTime(new Date());
+        if (customerBasic.getType() == null || customerBasic.getType() == "") {
+            customerBasic.setType("0");
+        }
+        cb.insert(customerBasic);
+    }
+
+    public void deleteCustomerBasic(String id) {
+        cb.deleteByPrimaryKey(id);
+    }
+/**根据用户类型获取用户
+* @author 张路明
+*/
+    public List<CustomerBasic> getList(CustomerBasic customerBasic) {
+        CustomerBasicExample customerBasicExample = new CustomerBasicExample();
+        CustomerBasicExample.Criteria criteria = customerBasicExample.createCriteria();
+        if (customerBasic.getStoreId() != null) {
+            criteria.andStoreIdLike(customerBasic.getStoreId());
+        }
+        if (customerBasic.getType() != null) {
+            criteria.andTypeLike(customerBasic.getType());
+        }
+        if (customerBasic.getId() != null) {
+            criteria.andIdEqualTo(customerBasic.getId());
+        }
+        List<CustomerBasic> lists = cb.selectByExample(customerBasicExample);
+        return lists;
+    }
+
+/**更新用户
+* @author 张路明
+*/
+    public void updateCustomer(CustomerBasic customerBasic) {
+        String id = customerBasic.getId();
+        CustomerBasic customerBasic1 = cb.selectByPrimaryKey(id);
+        if ((customerBasic1.getType().equals("0")) && (customerBasic1.getCheckStatus().equals("0")) && (customerBasic.getCheckStatus().equals("1"))) {
+            nursingEducationService.initNursingEducation(id);
+        }
+        customerBasic.setUpdateTime(new Date());
+        if (!StringUtils.isEmpty(customerBasic.getCheckStatus()) && customerBasic.getCheckStatus().equals("1")) {
+            cb.updateByPrimaryKeySelective(customerBasic);
+        } else if (!StringUtils.isEmpty(customerBasic.getCheckStatus()) && customerBasic.getCheckStatus().equals("2")) {
+            cb.updateByPrimaryKeySelective(customerBasic);
+
+            previewMapper.updateStatus(customerBasic.getId());
+            orderCustomerMapper.updateStatusByMotherid(customerBasic.getId(), customerBasic.getCheckStatus());
+        } else {
+            cb.updateByPrimaryKeySelective(customerBasic);
+        }
+    }
+/**更新妈妈入住禁忌
+* @author 张路明
+*/
+    @Override
+    public void updateAvoid(String avoid, String motherid) {
+        cb.updateAvoid(avoid, motherid);
+    }
+/**查找妈妈
+* @author 张路明
+*/
+    @Override
+    public List<CustomerBasic> selectCustomerBasicByStoreId(String storeId, String type) {
+        return cb.selectCustomerBasicByStoreId(storeId, type);
+    }
+    /**
+     * 根据类型查找妈妈
+    * @author 张路明
+    */
+    @Override
+    public List<CustomerBasic> getOneCustomerBasics(String storeId, String type) {
+        return cb.getOneCustomerBasics(storeId, type);
+    }
+    /**
+     * 根据类型查找妈妈
+     * @author 张路明
+     */
+    @Override
+    public List<CustomerBasic> getTwoCustomerBasics(String storeId, String type, String checkStatus, String motherType) {
+        return cb.getTwoCustomerBasics(storeId, type, checkStatus, motherType);
+    }
+
+    public List<CustomerBasic> selectByStoreId() {
+        String storeId = storeFileService.getStoreFileId();
+
+        return cb.getMotherList(storeId);
+    }
+
+    @Override
+    public List<CustomerBasic> getBabyBasics(String motherId) {
+        return cb.getBabyBasics(motherId);
+    }
+
+    @Override
+    public List<CustomerBasic> getTwoTypeCustomerBasics(String storeId) {
+        return cb.getMothers(storeId);
+    }
+
+    @Override
+    public List<CustomerBasic> selectCustomerBasic(String storeId) {
+        return cb.getCustomerBasic(storeId);
+    }
+
+    /**新增宝宝
+     *
+    * @author 张路明
+    */
+    public void addBabyBasic(CustomerBasic customerBasic) throws CustomerException {
+        List<CustomerBasic> list=cb.getBabyBasics(customerBasic.getMotherId());
+
+            customerBasic.setId(CustomerNum.getBabyNum(customerBasic.getMotherId(),list.size()));
+            customerBasic.setUpdateTime(new Date());
+            if (customerBasic.getType() == null || customerBasic.getType() == "") {
+                customerBasic.setType("0");
+            }
+            cb.insert(customerBasic);
+
+
+    }
+}

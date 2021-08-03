@@ -1,0 +1,66 @@
+package com.luer.businessmanager.controller;
+
+import com.luer.businessmanager.bean.QuestionSort;
+import com.luer.businessmanager.service.Question_sortService;
+import com.luer.comm.utils.ResultSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Created by  2018/8/13.
+ * 顾客管理
+ * *常见问题分类
+ */
+@RequestMapping("/businessmanager")
+@Controller
+public class Question_sortController {
+
+    @Autowired
+    private Question_sortService question_sortService;
+
+    //添加信息
+    @ResponseBody
+    @RequestMapping(value="/addQuestionsort")
+    public ResultSet addQuestionsort(){
+        QuestionSort questionSort = new QuestionSort();
+        questionSort.setId(UUID.randomUUID().toString());
+        questionSort.setClassification("2222");
+
+        question_sortService.insert(questionSort);
+        return ResultSet.getSuccess();
+    }
+
+    //单个信息删除
+    @ResponseBody
+    @RequestMapping(value="/deleteQuestionsort")
+    public ResultSet deleteQuestionsort(){
+        String id="11";
+        question_sortService.deleteById(id);
+        return ResultSet.getSuccess();}
+
+    //修改信息
+    @ResponseBody
+    @RequestMapping(value="/updateQuestionsort")
+    public ResultSet updateQuestionsort(){
+        QuestionSort questionSort = new QuestionSort();
+        questionSort.setClassification("xxxx");
+        String id="333";
+        question_sortService.updateById(id,questionSort);
+        return ResultSet.getSuccess();
+    }
+
+
+    //查询所有的分类
+    @ResponseBody
+    @RequestMapping(value="/selectQuestionSortList")
+    public List<QuestionSort> selectQuestionSortList(){
+        List<QuestionSort> questionSorts = question_sortService.selectAllList();
+        return questionSorts;
+    }
+
+}

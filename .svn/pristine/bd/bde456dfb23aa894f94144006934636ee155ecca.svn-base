@@ -1,0 +1,19 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.Supplier;
+
+import java.util.List;
+
+public interface SupplierService {
+    void saveSupplier(Supplier supplier);
+
+    void deleteSupplierById(String supplierId);
+
+    void updateSupplier(Supplier supplier);
+
+    List<Supplier> selectSupplier();
+    //查询商品对应供应商信息
+    List<Supplier> selectSupplierByGoodsName(String goodsName);
+
+    List<Supplier> selectHeadSupplier();
+}

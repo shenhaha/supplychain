@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.stockandsales.dao.GoodsOrderMapper">
+    <resultMap id="BaseResultMap" type="com.luer.stockandsales.bean.GoodsOrder">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="employer_id" property="employerId" jdbcType="VARCHAR"/>
+        <result column="supplier_id" property="supplierId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="ordertime" property="ordertime" jdbcType="TIMESTAMP"/>
+        <result column="applicationtime" property="applicationtime" jdbcType="TIMESTAMP"/>
+        <result column="tell" property="tell" jdbcType="VARCHAR"/>
+        <result column="sumprice" property="sumprice" jdbcType="DOUBLE"/>
+        <result column="profits" property="profits" jdbcType="DOUBLE"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="num" property="num" jdbcType="VARCHAR" />
+        <result column="storeName" property="storeName" jdbcType="VARCHAR"/>
+        <result column="supplierName" property="supplierName" jdbcType="VARCHAR"/>
+        <result column="employerName" property="employerName" jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+
+        <sql id="Example_Where_Clause" >
+            <where >
+                <foreach collection="oredCriteria" item="criteria" separator="or" >
+                    <if test="criteria.valid" >
+                        <trim prefix="(" suffix=")" prefixOverrides="and" >
+                            <foreach collection="criteria.criteria" item="criterion" >
+                                <choose >
+                                    <when test="criterion.noValue" >
+                                        and ${criterion.condition}
+                                    </when>
+                                    <when test="criterion.singleValue" >
+                                        and ${criterion.condition} #{criterion.value}
+                                    </when>
+                                    <when test="criterion.betweenValue" >
+                                        and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                    </when>
+                                    <when test="criterion.listValue" >
+                                        and ${criterion.condition}
+                                        <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                            #{listItem}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </if>
+                </foreach>
+            </where>
+        </sql>
+        <sql id="Update_By_Example_Where_Clause" >
+            <where >
+                <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                    <if test="criteria.valid" >
+                        <trim prefix="(" suffix=")" prefixOverrides="and" >
+                            <foreach collection="criteria.criteria" item="criterion" >
+                                <choose >
+                                    <when test="criterion.noValue" >
+                                        and ${criterion.condition}
+                                    </when>
+                                    <when test="criterion.singleValue" >
+                                        and ${criterion.condition} #{criterion.value}
+                                    </when>
+                                    <when test="criterion.betweenValue" >
+                                        and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                    </when>
+                                    <when test="criterion.listValue" >
+                                        and ${criterion.condition}
+                                        <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                            #{listItem}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </if>
+                </foreach>
+            </where>
+        </sql>
+        <sql id="Base_Column_List" >
+            id, store_id, employer_id, supplier_id, status, ordertime, applicationtime, tell,
+            sumprice, remark, type, num
+        </sql>
+        <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.stockandsales.bean.GoodsOrderExample" >
+            select
+            <if test="distinct" >
+                distinct
+            </if>
+            <include refid="Base_Column_List" />
+            from goods_order
+            <if test="_parameter != null" >
+                <include refid="Example_Where_Clause" />
+            </if>
+            <if test="orderByClause != null" >
+                order by ${orderByClause}
+            </if>
+        </select>
+        <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+            select
+            <include refid="Base_Column_List" />
+            from goods_order
+            where id = #{id,jdbcType=VARCHAR}
+        </select>
+        <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+            delete from goods_order
+            where id = #{id,jdbcType=VARCHAR}
+        </delete>
+        <delete id="deleteByExample" parameterType="com.luer.stockandsales.bean.GoodsOrderExample" >
+            delete from goods_order
+            <if test="_parameter != null" >
+                <include refid="Example_Where_Clause" />
+            </if>
+        </delete>
+        <insert id="insert" parameterType="com.luer.stockandsales.bean.GoodsOrder" >
+            insert into goods_order (id, store_id, employer_id,
+            supplier_id, status, ordertime,
+            applicationtime, tell, sumprice,
+            remark, type, num)
+            values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{employerId,jdbcType=VARCHAR},
+            #{supplierId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{ordertime,jdbcType=TIMESTAMP},
+            #{applicationtime,jdbcType=TIMESTAMP}, #{tell,jdbcType=VARCHAR}, #{sumprice,jdbcType=DOUBLE},
+            #{remark,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{num,jdbcType=VARCHAR})
+        </insert>
+        <insert id="insertSelective" parameterType="com.luer.stockandsales.bean.GoodsOrder" >
+            insert into goods_order
+            <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >
+                    id,
+                </if>
+                <if test="storeId != null" >
+                    store_id,
+                </if>
+                <if test="employerId != null" >
+                    employer_id,
+                </if>
+                <if test="supplierId != null" >
+                    supplier_id,
+                </if>
+                <if test="status != null" >
+                    status,
+                </if>
+                <if test="ordertime != null" >
+                    ordertime,
+                </if>
+                <if test="applicationtime != null" >
+                    applicationtime,
+                </if>
+                <if test="tell != null" >
+                    tell,
+                </if>
+                <if test="sumprice != null" >
+                    sumprice,
+                </if>
+                <if test="remark != null" >
+                    remark,
+                </if>
+                <if test="type != null" >
+                    type,
+                </if>
+                <if test="num != null" >
+                    num,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >
+                    #{id,jdbcType=VARCHAR},
+                </if>
+                <if test="storeId != null" >
+                    #{storeId,jdbcType=VARCHAR},
+                </if>
+                <if test="employerId != null" >
+                    #{employerId,jdbcType=VARCHAR},
+                </if>
+                <if test="supplierId != null" >
+                    #{supplierId,jdbcType=VARCHAR},
+                </if>
+                <if test="status != null" >
+                    #{status,jdbcType=INTEGER},
+                </if>
+                <if test="ordertime != null" >
+                    #{ordertime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="applicationtime != null" >
+                    #{applicationtime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="tell != null" >
+                    #{tell,jdbcType=VARCHAR},
+                </if>
+                <if test="sumprice != null" >
+                    #{sumprice,jdbcType=DOUBLE},
+                </if>
+                <if test="remark != null" >
+                    #{remark,jdbcType=VARCHAR},
+                </if>
+                <if test="type != null" >
+                    #{type,jdbcType=INTEGER},
+                </if>
+                <if test="num != null" >
+                    #{num,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </insert>
+        <select id="countByExample" parameterType="com.luer.stockandsales.bean.GoodsOrderExample" resultType="java.lang.Integer" >
+            select count(*) from goods_order
+            <if test="_parameter != null" >
+                <include refid="Example_Where_Clause" />
+            </if>
+        </select>
+        <update id="updateByExampleSelective" parameterType="map" >
+            update goods_order
+            <set >
+                <if test="record.id != null" >
+                    id = #{record.id,jdbcType=VARCHAR},
+                </if>
+                <if test="record.storeId != null" >
+                    store_id = #{record.storeId,jdbcType=VARCHAR},
+                </if>
+                <if test="record.employerId != null" >
+                    employer_id = #{record.employerId,jdbcType=VARCHAR},
+                </if>
+                <if test="record.supplierId != null" >
+                    supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+                </if>
+                <if test="record.status != null" >
+                    status = #{record.status,jdbcType=INTEGER},
+                </if>
+                <if test="record.ordertime != null" >
+                    ordertime = #{record.ordertime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="record.applicationtime != null" >
+                    applicationtime = #{record.applicationtime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="record.tell != null" >
+                    tell = #{record.tell,jdbcType=VARCHAR},
+                </if>
+                <if test="record.sumprice != null" >
+                    sumprice = #{record.sumprice,jdbcType=DOUBLE},
+                </if>
+                <if test="record.remark != null" >
+                    remark = #{record.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="record.type != null" >
+                    type = #{record.type,jdbcType=INTEGER},
+                </if>
+                <if test="record.num != null" >
+                    num = #{record.num,jdbcType=VARCHAR},
+                </if>
+            </set>
+            <if test="_parameter != null" >
+                <include refid="Update_By_Example_Where_Clause" />
+            </if>
+        </update>
+        <update id="updateByExample" parameterType="map" >
+            update goods_order
+            set id = #{record.id,jdbcType=VARCHAR},
+            store_id = #{record.storeId,jdbcType=VARCHAR},
+            employer_id = #{record.employerId,jdbcType=VARCHAR},
+            supplier_id = #{record.supplierId,jdbcType=VARCHAR},
+            status = #{record.status,jdbcType=INTEGER},
+            ordertime = #{record.ordertime,jdbcType=TIMESTAMP},
+            applicationtime = #{record.applicationtime,jdbcType=TIMESTAMP},
+            tell = #{record.tell,jdbcType=VARCHAR},
+            sumprice = #{record.sumprice,jdbcType=DOUBLE},
+            remark = #{record.remark,jdbcType=VARCHAR},
+            type = #{record.type,jdbcType=INTEGER},
+            num = #{record.num,jdbcType=VARCHAR}
+            <if test="_parameter != null" >
+                <include refid="Update_By_Example_Where_Clause" />
+            </if>
+        </update>
+        <update id="updateByPrimaryKeySelective" parameterType="com.luer.stockandsales.bean.GoodsOrder" >
+            update goods_order
+            <set >
+                <if test="storeId != null" >
+                    store_id = #{storeId,jdbcType=VARCHAR},
+                </if>
+                <if test="employerId != null" >
+                    employer_id = #{employerId,jdbcType=VARCHAR},
+                </if>
+                <if test="supplierId != null" >
+                    supplier_id = #{supplierId,jdbcType=VARCHAR},
+                </if>
+                <if test="status != null" >
+                    status = #{status,jdbcType=INTEGER},
+                </if>
+                <if test="ordertime != null" >
+                    ordertime = #{ordertime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="applicationtime != null" >
+                    applicationtime = #{applicationtime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="tell != null" >
+                    tell = #{tell,jdbcType=VARCHAR},
+                </if>
+                <if test="sumprice != null" >
+                    sumprice = #{sumprice,jdbcType=DOUBLE},
+                </if>
+                <if test="remark != null" >
+                    remark = #{remark,jdbcType=VARCHAR},
+                </if>
+                <if test="type != null" >
+                    type = #{type,jdbcType=INTEGER},
+                </if>
+                <if test="num != null" >
+                    num = #{num,jdbcType=VARCHAR},
+                </if>
+            </set>
+            where id = #{id,jdbcType=VARCHAR}
+        </update>
+        <update id="updateByPrimaryKey" parameterType="com.luer.stockandsales.bean.GoodsOrder" >
+            update goods_order
+            set store_id = #{storeId,jdbcType=VARCHAR},
+            employer_id = #{employerId,jdbcType=VARCHAR},
+            supplier_id = #{supplierId,jdbcType=VARCHAR},
+            status = #{status,jdbcType=INTEGER},
+            ordertime = #{ordertime,jdbcType=TIMESTAMP},
+            applicationtime = #{applicationtime,jdbcType=TIMESTAMP},
+            tell = #{tell,jdbcType=VARCHAR},
+            sumprice = #{sumprice,jdbcType=DOUBLE},
+            remark = #{remark,jdbcType=VARCHAR},
+            type = #{type,jdbcType=INTEGER},
+            num = #{num,jdbcType=VARCHAR}
+            where id = #{id,jdbcType=VARCHAR}
+        </update>
+
+
+
+    <!--获取门店订单显示信息-->
+    <select id="selectOrderByStoreId" resultMap="BaseResultMap">
+        select * from goods_order WHERE store_id=#{storeId} and DATE_FORMAT(ordertime,'%Y%m') = DATE_FORMAT(CURDATE( ),'%Y%m' ) order by ordertime desc
+    </select>
+
+    <select id="selectOrderByHeadId" resultMap="BaseResultMap">
+
+      SELECT
+      o.num,
+      o.id as id,
+      o.store_id as storeId,
+      o.status as status,
+      o.ordertime as ordertime,
+      o.applicationtime as applicationtime,
+      sf.name as storeName,
+      o.sumprice as sumprice,
+      o.employer_id as employerId,
+      e.name as employerName,
+      o.supplier_id as supplierId,
+      supplier.supplier_name as supplierName,
+      o.tell as tell,
+      o.type as type,
+      o.remark as remark
+      from store_file sf ,supplier,goods_order o
+      left join  employer e on o.employer_id=e.id
+      WHERE o.store_id=#{storeId}
+      and o.store_id=sf.id
+      and o.type=0
+      and o.supplier_id=supplier.id
+    </select>
+    <!--查询门店从总部采购的订单信息-->
+    <select id="selectHeadByType" resultMap="BaseResultMap">
+      SELECT
+      o.num,
+      o.id as id,
+      o.store_id as storeId,
+      o.status as status,
+      o.ordertime as ordertime,
+      o.applicationtime as applicationtime,
+      sf.name as storeName,
+      o.supplier_id,
+      o.sumprice as sumprice,
+      o.tell as tell,
+      o.remark as remark,
+      o.type as type,
+      o.employer_id as employerId,
+      e.name as employerName
+      from goods_order o
+      left join store_file sf on o.store_id=sf.id
+      left join employer e on o.employer_id=e.id
+      WHERE o.store_id=#{storeId}
+      and o.type=#{type}
+      order by ordertime desc
+    </select>
+    <select id="selectStoreByType" resultMap="BaseResultMap">
+        SELECT
+        o.num,
+        o.id as id,
+        o.store_id as storeId,
+        o.status as status,
+        o.ordertime as ordertime,
+        o.applicationtime as applicationtime,
+        sf.name as storeName,
+        o.supplier_id,
+        o.sumprice as sumprice,
+        o.tell as tell,
+        o.type as type,
+        o.remark as remark,
+        o.employer_id as employerId,
+        supplier.supplier_name as supplierName,
+        e.name as employerName
+        from goods_order o
+      left join store_file sf on o.store_id=sf.id
+      left join employer e on o.employer_id=e.id
+      left join supplier on o.supplier_id=supplier.id
+        WHERE o.store_id=#{storeId}
+        and o.type=#{type}
+
+        and supplier.id=o.supplier_id
+        order by ordertime desc
+    </select>
+    <!--查询门店的总采/自采订单id-->
+    <select id="selectIdsByType" resultType="java.lang.String">
+        select id from goods_order WHERE store_id=#{storeId} and type  = #{type}  and DATE_FORMAT(ordertime,'%Y%m') = DATE_FORMAT(CURDATE( ),'%Y%m' )
+    </select>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from goods_order
+    </select>
+    <!--查询本月所有门店向总部的订单-->
+    <select id="selectOrdersbyType" resultMap="BaseResultMap">
+        SELECT
+        o.num,
+        o.id as id,
+        o.store_id as storeId,
+        o.status as status,
+        o.ordertime as ordertime,
+        o.applicationtime as applicationtime,
+        sf.name as storeName,
+        e.name as   employerName,
+        o.sumprice as sumprice,
+        o.tell as tell,
+        o.remark as remark
+        from goods_order o,store_file sf,employer e
+        where o.type=#{type} and o.status=1
+        and e.id=o.employer_id and o.store_id=sf.id
+        and DATE_FORMAT(o.ordertime,'%Y%m')  = DATE_FORMAT(CURDATE( ),'%Y%m' )
+    </select>
+    <select id="selectOrderIdsByType" resultType="java.lang.String">
+        select id from goods_order where type=#{type} and status=1 and ordertime between #{beginTime} and #{endTime}
+    </select>
+
+    <select id="selectHeadOrder" resultMap="BaseResultMap">
+        SELECT
+        o.num,
+        o.id as id,
+        o.store_id as storeId,
+        o.status as status,
+        o.ordertime as ordertime,
+        o.applicationtime as applicationtime,
+        sf.name as storeName,
+        o.sumprice as sumprice,
+        supplier.supplier_name as supplierName,
+        o.tell as tell,
+        o.remark as remark
+        from goods_order o,store_file sf,supplier
+        WHERE o.store_id=#{storeId} and o.supplier_id=#{supplierId} and o.store_id=sf.id
+        and o.supplier_id=supplier.id
+        and DATE_FORMAT(ordertime,'%Y%m') = DATE_FORMAT(CURDATE( ),'%Y%m' )
+    </select>
+
+    <select id="selectOrderByStoreIds" resultMap="BaseResultMap">
+        select
+        o.num,
+        o.id as id,
+        sm.profits as profits,
+        o.store_id as storeId,
+        o.status as status,
+        o.ordertime as ordertime,
+        o.applicationtime as applicationtime,
+        sf.name as storeName,
+        o.sumprice as sumprice,
+        o.employer_id asemployerId,
+        o.supplier_id as supplierId,
+        employer.name as employerName,
+        o.tell as tell,
+        o.remark as remark
+        from goods_order o
+        left join store_file sf on o.store_id=sf.id
+        left join employer on o.employer_id=employer.id
+        left join (
+        select COALESCE(sum((goods.price_two-goods.price_one)*od.goods_num),0) as profits ,od.order_id
+        from order_details od LEFT JOIN goods on od.goods_id=goods.id
+        group by od.order_id
+        ) sm on o.id=sm.order_id
+
+        where o.type=#{type} and status!=0 and
+        o.store_id in
+        <foreach collection="storeIdList" item="storeId" open="(" close=")" separator="," index="index">
+            #{storeId}
+        </foreach>
+
+
+    </select>
+
+    <select id="selectHeadByDeadline" resultMap="BaseResultMap">
+        SELECT
+        o.num,
+        o.id as id,
+        o.store_id as storeId,
+        o.status as status,
+        o.ordertime as ordertime,
+        o.applicationtime as applicationtime,
+        sf.name as storeName,
+        o.supplier_id,
+        o.sumprice as sumprice,
+        o.tell as tell,
+        o.remark as remark,
+        o.type as type,
+        o.employer_id as employerId,
+        e.name as employerName
+        from goods_order o
+        left join store_file sf on o.store_id=sf.id
+        left join employer e on o.employer_id=e.id
+        WHERE o.store_id=#{storeId}
+        and o.type=#{type} and  o.ordertime between #{beginTime} and #{endTime}
+        order by o.ordertime desc
+    </select>
+    <select id="selectStoreOrdersbyDeadline" resultMap="BaseResultMap">
+        SELECT
+        o.num,
+        o.id as id,
+        o.store_id as storeId,
+        o.status as status,
+        o.ordertime as ordertime,
+        o.applicationtime as applicationtime,
+        sf.name as storeName,
+        e.name as   employerName,
+        o.sumprice as sumprice,
+        o.tell as tell,
+        o.remark as remark
+        from goods_order o,store_file sf,employer e
+        where o.type=#{type} and o.status!=0
+        and e.id=o.employer_id and o.store_id=sf.id
+        and o.ordertime between #{beginTime} and #{endTime}
+        order by o.ordertime desc
+    </select>
+    <select id="selectOrderByHeadIdAndDeadline" resultMap="BaseResultMap">
+     SELECT
+      o.num,
+      o.id as id,
+      o.store_id as storeId,
+      o.status as status,
+      o.ordertime as ordertime,
+      o.applicationtime as applicationtime,
+      sf.name as storeName,
+      o.sumprice as sumprice,
+      o.employer_id as employerId,
+      e.name as employerName,
+      o.supplier_id as supplierId,
+      supplier.supplier_name as supplierName,
+      o.tell as tell,
+      o.type as type,
+      o.remark as remark
+      from store_file sf ,supplier,goods_order o
+      left join  employer e on o.employer_id=e.id
+      WHERE o.store_id=#{storeId}
+      and o.store_id=sf.id
+      and o.type=0
+      and o.supplier_id=supplier.id
+      and o.ordertime between #{beginTime} and #{endTime}
+      order by o.ordertime desc
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Growthrecord;
+import com.luer.servicecenter.bean.GrowthrecordExample;
+import lombok.NonNull;
+
+import java.util.List;
+
+public interface GrowthService {
+    int insert(Growthrecord record);
+    int deleteByPrimaryKey(String id);
+    int updateByPrimaryKey(Growthrecord record);
+    List<Growthrecord> selectByExample(Growthrecord growthrecord);
+    Growthrecord selectByPrimaryKey(String id);
+
+    List<Growthrecord> getGrowthByMatherId(String motherid);
+    List<Growthrecord> getGrowthByMatherIdanddata(String motherid,  String  babaname,  String  recorddate);
+}

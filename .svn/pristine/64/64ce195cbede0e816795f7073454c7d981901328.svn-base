@@ -1,0 +1,61 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>月子餐每日统计</title>
+</head>
+<body>
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                    <%--<div class="panel-heading">
+                        <div class="pull-left">
+                            <h6 class="panel-title txt-dark">月子餐每日统计</h6>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>--%>
+                    <div>
+                        <div class="panel-body" >
+                            <div class="table-wrap">
+                                <table id="footable_appointment" class="table" data-paging="true" data-filtering="true" data-sorting="true">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+      <!-- /Row -->
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var appointmentTitle = [
+            {"name":"breakfast","title":"早餐"},
+            {"name":"lunch","title":"午餐"},
+            {"name":"dinner","title":"晚餐"},
+            {"name":"snack","title":"午点"},
+            {"name":"midnight_snack","title":"夜宵"},
+            {"name":"reveille","title":"早点"},
+            {"name":"familymealcount","title":"家属餐"},
+            {"name":"mealdate","title":"时间"},
+        ];
+        //启动footable 查询点餐详细信息
+        var $modal = $('#app-editor-modal'),
+            $editor = $('#editor'),
+            $editorTitle = $('#editor-title')
+        var ft = FooTable.init('#footable_appointment',{
+            "columns": appointmentTitle,
+            "rows": $.get("${ctx}/mealmanager/getmealAccount?storeId=<%=session.getAttribute("storeId")%>"),
+        });
+    });
+</script>
+</body>
+
+</html>

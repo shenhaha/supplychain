@@ -1,0 +1,12 @@
+package com.luer.storemanager.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class MotherCheckIn {
+    private String name;
+    private String motherid;
+    private String roomnumber;
+}

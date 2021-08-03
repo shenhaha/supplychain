@@ -1,0 +1,167 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx}/static/template/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="${ctx}/static/template/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<!--获用户登录时取存入session域对象中店铺id-->
+<input style="display:none" type="hidden" id="storeId" value="${storeId}">
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id" placeholder="id" >
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5 ">
+                <label for="name" class="col-sm-3 control-label">员工姓名:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="员工姓名" maxlength="30">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="sex" class="col-sm-3 control-label">性别:</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="sex"name="sex" placeholder="性别">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="position" class="col-sm-3 control-label">职位:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="position"
+                           name="position" maxlength="30">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="positionNum" class="col-sm-3 control-label">岗位编号:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="positionNum" maxlength="30"
+                           name="positionNum">
+                </div>
+            </div>
+            <div class="form-group col-md-5 ">
+                <label for="department" class="col-sm-3 control-label">所在部门:</label>
+                <div class="col-sm-6">
+                    <select type="text" class="form-control" id="department" name="department"
+                            placeholder="department" maxlength="30">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5 ">
+                <label for="type" class="col-sm-3 control-label">员工类型:</label>
+                <div class="col-sm-6">
+                    <select type="text" class="form-control" id="type" name="type" maxlength="30">
+                        <option value="普通员工">普通员工</option>
+                        <option value="派遣人员">派遣员工</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="institution" class="col-sm-3 control-label">所属机构:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="institution" maxlength="30"
+                           name="institution">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="tell" class="col-sm-3 control-label">电话:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="tell"
+                           name="tell" required>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="email" class="col-sm-3 control-label">邮箱:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control"  name="email" id="email">
+                </div>
+            </div>
+            <%--<div class="form-group col-md-5">
+                <label for="permission" class="col-sm-3 control-label">权限:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="permission" maxlength="30"
+                           name="permission">
+                </div>
+            </div>--%>
+            <div class="form-group col-md-5">
+                <label for="cardId" class="col-sm-3 control-label">身份证:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="cardId"
+                           name="cardId">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="workId" class="col-sm-3 control-label">工作证:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="workId" maxlength="30"
+                           name="workId">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="banknum" class="col-sm-3 control-label">工资卡号:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="banknum" maxlength="50"
+                           name="banknum">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="criticalPerson" class="col-sm-3 control-label">紧急联络人:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="criticalPerson" maxlength="30"
+                           name="criticalPerson">
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="criticalTell" class="col-sm-3 control-label">联络人电话:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="criticalTell"
+                           name="criticalTell">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+
+    //获取storeId的值
+    var storeValue = $("#storeId").val();
+    $(function () {
+        //动态查询部门信息
+        $.ajax({
+            url:"${ctx}/accessDepartment/getDepartments?storeId="+storeValue,
+            type:"post",
+            success:function(data){
+                for(var i=0;i<data.length;i++){
+                    $("#department").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

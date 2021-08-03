@@ -1,0 +1,18 @@
+package com.luer.storemanager.bean;
+
+import com.luer.storesdata.bean.Room;
+import com.luer.storesdata.bean.RoomResources;
+import lombok.Data;
+
+import java.util.List;
+
+/**
+ * @author：EVEA
+ * @date：2018/9/3 16:38
+ * 房间预览页面左部（按房型分类）
+ **/
+@Data
+public class PreviewRoomResource {
+    private String title;
+    private List<RoomResources> children;
+}

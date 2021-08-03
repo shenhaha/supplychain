@@ -1,0 +1,171 @@
+package com.luer.stockandsales.bean;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+@Data
+public class GoodsOrder {
+    private String id;
+
+    private String storeId;
+
+
+    private String employerId;
+
+    private String supplierId;
+
+    private Integer status;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date ordertime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date applicationtime;
+
+    private String tell;
+
+    private Double sumprice;
+    //利润
+    private Double profits;
+
+    private String remark;
+
+    private String storeName;
+
+    private String employerName;
+
+    private String supplierName;
+
+    private Integer type;//类型：0总采/1自采
+
+    private String num;//编号
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getEmployerName() {
+        return employerName;
+    }
+
+    public void setEmployerName(String employerName) {
+        this.employerName = employerName;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(String employerId) {
+        this.employerId = employerId == null ? null : employerId.trim();
+    }
+
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId == null ? null : supplierId.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getOrdertime() {
+        return ordertime;
+    }
+
+    public void setOrdertime(Date ordertime) {
+        this.ordertime = ordertime;
+    }
+
+    public Date getApplicationtime() {
+        return applicationtime;
+    }
+
+    public void setApplicationtime(Date applicationtime) {
+        this.applicationtime = applicationtime;
+    }
+
+    public String getTell() {
+        return tell;
+    }
+
+    public void setTell(String tell) {
+        this.tell = tell == null ? null : tell.trim();
+    }
+
+    public Double getSumprice() {
+        return sumprice;
+    }
+
+    public void setSumprice(Double sumprice) {
+        this.sumprice = sumprice;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Double getProfits() {
+        return profits;
+    }
+
+    public void setProfits(Double profits) {
+        this.profits = profits;
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
+}

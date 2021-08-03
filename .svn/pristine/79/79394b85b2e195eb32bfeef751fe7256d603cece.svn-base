@@ -1,0 +1,140 @@
+package com.luer.stockandsales.controller;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.luer.comm.utils.ResultSet;
+import com.luer.stockandsales.bean.GoodsOrder;
+import com.luer.stockandsales.bean.HeadSumOrder;
+import com.luer.stockandsales.service.GoodsOrderService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/goodsOrder")
+public class GoodsOrderController {
+    //订单
+    @Autowired
+    private GoodsOrderService orderService;
+
+    //新增总采信息
+    @ResponseBody
+    @RequestMapping(value = "/saveHeadOrder")
+    public ResultSet saveHeadOrder(@NonNull GoodsOrder order) {
+        order.setType(0);
+        orderService.saveOrder(order);
+        return ResultSet.getSuccess();
+    }
+
+    //新增自采订单
+    @ResponseBody
+    @RequestMapping(value = "/saveOtherOrder")
+    public ResultSet saveOtherOrder(@NonNull GoodsOrder order) {
+        order.setType(1);
+
+        orderService.saveOrder(order);
+        return ResultSet.getSuccess();
+    }
+
+    //门店通过总部商品创建订单
+    @ResponseBody
+    @RequestMapping(value = "/createGoodsOrder")
+    public ResultSet createGoodsOrder(@RequestBody String headSumNum) {
+
+        orderService.createOrder(headSumNum, 0);
+        return ResultSet.getSuccess();
+    }
+
+    //门店通过供应商提供的商品创建订单
+    @ResponseBody
+    @RequestMapping(value = "/createStoreGoodsOrder")
+    public ResultSet createStoreGoodsOrder(@RequestBody String headSumNum) {
+
+        orderService.createOrder(headSumNum, 1);
+        return ResultSet.getSuccess();
+    }
+
+    //删除订单信息
+    @ResponseBody
+    @RequestMapping(value = "/deleteOrderById")
+    public ResultSet deleteGoodsById(@NonNull String id) {
+        orderService.deleteOrderById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改订单信息
+    @ResponseBody
+    @RequestMapping(value = "/updateOrder")
+    public ResultSet updateorder(@NonNull GoodsOrder order) {
+
+        orderService.updateOrder(order);
+        return ResultSet.getSuccess();
+    }
+
+
+    //根据门店查询订单信息
+    @ResponseBody
+    @RequestMapping(value = "/selectOrderByStoreId")
+    public List<GoodsOrder> selectOrderByStoreId() {
+        List<GoodsOrder> orderList = orderService.selectOrderByStoreId();
+
+        return orderList;
+    }
+
+    //门店查询门店从总部采购的订单信息
+    @ResponseBody
+    @RequestMapping(value = "/selectBySupplierId")
+    public List<GoodsOrder> selectBySupplierId() {
+        List<GoodsOrder> orderList = orderService.selectByType(0);
+
+        return orderList;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/selectByStoreId")
+    public List<GoodsOrder> selectByStoreId(@NonNull String storeId) {
+        List<GoodsOrder> orderList = orderService.selectByStoreAndType(storeId, 0);
+
+        return orderList;
+    }
+
+    //查询门店自采订单信息
+    @ResponseBody
+    @RequestMapping(value = "/selectByMyself")
+    public List<GoodsOrder> selectByMyself() {
+        List<GoodsOrder> orderList = orderService.selectByType(1);
+
+        return orderList;
+    }
+
+    //总部查询各门店的订单信息
+    @ResponseBody
+    @RequestMapping(value = "/selectAllStoreOrder")
+    public List<GoodsOrder> selectAllStoreOrder() {
+
+        List<GoodsOrder> orderList = orderService.selectAllStoreOrder();
+        return orderList;
+    }
+
+    //分公司查询旗下门店的订单信息
+    @ResponseBody
+    @RequestMapping(value = "/selectByBranchOfficeId")
+    public List<GoodsOrder> selectByBranchOfficeId() {
+        List<GoodsOrder> orderList = orderService.selectByBranchOfficeId();
+        return orderList;
+    }
+
+    //总部查询门店订单的汇总信息
+    @ResponseBody
+    @RequestMapping("/selectOrderByHeadOfficeId")
+    public List<GoodsOrder> selectOrderByHeadOfficeId() {
+        List<GoodsOrder> orderList = orderService.selectOrderByHeadOfficeId();
+        return orderList;
+    }
+
+}

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.ScheduleMapper" >
+    <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.Schedule" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+        <result column="institution" property="institution" jdbcType="VARCHAR" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="detailinfo" property="detailinfo" jdbcType="VARCHAR" />
+        <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+        <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+        <result column="employid" property="employid" jdbcType="VARCHAR" />
+        <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        id, store_id, institution, department, type, detailinfo, starttime, endtime, employid,
+        createdate
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.ScheduleExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from schedule
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from schedule
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from schedule
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.ScheduleExample" >
+        delete from schedule
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.storemanager.bean.Schedule" >
+        insert into schedule (id, store_id, institution,
+        department, type, detailinfo,
+        starttime, endtime, employid,
+        createdate)
+        values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{institution,jdbcType=VARCHAR},
+        #{department,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{detailinfo,jdbcType=VARCHAR},
+        #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{employid,jdbcType=VARCHAR},
+        #{createdate,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.storemanager.bean.Schedule" >
+        insert into schedule
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="storeId != null" >
+                store_id,
+            </if>
+            <if test="institution != null" >
+                institution,
+            </if>
+            <if test="department != null" >
+                department,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="detailinfo != null" >
+                detailinfo,
+            </if>
+            <if test="starttime != null" >
+                starttime,
+            </if>
+            <if test="endtime != null" >
+                endtime,
+            </if>
+            <if test="employid != null" >
+                employid,
+            </if>
+            <if test="createdate != null" >
+                createdate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null" >
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="institution != null" >
+                #{institution,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="detailinfo != null" >
+                #{detailinfo,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null" >
+                #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endtime != null" >
+                #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="employid != null" >
+                #{employid,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.storemanager.bean.ScheduleExample" resultType="java.lang.Integer" >
+        select count(*) from schedule
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update schedule
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeId != null" >
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.institution != null" >
+                institution = #{record.institution,jdbcType=VARCHAR},
+            </if>
+            <if test="record.department != null" >
+                department = #{record.department,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null" >
+                type = #{record.type,jdbcType=VARCHAR},
+            </if>
+            <if test="record.detailinfo != null" >
+                detailinfo = #{record.detailinfo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.starttime != null" >
+                starttime = #{record.starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.endtime != null" >
+                endtime = #{record.endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.employid != null" >
+                employid = #{record.employid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdate != null" >
+                createdate = #{record.createdate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update schedule
+        set id = #{record.id,jdbcType=VARCHAR},
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+        institution = #{record.institution,jdbcType=VARCHAR},
+        department = #{record.department,jdbcType=VARCHAR},
+        type = #{record.type,jdbcType=VARCHAR},
+        detailinfo = #{record.detailinfo,jdbcType=VARCHAR},
+        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+        employid = #{record.employid,jdbcType=VARCHAR},
+        createdate = #{record.createdate,jdbcType=TIMESTAMP}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.Schedule" >
+        update schedule
+        <set >
+            <if test="storeId != null" >
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="institution != null" >
+                institution = #{institution,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="detailinfo != null" >
+                detailinfo = #{detailinfo,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null" >
+                starttime = #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endtime != null" >
+                endtime = #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="employid != null" >
+                employid = #{employid,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null" >
+                createdate = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.Schedule" >
+    update schedule
+    set store_id = #{storeId,jdbcType=VARCHAR},
+      institution = #{institution,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      detailinfo = #{detailinfo,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      employid = #{employid,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!-- 查询所有的排班信息(排班关联查询表) -->
+    <select id="selectSchedule" resultMap="BaseResultMap">
+    select * from schedule WHERE store_id=#{store_id}
+  </select>
+    <select id="selectSchedules" resultMap="BaseResultMap">
+    select * from schedule
+  </select>
+
+    <!--根据员工id、所在部门和班次类型查询对应的排班信息 -->
+    <select id="selectScheduleByType" resultMap="BaseResultMap">
+        select id, institution, department, type, detailinfo, starttime, endtime, employid, createdate from schedule
+        where 1=1
+        <if test="employId != null">
+            and employid =#{employId,jdbcType=VARCHAR}
+        </if>
+        <if test="department != null">
+            and department = #{department,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            and type = #{type,jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+    <!--根据开始时间、结束时间、员工id、所在部门和班次类型查询对应的排班信息(条件可为null) -->
+    <select id="selectScheduleByTime" resultMap="BaseResultMap">
+        select id, institution, department, type, detailinfo, starttime, endtime, employid, createdate from schedule
+        where 1=1
+        <if test="startTime != null">
+            and starttime &gt; #{startTime,jdbcType=DATE}
+        </if>
+        <if test="endTime != null">
+            and endtime &lt;= #{endTime,jdbcType=DATE}
+        </if>
+        <if test="employId != null">
+            and employid = #{employId,jdbcType=VARCHAR}
+        </if>
+        <if test="department != null">
+            and department = #{department,jdbcType=VARCHAR}
+        </if>
+
+        <if test="type != null">
+            and type = #{type,jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+    <!--根据开始时间、结束时间、员工id查询对应的排班信息 -->
+    <select id="selectScheduleByTimeAndName" resultType="int">
+        select count(id) from schedule where starttime &gt;= #{startTime} and
+        endtime &lt;= #{endTime} and employid =#{employerID}
+    </select>
+    <!--根据开始时间、结束时间查询对应的排班信息 -->
+    <select id="selectScheduleByTimeCount" resultType="int">
+        select count(id) from schedule where starttime &gt;= #{startTime} and
+        endtime &lt;= #{endTime}
+    </select>
+    <select id="selectScheduleByMonth" resultMap="BaseResultMap">
+        select * from schedule where
+        date_format(starttime,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m')
+        and employid=#{employid}
+    </select>
+</mapper>

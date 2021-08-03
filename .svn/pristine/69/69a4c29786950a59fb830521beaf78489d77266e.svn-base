@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.StoreserviceMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Storeservice" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="motherid" property="motherid" jdbcType="VARCHAR" />
+    <result column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="storeid" property="storeid" jdbcType="VARCHAR" />
+    <result column="mothername" property="mothername" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="profit" property="profit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, motherid, serviceid, storeid, mothername, time, price, profit
+  </sql>
+  <resultMap id="ServiceDetail" type="com.luer.servicecenter.bean.ServiceDetail">
+      <result property="id" column="id"></result>
+    <result property="project" column="project"></result>
+    <result property="motherid" column="motherid"></result>
+    <result property="name" column="name"></result>
+    <result property="time" column="time"></result>
+    <result property="price" column="price"></result>
+
+  </resultMap>
+  <update id="updatePrice">
+    UPDATE storeservice SET storeservice.price = #{price},storeservice.profit = #{profit}
+    WHERE  storeservice.serviceid = #{serviceid}
+  </update>
+  <update id="updateTime">
+    UPDATE storeservice SET time = #{time}
+    WHERE  storeservice.id = #{id}
+  </update>
+  <select id="getServiceDetail" resultMap="ServiceDetail">
+    SELECT  test.storeserviceid id,es.project ,test.id motherid,test.name name,test.time time,test.price price  from  extra_service es
+
+LEFT JOIN (SELECT cb.id,cb.`name`,s.time,s.price,s.profit,s.serviceid ,s.id storeserviceid FROM storeservice s
+LEFT JOIN customer_basic cb ON cb.id = s.motherid) test
+ON test.serviceid = es.id
+WHERE test.id=#{motherId}
+  </select>
+  <resultMap id="serviceAccount" type="com.luer.servicecenter.bean.ServiceAccount">
+    <result property="motherid" column="motherid"></result>
+    <result property="mothername" column="mothername"></result>
+    <result property="roomnum" column="roomnum"></result>
+    <result property="price" column="sumprice"></result>
+    <result property="profit" column="sumprofit"></result>
+  </resultMap>
+  <select id="getAccount" resultMap="serviceAccount">
+    SELECT cb.id motherid,cb.`name` mothername,COALESCE(SUM(time*(s.price)),0) sumprice,COALESCE(SUM(time*(s.profit)),0) sumprofit,oc.room_number roomnum
+FROM customer_basic cb
+LEFT JOIN storeservice s ON s.motherid = cb.id
+LEFT JOIN extra_service es ON es.id = s.serviceid
+LEFT JOIN order_customer oc ON oc.customer_id = cb.id
+WHERE cb.type='0' AND cb.check_status = '1' AND cb.store_id=#{storeid}
+GROUP BY cb.id
+  </select>
+    <select id="getAccountByMotherId" resultMap="serviceAccount">
+        SELECT cb.id motherid,cb.`name` mothername,COALESCE(SUM(time*(s.price)),0) sumprice,COALESCE(SUM(time*(s.profit)),0) sumprofit,oc.room_number roomnum
+FROM customer_basic cb
+LEFT JOIN storeservice s ON s.motherid = cb.id
+LEFT JOIN extra_service es ON es.id = s.serviceid
+LEFT JOIN order_customer oc ON oc.customer_id = cb.id
+WHERE cb.type='0' AND cb.check_status = '1' AND cb.id=#{customerBasicId}
+GROUP BY cb.id
+    </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.StoreserviceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from storeservice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from storeservice
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from storeservice
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.StoreserviceExample" >
+    delete from storeservice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Storeservice" >
+    insert into storeservice (id, motherid, serviceid, 
+      storeid, mothername, time, 
+      price, profit)
+    values (#{id,jdbcType=VARCHAR}, #{motherid,jdbcType=VARCHAR}, #{serviceid,jdbcType=VARCHAR}, 
+      #{storeid,jdbcType=VARCHAR}, #{mothername,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
+      #{price,jdbcType=VARCHAR}, #{profit,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Storeservice" >
+    insert into storeservice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="motherid != null" >
+        motherid,
+      </if>
+      <if test="serviceid != null" >
+        serviceid,
+      </if>
+      <if test="storeid != null" >
+        storeid,
+      </if>
+      <if test="mothername != null" >
+        mothername,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="profit != null" >
+        profit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceid != null" >
+        #{serviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeid != null" >
+        #{storeid,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        #{mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="profit != null" >
+        #{profit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.StoreserviceExample" resultType="java.lang.Integer" >
+    select count(*) from storeservice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update storeservice
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherid != null" >
+        motherid = #{record.motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceid != null" >
+        serviceid = #{record.serviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeid != null" >
+        storeid = #{record.storeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mothername != null" >
+        mothername = #{record.mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profit != null" >
+        profit = #{record.profit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update storeservice
+    set id = #{record.id,jdbcType=VARCHAR},
+      motherid = #{record.motherid,jdbcType=VARCHAR},
+      serviceid = #{record.serviceid,jdbcType=VARCHAR},
+      storeid = #{record.storeid,jdbcType=VARCHAR},
+      mothername = #{record.mothername,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      profit = #{record.profit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Storeservice" >
+    update storeservice
+    <set >
+      <if test="motherid != null" >
+        motherid = #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceid != null" >
+        serviceid = #{serviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeid != null" >
+        storeid = #{storeid,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        mothername = #{mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="profit != null" >
+        profit = #{profit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Storeservice" >
+    update storeservice
+    set motherid = #{motherid,jdbcType=VARCHAR},
+      serviceid = #{serviceid,jdbcType=VARCHAR},
+      storeid = #{storeid,jdbcType=VARCHAR},
+      mothername = #{mothername,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      profit = #{profit,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

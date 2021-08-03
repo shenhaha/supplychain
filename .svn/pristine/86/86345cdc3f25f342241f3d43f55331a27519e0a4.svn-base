@@ -1,0 +1,166 @@
+package com.luer.businessmanager.controller;
+
+import com.luer.businessmanager.bean.Appointment;
+import com.luer.businessmanager.bean.CountAppointment;
+import com.luer.businessmanager.service.AppointmentService;
+import com.luer.comm.utils.ResultSet;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+* Created by  2018/8/13.
+ * 顾客管理
+ * * 预约客户
+ */
+@RequestMapping("/businessmanager")
+@Controller
+public class AppointmentController {
+
+    @Autowired
+    private AppointmentService appointmentService;
+
+    //预约客户的添加
+    @ResponseBody
+    @RequestMapping(value="/addAppointment",method = RequestMethod.POST)
+    public ResultSet  addCallrecord(@NonNull Appointment appointment){
+        appointmentService.insert(appointment);
+        return ResultSet.getSuccess();
+    }
+
+    //单个信息删除
+    @ResponseBody
+    @RequestMapping(value="/deleteAppointment")
+    public ResultSet deleteAppointment(@NonNull String id){
+        appointmentService.deleteByPrimaryKey(id);
+            return ResultSet.getSuccess();
+    }
+
+    //批量信息删除
+    @ResponseBody
+    @RequestMapping(value="/deleteListAppointment")
+    public ResultSet deleteListAppointment(@NonNull String ids){
+        appointmentService.deleteListById(ids);
+        return ResultSet.getSuccess();
+    }
+
+    //修改信息
+    @ResponseBody
+    @RequestMapping(value="/updateAppointment")
+    public ResultSet  updateAppointment(@NonNull  Appointment appointment){
+        appointmentService.updateById(appointment.getId(),appointment);
+        return ResultSet.getSuccess();
+    }
+
+    //通过门店id查询信息
+    @ResponseBody
+    @RequestMapping(value="/selectListAppointment")
+    public List<Appointment>  selectListAppointment(@NonNull  String storeId){
+        List<Appointment> appointments = appointmentService.selectListByStoreId(storeId);
+        return appointments;
+    }
+    //通过门店id查询信息
+    @ResponseBody
+    @RequestMapping(value="/selectListappointmentToday")
+    public List<Appointment>  selectListAppointmentToday(String storeId){
+        List<Appointment> appointments = appointmentService.selectListAppointmentToday(storeId);
+        return appointments;
+    }
+
+    //通过门店id查询信息
+    @ResponseBody
+    @RequestMapping(value="/selectAllAppointment")
+    public  List<Appointment>  selectAllAppointment(){
+        List<Appointment> appointments = appointmentService.selectAllList();
+        return appointments;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/getCountAppointments")
+    public  Map  getCountAppointments(String time){
+        List<CountAppointment> appointments = appointmentService.getCountAppointments(time);
+        Map<String,List> s = new HashMap<>();
+        List<String> names = new ArrayList<>();
+        List<String> counts = new ArrayList<>();
+        appointments.forEach(a->{
+            names.add(a.getAbbreviation1());
+            counts.add(a.getCount());
+        });
+        s.put("names",names);
+        s.put("counts",counts);
+        return s;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/getSignatureNumberDay")
+    public  Map  getSignatureNumberDay(String time){
+        List<CountAppointment> appointments = appointmentService.getSignatureNumberDay(time);
+        Map<String,List> s = new HashMap<>();
+        List<String> names = new ArrayList<>();
+        List<String> counts = new ArrayList<>();
+        appointments.forEach(a->{
+            names.add(a.getAbbreviation1());
+            counts.add(a.getCount());
+        });
+        s.put("names",names);
+        s.put("counts",counts);
+        return s;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/getSignatureNumberMonth")
+    public  Map  getSignatureNumberMonth(String time){
+        List<CountAppointment> appointments = appointmentService.getSignatureNumberMonth(time);
+        Map<String,List> s = new HashMap<>();
+        List<String> names = new ArrayList<>();
+        List<String> counts = new ArrayList<>();
+        appointments.forEach(a->{
+            names.add(a.getAbbreviation1());
+            counts.add(a.getCount());
+        });
+        s.put("names",names);
+        s.put("counts",counts);
+        return s;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/getTotalSalesAmount")
+    public  Map  getTotalSalesAmount(String time){
+        List<CountAppointment> appointments = appointmentService.getTotalSalesAmount(time);
+        Map<String,List> s = new HashMap<>();
+        List<String> names = new ArrayList<>();
+        List<String> counts = new ArrayList<>();
+        appointments.forEach(a->{
+            names.add(a.getAbbreviation1());
+            counts.add(a.getCount());
+        });
+        s.put("names",names);
+        s.put("counts",counts);
+        return s;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/getBillofMoney")
+    public  Map  getBillofMoney(String time){
+        List<CountAppointment> appointments = appointmentService.getBillofMoney(time);
+        Map<String,List> s = new HashMap<>();
+        List<String> names = new ArrayList<>();
+        List<String> counts = new ArrayList<>();
+        appointments.forEach(a->{
+            names.add(a.getAbbreviation1());
+            counts.add(a.getCount());
+        });
+        s.put("names",names);
+        s.put("counts",counts);
+        return s;
+    }
+
+}

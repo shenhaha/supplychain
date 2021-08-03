@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.GrowthrecordMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Growthrecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_basic_id" property="customerBasicId" jdbcType="VARCHAR" />
+    <result column="recordDate" property="recorddate" jdbcType="TIMESTAMP" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="temperature" property="temperature" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="VARCHAR" />
+    <result column="breast_milk" property="breastMilk" jdbcType="VARCHAR" />
+    <result column="formula_milk" property="formulaMilk" jdbcType="VARCHAR" />
+    <result column="defecateFrequency" property="defecatefrequency" jdbcType="VARCHAR" />
+    <result column="jaundice" property="jaundice" jdbcType="VARCHAR" />
+    <result column="motherId" property="motherid" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="babyname" property="babyname" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.luer.servicecenter.bean.Growthrecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_basic_id" property="customerBasicId" jdbcType="VARCHAR" />
+    <result column="recordDate1" property="recorddate" jdbcType="TIMESTAMP" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="temperature" property="temperature" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="VARCHAR" />
+    <result column="breast_milk" property="breastMilk" jdbcType="VARCHAR" />
+    <result column="formula_milk" property="formulaMilk" jdbcType="VARCHAR" />
+    <result column="defecateFrequency" property="defecatefrequency" jdbcType="VARCHAR" />
+    <result column="jaundice" property="jaundice" jdbcType="VARCHAR" />
+    <result column="motherId" property="motherid" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="babyname" property="babyname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, customer_basic_id, recordDate, project, temperature, weight, breast_milk, formula_milk, 
+    defecateFrequency, jaundice, motherId, store_id, babyname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.GrowthrecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from growthrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from growthrecord
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from growthrecord
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.GrowthrecordExample" >
+    delete from growthrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Growthrecord" >
+    insert into growthrecord (id, customer_basic_id, recordDate, 
+      project, temperature, weight, 
+      breast_milk, formula_milk, defecateFrequency, 
+      jaundice, motherId, store_id, 
+      babyname)
+    values (#{id,jdbcType=VARCHAR}, #{customerBasicId,jdbcType=VARCHAR}, #{recorddate,jdbcType=TIMESTAMP}, 
+      #{project,jdbcType=VARCHAR}, #{temperature,jdbcType=VARCHAR}, #{weight,jdbcType=VARCHAR}, 
+      #{breastMilk,jdbcType=VARCHAR}, #{formulaMilk,jdbcType=VARCHAR}, #{defecatefrequency,jdbcType=VARCHAR}, 
+      #{jaundice,jdbcType=VARCHAR}, #{motherid,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, 
+      #{babyname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Growthrecord" >
+    insert into growthrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerBasicId != null" >
+        customer_basic_id,
+      </if>
+      <if test="recorddate != null" >
+        recordDate,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="temperature != null" >
+        temperature,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="breastMilk != null" >
+        breast_milk,
+      </if>
+      <if test="formulaMilk != null" >
+        formula_milk,
+      </if>
+      <if test="defecatefrequency != null" >
+        defecateFrequency,
+      </if>
+      <if test="jaundice != null" >
+        jaundice,
+      </if>
+      <if test="motherid != null" >
+        motherId,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="babyname != null" >
+        babyname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBasicId != null" >
+        #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="recorddate != null" >
+        #{recorddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="breastMilk != null" >
+        #{breastMilk,jdbcType=VARCHAR},
+      </if>
+      <if test="formulaMilk != null" >
+        #{formulaMilk,jdbcType=VARCHAR},
+      </if>
+      <if test="defecatefrequency != null" >
+        #{defecatefrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="jaundice != null" >
+        #{jaundice,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="babyname != null" >
+        #{babyname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.GrowthrecordExample" resultType="java.lang.Integer" >
+    select count(*) from growthrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update growthrecord
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBasicId != null" >
+        customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recorddate != null" >
+        recordDate = #{record.recorddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.project != null" >
+        project = #{record.project,jdbcType=VARCHAR},
+      </if>
+      <if test="record.temperature != null" >
+        temperature = #{record.temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.breastMilk != null" >
+        breast_milk = #{record.breastMilk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formulaMilk != null" >
+        formula_milk = #{record.formulaMilk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defecatefrequency != null" >
+        defecateFrequency = #{record.defecatefrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jaundice != null" >
+        jaundice = #{record.jaundice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherid != null" >
+        motherId = #{record.motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.babyname != null" >
+        babyname = #{record.babyname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update growthrecord
+    set id = #{record.id,jdbcType=VARCHAR},
+      customer_basic_id = #{record.customerBasicId,jdbcType=VARCHAR},
+      recordDate = #{record.recorddate,jdbcType=TIMESTAMP},
+      project = #{record.project,jdbcType=VARCHAR},
+      temperature = #{record.temperature,jdbcType=VARCHAR},
+      weight = #{record.weight,jdbcType=VARCHAR},
+      breast_milk = #{record.breastMilk,jdbcType=VARCHAR},
+      formula_milk = #{record.formulaMilk,jdbcType=VARCHAR},
+      defecateFrequency = #{record.defecatefrequency,jdbcType=VARCHAR},
+      jaundice = #{record.jaundice,jdbcType=VARCHAR},
+      motherId = #{record.motherid,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      babyname = #{record.babyname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Growthrecord" >
+    update growthrecord
+    <set >
+      <if test="customerBasicId != null" >
+        customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      </if>
+      <if test="recorddate != null" >
+        recordDate = #{recorddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        temperature = #{temperature,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="breastMilk != null" >
+        breast_milk = #{breastMilk,jdbcType=VARCHAR},
+      </if>
+      <if test="formulaMilk != null" >
+        formula_milk = #{formulaMilk,jdbcType=VARCHAR},
+      </if>
+      <if test="defecatefrequency != null" >
+        defecateFrequency = #{defecatefrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="jaundice != null" >
+        jaundice = #{jaundice,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        motherId = #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="babyname != null" >
+        babyname = #{babyname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getGrowthByMatherId" resultMap="BaseResultMap2">
+    SELECT id,DATE_FORMAT(g.recordDate,'%Y-%m-%d') recordDate1,project,g.temperature,g.weight,SUM(g.breast_milk) breast_milk,sum(g.defecateFrequency) defecateFrequency,
+g.jaundice,g.motherId,sum(g.formula_milk) formula_milk, g.babyname FROM growthrecord g
+ WHERE motherId =#{motherId}
+GROUP BY recordDate1,babyname
+  </select>
+  <select id="getGrowthByMatherIdanddata" resultMap="BaseResultMap">
+SELECT * ,DATE_FORMAT(growthrecord.recordDate,'%Y-%m-%d') date1 FROM growthrecord
+WHERE  motherid  = #{motherid} and babyname = #{babaname}
+HAVING date1 = #{recorddate}
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Growthrecord" >
+    update growthrecord
+    set customer_basic_id = #{customerBasicId,jdbcType=VARCHAR},
+      recordDate = #{recorddate,jdbcType=TIMESTAMP},
+      project = #{project,jdbcType=VARCHAR},
+      temperature = #{temperature,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=VARCHAR},
+      breast_milk = #{breastMilk,jdbcType=VARCHAR},
+      formula_milk = #{formulaMilk,jdbcType=VARCHAR},
+      defecateFrequency = #{defecatefrequency,jdbcType=VARCHAR},
+      jaundice = #{jaundice,jdbcType=VARCHAR},
+      motherId = #{motherid,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR},
+      babyname = #{babyname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

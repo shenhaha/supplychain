@@ -1,0 +1,71 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <title>入住核实</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+           <%-- <div class="panel-heading">
+                <div class="pull-left">
+                    <ol class="breadcrumb">
+                        <li><a href="${ctx}/index">首页</a></li>
+                        <li class="active">入住核实</li>
+                    </ol>
+                </div>
+                <div class="clearfix"></div>
+            </div>--%>
+            <!--入住核实-->
+            <div id="repairdiv">
+                <div class="panel-body" onclick="" >
+                    <div class="table-responsive">
+                        <table id="guestlists" class="table" data-paging="true" data-filtering="true" data-sorting="true" style="width:150%">
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--入住核实-->
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script >
+
+    $(function () {
+
+        function detail(id) {
+            window.location.href = "${ctx}/checkInDeatil?motherid="+id;
+        }
+        window.detail = detail;
+        var guestTitle = [
+            {"name":"motherid","visible":false},
+            {"name":"name","title":"妈妈姓名"},
+            {"name": "roomnumber","title":"房间号"},
+            {"name":"options","title":"操作"}
+        ];
+        //启动footable
+        var ft=FooTable.init('#guestlists',{
+            "columns": guestTitle,
+            "rows": $.get("${ctx}/checkIn/selectMotherCheckIn?storeId="+"<%=session.getAttribute("storeId")%>",function (data) {
+                $(data).each(function () {
+                    this.options = "<button class='btn btn-primary btn-sm' onclick='detail("+'"'+this.motherid+'"'+")'>查看详细</button>";
+                })
+            }),
+            //功能操作
+            editing: {
+                enabled: false,
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    window.location.href = "${ctx}/checkInDeatil?motherid="+values.motherid;
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

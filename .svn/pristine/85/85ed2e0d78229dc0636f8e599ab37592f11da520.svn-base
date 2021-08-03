@@ -1,0 +1,55 @@
+package com.luer.storemanager.bean;
+
+import java.util.Date;
+
+public class Shopping {
+    private String id;
+
+    private String itemId;
+
+    private Date shoppingTime;
+
+    private String price;
+
+    private String payStyle;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId == null ? null : itemId.trim();
+    }
+
+    public Date getShoppingTime() {
+        return shoppingTime;
+    }
+
+    public void setShoppingTime(Date shoppingTime) {
+        this.shoppingTime = shoppingTime;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price == null ? null : price.trim();
+    }
+
+    public String getPayStyle() {
+        return payStyle;
+    }
+
+    public void setPayStyle(String payStyle) {
+        this.payStyle = payStyle == null ? null : payStyle.trim();
+    }
+}

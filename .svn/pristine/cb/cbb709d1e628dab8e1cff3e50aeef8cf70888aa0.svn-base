@@ -1,0 +1,56 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.Shopping;
+
+import java.util.List;
+
+/**
+ * 购物信息服务类
+ *
+ * @ClassName ShoppingService
+ * @Author GavinJiang
+ * @Date 2018/8/21 9:52.
+ */
+public interface ShoppingService {
+    /**
+     * 查询所有的购物信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.Shopping>
+     * @author GavinJiang
+     * @date
+     * @params
+     */
+    List<Shopping> selectShopping();
+
+    /**
+     * 修改所有的购物信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @params
+     */
+    int insert(Shopping record);
+
+    /**
+     * 修改所有的购物信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @params
+     */
+    int updateByPrimaryKeySelective(Shopping record);
+
+    /**
+     * 删除所有的购物信息
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/21 9:59
+     * @params
+     */
+    int deleteByPrimaryKey(String id);
+
+}

@@ -1,0 +1,34 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Babynursingrecord;
+import com.luer.servicecenter.bean.BabynursingrecordExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface BabynursingrecordMapper {
+    int countByExample(BabynursingrecordExample example);
+
+    int deleteByExample(BabynursingrecordExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Babynursingrecord record);
+
+    int insertSelective(Babynursingrecord record);
+
+    List<Babynursingrecord> selectByExample(BabynursingrecordExample example);
+
+    Babynursingrecord selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Babynursingrecord record, @Param("example") BabynursingrecordExample example);
+
+    int updateByExample(@Param("record") Babynursingrecord record, @Param("example") BabynursingrecordExample example);
+
+    int updateByPrimaryKeySelective(Babynursingrecord record);
+
+    int updateByPrimaryKey(Babynursingrecord record);
+}

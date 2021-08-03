@@ -1,0 +1,65 @@
+package com.luer.businessmanager.controller;
+
+import com.luer.businessmanager.bean.SendCar;
+import com.luer.businessmanager.service.SendCarService;
+import com.luer.comm.utils.ResultSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Created by monkey  2018/8/13.
+ * 订单入住管理
+ * *派车单
+ */
+
+@RequestMapping("/businessmanager")
+@Controller
+public class SendCarController {
+
+    @Autowired
+    private SendCarService sendCarService;
+
+    @ResponseBody
+    @RequestMapping("/addSendCar")
+    public ResultSet addSendCar(SendCar sendCar){
+        sendCarService.insert(sendCar);
+        return ResultSet.getSuccess();
+
+    }
+
+    @ResponseBody
+    @RequestMapping("selectSendCarList")
+    public List<SendCar> selectAllList(){
+        List<SendCar> sendCars = sendCarService.selectAllLIst();
+        return sendCars;
+    }
+
+    @ResponseBody
+    @RequestMapping("getAllList")
+    public List<SendCar> getAllList(String storeId){
+        List<SendCar> sendCars = sendCarService.getAllList(storeId);
+        return sendCars;
+    }
+
+    @ResponseBody
+    @RequestMapping("updateSendCar")
+    public ResultSet updateSendCar(SendCar sendCar){
+      sendCarService.updateSendCar(sendCar);
+        return ResultSet.getSuccess();
+    }
+
+
+    @ResponseBody
+    @RequestMapping("deleteSendCar")
+    public ResultSet deleteSendCar(String id){
+        sendCarService.deleteSendCar(id);
+        return ResultSet.getSuccess();
+    }
+
+}

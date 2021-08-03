@@ -1,0 +1,36 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.MemberManager;
+import com.luer.storemanager.bean.MemberManagerExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface MemberManagerMapper {
+    int countByExample(MemberManagerExample example);
+
+    int deleteByExample(MemberManagerExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(MemberManager record);
+
+    int insertSelective(MemberManager record);
+
+    List<MemberManager> selectByExample(MemberManagerExample example);
+
+    MemberManager selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") MemberManager record, @Param("example") MemberManagerExample example);
+
+    int updateByExample(@Param("record") MemberManager record, @Param("example") MemberManagerExample example);
+
+    int updateByPrimaryKeySelective(MemberManager record);
+
+    int updateByPrimaryKey(MemberManager record);
+
+    List<MemberManager> getList();
+}

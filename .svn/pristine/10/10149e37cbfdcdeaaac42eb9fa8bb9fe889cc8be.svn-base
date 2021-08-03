@@ -1,0 +1,33 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Motherworryquestion;
+import com.luer.servicecenter.bean.MotherworryquestionExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface MotherworryquestionMapper {
+    int countByExample(MotherworryquestionExample example);
+
+    int deleteByExample(MotherworryquestionExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Motherworryquestion record);
+
+    int insertSelective(Motherworryquestion record);
+
+    List<Motherworryquestion> selectByExample(MotherworryquestionExample example);
+
+    Motherworryquestion selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Motherworryquestion record, @Param("example") MotherworryquestionExample example);
+
+    int updateByExample(@Param("record") Motherworryquestion record, @Param("example") MotherworryquestionExample example);
+
+    int updateByPrimaryKeySelective(Motherworryquestion record);
+
+    int updateByPrimaryKey(Motherworryquestion record);
+
+    List<Motherworryquestion> getByMotherId(@Param("motherid") String motherid);
+}

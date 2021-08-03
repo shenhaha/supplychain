@@ -1,0 +1,182 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<html>
+<head>
+    <title>优惠卷统计</title>
+</head>
+<body>
+<!--Main Content-->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+                    <li id="mealdetail"><a href="${ctx}/storemanager/mealdetails?motherid=${motherid}">用餐统计</a></li>
+                    <li id="shopdetail"><a href="${ctx}/storemanager/shopdetails?motherid=${motherid}">购物统计</a></li>
+                    <li id="extraservicedetail"><a href="${ctx}/storemanager/extraservicedetails?motherid=${motherid}">加值服务统计</a></li>
+                    <li id="couponsdetail"><a href="${ctx}/storemanager/couponsdetails?motherid=${motherid}">优惠卷统计</a></li>
+
+                </ul>
+                <!--妈妈护理详细信息登记表-->
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <table id="coupons" class="table" data-paging="true" data-filtering="true" data-sorting="true"></table>
+                    </div>
+                </div>
+                <!--妈妈护理详细信息登记表-->
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<script >
+    $(function () {
+        $('#couponsdetail').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'mealdetail':
+                $('#mealdetail').addClass("active");
+                break;
+            case 'shopdetail':
+                $('#shopdetail').addClass("active");
+                break;
+            case 'extraservicedetail':
+                $('#extraservicedetail').addClass("active");
+                break;
+            case 'couponsdetail':
+                $('#couponsdetail').addClass("active");
+                break;
+
+        }
+        var couponsTitle = [
+            {   "name":"id",
+                "title":"id",
+                "visible": false},
+            {"name":"customerBasicId","title":"产妇id","visible": false},
+            {"name":"customerBasicName","title":"产妇姓名"},
+            {"name":"source","title":"来自哪位会员妈妈"},
+            {"name":"howMouch","title":"额度"}
+        ];
+        //启动footable
+        var ft = FooTable.init('#coupons',{
+            "columns": couponsTitle,
+            "rows": $.get("${ctx}/coupons/selectCouponsByMotherId?motherId="+'${motherid}'),
+            //功能操作
+            //增删改功能
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    $modal.removeData('row');
+                    $editor[0].reset();
+
+                    $editorTitle.text('为妈妈添加一条新记录');
+                    $modal.modal('show');
+
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    $editor.find('#id').val(values.id);
+                    $editor.find('#mothername').val(values.mothername);
+                    $editor.find('#breakfast').val(values.breakfast);
+                    $editor.find('#lunch').val(values.lunch);
+                    $editor.find('#dinner').val(values.dinner);
+                    $editor.find('#familymeal').val(values.familymeal);
+                    $editor.find('#roomnum').val(values.roomnum);
+                    $editor.find('#mealdate').val(values.mealdate);
+                    $modal.data('row', row);
+                    $editorTitle.text('Edit row #' + values.id);
+                    $modal.modal('show');
+                },
+                //删除操作
+                deleteRow: function(row){
+                    if (confirm('是否确定删除?')){
+                        $.ajax({
+                            //后台请求路径
+                            url:"${ctx}/mealmanager/delMeal",
+                            type:"post",
+                            data:{
+                                'id':row.value.id
+                            },success:function(data) {
+                                alert("删除成功");
+                                location.reload();
+                            }
+                        });
+
+                    }
+                }
+            }
+        });
+        var uid = 10;
+        $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+            var row = $modal.data('row'),
+                values = {
+                    id: $editor.find('#id').val(),
+                    mothername: $editor.find('#mothername').val(),
+                    breakfast: $editor.find('#breakfast').val(),
+                    lunch: $editor.find('#lunch').val(),
+                    dinner: $editor.find('#dinner').val(),
+                    familymealcount:$editor.find("#familymeal").val(),
+                    mealdate:$editor.find('#mealdate').val(),
+                };
+            if (row instanceof FooTable.Row){
+
+                //修改一条记录
+                $.ajax({
+                    url:"${ctx}/mealmanager/updateMeal",
+                    type:"post",
+                    data:{
+                        'id':$editor.find('#id').val(),
+                        'motherid':"<%=request.getParameter("motherid")%>",
+                        'breakfast':$editor.find('#breakfast').val(),
+                        'lunch':$editor.find('#lunch').val(),
+                        'dinner':$editor.find('#dinner').val(),
+                        'familymealcount':$editor.find('#familymeal').val(),
+                        'mealdate':$editor.find('#mealdate').val(),
+                        'roomnum':$editor.find('#roomnum').val()
+                    },
+                    success:function(data){
+                        if(data.code==406)	{
+                            alert("修改失败，请注意输入格式");
+                        }else{
+                            alert("修改成功");
+                            row.val(values);
+
+                        }
+                    }
+
+                });
+            } else {
+                //新增一条记录
+                $.ajax({
+                    url:"${ctx}/mealmanager/insertMeal",
+                    type:"post",
+                    async:true,
+                    dataType:'json',
+                    data:{
+                        'motherid':"<%=request.getParameter("motherid")%>",
+                        'breakfast':$editor.find('#breakfast').val(),
+                        'lunch':$editor.find('#lunch').val(),
+                        'dinner':$editor.find('#dinner').val(),
+                        'familymealcount':$editor.find('#familymeal').val(),
+                        'mealdate':$editor.find('#mealdate').val(),
+                        'roomnum':$editor.find('#roomnum').val()
+                    },
+                    success:function(data){
+                        alert("success");
+                        location.reload();
+                    }
+                });
+            }
+            $modal.modal('hide');
+        });
+    });
+</script>
+</body>
+</html>

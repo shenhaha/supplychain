@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.MotherworryquestionMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Motherworryquestion" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="mothername" property="mothername" jdbcType="VARCHAR" />
+    <result column="answerone" property="answerone" jdbcType="VARCHAR" />
+    <result column="answertwo" property="answertwo" jdbcType="VARCHAR" />
+    <result column="answerthree" property="answerthree" jdbcType="VARCHAR" />
+    <result column="answerfour" property="answerfour" jdbcType="VARCHAR" />
+    <result column="answerfive" property="answerfive" jdbcType="VARCHAR" />
+    <result column="answersix" property="answersix" jdbcType="VARCHAR" />
+    <result column="answerseven" property="answerseven" jdbcType="VARCHAR" />
+    <result column="answereight" property="answereight" jdbcType="VARCHAR" />
+    <result column="answernine" property="answernine" jdbcType="VARCHAR" />
+    <result column="answerten" property="answerten" jdbcType="VARCHAR" />
+    <result column="storeid" property="storeid" jdbcType="VARCHAR" />
+    <result column="motherid" property="motherid" jdbcType="VARCHAR" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="store" property="store" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
+    <result column="roomnumber" property="roomnumber" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="getByMotherId" resultMap="BaseResultMap">
+        SELECT * FROM motherworryquestion WHERE motherid =#{motherid}
+    </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, mothername, answerone, answertwo, answerthree, answerfour, answerfive, answersix, 
+    answerseven, answereight, answernine, answerten, storeid, motherid, updatetime, store, 
+    age, roomnumber
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.MotherworryquestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from motherworryquestion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from motherworryquestion
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from motherworryquestion
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.MotherworryquestionExample" >
+    delete from motherworryquestion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Motherworryquestion" >
+    insert into motherworryquestion (id, mothername, answerone, 
+      answertwo, answerthree, answerfour, 
+      answerfive, answersix, answerseven, 
+      answereight, answernine, answerten, 
+      storeid, motherid, updatetime, 
+      store, age, roomnumber
+      )
+    values (#{id,jdbcType=VARCHAR}, #{mothername,jdbcType=VARCHAR}, #{answerone,jdbcType=VARCHAR}, 
+      #{answertwo,jdbcType=VARCHAR}, #{answerthree,jdbcType=VARCHAR}, #{answerfour,jdbcType=VARCHAR}, 
+      #{answerfive,jdbcType=VARCHAR}, #{answersix,jdbcType=VARCHAR}, #{answerseven,jdbcType=VARCHAR}, 
+      #{answereight,jdbcType=VARCHAR}, #{answernine,jdbcType=VARCHAR}, #{answerten,jdbcType=VARCHAR}, 
+      #{storeid,jdbcType=VARCHAR}, #{motherid,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{store,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{roomnumber,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Motherworryquestion" >
+    insert into motherworryquestion
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mothername != null" >
+        mothername,
+      </if>
+      <if test="answerone != null" >
+        answerone,
+      </if>
+      <if test="answertwo != null" >
+        answertwo,
+      </if>
+      <if test="answerthree != null" >
+        answerthree,
+      </if>
+      <if test="answerfour != null" >
+        answerfour,
+      </if>
+      <if test="answerfive != null" >
+        answerfive,
+      </if>
+      <if test="answersix != null" >
+        answersix,
+      </if>
+      <if test="answerseven != null" >
+        answerseven,
+      </if>
+      <if test="answereight != null" >
+        answereight,
+      </if>
+      <if test="answernine != null" >
+        answernine,
+      </if>
+      <if test="answerten != null" >
+        answerten,
+      </if>
+      <if test="storeid != null" >
+        storeid,
+      </if>
+      <if test="motherid != null" >
+        motherid,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="store != null" >
+        store,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="roomnumber != null" >
+        roomnumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="mothername != null" >
+        #{mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="answerone != null" >
+        #{answerone,jdbcType=VARCHAR},
+      </if>
+      <if test="answertwo != null" >
+        #{answertwo,jdbcType=VARCHAR},
+      </if>
+      <if test="answerthree != null" >
+        #{answerthree,jdbcType=VARCHAR},
+      </if>
+      <if test="answerfour != null" >
+        #{answerfour,jdbcType=VARCHAR},
+      </if>
+      <if test="answerfive != null" >
+        #{answerfive,jdbcType=VARCHAR},
+      </if>
+      <if test="answersix != null" >
+        #{answersix,jdbcType=VARCHAR},
+      </if>
+      <if test="answerseven != null" >
+        #{answerseven,jdbcType=VARCHAR},
+      </if>
+      <if test="answereight != null" >
+        #{answereight,jdbcType=VARCHAR},
+      </if>
+      <if test="answernine != null" >
+        #{answernine,jdbcType=VARCHAR},
+      </if>
+      <if test="answerten != null" >
+        #{answerten,jdbcType=VARCHAR},
+      </if>
+      <if test="storeid != null" >
+        #{storeid,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="store != null" >
+        #{store,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="roomnumber != null" >
+        #{roomnumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.MotherworryquestionExample" resultType="java.lang.Integer" >
+    select count(*) from motherworryquestion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update motherworryquestion
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mothername != null" >
+        mothername = #{record.mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerone != null" >
+        answerone = #{record.answerone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answertwo != null" >
+        answertwo = #{record.answertwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerthree != null" >
+        answerthree = #{record.answerthree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerfour != null" >
+        answerfour = #{record.answerfour,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerfive != null" >
+        answerfive = #{record.answerfive,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answersix != null" >
+        answersix = #{record.answersix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerseven != null" >
+        answerseven = #{record.answerseven,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answereight != null" >
+        answereight = #{record.answereight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answernine != null" >
+        answernine = #{record.answernine,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerten != null" >
+        answerten = #{record.answerten,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeid != null" >
+        storeid = #{record.storeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherid != null" >
+        motherid = #{record.motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.store != null" >
+        store = #{record.store,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomnumber != null" >
+        roomnumber = #{record.roomnumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update motherworryquestion
+    set id = #{record.id,jdbcType=VARCHAR},
+      mothername = #{record.mothername,jdbcType=VARCHAR},
+      answerone = #{record.answerone,jdbcType=VARCHAR},
+      answertwo = #{record.answertwo,jdbcType=VARCHAR},
+      answerthree = #{record.answerthree,jdbcType=VARCHAR},
+      answerfour = #{record.answerfour,jdbcType=VARCHAR},
+      answerfive = #{record.answerfive,jdbcType=VARCHAR},
+      answersix = #{record.answersix,jdbcType=VARCHAR},
+      answerseven = #{record.answerseven,jdbcType=VARCHAR},
+      answereight = #{record.answereight,jdbcType=VARCHAR},
+      answernine = #{record.answernine,jdbcType=VARCHAR},
+      answerten = #{record.answerten,jdbcType=VARCHAR},
+      storeid = #{record.storeid,jdbcType=VARCHAR},
+      motherid = #{record.motherid,jdbcType=VARCHAR},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      store = #{record.store,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=VARCHAR},
+      roomnumber = #{record.roomnumber,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Motherworryquestion" >
+    update motherworryquestion
+    <set >
+      <if test="mothername != null" >
+        mothername = #{mothername,jdbcType=VARCHAR},
+      </if>
+      <if test="answerone != null" >
+        answerone = #{answerone,jdbcType=VARCHAR},
+      </if>
+      <if test="answertwo != null" >
+        answertwo = #{answertwo,jdbcType=VARCHAR},
+      </if>
+      <if test="answerthree != null" >
+        answerthree = #{answerthree,jdbcType=VARCHAR},
+      </if>
+      <if test="answerfour != null" >
+        answerfour = #{answerfour,jdbcType=VARCHAR},
+      </if>
+      <if test="answerfive != null" >
+        answerfive = #{answerfive,jdbcType=VARCHAR},
+      </if>
+      <if test="answersix != null" >
+        answersix = #{answersix,jdbcType=VARCHAR},
+      </if>
+      <if test="answerseven != null" >
+        answerseven = #{answerseven,jdbcType=VARCHAR},
+      </if>
+      <if test="answereight != null" >
+        answereight = #{answereight,jdbcType=VARCHAR},
+      </if>
+      <if test="answernine != null" >
+        answernine = #{answernine,jdbcType=VARCHAR},
+      </if>
+      <if test="answerten != null" >
+        answerten = #{answerten,jdbcType=VARCHAR},
+      </if>
+      <if test="storeid != null" >
+        storeid = #{storeid,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        motherid = #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="store != null" >
+        store = #{store,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="roomnumber != null" >
+        roomnumber = #{roomnumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Motherworryquestion" >
+    update motherworryquestion
+    set mothername = #{mothername,jdbcType=VARCHAR},
+      answerone = #{answerone,jdbcType=VARCHAR},
+      answertwo = #{answertwo,jdbcType=VARCHAR},
+      answerthree = #{answerthree,jdbcType=VARCHAR},
+      answerfour = #{answerfour,jdbcType=VARCHAR},
+      answerfive = #{answerfive,jdbcType=VARCHAR},
+      answersix = #{answersix,jdbcType=VARCHAR},
+      answerseven = #{answerseven,jdbcType=VARCHAR},
+      answereight = #{answereight,jdbcType=VARCHAR},
+      answernine = #{answernine,jdbcType=VARCHAR},
+      answerten = #{answerten,jdbcType=VARCHAR},
+      storeid = #{storeid,jdbcType=VARCHAR},
+      motherid = #{motherid,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      store = #{store,jdbcType=VARCHAR},
+      age = #{age,jdbcType=VARCHAR},
+      roomnumber = #{roomnumber,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,46 @@
+package com.luer.businessmanager.dao;
+
+import com.luer.businessmanager.bean.OrderCustomer;
+import com.luer.businessmanager.bean.OrderCustomerExample;
+
+import java.util.Date;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.security.access.method.P;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface OrderCustomerMapper {
+    int countByExample(OrderCustomerExample example);
+
+    int deleteByExample(OrderCustomerExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(OrderCustomer record);
+
+    int insertSelective(OrderCustomer record);
+    
+    List<OrderCustomer> selectAllOrderCustomer();
+
+    List<OrderCustomer> selectByExample(OrderCustomerExample example);
+
+    List<OrderCustomer> selectNotice(@Param("orderCustomer") OrderCustomer orderCustomer,
+                                     @Param("starttime") Date starttime,@Param("endtime") Date endtime);
+
+    OrderCustomer selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") OrderCustomer record, @Param("example") OrderCustomerExample example);
+
+    int updateByExample(@Param("record") OrderCustomer record, @Param("example") OrderCustomerExample example);
+
+    int updateByPrimaryKeySelective(OrderCustomer record);
+
+    int updateByPrimaryKey(OrderCustomer record);
+
+    List<OrderCustomer> getOrderCustomers(@Param("store_id") String storeId);
+
+    int updateStatusByMotherid(@Param("motherId") String motherId,@Param("status") String status);
+}

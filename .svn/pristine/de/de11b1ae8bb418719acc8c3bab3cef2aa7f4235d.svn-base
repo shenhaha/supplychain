@@ -1,0 +1,87 @@
+package com.luer.storesdata.dao;
+
+import com.luer.storesdata.bean.AccountInfo;
+import com.luer.storesdata.bean.StoreFile;
+import com.luer.storesdata.bean.StoreFileExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@Component
+@MapperScan
+public interface StoreFileMapper {
+    int countByExample(StoreFileExample example);
+
+    int deleteByExample(StoreFileExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(StoreFile record);
+
+    int insertSelective(StoreFile record);
+
+    List<StoreFile> selectByExample(StoreFileExample example);
+
+    List<StoreFile> selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") StoreFile record, @Param("example") StoreFileExample example);
+
+    int updateByExample(@Param("record") StoreFile record, @Param("example") StoreFileExample example);
+
+    int updateByPrimaryKeySelective(StoreFile record);
+
+    int updateByPrimaryKey(StoreFile record);
+
+    //查询所有门店资料
+    List<StoreFile> selectAll();
+
+    //查询所有分公司的信息
+    List<StoreFile> selectBranch();
+
+    //查询分公司对应的门店信息
+    List<StoreFile> selectByBranchId(String storeId);
+
+    //查询总公司id
+    String selectIdBySort();
+
+
+    List<String> selectIdsByBranchId(String storeId);
+
+    /**
+     * 通过门店id和门店分类判断其是总公司或分公司还是门店
+     *
+     * @param id
+     * @return java.util.List<com.luer.storesdata.bean.StoreFile>
+     * @author GavinJiang
+     * @date 2018/9/10 11:20
+     * @params
+     */
+    List<StoreFile> selectStoreFileBySortIdAndName(String id);
+
+    /**
+     * 查询所有总公司基本资料
+     *
+     * @return
+     * @author GavinJiang
+     * @params
+     */
+    List<StoreFile> selectStoreFilesByHeadquarters();
+
+    /**
+     * 根据上级门店id查询当前上级门店id下面所有的门店信息
+     *
+     * @param storeId
+     * @return java.util.List<com.luer.storesdata.bean.StoreFile>
+     * @author GavinJiang
+     * @date 2018/9/11 18:15
+     * @params
+     */
+    List<StoreFile> selectByStoreFileIdAll(@Param("id") String storeId,@Param("sort")String sort);
+
+    List<AccountInfo> selectAdmin(@Param("storeId") String storeId);
+
+    StoreFile selectById(String storeId);
+}

@@ -1,0 +1,78 @@
+package com.luer.businessmanager.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Appointment {
+    private String id;
+
+    private String name;
+
+    private String tell;
+
+    private String sex;
+
+    private Integer number;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date cometime;
+
+    private String storeId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getTell() {
+        return tell;
+    }
+
+    public void setTell(String tell) {
+        this.tell = tell == null ? null : tell.trim();
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Date getCometime() {
+        return cometime;
+    }
+
+    public void setCometime(Date cometime) {
+        this.cometime = cometime;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+}

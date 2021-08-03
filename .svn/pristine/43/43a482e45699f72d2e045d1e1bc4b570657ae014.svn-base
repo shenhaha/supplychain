@@ -1,0 +1,68 @@
+package com.luer.users.controller;
+
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.luer.comm.utils.ResultSet;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.springsecurity.bean.Role;
+import com.luer.springsecurity.bean.RolePermission;
+import com.luer.springsecurity.bean.UserRole;
+import com.luer.springsecurity.dao.RolePermissionMapper;
+import com.luer.springsecurity.service.RoleService;
+import com.luer.springsecurity.service.UserRoleService;
+import com.luer.storesdata.bean.StoreFile;
+import com.luer.storesdata.service.StoreFileService;
+import com.luer.users.bean.Users;
+import com.luer.users.service.BranchService;
+import com.luer.users.service.UsersService;
+import com.luer.users.service.impl.BranchServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * 添加分公司和门店
+ *
+ * @author 张路明
+ */
+@RestController
+public class BranchController {
+
+    @Autowired
+    BranchService branchService;
+    /**
+     * 先获取当前门店id，更具门店id获取 总公司信息
+     *
+     * @author 张路明
+     */
+    @PostMapping("/addBranch")
+    public ResultSet addbranch(StoreFile storeFile,String username,String password, HttpServletRequest request) {
+
+        branchService.addAdmin(storeFile,username,password,request);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/addStore")
+    public ResultSet addStore(StoreFile storeFile,String username,String password, HttpServletRequest request) {
+
+        branchService.addAdmin(storeFile,username,password,request);
+        return ResultSet.getSuccess();
+    }
+
+    @Autowired
+     RolePermissionMapper permissionMapper;
+    @GetMapping("/aaaa")
+    public void aa(){
+        BranchServiceImpl a= new BranchServiceImpl();
+        List<String> aaa = a.getStoreAuth();
+        aaa.forEach(auth->{
+            RolePermission rolePermission = new RolePermission();
+            rolePermission.setRoleId("3");
+            rolePermission.setPermissionId(auth);
+            permissionMapper.insert(rolePermission);
+        });
+    }
+}

@@ -1,0 +1,108 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Babywash {
+    private String id;
+
+    private String babyname;
+
+    private String babyid;
+
+    private String mothername;
+
+    private String motherid;
+
+    private String washway;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date washdate;
+
+    private String note;
+
+    private String babyfrom;
+
+    private String storeid;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getBabyname() {
+        return babyname;
+    }
+
+    public void setBabyname(String babyname) {
+        this.babyname = babyname == null ? null : babyname.trim();
+    }
+
+    public String getBabyid() {
+        return babyid;
+    }
+
+    public void setBabyid(String babyid) {
+        this.babyid = babyid == null ? null : babyid.trim();
+    }
+
+    public String getMothername() {
+        return mothername;
+    }
+
+    public void setMothername(String mothername) {
+        this.mothername = mothername == null ? null : mothername.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public String getWashway() {
+        return washway;
+    }
+
+    public void setWashway(String washway) {
+        this.washway = washway == null ? null : washway.trim();
+    }
+
+    public Date getWashdate() {
+        return washdate;
+    }
+
+    public void setWashdate(Date washdate) {
+        this.washdate = washdate;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getBabyfrom() {
+        return babyfrom;
+    }
+
+    public void setBabyfrom(String babyfrom) {
+        this.babyfrom = babyfrom == null ? null : babyfrom.trim();
+    }
+
+    public String getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(String storeid) {
+        this.storeid = storeid == null ? null : storeid.trim();
+    }
+}

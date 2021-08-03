@@ -1,0 +1,445 @@
+package com.luer.stockandsales.service.impl;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.luer.comm.utils.GetDate;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.*;
+import com.luer.stockandsales.dao.GoodsMapper;
+import com.luer.stockandsales.dao.GoodsOrderMapper;
+import com.luer.stockandsales.dao.OrderDetailsMapper;
+import com.luer.stockandsales.dao.PurchaseMapper;
+import com.luer.stockandsales.service.DeadlineService;
+import com.luer.stockandsales.service.GoodsOrderService;
+import com.luer.stockandsales.service.OrderDetailsService;
+import com.luer.stockandsales.service.StockService;
+import com.luer.storesdata.dao.StoreFileMapper;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+@Transactional
+@Service
+public class GoodsOrderServiceImpl implements GoodsOrderService {
+    @Autowired
+    private GoodsOrderMapper orderMapper;
+    @Autowired
+    private StoreFileMapper storeFileMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
+    @Autowired
+    private OrderDetailsMapper orderDetailsMapper;
+    @Autowired
+    private OrderDetailsService orderDetailsService;
+    @Autowired
+    private PurchaseMapper purchaseMapper;
+    @Autowired
+    private StoreFileService storeFileService;
+    @Autowired
+    private StockService stockService;
+    @Autowired
+    private DeadlineService deadlineService;
+
+
+    @Override
+    public void saveOrder(GoodsOrder order) {
+        if (order.getApplicationtime() == null) {
+            order.setApplicationtime(GetDate.getDate());
+        }
+
+        if (order.getOrdertime() == null) {
+            order.setOrdertime(GetDate.getDate());
+        }
+
+        String supplierId = storeFileMapper.selectIdBySort();
+        if (order.getType() == 0) {
+            order.setSupplierId(supplierId);
+        }
+        String storeId = storeFileService.getStoreFileId();
+        String num = getGoodsOrderNum(storeId);
+        order.setNum(num);
+        order.setStoreId(storeId);
+        order.setSumprice(0.0);
+        order.setId(UUIDUtils.getUUID());
+        orderMapper.insert(order);
+
+    }
+
+    @Override
+    public void deleteOrderById(String orderId) {
+        GoodsOrder order = orderMapper.selectByPrimaryKey(orderId);
+        orderMapper.deleteByPrimaryKey(orderId);
+        //删除订单对应的订单详情
+        orderDetailsMapper.deleteByOrderId(orderId);
+        if (order.getStoreId() != storeFileMapper.selectIdBySort() && order.getStatus() == 1) {
+            createOrUpdateHeadOrder(order);
+        }
+
+    }
+
+    //修改订单
+    @Override
+    public void updateOrder(GoodsOrder order) {
+
+        Integer type = order.getType();
+        //获取修改之前订单的全部信息
+        GoodsOrder goodsOrder = orderMapper.selectByPrimaryKey(order.getId());
+        //修改对应订单
+        orderMapper.updateByPrimaryKeySelective(order);
+
+        //如果将订单状态修改为入库，添加对应订单的入库信息已及入库详情
+        if (goodsOrder.getStatus() == 1 && order.getStatus() == 2) {
+            //设置对应的入库信息
+            Purchase purchase = new Purchase();
+            purchase.setId(UUIDUtils.getUUID());
+            purchase.setPurchaseTime(GetDate.getDate());
+            purchase.setGoodsOrderId(order.getId());
+            purchase.setStoreId(order.getStoreId());
+            purchase.setPayable(0.0);
+            purchase.setType(type);
+            OrderDetails orderDetails = null;
+            double payable = 0.0;
+            //获取订单对应的详情信息
+            List<OrderDetails> orderDetailsList = orderDetailsMapper.selectByOrderId(order.getId());
+            for (OrderDetails details : orderDetailsList) {
+                orderDetails = new OrderDetails();
+                orderDetails.setId(UUIDUtils.getUUID());
+                orderDetails.setDetailstype(details.getDetailstype() + 1);
+                orderDetails.setOrderId(purchase.getId());
+                orderDetails.setGoodsId(details.getGoodsId());
+                orderDetails.setPrice(details.getPrice());
+                orderDetails.setSerialnum(details.getSerialnum());
+                orderDetails.setGoodsNum(details.getGoodsNum());
+                //插入订单入库的详情
+                orderDetailsMapper.insert(orderDetails);
+                payable += details.getGoodsNum() * details.getPrice();
+            }
+            //进货的应付金额
+            purchase.setPayable(payable);
+            //插入进货信息
+            purchaseMapper.insert(purchase);
+            //获取入库对应的详情
+            orderDetailsList = orderDetailsMapper.selectByOrderId(purchase.getId());
+
+            //遍历入库详情，修改库存信息
+            for (OrderDetails details : orderDetailsList) {
+
+                stockService.updateStock(purchase.getId(), details.getGoodsId(), 1);
+            }
+        }
+        //生成或者修改总部的总订单
+        createOrUpdateHeadOrder(order);
+    }
+
+    //根据门店id查询订单
+    @Override
+    public List<GoodsOrder> selectOrderByStoreId() {
+        List<GoodsOrder> orderList = orderMapper.selectOrderByStoreId(storeFileService.getStoreFileId());
+        return orderList;
+    }
+
+    //根据门店id和订单类型查询门店的总采/自采订单信息
+    @Override
+    public List<GoodsOrder> selectByType(Integer type) {
+        String storeId = storeFileService.getStoreFileId();
+        List<GoodsOrder> orderList = null;
+        if (type == 0) {
+            Deadline deadline = deadlineService.selectDeadline();
+            Date beginTime = deadline.getBegintime();
+            Date endTime = deadline.getEndtime();
+
+            orderList = orderMapper.selectHeadByDeadline(storeId, type, beginTime, endTime);
+        } else {
+            orderList = orderMapper.selectStoreByType(storeId, type);
+        }
+
+        return orderList;
+    }
+
+
+    //查询所有订单信息
+    @Override
+    public List<GoodsOrder> selectAll() {
+        return orderMapper.selectAll();
+    }
+
+    //总部查询各门店的订单信息
+    @Override
+    public List<GoodsOrder> selectAllStoreOrder() {
+        String supplierId = storeFileMapper.selectIdBySort();
+        Deadline deadline = deadlineService.selectDeadline();
+        Date beginTime = deadline.getBegintime();
+        Date endTime = deadline.getEndtime();
+        int type = 0;
+
+        List<GoodsOrder> goodsOrderList = orderMapper.selectStoreOrdersbyDeadline(type, beginTime, endTime);
+
+        return goodsOrderList;
+    }
+
+    //根据门店id和商品id以及订单类型生成订单
+    @Override
+    public void createOrder(String headSumNums, Integer type) {
+
+        headSumNums = headSumNums.substring(headSumNums.lastIndexOf("[") + 1, headSumNums.indexOf("]")).replace("{", "").replace("}", "").replace("null,", "");
+
+        String[] strs = headSumNums.split(",");
+        List<HeadSumOrder> headSumOrderList = new ArrayList<HeadSumOrder>();
+        List<String> goodsIds = new ArrayList<String>();
+        HeadSumOrder headSumOrder = null;
+        String[] str2;
+        String[] str3;
+        String[] str4;
+        String goodsId = null;
+        double num = 0;
+        //获取商品id及其对应的数量
+        for (int i = 0; i < strs.length; i = i + 2) {
+
+            str2 = strs[i].split(":");
+            str3 = strs[i + 1].split(":");
+            goodsId = str2[1].replaceAll("\"", "");
+            num = Double.parseDouble(str3[1].replaceAll("\"", ""));
+            if (num != 0.0) {
+                headSumOrder = new HeadSumOrder();
+                headSumOrder.setGoodsId(goodsId);
+                headSumOrder.setSumNum(num);
+                headSumOrderList.add(headSumOrder);
+                goodsIds.add(goodsId);
+            }
+        }
+
+
+        String storeId = storeFileService.getStoreFileId();
+        if (type == 0) {
+
+            //将总部的id作为门店的供应商id
+            String orderId = UUIDUtils.getUUID();
+            GoodsOrder goodsOrder = new GoodsOrder();
+            goodsOrder.setId(orderId);
+            goodsOrder.setStoreId(storeId);
+            String supplierId = storeFileMapper.selectIdBySort();
+            goodsOrder.setSupplierId(supplierId);
+            goodsOrder.setStatus(0);
+            goodsOrder.setApplicationtime(GetDate.getDate());
+            goodsOrder.setOrdertime(GetDate.getDate());
+            goodsOrder.setSumprice(0.0);
+            goodsOrder.setType(0);
+            goodsOrder.setNum(getGoodsOrderNum(storeId));
+            //将生成的门店订单存到数据库中
+            orderMapper.insert(goodsOrder);
+            //遍历headSumOrderList,添加订单详情
+            for (HeadSumOrder headSumOrder1 : headSumOrderList) {
+                String gid = headSumOrder1.getGoodsId();
+                Goods goods = goodsMapper.selectByPrimaryKey(gid);
+                OrderDetails orderDetails = new OrderDetails();
+                orderDetails.setId(UUIDUtils.getUUID());
+                orderDetails.setOrderId(orderId);
+                orderDetails.setDetailstype(0);
+                orderDetails.setGoodsId(gid);
+                //修改商品对应数量
+                orderDetails.setGoodsNum(headSumOrder1.getSumNum());
+                orderDetails.setPrice(goods.getPriceTwo());
+                orderDetails.setSerialnum(goods.getSerialnum());
+                orderDetailsMapper.insert(orderDetails);
+
+            }
+            orderDetailsService.updateSum(orderId, 0);
+        }
+        if (type == 1) {
+            //根据商品id的数组查询所有商品
+            //List<Goods> goodss = goodsMapper.selectByPrimaryKeys(goodsIds);
+            //查询所有供应商
+            List<String> supplierIds = goodsMapper.selectSupplierIdsByIds(goodsIds);
+            //根据供应商新建订单
+            GoodsOrder goodsOrder = null;
+            for (String supplierId : supplierIds) {
+                String orderId = UUIDUtils.getUUID();
+                goodsOrder = new GoodsOrder();
+                goodsOrder.setId(orderId);
+                goodsOrder.setStoreId(storeId);
+                goodsOrder.setSupplierId(supplierId);
+                goodsOrder.setStatus(0);
+                goodsOrder.setApplicationtime(GetDate.getDate());
+                goodsOrder.setOrdertime(GetDate.getDate());
+                goodsOrder.setSumprice(0.0);
+                goodsOrder.setType(1);
+                goodsOrder.setNum(getGoodsOrderNum(storeId));
+                orderMapper.insert(goodsOrder);
+                //添加对应订单的商品详情
+                for (HeadSumOrder headSumOrder1 : headSumOrderList) {
+                    String gid = headSumOrder1.getGoodsId();
+                    Goods goods = goodsMapper.selectByPrimaryKey(gid);
+                    if (goods.getSupplierId().equals(supplierId)) {
+
+                        OrderDetails orderDetails = new OrderDetails();
+                        orderDetails.setId(UUIDUtils.getUUID());
+                        orderDetails.setOrderId(orderId);
+                        orderDetails.setDetailstype(4);
+                        orderDetails.setGoodsId(gid);
+                        //修改商品对应数量
+                        orderDetails.setGoodsNum(headSumOrder1.getSumNum());
+                        orderDetails.setPrice(goods.getPriceTwo());
+                        orderDetails.setSerialnum(goods.getSerialnum());
+                        orderDetailsMapper.insert(orderDetails);
+                    }
+                }
+
+                orderDetailsService.updateSum(orderId, 0);
+
+            }
+        }
+    }
+
+
+    //生成或者修改总部的总订单
+    @Override
+    public void createOrUpdateHeadOrder(GoodsOrder goodsOrder) {
+
+        Goods goods = null;
+        String goodsId = null;
+        Double goodsNum = 0.0;
+        String supplierId = null;
+        String orderId = null;
+        GoodsOrder order = null;
+        OrderDetails orderDetails = null;
+        //获取总部id
+        String storeId = storeFileMapper.selectIdBySort();
+
+        Deadline deadline = deadlineService.selectDeadline();
+        Date beginTime = deadline.getBegintime();
+        Date endTime = deadline.getEndtime();
+        //如果是总部修改订单跳出该方法
+        if (goodsOrder.getStoreId().equals(storeFileMapper.selectIdBySort())) {
+            return;
+        }
+        //如果不是向总部下的订单，跳出方法
+        if (!goodsOrder.getSupplierId().equals(storeId)) {
+            return;
+        }
+        //获取再截止时间之内门店向总部下的订单的id集合
+        Integer type = 0;
+        List<String> orderIds = orderMapper.selectOrderIdsByType(type, beginTime, endTime);
+        if (orderIds.size() == 0) {
+            return;
+        }
+        //遍历门店向总部下的订单，获取每种商品及其总数量
+        List<HeadSumOrder> goodsMapList = orderDetailsMapper.selectByOrderIds(orderIds);
+        //遍历每种商品及其总数量
+        int i = 0;
+        for (HeadSumOrder headSumOrder : goodsMapList) {
+            goodsId = headSumOrder.getGoodsId();
+            goodsNum = headSumOrder.getSumNum();
+            //如果商品数量为0，跳出本次循环
+            if (goodsNum == 0) {
+                i++;
+                continue;
+            }
+            //如果所有商品数量为0，跳出方法
+            if (i == goodsMapList.size()) {
+                return;
+            }
+            //获取对应商品的详情
+            goods = goodsMapper.selectByPrimaryKey(goodsId);
+            //获取商品对应的供应商
+            supplierId = goods.getSupplierId();
+            //获取总部向某个供应商下的订单
+
+            order = orderMapper.selectHeadOrder(storeId, supplierId);
+
+            //如果总部订单中没有该供应商的订单，新建订单
+            if (order == null) {
+                order = new GoodsOrder();
+                order.setId(UUIDUtils.getUUID());
+                order.setSupplierId(supplierId);
+                order.setStoreId(storeId);
+                order.setStatus(0);
+                order.setOrdertime(GetDate.getDate());
+                order.setApplicationtime(GetDate.getDate());
+                order.setType(0);
+                order.setSumprice(0.0);
+                order.setNum(getGoodsOrderNum("head"));
+
+                orderMapper.insert(order);
+            }
+
+            //获取订单id
+            orderId = order.getId();
+            //如果该订单的详情中没有这种商品，添加该商品的详情，如果有，修改商品数量
+            orderDetails = orderDetailsMapper.selectByOrderIdAndGoodsId(orderId, goodsId);
+            if (orderDetails != null) {
+                orderDetails.setGoodsNum(goodsNum);
+                orderDetailsMapper.updateByPrimaryKey(orderDetails);
+            } else {
+                orderDetails = new OrderDetails();
+                orderDetails.setId(UUIDUtils.getUUID());
+                orderDetails.setGoodsId(goodsId);
+                orderDetails.setOrderId(orderId);
+                orderDetails.setGoodsNum(goodsNum);
+                orderDetails.setDetailstype(0);
+                orderDetails.setSerialnum(goods.getSerialnum());
+                orderDetails.setPrice(goods.getPriceOne());
+                orderDetailsMapper.insert(orderDetails);
+            }
+
+            orderDetailsService.updateSum(orderId, orderDetails.getDetailstype());
+        }
+    }
+
+    //查询分公司旗下的门店订单
+    @Override
+    public List<GoodsOrder> selectByBranchOfficeId() {
+        //通过分公司id查询对应的门店id
+        //获取分公司id
+        String storeId = storeFileService.getStoreFileId();
+        //获取总部id
+        String supplierId = storeFileMapper.selectIdBySort();
+
+        //获取分公司旗下的门店
+
+        List<String> storeIdList = storeFileMapper.selectIdsByBranchId(storeId);
+
+        //获取门店向总部下的订单
+        if (storeIdList.size() == 0) {
+            return null;
+        }
+        List<GoodsOrder> orderList = orderMapper.selectOrderByStoreIds(storeIdList, 0);
+
+        return orderList;
+    }
+
+    //总部查询门店订单的汇总信息
+    @Override
+    public List<GoodsOrder> selectOrderByHeadOfficeId() {
+        Deadline deadline = deadlineService.selectDeadline();
+        Date beginTime = deadline.getBegintime();
+        Date endTime = deadline.getEndtime();
+        //获取门店id
+        String storeId = storeFileService.getStoreFileId();
+
+
+        List<GoodsOrder> orderList = orderMapper.selectOrderByHeadIdAndDeadline(storeId, beginTime, endTime);
+        return orderList;
+    }
+
+    @Override
+    public List<GoodsOrder> selectByStoreAndType(String storeId, int type) {
+        return orderMapper.selectHeadByType(storeId, type);
+    }
+
+    public String getGoodsOrderNum(String storeId) {
+
+        Date d = new Date();
+        DateFormat f = new SimpleDateFormat("yyyyMMddhhmmss");
+        String s = f.format(d);
+        String num = storeId + s;
+        return num;
+    }
+
+}

@@ -1,0 +1,43 @@
+package com.luer.storemanager.bean;
+
+public class GuestRecordWithBLOBs extends GuestRecord {
+    private String detail;
+
+    private String cause;
+
+    private String solution;
+
+    private String customerReback;
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail == null ? null : detail.trim();
+    }
+
+    public String getCause() {
+        return cause;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause == null ? null : cause.trim();
+    }
+
+    public String getSolution() {
+        return solution;
+    }
+
+    public void setSolution(String solution) {
+        this.solution = solution == null ? null : solution.trim();
+    }
+
+    public String getCustomerReback() {
+        return customerReback;
+    }
+
+    public void setCustomerReback(String customerReback) {
+        this.customerReback = customerReback == null ? null : customerReback.trim();
+    }
+}

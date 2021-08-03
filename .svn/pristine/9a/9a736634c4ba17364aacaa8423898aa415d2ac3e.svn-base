@@ -1,0 +1,513 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <title>证书页面</title>
+
+        <style>
+            .pull-left {
+                width: 100%;
+                height: 60px;
+
+            }
+
+            #result1 {
+                width: 500px;
+                height: 300px;
+            }
+
+            #result2 {
+                width: 500px;
+                height: 300px;
+            }
+
+            @-moz-document url-prefix() {
+                input {
+                    width: 65px;
+                }
+            }
+            .upload{
+                width: 500px;
+                height: 50px;
+                margin-top: 10px;
+            }
+            .delete{
+                width: 500px;
+                height: 50px;
+                margin-top: 10px;
+            }
+            .certificates2{
+                padding-left: 80px;
+            }
+        </style>
+    </head>
+<body>
+
+<script>
+    $(document).ready(function () {
+        var url = location.search;
+        var otherId = url.substring(9, 41);
+        /*var otherId = getUrlParam("otherId");*/
+        $.ajax({
+            url: "${ctx}/credentials/selectByOtherId",
+            type: "post",
+            data: {
+                'otherId': otherId
+            },
+            success: function (credentialsList) {
+
+                if (credentialsList[0] != null) {
+                    $('#id1').val(credentialsList[0].id);
+                    $('#name1').text(credentialsList[0].name);
+                    $('#cardid1').text(credentialsList[0].cardid);
+                    $('#uptime1').text(credentialsList[0].uptime);
+                    $('#result1').attr("src","/micc/credentials/testDownloadFile?fileUrl="+credentialsList[0].address);
+                    $("#upload1").css("display","none");
+                    $("#delete1").css("display","block");
+                }else{
+                    $("#upload1").css("display","block");
+                    $("#delete1").css("display","none");
+                }
+                if (credentialsList[1] != null) {
+                    $('#id2').val(credentialsList[1].id);
+                    $('#name2').text(credentialsList[1].name);
+                    $('#cardid2').text(credentialsList[1].cardid);
+                    $('#uptime2').text(credentialsList[1].uptime);
+                    $('#result2').attr("src","/micc/credentials/testDownloadFile?fileUrl="+credentialsList[1].address);
+                    $("#upload2").css("display","none");
+                    $("#delete2").css("display","block");
+                }else{
+                    $("#upload2").css("display","block");
+                    $("#delete2").css("display","none");
+                }
+
+
+            }
+        });
+
+    })
+
+</script>
+<input style="display: none" type="hidden" id="otherId" name="otherId" value="${otherId}">
+<%--<div class="container">
+    <div class="box">
+        <form id="uploadFile" name="uploadFile" enctype="multipart/form-data" onchange="">
+            <div class="content">
+                <div class="content_body">
+                    <div class="left">
+                        <table id="tab1">
+                            <div class="form-group col-md-5" hidden="hidden">
+                                <label for="id1" class="col-md-4 control-label">证件id</label>
+                                <div class="col-md-5">
+                                    <input type="text" id="id1" name="id" style="width: 150px;height:40px"
+                                           placeholder="id">
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for="name1" class="col-md-4 control-label">证件名称</label>
+                                    <div class="col-md-5">
+                                        <input type="text" id="name1" name="name" style="width: 150px;height:40px"
+                                               placeholder="name" readonly="readonly">
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="cardid1" class="col-md-4 control-label">证件号</label>
+                                    <div class="col-md-5">
+                                        <input type="text" id="cardid1" name="cardid" style="width: 150px;height:40px"
+                                               placeholder="cardid" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <div class="form-group col-md-5">
+                                        <label for="uptime1" class="col-md-4 control-label">上传时间</label>
+                                        <div style="padding-left: 7.5px;padding-right: 7.5px"
+                                             class="input-group date form_datetime"
+                                             data-date="" data-date-format="yyyy-mm-dd hh:ii:ss"
+                                             data-link-field="dtp_input1">
+                                            <input class="form-control  col-md-5" size="16" type="text" value=""
+                                                   name="uptime"
+                                                   id="uptime1" readonly="readonly">
+                                            <span class="input-group-addon" readonly="readonly">
+                                                <span class="glyphicon glyphicon-th">
+
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div id="result2" name="image"  class="two">证件1</div>
+                                &lt;%&ndash;src="ftp://192.168.1.202//qfUpload/picture/timg(1).jpg"&ndash;%&gt;
+                            </div>
+                        </table>
+                        <span id=span1>
+            <button type="button" id="upload" name="upload" class="btn btn-primary btn-sm"
+                    onclick="uploadCredentials(1)">上传</button>
+           &lt;%&ndash;<button type="button" id="update" name="update" class="btn btn-primary btn-sm"
+                    onclick="updateCredentials(1)" >修改</button>&ndash;%&gt;
+            <button type="button" id="delete" name="delete" class="btn btn-primary btn-sm"
+                    onclick="deleteCredentials(1)">删除</button>
+
+                        </span>
+                    </div>
+                    <div class="right">
+                        <table id="tab2">
+                            <div class="form-group col-md-5" hidden="hidden">
+                                <label for="id2" class="col-md-4 control-label">证件id</label>
+                                <div class="col-md-5">
+                                    <input type="text" id="id2" name="id" style="width: 150px;height:40px"
+                                           placeholder="id">
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for="name2" class="col-md-4 control-label">证件名称</label>
+                                    <div class="col-md-5">
+                                        <input type="text" id="name2" name="name" style="width: 150px;height:40px"
+                                               placeholder="name" readonly="readonly">
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="cardid2" class="col-md-4 control-label">证件号</label>
+                                    <div class="col-md-5">
+                                        <input type="text" id="cardid2" name="cardid" style="width: 150px;height:40px"
+                                               placeholder="cardid" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <div class="form-group col-md-5">
+                                        <label for="uptime2" class="col-md-4 control-label">上传时间</label>
+                                        <div style="padding-left: 7.5px;padding-right: 7.5px"
+                                             class="input-group date form_datetime"
+                                             data-date="" data-date-format="yyyy-mm-dd hh:ii:ss"
+                                             data-link-field="dtp_input1">
+                                            <input class="form-control  col-md-5" size="16" type="text" value=""
+                                                   name="uptime"
+                                                   id="uptime2" readonly="readonly">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-th">
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div id="result1" name="image" class="one" readonly="readonly">证件2</div>
+                            </div>
+                        </table>
+                        <span id="span2">
+                           <button type="button" id="upload2" name="upload" class="btn btn-primary btn-sm"
+                                   onclick="uploadCredentials(2)">上传</button>
+                           &lt;%&ndash;<button type="button" id="update2" name="update" class="btn btn-primary btn-sm"
+                                   onclick="updateCredentials(2)" >修改</button>&ndash;%&gt;
+                           <button type="button" id="delete2" name="delete" class="btn btn-primary btn-sm"
+                                   onclick="deleteCredentials(2)">删除</button>
+
+                  </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>--%>
+
+<div style="margin-top: 50px;">
+    <div class="col-md-6">
+        <div class="certificates2">
+            <div>
+                <input type="hidden" id="id1">
+                <table width="500px" style="text-align: center;">
+                    <tr>
+                        <td width="167px"><label>证件名称</label></td>
+                        <td width="167px"><label>证件号</label></td>
+                        <td width="167px"><label>上传时间</label></td>
+                    </tr>
+                    <tr>
+                        <td><label id="name1">无</label></td>
+                        <td><label id="cardid1">无</label></td>
+                        <td><label id="uptime1">无</label></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="result">
+                <img id="result1">
+            </div>
+            <div>
+                <button id="upload1" class="btn btn-primary btn-sm upload" onclick="uploadCredentials(1)">上传</button>
+                <button id="delete1" style="display: none;" class="btn btn-primary btn-sm delete" onclick="deleteCredentials(1)">删除</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="certificates2">
+            <div>
+                <input type="hidden" id="id2">
+                <table width="500px" style="text-align: center;" >
+                    <tr>
+                        <td width="167px"><label>证件名称</label></td>
+                        <td width="167px"><label>证件号</label></td>
+                        <td width="167px"><label>上传时间</label></td>
+                    </tr>
+                    <tr>
+                        <td><label id="name2">无</label></td>
+                        <td><label id="cardid2">无</label></td>
+                        <td><label id="uptime2">无</label></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="result">
+                <img id="result2">
+            </div>
+            <div>
+                <button id="upload2" class="btn btn-primary btn-sm upload" onclick="uploadCredentials(2)">上传</button>
+                <button id="delete2" style="display: none;" class="btn btn-primary btn-sm delete" onclick="deleteCredentials(2)">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //图二
+    var form = new FormData();//通过HTML表单创建FormData对象
+    /* var url = '127.0.0.1:8080/'*/
+
+    function uploadCredentials(num) {
+
+        var $that = $(this);
+
+        var dialog = BootstrapDialog.show({
+            type: BootstrapDialog.TYPE_DEFAULT,
+            title: "<span style=\"color:#ab8ce4\">上传证书</span>",
+            closable: false,
+            draggable: true,
+            cssClass: 'api-blacklist-form-add',
+            message: $('<div></div>').load('${ctx}/template/storesdata/credentials.jsp'),//加载弹出页面
+            size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+            onhide: function () {
+                $that.removeAttr("disabled");
+            },
+            buttons: [{
+                id: 'btn-form-submit',
+                label: '提交',
+                icon: 'fa fa-check-circle',
+                cssClass: 'btn-primary',
+                action: function () {
+
+                    var formData = new FormData();
+                    formData.append("file", document.getElementById("address").files[0]);//图片
+                    formData.append('name', document.getElementById("name").value);//证书名称
+                    formData.append('cardid', document.getElementById("cardid").value);//证书号
+                    formData.append('uptime', document.getElementById("uptime").value);//上传时间
+                    formData.append('otherId', "<%=request.getParameter("otherId")%>");//用户/门店id
+
+                    $("#myform").bootstrapValidator({
+                        live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                        excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                        submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                        message: '通用的验证失败消息',//好像从来没出现过
+                        feedbackIcons: {//根据验证结果显示的各种图标
+                            valid: 'glyphicon glyphicon-ok',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        },
+                        fields: {
+                            name: {
+                                validators: {
+                                    notEmpty: {
+                                        message: '证书名称不能为空'
+                                    },
+                                }
+                            },
+                            cardid: {
+                                validators: {
+                                    notEmpty: {
+                                        message: '证件号不能为空'
+                                    },
+                                }
+                            },
+                            uptime: {
+                                validators: {
+                                    notEmpty: {
+                                        message: '上传时间不能为空！'
+                                    },
+                                }
+                            },
+                            address: {
+                                validators: {
+                                    notEmpty: {
+                                        message: '证件图片不能为空！'
+                                    },
+                                }
+                            }
+                        }
+                    });
+                    var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                    bootstrapValidator.validate();
+                    if (bootstrapValidator.isValid()) {
+
+                        $.ajax({
+                            url: "${ctx}/credentials/uploadCredentials",
+                            type: "post",
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (data) {
+                                setTimeout( function(){5 * 1000});
+                                getCode(data);
+                            }
+                        });
+
+
+                    }
+                }
+            }, {
+                label: '关闭',
+                icon: 'fa fa-close',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }]
+        });
+
+    }
+
+    function updateCredentials(num) {
+        var id;
+        if (num == 1) {
+            id = document.getElementById('id1').value;
+        }
+        else {
+            id = document.getElementById('id2').value;
+        }
+        if (id == null) {
+            return;
+        }
+        var dialog = BootstrapDialog.show({
+            type: BootstrapDialog.TYPE_DEFAULT,
+            title: "<span style=\"color:#ab8ce4\"><i></i>修改一条数据</span>",
+            closable: false,
+            draggable: true,
+            cssClass: 'api-blacklist-form-add',
+            message: $('<div></div>').load('${ctx}/template/storesdata/credentials.jsp'),//加载弹出页面
+            size: BootstrapDialog.SIZE_WIDE,//弹出框大小。
+            //数据回显
+            onshown: function (dialogRef) {
+                if (num == 1) {
+                    $('#id').val(id1.value);
+                    $('#name').val(name1.value);
+                    $('#cardid').val(cardid1.value);
+                    $('#uptime').val(uptime1.value);
+                    $('#otherId').val(otherId1.value);
+                    $('#address').val(result2.value);
+
+                } else {
+                    $('#id').val(id2.value);
+                    $('#name').val(name2.value);
+
+                    $('#cardid').val(cardid2.value);
+                    $('#uptime').val(uptime2.value);
+                    $('#otherId').val(otherId2.value);
+                    $('#address').val(address2.value);
+                }
+
+
+            },
+            buttons: [{
+                id: 'btn-form-submit',
+                label: '提交',
+                icon: 'fa fa-check-circle',
+                cssClass: 'btn-primary',
+                action: function () {
+                    var formData = new FormData();
+                    formData.append("file", document.getElementById("address").files[0]);//图片
+                    formData.append('name', document.getElementById("name").value);//证书名称
+                    formData.append('cardid', document.getElementById("cardid").value);//证书号
+                    formData.append('uptime', document.getElementById("uptime").value);//上传时间
+                    formData.append('otherId', "<%=request.getParameter("otherId")%>");//用户/门店id
+                    //修改提交路径
+                    $.ajax({
+                        url: "${ctx}/credentials/updateCredentials",
+                        type: "post",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            getCode(data);
+                        }
+                    });
+                }
+            }, {
+                label: '关闭',
+                icon: 'fa fa-close',
+                action: function (dialogItself) {
+                    dialogItself.close();
+                }
+            }]
+        });
+
+
+    }
+
+    function deleteCredentials(num) {
+        var id;
+        if (num == 1) {
+            id = document.getElementById('id1').value;
+        } else if (num == 2) {
+            id = document.getElementById('id2').value;
+        }
+        var json = {
+            'id': id
+
+        };
+        PNotify.prototype.options.styling = "bootstrap3";
+        if (id != null) {
+            var url = "${ctx}/credentials/deleteCredentialsById"
+            $.post(url, json).done(function (data) {
+                getCode(data)
+            }).fail(function (data) {
+                getCode(data)
+            });
+        } else {
+            new PNotify({
+                title: 'Oh No!',
+                text: '操作失败',
+                delay: delay,
+                hide: true,
+                type: 'error'
+            });
+        }
+
+    }
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".result").click(function () {
+            if($(this).children("img").attr("src")!=null){
+                $("#seeimage").children("div").children("img").attr("src",$(this).children("img").attr("src"));
+                $("#seeimage").css("display","block");
+            }
+        });
+        $("#seeimage").click(function () {
+            $(this).css("display","none");
+        });
+    })
+</script>
+</body>
+</html>

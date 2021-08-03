@@ -1,0 +1,149 @@
+package com.luer.storesdata.service.impl;
+
+import com.luer.comm.utils.FTPUtils;
+import com.luer.comm.utils.FtpPropertiesUtils;
+import com.luer.comm.utils.GetDate;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storesdata.bean.Credentials;
+import com.luer.storesdata.dao.CredentialsMapper;
+import com.luer.storesdata.service.CredentialsService;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.InetAddress;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+
+@Transactional
+@Service
+public class CredentialsServiceImpl implements CredentialsService {
+    @Autowired
+    private CredentialsMapper credentialsMapper;
+
+    @Override
+    public void uploadCredentials(MultipartFile files, Credentials credentials) throws IOException {
+        //上传证书
+
+        //连接ftp服务器
+        try {
+            FtpPropertiesUtils ftpPropertiesUtils = new FtpPropertiesUtils();
+            Properties properties = ftpPropertiesUtils.getProperties();
+            String ftpIp = properties.getProperty("ftpIp"); //ip
+            int ftpPort = Integer.parseInt(properties.getProperty("ftpPort")); //端口号
+            String ftpName = properties.getProperty("ftpName"); //用户名
+            String ftpPassword = properties.getProperty("ftpPassword"); //密码
+            String ftpPictureUrl = properties.getProperty("ftpPictureUrl"); //ftp图片地址
+            boolean b = FTPUtils.connect(ftpIp, ftpPort, ftpName, ftpPassword);
+            if (b) {
+                if (null != files) {
+                    DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+                    String sysTime=df.format(new Date());//获得当前时间的字符串
+                    String fileName2 = ftpPictureUrl + sysTime +".jpg";
+                    // 开始读取文件并进行压缩
+                    Image src = ImageIO.read(files.getInputStream());
+                    // 构造一个类型为预定义图像类型之一的 BufferedImage
+                    BufferedImage tag = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
+                    //绘制图像  getScaledInstance表示创建此图像的缩放版本，返回一个新的缩放版本Image,按指定的width,height呈现图像
+                    //Image.SCALE_SMOOTH,选择图像平滑度比缩放速度具有更高优先级的图像缩放算法。
+                    tag.getGraphics().drawImage(src.getScaledInstance(500, 500, Image.SCALE_SMOOTH), 0, 0, null);
+                    java.io.ByteArrayOutputStream   output   =   new   java.io.ByteArrayOutputStream();
+                    ImageIO.write(tag,   "jpg",   output);
+                    byte[]   buff   =   output.toByteArray();
+                    InputStream   in   =   new ByteArrayInputStream(buff);
+                    //调用ftp上传
+                    FTPUtils.upload(in, fileName2);
+                    credentials.setId(UUIDUtils.getUUID());
+                    credentials.setAddress(fileName2);
+                    credentials.setUptime(GetDate.getDate());
+                    credentialsMapper.insert(credentials);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void deleteCredentialsById(String id) throws IOException {
+        Credentials credentials = credentialsMapper.selectByPrimaryKey(id);
+        String address = credentials.getAddress();
+        address=address.substring(address.lastIndexOf("/"));
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        String allSystemFileURL = "/home/"+inetAddress.getHostName()+"/Documents/micc/image/"+address;
+        File file = new File(allSystemFileURL);
+        if (file.exists()) {
+            file.delete();
+        }
+        FtpPropertiesUtils ftpPropertiesUtils = new FtpPropertiesUtils();
+        Properties properties = ftpPropertiesUtils.getProperties();
+        String ftpIp = properties.getProperty("ftpIp"); //ip
+        int ftpPort = Integer.parseInt(properties.getProperty("ftpPort")); //端口号
+        String ftpName = properties.getProperty("ftpName"); //用户名
+        String ftpPassword = properties.getProperty("ftpPassword"); //密码
+        String ftpPictureUrl = properties.getProperty("ftpPictureUrl"); //ftp图片地址
+        boolean b = FTPUtils.connect(ftpIp, ftpPort, ftpName, ftpPassword);
+        if(b){
+            FTPUtils.deleteLoadFile(ftpPictureUrl+address);
+        }
+        credentialsMapper.deleteByPrimaryKey(id);
+    }
+
+
+    public void updateCredentials(Credentials credentials, MultipartFile file) {
+        credentialsMapper.updateByPrimaryKey(credentials);
+    }
+
+
+    public List<Credentials> selectCredentialsbyOtherId(String otherId) throws IOException {
+        List<Credentials> credentialsListNew = new ArrayList<>();//创建一个新集合
+        List<Credentials> credentialsList = credentialsMapper.selectByOtherId(otherId);//根据id从数据库查询出来的数据集合
+        InetAddress inetAddress = InetAddress.getLocalHost();//java封装用来表示ip地址的对象
+        String allSystemFileURL = "/home/"+inetAddress.getHostName()+"/Documents/micc/image/";//创建本地地址字符串
+        File file = new File(allSystemFileURL);//创建file对象
+        if(!file.exists()){//判断是否存在文件夹
+            file.mkdirs();//不存在则创建
+        }
+        //连接至ftp
+        FtpPropertiesUtils ftpPropertiesUtils = new FtpPropertiesUtils();
+        Properties properties = ftpPropertiesUtils.getProperties();
+        String ftpIp = properties.getProperty("ftpIp"); //ip
+        int ftpPort = Integer.parseInt(properties.getProperty("ftpPort")); //端口号
+        String ftpName = properties.getProperty("ftpName"); //用户名
+        String ftpPassword = properties.getProperty("ftpPassword"); //密码
+        boolean b = FTPUtils.connect(ftpIp, ftpPort, ftpName, ftpPassword);
+        if (b) {//判断是否连接成功
+            /*连接成功*/
+            for(Credentials credentials : credentialsList){//循环数据集合
+                if (null != credentials.getAddress()) {//判断当credentials.getAddress()不为空时
+                    //创建文件输出流
+                    OutputStream out = new FileOutputStream(allSystemFileURL+credentials.getAddress().substring(credentials.getAddress().lastIndexOf("/")));
+                    //从ftp上将对应的文件下载至本地路径
+                    if(FTPUtils.download(credentials.getAddress(),out)){
+                        /*下载成功*/
+                        //将credentials.setAddress()修改为新的地址
+                        credentials.setAddress(allSystemFileURL+credentials.getAddress().substring(credentials.getAddress().lastIndexOf("/")));
+                    }
+                }
+                //保存至新集合中
+                credentialsListNew.add(credentials);
+            }
+        }
+        //将新集合返回页面输出
+        return credentialsListNew;
+    }
+
+
+}

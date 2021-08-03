@@ -1,0 +1,31 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.FamilyFunction;
+import com.luer.servicecenter.bean.FamilyFunctionExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface FamilyFunctionMapper {
+    int countByExample(FamilyFunctionExample example);
+
+    int deleteByExample(FamilyFunctionExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(FamilyFunction record);
+
+    int insertSelective(FamilyFunction record);
+
+    List<FamilyFunction> selectByExample(FamilyFunctionExample example);
+
+    FamilyFunction selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") FamilyFunction record, @Param("example") FamilyFunctionExample example);
+
+    int updateByExample(@Param("record") FamilyFunction record, @Param("example") FamilyFunctionExample example);
+
+    int updateByPrimaryKeySelective(FamilyFunction record);
+
+    int updateByPrimaryKey(FamilyFunction record);
+}

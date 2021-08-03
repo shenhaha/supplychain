@@ -1,0 +1,45 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.Classify;
+import com.luer.stockandsales.bean.ClassifyExample;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface ClassifyMapper {
+    int countByExample(ClassifyExample example);
+
+    int deleteByExample(ClassifyExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Classify record);
+
+    int insertSelective(Classify record);
+
+    List<Classify> selectByExample(ClassifyExample example);
+
+    Classify selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Classify record, @Param("example") ClassifyExample example);
+
+    int updateByExample(@Param("record") Classify record, @Param("example") ClassifyExample example);
+
+    int updateByPrimaryKeySelective(Classify record);
+
+    int updateByPrimaryKey(Classify record);
+
+    //根据门店id获取分类
+    List<Classify> selectByStoreId(String storeId);
+
+    List<String> selectByParentId(String parentId);
+
+    List<String> selectByParentIdList(@Param("classifyIdList") List<String> classifyIdList);
+
+    void deleteByPrimaryKeyList(@Param("idList")List<String> idList);
+}

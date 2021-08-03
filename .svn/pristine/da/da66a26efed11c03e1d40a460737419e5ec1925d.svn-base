@@ -1,0 +1,97 @@
+package com.luer.servicecenter.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+@Setter
+@Getter
+@ToString
+public class BabyEvaluate {
+    private String id;
+
+    private String storeId;
+
+    private String customerBasicId;
+
+    private String roomId;
+
+    private String hospitalsummary;
+
+    private String childBirthWay;
+
+    private String weight;
+
+    private String height;
+
+    private String temperature;
+
+    private String heartbeat;
+
+    private String breathing;
+
+    private String chimney;
+
+    private String scalp;
+
+    private String eye;
+
+    private String ear;
+
+    private String oral;
+
+    private String nose;
+
+    private String neck;
+
+    private String chest;
+
+    private String abdomen;
+
+    private String umbilicalCord;
+
+    private String back;
+
+    private String upperLimb;
+
+    private String lowerLimbs;
+
+    private String skin;
+
+    private String appearance;
+
+    private String secretions;
+
+    private String moveBowels;
+
+    private String urinate;
+
+    private String assessment;
+
+    private String confirmSignature;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date assessmentTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updatetime;
+
+    private String note;
+
+    private String babyname;
+
+    private String status;
+
+    private String jaundice;
+
+    private String plantarBlood;
+
+    private String strone;
+
+    private String strtwo;
+
+    private String strthree;
+
+
+}

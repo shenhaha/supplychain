@@ -1,0 +1,125 @@
+package com.luer.servicecenter.bean;
+
+import java.util.Date;
+
+public class FamilyFunction {
+    private String id;
+
+    private String motherid;
+
+    private String answerone;
+
+    private String answertwo;
+
+    private String answerthree;
+
+    private String answerfour;
+
+    private String answerfive;
+
+    private String answersix;
+
+    private String score;
+
+    private Date updatetime;
+
+    private String storeid;
+
+    private String age;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public String getAnswerone() {
+        return answerone;
+    }
+
+    public void setAnswerone(String answerone) {
+        this.answerone = answerone == null ? null : answerone.trim();
+    }
+
+    public String getAnswertwo() {
+        return answertwo;
+    }
+
+    public void setAnswertwo(String answertwo) {
+        this.answertwo = answertwo == null ? null : answertwo.trim();
+    }
+
+    public String getAnswerthree() {
+        return answerthree;
+    }
+
+    public void setAnswerthree(String answerthree) {
+        this.answerthree = answerthree == null ? null : answerthree.trim();
+    }
+
+    public String getAnswerfour() {
+        return answerfour;
+    }
+
+    public void setAnswerfour(String answerfour) {
+        this.answerfour = answerfour == null ? null : answerfour.trim();
+    }
+
+    public String getAnswerfive() {
+        return answerfive;
+    }
+
+    public void setAnswerfive(String answerfive) {
+        this.answerfive = answerfive == null ? null : answerfive.trim();
+    }
+
+    public String getAnswersix() {
+        return answersix;
+    }
+
+    public void setAnswersix(String answersix) {
+        this.answersix = answersix == null ? null : answersix.trim();
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score == null ? null : score.trim();
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(String storeid) {
+        this.storeid = storeid == null ? null : storeid.trim();
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age == null ? null : age.trim();
+    }
+}

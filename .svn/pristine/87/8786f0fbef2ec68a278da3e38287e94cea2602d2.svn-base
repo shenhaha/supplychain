@@ -1,0 +1,100 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>同级账号管理</title>
+</head>
+<body>
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                    <%--<div class="panel-heading">
+                        <div class="pull-left">
+                            <ol class="breadcrumb">
+                                <li><a href="${ctx}/index">首页</a></li>
+                                <li class="active">本店用户管理</li>
+                            </ol>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>--%>
+                        <div class="panel-body" >
+                            <div class="table-responsive">
+                                <table id="footable_appointment" class="table" data-paging="true" data-filtering="true" data-sorting="true">
+                                </table>
+                            </div>
+                        </div>
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script >
+    $(function () {
+        var appointmentTitle = [
+            {"name":"id","title":"ID",visible:false,},
+            {"name":"username","title":"用户名"},
+            {"name":"createdate","title":"用户创建时间"},
+            {"name":"updatepass","title":"操作"}
+        ];
+        function update(id,username) {
+            var dialog = BootstrapDialog.show({
+                type : BootstrapDialog.TYPE_DEFAULT,
+                title : "<span style=\"color: #ab8ce4\"><i></i>修改密码</span>",
+                closable: false,
+                draggable: true,
+                cssClass: 'api-blacklist-form-add',
+                message:$('<div></div>').load('${ctx}/template/systemmanager/updatepass.jsp'),//加载弹出页面
+                size : BootstrapDialog.SIZE_NORMAL,//弹出框大小。
+                onshown:function () {
+                    $("#name").val(username);
+                },
+                buttons : [{
+                    id: 'btn-form-submit',
+                    label: '提交',
+                    icon: 'fa fa-check-circle',
+                    cssClass: 'btn-primary',
+                    action: function(){
+                        if($('#password').val()!=$('#repass').val()){
+                            if($('#mylabel')!=undefined){
+                                $('#mylabel').remove();
+                            }
+                            $('#divs').append('<lable style="color: red" id="mylabel">两次密码不正确</lable>');
+
+                            return false;
+                        }
+                        $.post('${ctx}/updatepass',{"pass":$('#password').val(),"id":id},function (data) {
+                            getCode(data)
+                        })
+                    }
+                },{
+                    label : '关闭',
+                    icon: 'fa fa-close',
+                    action : function(dialogItself) {
+                        dialogItself.close();
+                    }
+                } ]
+            });
+        }
+        window.update = update;
+        //启动footable
+        var ft = FooTable.init('#footable_appointment',{
+            "columns": appointmentTitle,
+            "rows": $.get("${ctx}/getUsersByStoreID",function(data){
+                $(data).each(function(){//用这个类样式写css就行了 detailsBtn
+                    this.updatepass = "<button id='cx' class='btn btn-primary btn-sm' onclick="+"update('"+this.id+"','"+this.username+"')>修改密码</button>";
+                });
+                return data;
+            }),
+        });
+        uid = 6;
+    });
+</script>
+</body>
+</html>

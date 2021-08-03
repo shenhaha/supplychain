@@ -1,0 +1,168 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Patientrounds {
+    private String id;
+
+    private String customerBasicId;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date operationdate;
+
+    private String shrinkage;
+
+    private String cesareansection;
+
+    private String sidecutter;
+
+    private String lochiacolor;
+
+    private String lochiasmell;
+
+    private String leucorrhea;
+
+    private String fever;
+
+    private String signature;
+
+    private String othersituations;
+
+    private String customername;
+
+    private String motherid;
+
+    private String storeId;
+
+    private String type;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public Date getOperationdate() {
+        return operationdate;
+    }
+
+    public void setOperationdate(Date operationdate) {
+        this.operationdate = operationdate;
+    }
+
+    public String getShrinkage() {
+        return shrinkage;
+    }
+
+    public void setShrinkage(String shrinkage) {
+        this.shrinkage = shrinkage == null ? null : shrinkage.trim();
+    }
+
+    public String getCesareansection() {
+        return cesareansection;
+    }
+
+    public void setCesareansection(String cesareansection) {
+        this.cesareansection = cesareansection == null ? null : cesareansection.trim();
+    }
+
+    public String getSidecutter() {
+        return sidecutter;
+    }
+
+    public void setSidecutter(String sidecutter) {
+        this.sidecutter = sidecutter == null ? null : sidecutter.trim();
+    }
+
+    public String getLochiacolor() {
+        return lochiacolor;
+    }
+
+    public void setLochiacolor(String lochiacolor) {
+        this.lochiacolor = lochiacolor == null ? null : lochiacolor.trim();
+    }
+
+    public String getLochiasmell() {
+        return lochiasmell;
+    }
+
+    public void setLochiasmell(String lochiasmell) {
+        this.lochiasmell = lochiasmell == null ? null : lochiasmell.trim();
+    }
+
+    public String getLeucorrhea() {
+        return leucorrhea;
+    }
+
+    public void setLeucorrhea(String leucorrhea) {
+        this.leucorrhea = leucorrhea == null ? null : leucorrhea.trim();
+    }
+
+    public String getFever() {
+        return fever;
+    }
+
+    public void setFever(String fever) {
+        this.fever = fever == null ? null : fever.trim();
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
+    }
+
+    public String getOthersituations() {
+        return othersituations;
+    }
+
+    public void setOthersituations(String othersituations) {
+        this.othersituations = othersituations == null ? null : othersituations.trim();
+    }
+
+    public String getCustomername() {
+        return customername;
+    }
+
+    public void setCustomername(String customername) {
+        this.customername = customername == null ? null : customername.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+}

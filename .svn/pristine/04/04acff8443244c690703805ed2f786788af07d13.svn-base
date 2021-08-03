@@ -1,0 +1,67 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Neonatalrounds;
+import com.luer.servicecenter.service.NeonatalroundsService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * @author EVEA
+ * 宝宝查房表
+ */
+@RestController
+@RequestMapping("/neonatalrounds")
+public class NeonatalroundsController {
+    @Autowired
+    private NeonatalroundsService neonatalroundsService;
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getNeonatalroundsByMotherId")
+    @ResponseBody
+    public List<Neonatalrounds> getNeonatalroundsByMotherId(@NonNull String motherId){
+        return neonatalroundsService.getNeonatalroundsByMotherId(motherId);
+    }
+
+
+
+    @RequestMapping("/addNeonatalrounds")
+    @ResponseBody
+    public ResultSet addNeonatalrounds(Neonatalrounds neonatalrounds){
+        neonatalroundsService.insert(neonatalrounds);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/delNeonatalrounds")
+    @ResponseBody
+    public ResultSet delNeonatalrounds(@NonNull String id){
+        neonatalroundsService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/updateNeonatalrounds")
+    @ResponseBody
+    public ResultSet updateNeonatalrounds(Neonatalrounds neonatalrounds){
+        neonatalroundsService.updateByPrimaryKey(neonatalrounds);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/queryOneNeonatalrounds")
+    @ResponseBody
+    public Neonatalrounds queryOneNeonatalrounds(@NonNull String id){
+        return neonatalroundsService.selectByPrimaryKey(id);
+    }
+
+    @RequestMapping("/queryAllNeonatalrounds")
+    @ResponseBody
+    public List<Neonatalrounds> queryAllNeonatalrounds(Neonatalrounds neonatalrounds){
+       return neonatalroundsService.selectByExample(neonatalrounds);
+    }
+
+}

@@ -1,0 +1,336 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<head>
+    <style type="text/css">
+        #sosuo {
+            float: right;
+            width: 22%;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #test1, #test2, #test3, #test4 {
+            float: left;
+            cursor: move;
+            font-size: 22px;
+            color: #F0F8FF;
+            background: #4682B4;
+            z-index: 999;
+            width: 60px;
+            margin: 0.5%;
+        }
+
+        .bothClear {
+            clear: both;
+        }
+    </style>
+</head>
+<html>
+<body>
+<!--获用户登录时取存入session域对象中店铺id-->
+<input style="display:none" type="hidden" id="storeId" value="${requestScope.storeId}">
+<%--<div class="panel-heading">
+    <div class="pull-left">
+        <ol class="breadcrumb">
+            <li><a href="${ctx}/index">首页</a></li>
+            <li class="active">排班管理</li>
+        </ol>
+    </div>
+    <div class="clearfix"></div>
+</div>--%>
+    <%--<div id="sosuo" >
+        <input type="button" name="advance" id="advance" class="btn btn-success"&lt;%&ndash;style="color: black;background-color: #2aabd2"&ndash;%&gt; value="复刻上月排班" onclick="advenceSchedul()"/>
+    </div>--%>
+<%--<div id="sosuo">
+    <div id="test3" style="background:black">白班</div>
+    <div id="test4" style="background:purple">晚班</div>
+    <div id="test1" style="background:green">请假</div>
+    <div id="test2" style="background:red">休息</div>
+</div>--%>
+<div class="bothClear"></div>
+<%--插件主体--%>
+<div id="calendar" class="fc fc-unthemed fc-ltr"></div>
+
+<script>
+    //把div设置成可以拖拽的元素
+    $('#test1').draggable({
+        revert: true,
+        revertDuration: 0
+    });
+    $('#test2').draggable({
+        revert: true,
+        revertDuration: 0
+    });
+    $('#test3').draggable({
+        revert: true,
+        revertDuration: 0
+    });
+    $('#test4').draggable({
+        revert: true,
+        revertDuration: 0
+    });
+
+    //获取storeId的值
+    var storeValue = '<%=request.getParameter("storeId")%>';
+
+    function getRes(data) {
+        PNotify.prototype.options.styling = "bootstrap3";
+        var delay = 1000 * 2;
+        if (data.code == 200 && data.msg == "success") {
+            new PNotify({
+                title: 'Success!',
+                text: '操作成功',
+                delay: delay,
+                hide: true,
+                type: 'success'
+            });
+            $("#calendar").fullCalendar("refetchEvents");
+        } else {
+            new PNotify({
+                title: 'Oh No!',
+                text: '操作失败',
+                delay: delay,
+                hide: true,
+                type: 'error'
+            });
+            $("#calendar").fullCalendar("refetchEvents");
+        }
+    }
+    //预排班
+    function advenceSchedul(){
+        var json = {
+            "storeId":'<%=session.getAttribute("storeId")%>'
+        }
+        $.post("${ctx}/schedule/advanceSchedule", json).done(function (data) {
+            getRes(data)
+        }).fail(function (data) {
+            getRes(data)
+        });
+    }
+    $(function () {
+
+        function editRoomState(calEve) {
+            var json = {
+                "id": calEve.id,
+                "employid": calEve.resourceId,
+                "starttime": $.fullCalendar.formatDate(calEve.start, "YYYY-MM-DD HH:mm:ss"),
+                "endtime": $.fullCalendar.formatDate(calEve.end, "YYYY-MM-DD HH:mm:ss")
+            }
+            $.post("${ctx}/schedule/updateScheduleById", json).done(function (data) {
+                getRes(data)
+            }).fail(function (data) {
+                getRes(data)
+            });
+        }
+
+        function changeDate() {
+            $('#calendar').fullCalendar('gotoDate', $("#mydate").val());
+        }
+
+        //排班表json数据
+        $('#calendar').fullCalendar({
+            //日历表左部列表
+            resources: "${ctx}/employer/selectemployersByScale?storeId="+storeValue,
+            //具体日程事件
+            events: "${ctx}/schedule/selectScheduleAllList?storeId="+storeValue,
+            now: new Date(),
+            editable: false,
+            selectable: false,
+            droppable: false,
+            eventRender: function(calEvent, element, view){
+                element.html(calEvent.title);
+                if(calEvent.title=="请假"){
+                    element.css('background','green');
+                }else if(calEvent.title=="休息"){
+                    element.css('background','red');
+                }else if(calEvent.title=="医陪1:1"){
+                    element.css('background','purple');
+                }else if(calEvent.title=="晚班"){
+                    element.css('background','black');
+                }else if(calEvent.title=="晚班N8"){
+                    element.css('background','black');
+                }else if(calEvent.title=="公出"){
+                    element.css('background','#1b1ad2');
+                }
+                console.log(calEvent.title);
+            },
+            <!--拖动添加 新增操作-->
+            drop: function (date, allDay, jsEvent, ui, objArg) {
+                //班次类型
+                var type = this.textContent;
+                //日期
+                var date = $.fullCalendar.formatDate(date, "YYYY-MM-DD")
+                $.post("${ctx}/schedule/addSchedule", {
+                    "employid": ui,
+                    "storeId":'<%=session.getAttribute("storeId")%>',
+                    "type": type,
+                    "date": date
+                }).done(function (data) {
+                    getRes(data)
+                }).fail(function (data) {
+                    getRes(data)
+                });
+            },
+            aspectRatio: 1.8,
+            buttonText: {
+                today: '今天',
+                gotoDate: '指定日期',
+                timelineDay: '日',
+                timelineTenDay: '10日',
+                timelineMonth: '月',
+                timelineYear: '年'
+            },
+            monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月',
+                '8月', '9月', '10月', '11月', '12月'],
+            scrollTime: '00:00',
+            header: {
+                left: 'today gotoDate prev,next',
+                center: 'title',
+                right: 'timelineDay,timelineTenDay,timelineMonth,timelineYear'
+            },
+            defaultView: 'timelineMonth',
+            views: {
+                timelineMonth:{
+                    type: 'timeline',
+                    titleFormat:'YYYY年MMMM'
+                },
+                timelineDay: {
+                    slotDuration: '00:30',
+                    titleFormat:'MM月DD号'
+                },
+                timelineTenDay: {
+                    type: 'timeline',
+                    duration: {days: 10},
+                }
+            },
+            navLinks: false,
+            resourceAreaWidth: '20%',
+            resourceLabelText: '员工姓名',
+            //拖动event监听事件
+            eventDrop: function (calEvent, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+                //editRoomState(calEvent);
+
+            },
+            //改变event长度监听事件
+            eventResize: function (calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
+               // editRoomState(calEvent);
+            },
+            <!--点击空白处添加 新增操作-->
+            dayClick: function (calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
+                var vid = revertFunc.id;
+                var start = $.fullCalendar.formatDate(calEvent, "YYYY-MM-DD")
+                //获取数据
+                $.get("${ctx}/employer/selectEmployersById?vid="+vid,function(data){
+                    $(data).each(function(){
+                        var dapa =  this.department;
+                        //alert(dapa);
+                        if(dapa=="护理部") {
+                            $(".fc-highlight").tips({
+                                side: 2,
+                                time: 3,
+                                msg: "<div style='width:300px height:500px'> " +
+                                "<div >" + "<div style='color: black'>护理部班次</div>" +
+                                "<input type='button'  value='白班D' style='background-color:black;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;白班D&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button'  value='白班D8' style='background-color:black;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;白班D8&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='晚班N8'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;晚班N8&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='请假'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;请假&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='休息'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;休息&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='医陪1:1'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;医陪1:1&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='医陪1:N'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;医陪1:N&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='公出'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;公出&quot;,&quot;" + start + "&quot;)>," +
+                                "</div>",
+                                color: '#F00',
+                                bg: '#ea68a2',
+                            });
+                        }else if(dapa=="房务部") {
+                            $(".fc-highlight").tips({
+                                side: 2,
+                                time: 3,
+                                msg: "<div style='width:300px height:500px'> " +
+                                "<div >" + "<div style='color: black'>房务部班次</div>" +
+                                "<input type='button'  value='白班' style='background-color:black;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;白班&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='请假'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;请假&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='休息'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;休息&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='公出'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;公出&quot;,&quot;" + start + "&quot;)>," +
+                                "</div>",
+                                color: '#F00',
+                                bg: '#ea68a2',
+                            });
+                        }else if(dapa=="客服部") {
+                            $(".fc-highlight").tips({
+                                side: 2,
+                                time: 3,
+                                msg: "<div style='width:300px height:500px'> " +
+                                "<div >" + "<div style='color: black'>客服部班次</div>" +
+                                "<input type='button'  value='白班D' style='background-color:black;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;白班D&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button'  value='白班D8' style='background-color:black;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;白班D8&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='午班'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;午班&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='晚班'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;晚班&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='请假'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;请假&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='休息'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;休息&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='公出'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;公出&quot;,&quot;" + start + "&quot;)>," +
+                                "</div>",
+                                color: '#F00',
+                                bg: '#ea68a2',
+                            });
+                        }else if(dapa=="厨房部") {
+                            $(".fc-highlight").tips({
+                                side: 2,
+                                time: 3,
+                                msg: "<div style='width:300px height:500px'> " +
+                                "<div style='color: black'>厨房部班次</div>" +
+                                "<input type='button'  value='A班' style='background-color:black;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;A班&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button'  value='B班' style='background-color:black;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;B班&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='C班'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;C班&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='请假'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;请假&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='休息'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;休息&quot;,&quot;" + start + "&quot;)>," +
+                                "<input type='button' value='公出'  style='background-color:purple;color: #8fcafe' onclick = newButt(&quot;" + vid + "&quot;,&quot;公出&quot;,&quot;" + start + "&quot;)>," +
+                                "</div>",
+                                color: '#F00',
+                                bg: '#ea68a2',
+                            });
+                        };
+                    });
+                });
+            },
+            <!--选中单一用户 删除 tips-->
+            /*eventClick: function (calEvent, jsEvent, view) {
+                var cid = calEvent.id;
+                $(this).tips({
+                    side: 1,
+                    time: 3,
+                    msg: "<input type='button' value='删除' onclick = newButton(\"" + calEvent.id + "\")>",
+                    color:'#F00',
+                    bg: '#ea68a2',
+                    x: 0,
+                    y: 0
+                });
+            },*/
+        });
+       var htmlInput = "<input id='mydate' type='date' style='margin-right:10px;'>";
+        $("div[class^='fc-toolbar']").before(htmlInput);
+        $("#mydate").after($("button[class^='fc-gotoDate-button']"));
+        $("button[class^='fc-gotoDate-button']").click(function () {
+            changeDate();
+        });
+        <!--删除操作tips-->
+    });
+    /*function newButton(id) {
+        $.post("/schedule/daleteSchedule", {"id": id}).done(function (data) {
+            getRes(data)
+        }).fail(function (data) {
+            getRes(data)
+        });
+    }*/
+    /*<!--点击空白处添加 新增操作-->
+    function newButt(vid, type, start) {
+        $.post("/schedule/addSchedule", {"employid": vid, "type": type, "date": start,"storeId":''}).done(function (data) {
+            getRes(data)
+        }).fail(function (data) {
+            getRes(data)
+        });
+    }*/
+</script>
+</body>
+</html>

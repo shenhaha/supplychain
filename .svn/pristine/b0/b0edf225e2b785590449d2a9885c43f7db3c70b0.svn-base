@@ -1,0 +1,17 @@
+package com.luer.storesdata.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * Created by 87961 on 2018/8/30.
+ */
+@Getter
+@Setter
+public class RoomResources {
+    //门店id
+    private String id;
+    //房间类型+房间号
+    private  String title;
+
+}

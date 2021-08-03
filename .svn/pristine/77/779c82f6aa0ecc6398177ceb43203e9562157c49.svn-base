@@ -1,0 +1,83 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.WorryEvaluate;
+import com.luer.servicecenter.bean.WorryEvaluateExample;
+import com.luer.servicecenter.bean.WorryProblem;
+import com.luer.servicecenter.bean.WorryProblemExample;
+import com.luer.servicecenter.dao.WorryEvaluateMapper;
+import com.luer.servicecenter.dao.WorryProblemMapper;
+import com.luer.servicecenter.service.WorryEvaluateService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/17.
+ */
+@Service
+@Transactional
+public class WorryEvaluateServiceImpl implements WorryEvaluateService {
+    @Autowired
+    private WorryProblemMapper worryProblemMapper;
+    @Autowired
+    private WorryEvaluateMapper worryEvaluateMapper;
+    @Override
+    public void addWorryProblem(WorryProblem worryProblem) {
+        worryProblem.setId(UUIDUtils.getUUID());
+        worryProblemMapper.insert(worryProblem);
+    }
+
+    @Override
+    public void deleteWorryProblem(String id) {
+        worryProblemMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<WorryProblem> getWorryProblem(WorryProblem worryProblem) {
+        WorryProblemExample worryProblemExample = new WorryProblemExample();
+        WorryProblemExample.Criteria criteria = worryProblemExample.createCriteria();
+        if(worryProblem.getStoreId()!=null){
+            criteria.andStoreIdEqualTo(worryProblem.getStoreId());
+        }
+        return worryProblemMapper.selectByExample(worryProblemExample);
+    }
+
+    @Override
+    public void updateWorryProblem(WorryProblem worryProblem) {
+        worryProblemMapper.updateByPrimaryKeySelective(worryProblem);
+    }
+
+    @Override
+    public void addWorryEvaluate(WorryEvaluate worryEvaluate) {
+        worryEvaluate.setId(UUIDUtils.getUUID());
+        worryEvaluateMapper.insert(worryEvaluate);
+    }
+
+    @Override
+    public void updateWorryEvaluate(WorryEvaluate worryEvaluate) {
+        worryEvaluateMapper.updateByPrimaryKeySelective(worryEvaluate);
+    }
+
+    @Override
+    public void deleteWorryEvaluate(String id) {
+        worryEvaluateMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<WorryEvaluate> getListEvaluate(String storeid) {
+        WorryEvaluateExample worryEvaluateExample = new WorryEvaluateExample();
+        WorryEvaluateExample.Criteria criteria = worryEvaluateExample.createCriteria();
+        if(storeid!=null){
+            criteria.andStoreIdEqualTo(storeid);
+        }
+        return worryEvaluateMapper.selectByExample(worryEvaluateExample);
+    }
+
+    @Override
+    public List<WorryProblem> getWorryProblemByMotherId(String customerBasicId) {
+        return worryEvaluateMapper.getWorryProblemByMotherId(customerBasicId);
+    }
+}

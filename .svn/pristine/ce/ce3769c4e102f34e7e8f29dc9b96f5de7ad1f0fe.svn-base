@@ -1,0 +1,107 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Swimming {
+    private String id;
+
+    private String customerBasicId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date swimTime;
+
+    private String weekday;
+
+    private String swimWay;
+
+    private String identify;
+
+    private String motherid;
+
+    private String storeId;
+
+    private String babyname;
+
+    private String mothername;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public Date getSwimTime() {
+        return swimTime;
+    }
+
+    public void setSwimTime(Date swimTime) {
+        this.swimTime = swimTime;
+    }
+
+    public String getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(String weekday) {
+        this.weekday = weekday == null ? null : weekday.trim();
+    }
+
+    public String getSwimWay() {
+        return swimWay;
+    }
+
+    public void setSwimWay(String swimWay) {
+        this.swimWay = swimWay == null ? null : swimWay.trim();
+    }
+
+    public String getIdentify() {
+        return identify;
+    }
+
+    public void setIdentify(String identify) {
+        this.identify = identify == null ? null : identify.trim();
+    }
+
+    public String getMotherid() {
+        return motherid;
+    }
+
+    public void setMotherid(String motherid) {
+        this.motherid = motherid == null ? null : motherid.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getBabyname() {
+        return babyname;
+    }
+
+    public void setBabyname(String babyname) {
+        this.babyname = babyname == null ? null : babyname.trim();
+    }
+
+    public String getMothername() {
+        return mothername;
+    }
+
+    public void setMothername(String mothername) {
+        this.mothername = mothername == null ? null : mothername.trim();
+    }
+}

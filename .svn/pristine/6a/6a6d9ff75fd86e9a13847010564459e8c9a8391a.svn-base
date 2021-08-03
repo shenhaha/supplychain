@@ -1,0 +1,30 @@
+package com.luer.storesdata.dao;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storesdata.bean.Hotel;
+import com.luer.storesdata.service.HotelService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+@Controller
+public class HotelController {
+
+    @Autowired
+    HotelService hotelService;
+    @GetMapping("/getByStoreId")
+    @ResponseBody
+    public ResultSet getByStoreId(String storeId){
+        return ResultSet.getSuccess(hotelService.getByStoreId(storeId));
+    }
+    @PostMapping("/insert")
+    @ResponseBody
+    public ResultSet insert(Hotel hotel){
+        hotelService.insert(hotel);
+        return ResultSet.getSuccess();
+    }
+}

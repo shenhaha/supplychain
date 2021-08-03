@@ -1,0 +1,76 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+
+import com.luer.servicecenter.bean.MotherEvaluate;
+import com.luer.servicecenter.service.MotherEvaluateService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/14.
+ */
+@Controller
+@RequestMapping("/motherEvaluate")
+public class MotherEvaluateController {
+    @Autowired
+    private MotherEvaluateService motherEvaluateService;
+
+    //根据妈妈ID获取信息
+    @RequestMapping(value = "/getEvaluateByMotherId")
+    @ResponseBody
+    public List<MotherEvaluate> getEvaluateByMotherId(@NonNull String  customerBasicId){
+
+        List<MotherEvaluate> motherEvaluates= motherEvaluateService.getEvaluateByMotherId(customerBasicId);
+        return motherEvaluates;
+
+    }
+
+
+    //添加妈妈入住评估信息
+    @RequestMapping(value = "/addMotherEvaluate")
+    @ResponseBody
+    public ResultSet  addMotherEvaluate(@NonNull MotherEvaluate motherEvaluate){
+
+        motherEvaluateService.addMotherEvaluate(motherEvaluate);
+
+        return ResultSet.getSuccess();
+
+    }
+    @RequestMapping(value = "/updateMotherEvaluate")
+    @ResponseBody
+    public ResultSet  updateMotherEvaluate(@NonNull MotherEvaluate motherEvaluate){
+
+        motherEvaluateService.updateMotherEvaluate(motherEvaluate);
+
+        return ResultSet.getSuccess();
+
+    }
+    @RequestMapping(value = "/getMotherEvaluate")
+    @ResponseBody
+    public List<MotherEvaluate> getList(@NonNull MotherEvaluate motherEvaluate){
+        //Assert.notNull(store_id);
+
+        List<MotherEvaluate> motherEvaluates= motherEvaluateService.getList(motherEvaluate);
+        return motherEvaluates;
+
+    }
+    @RequestMapping(value = "/deleteMotherEvaluate")
+    @ResponseBody
+    public ResultSet  deleteMotherEvaluate(@NonNull String id){
+
+        motherEvaluateService.deleteMot(id);
+
+        return ResultSet.getSuccess();
+
+    }
+}

@@ -1,0 +1,42 @@
+package com.luer.stockandsales.dao;
+
+import com.luer.stockandsales.bean.Deadline;
+import com.luer.stockandsales.bean.DeadlineExample;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface DeadlineMapper {
+    int countByExample(DeadlineExample example);
+
+    int deleteByExample(DeadlineExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Deadline record);
+
+    int insertSelective(Deadline record);
+
+    List<Deadline> selectByExample(DeadlineExample example);
+
+    Deadline selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Deadline record, @Param("example") DeadlineExample example);
+
+    int updateByExample(@Param("record") Deadline record, @Param("example") DeadlineExample example);
+
+    int updateByPrimaryKeySelective(Deadline record);
+
+    int updateByPrimaryKey(Deadline record);
+
+    //获取所有订单时间
+    List<Deadline> selectDeadlines();
+
+    List<Date> selectEndTime();
+}

@@ -1,0 +1,31 @@
+package com.luer.servicecenter.service;
+
+import com.luer.comm.utils.CustomerException;
+import com.luer.servicecenter.bean.ServiceAccount;
+import com.luer.servicecenter.bean.ServiceDetail;
+import com.luer.servicecenter.bean.Storeservice;
+import lombok.NonNull;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface StoreServiceService {
+
+    List<ServiceDetail> getServiceDetail(String motherId);
+
+    List<Storeservice> selectall(Storeservice storeservice);
+
+    List<ServiceAccount> getAccount(String  storeid);
+
+    int update(Storeservice storeservice);
+
+    int insert(Storeservice storeservice) throws CustomerException;
+
+    int delete(Storeservice storeservice);
+
+    List<Storeservice> getAllByMotherId(String motherid);
+
+    int updatePrice(String serviceid,String price, String profit );
+
+    ServiceAccount getCountByMotherId(String motherId);
+}

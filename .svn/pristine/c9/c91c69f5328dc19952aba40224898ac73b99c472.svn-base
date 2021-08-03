@@ -1,0 +1,18 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Motherworryquestion;
+import com.luer.servicecenter.bean.WorryEvaluate;
+
+import java.util.List;
+
+public interface WorryQuestionService {
+
+    List<Motherworryquestion> select(Motherworryquestion motherworryquestion);
+
+    int add(Motherworryquestion motherworryquestion);
+
+    int delete(Motherworryquestion motherworryquestion);
+    int update(Motherworryquestion motherworryquestion);
+
+    List<Motherworryquestion> getByMotherId(String motherid);
+}

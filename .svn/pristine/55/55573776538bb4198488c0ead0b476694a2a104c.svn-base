@@ -1,0 +1,89 @@
+package com.luer.stockandsales.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.stockandsales.bean.Stock;
+import com.luer.stockandsales.service.StockService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/stock")
+public class StockController {
+    //库存相关
+    @Autowired
+    private StockService stockService;
+
+    //新增门店库存信息
+    @ResponseBody
+    @RequestMapping(value = "/saveStock")
+    public ResultSet saveStock(@NonNull Stock stock) {
+
+        stockService.saveStock(stock);
+        return ResultSet.getSuccess();
+    }
+
+
+    //删除库存信息
+    @ResponseBody
+    @RequestMapping(value = "/deleteStock")
+    public ResultSet deleteStock(@NonNull String id) {
+        stockService.deleteStock(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改库存信息
+    @ResponseBody
+    @RequestMapping(value = "/updateStock")
+    public ResultSet updateStock(@NonNull Stock stock) {
+        stockService.updateStock(stock);
+        return ResultSet.getSuccess();
+    }
+
+    //通过库存损耗修改库存
+//修改库存信息
+    @ResponseBody
+    @RequestMapping(value = "/updateStockInventory")
+    public ResultSet updateStockInventory(@NonNull Stock stock) {
+        stockService.updateStockInventory(stock);
+        return ResultSet.getSuccess();
+    }
+    //通过库存损耗修改库存
+//修改库存信息
+    @ResponseBody
+    @RequestMapping(value = "/updateStockWarn")
+    public ResultSet updateStockWarn(@NonNull Stock stock) {
+        stockService.updateStockWarn(stock);
+        return ResultSet.getSuccess();
+    }
+
+    //查询所有库存信息
+    @ResponseBody
+    @RequestMapping(value = "/selectAllStock")
+    public List<Stock> selectAllStock() {
+        return stockService.selectAllStock();
+    }
+
+    //根据门店查询库存信息
+    @ResponseBody
+    @RequestMapping(value = "/selectByStoreId")
+    public List<Stock> selectByStoreId(@NonNull String classifyId) {
+
+        return stockService.selectByStoreId(classifyId);
+    }
+
+    //根据门店查询库存信息
+    @ResponseBody
+    @RequestMapping(value = "/selectOnlyByStoreId")
+    public List<Stock> selectOnlyByStoreId() {
+
+        return stockService.selectOnlyByStoreId();
+    }
+
+
+
+}

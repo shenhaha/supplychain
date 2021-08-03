@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storesdata.dao.CredentialsMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storesdata.bean.Credentials" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="other_id" property="otherId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="cardid" property="cardid" jdbcType="VARCHAR" />
+    <result column="uptime" property="uptime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, other_id, name, address, cardid, uptime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storesdata.bean.CredentialsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from credentials
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from credentials
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from credentials
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.storesdata.bean.CredentialsExample" >
+    delete from credentials
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.storesdata.bean.Credentials" >
+    insert into credentials (id, other_id, name,
+    address, cardid, uptime
+    )
+    values (#{id,jdbcType=VARCHAR}, #{otherId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{address,jdbcType=VARCHAR}, #{cardid,jdbcType=VARCHAR}, #{uptime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.storesdata.bean.Credentials" >
+    insert into credentials
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="otherId != null" >
+        other_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="cardid != null" >
+        cardid,
+      </if>
+      <if test="uptime != null" >
+        uptime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="otherId != null" >
+        #{otherId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null" >
+        #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null" >
+        #{uptime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.storesdata.bean.CredentialsExample" resultType="java.lang.Integer" >
+    select count(*) from credentials
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update credentials
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherId != null" >
+        other_id = #{record.otherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardid != null" >
+        cardid = #{record.cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uptime != null" >
+        uptime = #{record.uptime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update credentials
+    set id = #{record.id,jdbcType=VARCHAR},
+    other_id = #{record.otherId,jdbcType=VARCHAR},
+    name = #{record.name,jdbcType=VARCHAR},
+    address = #{record.address,jdbcType=VARCHAR},
+    cardid = #{record.cardid,jdbcType=VARCHAR},
+    uptime = #{record.uptime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.storesdata.bean.Credentials" >
+    update credentials
+    <set >
+      <if test="otherId != null" >
+        other_id = #{otherId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null" >
+        cardid = #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="uptime != null" >
+        uptime = #{uptime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.storesdata.bean.Credentials" >
+    update credentials
+    set other_id = #{otherId,jdbcType=VARCHAR},
+    name = #{name,jdbcType=VARCHAR},
+    address = #{address,jdbcType=VARCHAR},
+    cardid = #{cardid,jdbcType=VARCHAR},
+    uptime = #{uptime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--通过otherId查询证书信息-->
+  <select id="selectByOtherId" resultMap="BaseResultMap" parameterType="com.luer.storesdata.bean.Credentials" >
+    select * from credentials where other_id=#{otherId}
+  </select>
+
+</mapper>

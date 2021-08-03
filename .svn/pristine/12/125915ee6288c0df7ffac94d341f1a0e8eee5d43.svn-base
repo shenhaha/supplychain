@@ -1,0 +1,64 @@
+package com.luer.users.dao;
+
+import com.luer.springsecurity.bean.Permission;
+import com.luer.users.bean.Users;
+import com.luer.users.bean.UsersExample;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+
+public interface UsersMapper {
+
+    String getUserroleId(@Param("username") String username,@Param("roledesc") String roledesc);
+
+    Users getByName(String name);
+
+    void deleteByUserName(@Param("userName") String userName);
+
+    List<Users> getByStoreId(String storeId);
+
+    List<Permission> findPermissionByUsername(String username);
+    int countByExample(UsersExample example);
+
+    int deleteByExample(UsersExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Users record);
+
+    int insertSelective(Users record);
+
+    List<Users> selectByExample(UsersExample example);
+
+    Users selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Users record, @Param("example") UsersExample example);
+
+    int updateByExample(@Param("record") Users record, @Param("example") UsersExample example);
+
+    int updateByPrimaryKeySelective(Users record);
+
+    int updateByPrimaryKey(Users record);
+
+    /**
+     * 查询所有的用户信息
+     *
+     * @return java.util.List<User>
+     * @author GavinJiang
+     * @date 2018/8/16 14:21
+     * @params
+     */
+    List<Users> selectUsers();
+
+    /**
+     * 根据名称查询对应的用户信息
+     *
+     * @param userName
+     * @return com.luer.users.bean.Users
+     * @author GavinJiang
+     * @date 2018/8/16 14:44
+     * @params
+     */
+    Users selectUsersByName(String userName);
+}

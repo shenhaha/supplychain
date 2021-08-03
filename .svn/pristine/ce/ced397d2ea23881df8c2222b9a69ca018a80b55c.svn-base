@@ -1,0 +1,87 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.BabyEvaluate;
+import com.luer.servicecenter.bean.MotherEvaluate;
+import com.luer.servicecenter.service.BabyEvaluateService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ *Created by 87961 on 2018/8/14.
+ */
+@Controller
+@RequestMapping("/babyEvaluate")
+public class BabyEvaluateController {
+    @Autowired
+    private BabyEvaluateService babyEvaluateService;
+
+    //根据妈妈 ID获取信息
+    @RequestMapping(value = "/getBymotherId")
+    @ResponseBody
+    public List<BabyEvaluate> getBymotherId(@NonNull String customerBasicId){
+
+        List<BabyEvaluate> babyEvaluates= babyEvaluateService.getBymotherId(customerBasicId);
+
+        return babyEvaluates;
+
+    }
+
+
+
+
+    //添加宝宝入住评估信息
+    @RequestMapping(value = "/addBabyEvaluate")
+    @ResponseBody
+    public ResultSet addBabyEvaluate(@NonNull BabyEvaluate babyEvaluate){
+
+        babyEvaluateService.addBabyEvaluate(babyEvaluate);
+
+        return  ResultSet.getSuccess();
+
+    }
+    @RequestMapping(value = "/updateBabyEvaluate")
+    @ResponseBody
+    public ResultSet updateBabyEvaluate(@NonNull BabyEvaluate babyEvaluate){
+
+       babyEvaluateService.updateBabyEvaluate(babyEvaluate);
+
+        return ResultSet.getSuccess();
+
+    }
+    @RequestMapping(value = "/deteleBabyEvaluate")
+    @ResponseBody
+    public ResultSet deteleBabyEvaluate(@NonNull BabyEvaluate babyEvaluate){
+
+        babyEvaluateService.deteleBabyEvaluate(babyEvaluate);
+
+        return ResultSet.getSuccess();
+
+    }
+    @RequestMapping(value = "/getBabyEvaluate")
+    @ResponseBody
+    public List getList(@NonNull BabyEvaluate babyEvaluate){
+
+        List<BabyEvaluate> babyEvaluates= babyEvaluateService.getList(babyEvaluate);
+
+        return babyEvaluates;
+
+    }
+    @RequestMapping(value = "/selectBabyEvaluate")
+    @ResponseBody
+    public List selectBabyEvaluate(@NonNull String storeId){
+
+        List<BabyEvaluate> babyEvaluates= babyEvaluateService.selectBabyEvaluate(storeId);
+
+        return babyEvaluates;
+
+    }
+}

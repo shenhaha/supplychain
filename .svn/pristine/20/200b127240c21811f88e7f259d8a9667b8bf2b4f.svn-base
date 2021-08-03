@@ -1,0 +1,29 @@
+package com.luer.comm.utils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+/**
+ * ftp配置文件读取工具类
+ *
+ * @ClassName FtpPropertiesUtils
+ * @Author GavinJiang
+ * @Date 2018/10/14 15:08.
+ */
+public class FtpPropertiesUtils {
+
+    /** 
+     * 读取配置文件里的ftp配置
+     * @author GavinJiang
+     * @date 2018/10/14 15:17
+     * @params  
+     * @return java.util.Properties  
+     */
+    public Properties getProperties() throws IOException {
+        InputStream in =getClass().getResourceAsStream("/ftp.properties");
+        Properties pop = new Properties();
+        pop.load(in);
+        return pop;
+    }
+}

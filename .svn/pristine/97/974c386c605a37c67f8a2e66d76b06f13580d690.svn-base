@@ -1,0 +1,99 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.Preview;
+import com.luer.storemanager.bean.PreviewEvents;
+import com.luer.storemanager.bean.PreviewExample;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import com.luer.storesdata.bean.Room;
+import com.luer.storesdata.bean.RoomResources;
+import com.luer.storesdata.bean.RoomStyles;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface PreviewMapper {
+    List<Preview> getRoomsBymotherId(@Param("motherid") String motherid);
+
+    int countByExample(PreviewExample example);
+
+    int deleteByExample(PreviewExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Preview record);
+
+    int insertSelective(Preview record);
+
+    List<Preview> selectByExample(PreviewExample example);
+
+    Preview selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Preview record, @Param("example") PreviewExample example);
+
+    int updateByExample(@Param("record") Preview record, @Param("example") PreviewExample example);
+
+    int updateByPrimaryKeySelective(Preview record);
+
+    int updateByPrimaryKey(Preview record);
+
+    /**
+     * 通过开始时间和结束时间查询所有的房间的房态状况
+     *
+     * @param begin_time
+     * @param end_time
+     * @return java.util.List<com.luer.storemanager.bean.Preview>
+     * @author GavinJiang
+     * @date 2018/8/15 13:53
+     * @params
+     */
+    List<Preview> selectPreviewByTime(@Param("begin_time") Date begin_time, @Param("end_time") Date end_time,@Param("store_id") String storeid);
+
+    /**
+     * 查询所有的房间预览信息
+     *
+     * @author GavinJiang
+     */
+    List<Preview> selectPreview();
+
+    /**
+     * @author EVEA
+     * 查询所有房型
+     */
+    List<RoomStyles> selectAllStyle(String storeid);
+
+    /**
+     * @author EVEA
+     * 根据房型id查询所有对应房间
+     */
+    List<RoomResources> selectPreEveBySty(@Param("room_styles_id") String styleid,@Param("store_id") String storeid);
+
+    /**
+     * @author EVEA
+     * 查询所有房间日程条
+     */
+    List<PreviewEvents> selectAllEve(String storeid);
+
+    /**
+     * 查询房间类型
+     * @param storeid
+     * @return
+     */
+    List<PreviewEvents> selectAllMother(String storeid);
+
+
+    List<Preview> getAllMotherEve(@Param("store_id") String storeId);
+
+    List<Preview> getPreviewByMotherId(@Param("order_customer_id") String id);
+
+    void updateStatus(@Param("order_customer_id") String id);
+
+    void deleteByMotherId(@Param("order_customer_id") String customerId);
+
+    List<Preview> getBymotherId(@Param("order_customer_id")String customerId);
+}

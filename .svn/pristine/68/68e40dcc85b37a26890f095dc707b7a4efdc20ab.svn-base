@@ -1,0 +1,42 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.storemanager.bean.Shopping;
+import com.luer.storemanager.dao.ShoppingMapper;
+import com.luer.storemanager.service.ShoppingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * @ClassName ShoppingServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/21 10:09.
+ */
+@Service
+@Transactional
+public class ShoppingServiceImpl implements ShoppingService {
+    @Autowired
+    private ShoppingMapper shoppingMapper;
+
+    @Override
+    public List<Shopping> selectShopping() {
+        return shoppingMapper.selectShopping();
+    }
+
+    @Override
+    public int insert(Shopping record) {
+        return shoppingMapper.insert(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Shopping record) {
+        return shoppingMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return shoppingMapper.deleteByPrimaryKey(id);
+    }
+}

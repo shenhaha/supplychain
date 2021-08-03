@@ -1,0 +1,30 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.Goods;
+
+import java.util.List;
+
+public interface GoodsService {
+    void saveGoods(Goods goods);
+
+    void deleteGoodsById(String goodsId);
+
+    void updateGoods(Goods goods);
+
+
+    void saveGoods(List<Goods> goodss, String supplierId);
+
+    //查询商品对应供应商信息
+    List<Goods> selectSupplierGoods(String supplierId);
+
+    //查询总部提供的商品
+    List<Goods> selectHeadOfficGoods();
+
+    //查询门店所有商品信息
+    List<Goods> selectStoreGoods();
+
+    //查询门店所有供应商提供的商品信息
+    List<Goods> selectStoreGoodsBysupplier(String classifyId);
+
+    List<Goods> selectHeadOfficeGoodsByClassifyId(String classifyId);
+}

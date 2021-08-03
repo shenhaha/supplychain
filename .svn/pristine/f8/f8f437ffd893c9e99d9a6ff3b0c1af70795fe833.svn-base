@@ -1,0 +1,52 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.OrderRoom;
+
+import java.util.List;
+
+/**
+ * 订房服务类
+ *
+ * @ClassName OrderRoomService
+ * @Author GavinJiang
+ * @Date 2018/8/20 19:30.
+ */
+public interface OrderRoomService {
+
+    /**
+     * 查询所有的订房信息
+     *
+     * @return java.util.List<com.luer.storemanager.bean.OrderRoom>
+     * @author GavinJiang
+     * @date 2018/8/20 19:32
+     * @params
+     */
+    List<OrderRoom> selectOrderRoom();
+
+    /**
+     * 添加订房信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     */
+    int insert(OrderRoom record);
+
+    /**
+     * 修改订房信息
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     */
+    int updateByPrimaryKeySelective(OrderRoom record);
+
+    /**
+     * 删除订房信息
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     */
+    int deleteByPrimaryKey(String id);
+}

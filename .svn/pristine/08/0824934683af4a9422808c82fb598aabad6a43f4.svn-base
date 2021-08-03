@@ -1,0 +1,64 @@
+package com.luer.stockandsales.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.stockandsales.bean.Deadline;
+import com.luer.stockandsales.service.DeadlineService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/deadline")
+public class DeadlineController {
+    @Autowired
+    private DeadlineService deadlineService;
+
+    //新增订单起止时间信息
+    @ResponseBody
+    @RequestMapping(value = "/saveDeadline")
+    public ResultSet saveDeadline(@NonNull Deadline deadline) {
+
+        deadlineService.saveDeadline(deadline);
+        return ResultSet.getSuccess();
+    }
+
+
+    //删除订单起止时间信息
+    @ResponseBody
+    @RequestMapping(value = "/deleteDeadlineById")
+    public ResultSet deleteDeadlineById(@NonNull String id) {
+        deadlineService.deleteDeadlineById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改订单起止时间信息
+    @ResponseBody
+    @RequestMapping(value = "/updateDeadline")
+    public ResultSet updateDeadline(@NonNull Deadline deadline) {
+        deadlineService.updateDeadline(deadline);
+        return ResultSet.getSuccess();
+    }
+
+    //查询订单起止时间信息
+    @ResponseBody
+    @RequestMapping(value = "/selectDeadline")
+    public List<Deadline> selectStoreDeadline() {
+
+        List<Deadline> deadlineList = deadlineService.selectDeadlineList();
+
+        return deadlineList;
+    }
+
+    //查询订单截止时间
+    @ResponseBody
+    @RequestMapping(value = "/selectEndTime")
+    public List<Date> selectEndTime() {
+        List<Date> endtimeList = deadlineService.selectEndTime();
+        return endtimeList;
+    }
+}

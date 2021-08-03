@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.purchase.dao.PurchasematerialMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.purchase.bean.Purchasematerial" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="purchase_time" property="purchaseTime" jdbcType="TIMESTAMP" />
+    <result column="financial_time" property="financialTime" jdbcType="TIMESTAMP" />
+    <result column="submit_time" property="submitTime" jdbcType="TIMESTAMP" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="close_time" property="closeTime" jdbcType="TIMESTAMP" />
+    <result column="item_code" property="itemCode" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="supplier" property="supplier" jdbcType="VARCHAR" />
+    <result column="purchase_number" property="purchaseNumber" jdbcType="VARCHAR" />
+    <result column="purchase_source" property="purchaseSource" jdbcType="VARCHAR" />
+    <result column="audit_status" property="auditStatus" jdbcType="VARCHAR" />
+    <result column="receive_status" property="receiveStatus" jdbcType="VARCHAR" />
+    <result column="frequency" property="frequency" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="commodity_type" property="commodityType" jdbcType="VARCHAR" />
+    <result column="receive_address" property="receiveAddress" jdbcType="VARCHAR" />
+    <result column="single_person" property="singlePerson" jdbcType="VARCHAR" />
+    <result column="submitter" property="submitter" jdbcType="VARCHAR" />
+    <result column="contract_term" property="contractTerm" jdbcType="VARCHAR" />
+    <result column="financial_judge" property="financialJudge" jdbcType="VARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="total_sum" property="totalSum" jdbcType="DOUBLE" />
+    <result column="tax_total_sum" property="taxTotalSum" jdbcType="DOUBLE" />
+    <result column="total_quantity" property="totalQuantity" jdbcType="INTEGER" />
+    <result column="complete_status" property="completeStatus" jdbcType="VARCHAR" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="DOUBLE" />
+    <result column="non_invoice" property="nonInvoice" jdbcType="DOUBLE" />
+    <result column="tax_amount" property="taxAmount" jdbcType="DOUBLE" />
+    <result column="tax_rate" property="taxRate" jdbcType="DOUBLE" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="invoice" property="invoice" jdbcType="VARCHAR" />
+    <result column="freight" property="freight" jdbcType="DOUBLE" />
+    <result column="freight_transportation" property="freightTransportation" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="type_time" property="typeTime" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+    <result column="submit_status" property="submitStatus" jdbcType="VARCHAR" />
+    <result column="spare06" property="spare06" jdbcType="VARCHAR" />
+    <result column="spare07" property="spare07" jdbcType="VARCHAR" />
+    <result column="spare08" property="spare08" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, purchase_time, financial_time, submit_time, audit_time, 
+    close_time, item_code, number, supplier, purchase_number, purchase_source, audit_status, 
+    receive_status, frequency, type, commodity_type, receive_address, single_person, 
+    submitter, contract_term, financial_judge, auditor, total_sum, tax_total_sum, total_quantity, 
+    complete_status, invoice_amount, non_invoice, tax_amount, tax_rate, unit, contacts, 
+    invoice, freight, freight_transportation, remark, type_time, start_time, end_time, 
+    factory_name, submit_status, spare06, spare07, spare08
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.purchase.bean.PurchasematerialExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from purchasematerial
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from purchasematerial
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from purchasematerial
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.purchase.bean.PurchasematerialExample" >
+    delete from purchasematerial
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.purchase.bean.Purchasematerial" >
+    insert into purchasematerial (id, create_time, update_time, 
+      purchase_time, financial_time, submit_time, 
+      audit_time, close_time, item_code, 
+      number, supplier, purchase_number, 
+      purchase_source, audit_status, receive_status, 
+      frequency, type, commodity_type, 
+      receive_address, single_person, submitter, 
+      contract_term, financial_judge, auditor, 
+      total_sum, tax_total_sum, total_quantity, 
+      complete_status, invoice_amount, non_invoice, 
+      tax_amount, tax_rate, unit, 
+      contacts, invoice, freight, 
+      freight_transportation, remark, type_time, 
+      start_time, end_time, factory_name, 
+      submit_status, spare06, spare07, 
+      spare08)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{purchaseTime,jdbcType=TIMESTAMP}, #{financialTime,jdbcType=TIMESTAMP}, #{submitTime,jdbcType=TIMESTAMP}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP}, #{itemCode,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{supplier,jdbcType=VARCHAR}, #{purchaseNumber,jdbcType=VARCHAR}, 
+      #{purchaseSource,jdbcType=VARCHAR}, #{auditStatus,jdbcType=VARCHAR}, #{receiveStatus,jdbcType=VARCHAR}, 
+      #{frequency,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{commodityType,jdbcType=VARCHAR}, 
+      #{receiveAddress,jdbcType=VARCHAR}, #{singlePerson,jdbcType=VARCHAR}, #{submitter,jdbcType=VARCHAR}, 
+      #{contractTerm,jdbcType=VARCHAR}, #{financialJudge,jdbcType=VARCHAR}, #{auditor,jdbcType=VARCHAR}, 
+      #{totalSum,jdbcType=DOUBLE}, #{taxTotalSum,jdbcType=DOUBLE}, #{totalQuantity,jdbcType=INTEGER}, 
+      #{completeStatus,jdbcType=VARCHAR}, #{invoiceAmount,jdbcType=DOUBLE}, #{nonInvoice,jdbcType=DOUBLE}, 
+      #{taxAmount,jdbcType=DOUBLE}, #{taxRate,jdbcType=DOUBLE}, #{unit,jdbcType=VARCHAR}, 
+      #{contacts,jdbcType=VARCHAR}, #{invoice,jdbcType=VARCHAR}, #{freight,jdbcType=DOUBLE}, 
+      #{freightTransportation,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{typeTime,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{factoryName,jdbcType=VARCHAR}, 
+      #{submitStatus,jdbcType=VARCHAR}, #{spare06,jdbcType=VARCHAR}, #{spare07,jdbcType=VARCHAR}, 
+      #{spare08,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.purchase.bean.Purchasematerial" >
+    insert into purchasematerial
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time,
+      </if>
+      <if test="financialTime != null" >
+        financial_time,
+      </if>
+      <if test="submitTime != null" >
+        submit_time,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="closeTime != null" >
+        close_time,
+      </if>
+      <if test="itemCode != null" >
+        item_code,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="supplier != null" >
+        supplier,
+      </if>
+      <if test="purchaseNumber != null" >
+        purchase_number,
+      </if>
+      <if test="purchaseSource != null" >
+        purchase_source,
+      </if>
+      <if test="auditStatus != null" >
+        audit_status,
+      </if>
+      <if test="receiveStatus != null" >
+        receive_status,
+      </if>
+      <if test="frequency != null" >
+        frequency,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="commodityType != null" >
+        commodity_type,
+      </if>
+      <if test="receiveAddress != null" >
+        receive_address,
+      </if>
+      <if test="singlePerson != null" >
+        single_person,
+      </if>
+      <if test="submitter != null" >
+        submitter,
+      </if>
+      <if test="contractTerm != null" >
+        contract_term,
+      </if>
+      <if test="financialJudge != null" >
+        financial_judge,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="totalSum != null" >
+        total_sum,
+      </if>
+      <if test="taxTotalSum != null" >
+        tax_total_sum,
+      </if>
+      <if test="totalQuantity != null" >
+        total_quantity,
+      </if>
+      <if test="completeStatus != null" >
+        complete_status,
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount,
+      </if>
+      <if test="nonInvoice != null" >
+        non_invoice,
+      </if>
+      <if test="taxAmount != null" >
+        tax_amount,
+      </if>
+      <if test="taxRate != null" >
+        tax_rate,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="contacts != null" >
+        contacts,
+      </if>
+      <if test="invoice != null" >
+        invoice,
+      </if>
+      <if test="freight != null" >
+        freight,
+      </if>
+      <if test="freightTransportation != null" >
+        freight_transportation,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="typeTime != null" >
+        type_time,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="factoryName != null" >
+        factory_name,
+      </if>
+      <if test="submitStatus != null" >
+        submit_status,
+      </if>
+      <if test="spare06 != null" >
+        spare06,
+      </if>
+      <if test="spare07 != null" >
+        spare07,
+      </if>
+      <if test="spare08 != null" >
+        spare08,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseTime != null" >
+        #{purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="financialTime != null" >
+        #{financialTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitTime != null" >
+        #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemCode != null" >
+        #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="supplier != null" >
+        #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseNumber != null" >
+        #{purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseSource != null" >
+        #{purchaseSource,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveStatus != null" >
+        #{receiveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="frequency != null" >
+        #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityType != null" >
+        #{commodityType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAddress != null" >
+        #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="singlePerson != null" >
+        #{singlePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="submitter != null" >
+        #{submitter,jdbcType=VARCHAR},
+      </if>
+      <if test="contractTerm != null" >
+        #{contractTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="financialJudge != null" >
+        #{financialJudge,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="totalSum != null" >
+        #{totalSum,jdbcType=DOUBLE},
+      </if>
+      <if test="taxTotalSum != null" >
+        #{taxTotalSum,jdbcType=DOUBLE},
+      </if>
+      <if test="totalQuantity != null" >
+        #{totalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="completeStatus != null" >
+        #{completeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAmount != null" >
+        #{invoiceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="nonInvoice != null" >
+        #{nonInvoice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxAmount != null" >
+        #{taxAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="taxRate != null" >
+        #{taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice != null" >
+        #{invoice,jdbcType=VARCHAR},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=DOUBLE},
+      </if>
+      <if test="freightTransportation != null" >
+        #{freightTransportation,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="typeTime != null" >
+        #{typeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryName != null" >
+        #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="submitStatus != null" >
+        #{submitStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        #{spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="spare07 != null" >
+        #{spare07,jdbcType=VARCHAR},
+      </if>
+      <if test="spare08 != null" >
+        #{spare08,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.purchase.bean.PurchasematerialExample" resultType="java.lang.Integer" >
+    select count(*) from purchasematerial
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update purchasematerial
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseTime != null" >
+        purchase_time = #{record.purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.financialTime != null" >
+        financial_time = #{record.financialTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.submitTime != null" >
+        submit_time = #{record.submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditTime != null" >
+        audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.closeTime != null" >
+        close_time = #{record.closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemCode != null" >
+        item_code = #{record.itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.supplier != null" >
+        supplier = #{record.supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseNumber != null" >
+        purchase_number = #{record.purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseSource != null" >
+        purchase_source = #{record.purchaseSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatus != null" >
+        audit_status = #{record.auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiveStatus != null" >
+        receive_status = #{record.receiveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.frequency != null" >
+        frequency = #{record.frequency,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityType != null" >
+        commodity_type = #{record.commodityType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiveAddress != null" >
+        receive_address = #{record.receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singlePerson != null" >
+        single_person = #{record.singlePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitter != null" >
+        submitter = #{record.submitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractTerm != null" >
+        contract_term = #{record.contractTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.financialJudge != null" >
+        financial_judge = #{record.financialJudge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditor != null" >
+        auditor = #{record.auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalSum != null" >
+        total_sum = #{record.totalSum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taxTotalSum != null" >
+        tax_total_sum = #{record.taxTotalSum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalQuantity != null" >
+        total_quantity = #{record.totalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.completeStatus != null" >
+        complete_status = #{record.completeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceAmount != null" >
+        invoice_amount = #{record.invoiceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.nonInvoice != null" >
+        non_invoice = #{record.nonInvoice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taxAmount != null" >
+        tax_amount = #{record.taxAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taxRate != null" >
+        tax_rate = #{record.taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contacts != null" >
+        contacts = #{record.contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoice != null" >
+        invoice = #{record.invoice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.freight != null" >
+        freight = #{record.freight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.freightTransportation != null" >
+        freight_transportation = #{record.freightTransportation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeTime != null" >
+        type_time = #{record.typeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factoryName != null" >
+        factory_name = #{record.factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitStatus != null" >
+        submit_status = #{record.submitStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare06 != null" >
+        spare06 = #{record.spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare07 != null" >
+        spare07 = #{record.spare07,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare08 != null" >
+        spare08 = #{record.spare08,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update purchasematerial
+    set id = #{record.id,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      purchase_time = #{record.purchaseTime,jdbcType=TIMESTAMP},
+      financial_time = #{record.financialTime,jdbcType=TIMESTAMP},
+      submit_time = #{record.submitTime,jdbcType=TIMESTAMP},
+      audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      close_time = #{record.closeTime,jdbcType=TIMESTAMP},
+      item_code = #{record.itemCode,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=INTEGER},
+      supplier = #{record.supplier,jdbcType=VARCHAR},
+      purchase_number = #{record.purchaseNumber,jdbcType=VARCHAR},
+      purchase_source = #{record.purchaseSource,jdbcType=VARCHAR},
+      audit_status = #{record.auditStatus,jdbcType=VARCHAR},
+      receive_status = #{record.receiveStatus,jdbcType=VARCHAR},
+      frequency = #{record.frequency,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR},
+      commodity_type = #{record.commodityType,jdbcType=VARCHAR},
+      receive_address = #{record.receiveAddress,jdbcType=VARCHAR},
+      single_person = #{record.singlePerson,jdbcType=VARCHAR},
+      submitter = #{record.submitter,jdbcType=VARCHAR},
+      contract_term = #{record.contractTerm,jdbcType=VARCHAR},
+      financial_judge = #{record.financialJudge,jdbcType=VARCHAR},
+      auditor = #{record.auditor,jdbcType=VARCHAR},
+      total_sum = #{record.totalSum,jdbcType=DOUBLE},
+      tax_total_sum = #{record.taxTotalSum,jdbcType=DOUBLE},
+      total_quantity = #{record.totalQuantity,jdbcType=INTEGER},
+      complete_status = #{record.completeStatus,jdbcType=VARCHAR},
+      invoice_amount = #{record.invoiceAmount,jdbcType=DOUBLE},
+      non_invoice = #{record.nonInvoice,jdbcType=DOUBLE},
+      tax_amount = #{record.taxAmount,jdbcType=DOUBLE},
+      tax_rate = #{record.taxRate,jdbcType=DOUBLE},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      contacts = #{record.contacts,jdbcType=VARCHAR},
+      invoice = #{record.invoice,jdbcType=VARCHAR},
+      freight = #{record.freight,jdbcType=DOUBLE},
+      freight_transportation = #{record.freightTransportation,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      type_time = #{record.typeTime,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=VARCHAR},
+      end_time = #{record.endTime,jdbcType=VARCHAR},
+      factory_name = #{record.factoryName,jdbcType=VARCHAR},
+      submit_status = #{record.submitStatus,jdbcType=VARCHAR},
+      spare06 = #{record.spare06,jdbcType=VARCHAR},
+      spare07 = #{record.spare07,jdbcType=VARCHAR},
+      spare08 = #{record.spare08,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.purchase.bean.Purchasematerial" >
+    update purchasematerial
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time = #{purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="financialTime != null" >
+        financial_time = #{financialTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitTime != null" >
+        submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null" >
+        close_time = #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemCode != null" >
+        item_code = #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="supplier != null" >
+        supplier = #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseNumber != null" >
+        purchase_number = #{purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseSource != null" >
+        purchase_source = #{purchaseSource,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        audit_status = #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveStatus != null" >
+        receive_status = #{receiveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="frequency != null" >
+        frequency = #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityType != null" >
+        commodity_type = #{commodityType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAddress != null" >
+        receive_address = #{receiveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="singlePerson != null" >
+        single_person = #{singlePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="submitter != null" >
+        submitter = #{submitter,jdbcType=VARCHAR},
+      </if>
+      <if test="contractTerm != null" >
+        contract_term = #{contractTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="financialJudge != null" >
+        financial_judge = #{financialJudge,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="totalSum != null" >
+        total_sum = #{totalSum,jdbcType=DOUBLE},
+      </if>
+      <if test="taxTotalSum != null" >
+        tax_total_sum = #{taxTotalSum,jdbcType=DOUBLE},
+      </if>
+      <if test="totalQuantity != null" >
+        total_quantity = #{totalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="completeStatus != null" >
+        complete_status = #{completeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount = #{invoiceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="nonInvoice != null" >
+        non_invoice = #{nonInvoice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxAmount != null" >
+        tax_amount = #{taxAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="taxRate != null" >
+        tax_rate = #{taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice != null" >
+        invoice = #{invoice,jdbcType=VARCHAR},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=DOUBLE},
+      </if>
+      <if test="freightTransportation != null" >
+        freight_transportation = #{freightTransportation,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="typeTime != null" >
+        type_time = #{typeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryName != null" >
+        factory_name = #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="submitStatus != null" >
+        submit_status = #{submitStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        spare06 = #{spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="spare07 != null" >
+        spare07 = #{spare07,jdbcType=VARCHAR},
+      </if>
+      <if test="spare08 != null" >
+        spare08 = #{spare08,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.purchase.bean.Purchasematerial" >
+    update purchasematerial
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      purchase_time = #{purchaseTime,jdbcType=TIMESTAMP},
+      financial_time = #{financialTime,jdbcType=TIMESTAMP},
+      submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      close_time = #{closeTime,jdbcType=TIMESTAMP},
+      item_code = #{itemCode,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      supplier = #{supplier,jdbcType=VARCHAR},
+      purchase_number = #{purchaseNumber,jdbcType=VARCHAR},
+      purchase_source = #{purchaseSource,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=VARCHAR},
+      receive_status = #{receiveStatus,jdbcType=VARCHAR},
+      frequency = #{frequency,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      commodity_type = #{commodityType,jdbcType=VARCHAR},
+      receive_address = #{receiveAddress,jdbcType=VARCHAR},
+      single_person = #{singlePerson,jdbcType=VARCHAR},
+      submitter = #{submitter,jdbcType=VARCHAR},
+      contract_term = #{contractTerm,jdbcType=VARCHAR},
+      financial_judge = #{financialJudge,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      total_sum = #{totalSum,jdbcType=DOUBLE},
+      tax_total_sum = #{taxTotalSum,jdbcType=DOUBLE},
+      total_quantity = #{totalQuantity,jdbcType=INTEGER},
+      complete_status = #{completeStatus,jdbcType=VARCHAR},
+      invoice_amount = #{invoiceAmount,jdbcType=DOUBLE},
+      non_invoice = #{nonInvoice,jdbcType=DOUBLE},
+      tax_amount = #{taxAmount,jdbcType=DOUBLE},
+      tax_rate = #{taxRate,jdbcType=DOUBLE},
+      unit = #{unit,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      invoice = #{invoice,jdbcType=VARCHAR},
+      freight = #{freight,jdbcType=DOUBLE},
+      freight_transportation = #{freightTransportation,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      type_time = #{typeTime,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      factory_name = #{factoryName,jdbcType=VARCHAR},
+      submit_status = #{submitStatus,jdbcType=VARCHAR},
+      spare06 = #{spare06,jdbcType=VARCHAR},
+      spare07 = #{spare07,jdbcType=VARCHAR},
+      spare08 = #{spare08,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from purchasematerial
+  </select>
+
+  <select id="selectCreate" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from purchasematerial where create_time between #{startTime} and #{endTime}
+  </select>
+
+  <select id="selectCByAuditStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where create_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectCByAuditStatusAndReceiveStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where create_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+
+  </select>
+
+  <select id="selectCByAuditStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where create_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectCByAuditStatusAndReceiveStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where create_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectCByReceiveStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where create_time between #{startTime} and #{endTime} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectCByReceiveStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where create_time between #{startTime} and #{endTime} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectCByPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where
+    <if test="purchaseNumber != null">
+      A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectSubmit" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from purchasematerial where submit_time between #{startTime} and #{endTime}
+  </select>
+
+  <select id="selectSByAuditStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+
+    select * from purchasematerial where audit_status = #{auditStatus,jdbcType=VARCHAR}
+
+  </select>
+
+
+  <select id="selectSByAuditStatusAndReceiveStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where submit_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectSByAuditStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where submit_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectSByAuditStatusAndReceiveStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where  submit_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectSByReceiveStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where submit_time between #{startTime} and #{endTime} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectSByReceiveStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where submit_time between #{startTime} and #{endTime} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectSByPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where submit_time between #{startTime} and #{endTime}
+    <if test="purchaseNumber != null">
+      AND   A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectAudit" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from purchasematerial where audit_time between #{startTime} and #{endTime}
+  </select>
+
+  <select id="selectAByAuditStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where audit_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAByAuditStatusAndReceiveStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where audit_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+
+  </select>
+
+  <select id="selectAByAuditStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where audit_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectAByAuditStatusAndReceiveStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where audit_time between #{startTime} and #{endTime} and audit_status = #{auditStatus,jdbcType=VARCHAR} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectAByReceiveStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where audit_time between #{startTime} and #{endTime} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAByReceiveStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where audit_time between #{startTime} and #{endTime} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectAByPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where audit_time between #{startTime} and #{endTime}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectByAuditStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where audit_status = #{auditStatus,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAuditStatusAndReceiveStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where audit_status = #{auditStatus,jdbcType=VARCHAR} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAuditStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where audit_status = #{auditStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectByAuditStatusAndReceiveStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where audit_status = #{auditStatus,jdbcType=VARCHAR} and receive_status = #{receiveStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectByReceiveStatus" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where receive_status = #{receiveStatus,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByReceiveStatusAndPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial A where receive_status = #{receiveStatus,jdbcType=VARCHAR}
+    <if test="purchaseNumber != null">
+      AND A.purchase_number like CONCAT('%',#{purchaseNumber},'%')
+    </if>
+  </select>
+
+  <select id="selectMaxCreateTime"  resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from purchasematerial where create_time=(select max(create_time) from purchasematerial)
+    </select>
+
+  <select id="selectPNumberById"  resultType="java.lang.String" parameterType="java.lang.String">
+        select  purchase_number from purchasematerial where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+    delete from purchasematerial where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+  </delete>
+
+  <select id="selectById" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPurchaseNumber" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from purchasematerial  where purchase_number = #{purchaseNumber,jdbcType=VARCHAR}
+  </select>
+
+
+
+</mapper>

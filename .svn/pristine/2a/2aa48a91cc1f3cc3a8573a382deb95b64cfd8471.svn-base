@@ -1,0 +1,168 @@
+package com.luer.storemanager.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class GuestRecord {
+    private String id;
+
+    private String employerId;
+
+    private String employerName;
+
+    private String department;
+
+    private String reporter;
+
+    private String reporttile;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date eventtime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date reporttime;
+
+    private String result;
+
+    private String leaderidea;
+
+    private String storeFileId;
+    private String detail;
+
+    private String cause;
+
+    private String solution;
+
+    private String customerReback;
+
+    private String remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+
+
+    public String getEmployerName() {
+        return employerName;
+    }
+
+    public void setEmployerName(String employerName) {
+        this.employerName = employerName;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail == null ? null : detail.trim();
+    }
+
+    public String getCause() {
+        return cause;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause == null ? null : cause.trim();
+    }
+
+    public String getSolution() {
+        return solution;
+    }
+
+    public void setSolution(String solution) {
+        this.solution = solution == null ? null : solution.trim();
+    }
+
+    public String getCustomerReback() {
+        return customerReback;
+    }
+
+    public void setCustomerReback(String customerReback) {
+        this.customerReback = customerReback == null ? null : customerReback.trim();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(String employerId) {
+        this.employerId = employerId == null ? null : employerId.trim();
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department == null ? null : department.trim();
+    }
+
+    public String getReporter() {
+        return reporter;
+    }
+
+    public void setReporter(String reporter) {
+        this.reporter = reporter == null ? null : reporter.trim();
+    }
+
+    public String getReporttile() {
+        return reporttile;
+    }
+
+    public void setReporttile(String reporttile) {
+        this.reporttile = reporttile == null ? null : reporttile.trim();
+    }
+
+    public Date getEventtime() {
+        return eventtime;
+    }
+
+    public void setEventtime(Date eventtime) {
+        this.eventtime = eventtime;
+    }
+
+    public Date getReporttime() {
+        return reporttime;
+    }
+
+    public void setReporttime(Date reporttime) {
+        this.reporttime = reporttime;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result == null ? null : result.trim();
+    }
+
+    public String getLeaderidea() {
+        return leaderidea;
+    }
+
+    public void setLeaderidea(String leaderidea) {
+        this.leaderidea = leaderidea == null ? null : leaderidea.trim();
+    }
+
+    public String getStoreFileId() {
+        return storeFileId;
+    }
+
+    public void setStoreFileId(String storeFileId) {
+        this.storeFileId = storeFileId == null ? null : storeFileId.trim();
+    }
+}

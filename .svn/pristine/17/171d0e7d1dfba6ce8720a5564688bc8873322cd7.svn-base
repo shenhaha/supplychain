@@ -1,0 +1,58 @@
+package com.luer.storemanager.service;
+
+import com.luer.storemanager.bean.CheckOut;
+
+import java.util.List;
+
+/**
+ * 退房记录服务类
+ *
+ * @ClassName CheckOutService
+ * @Author GavinJiang
+ * @Date 2018/8/17 11:42.
+ */
+public interface CheckOutService {
+    /**
+     * 查询所有的退房记录
+     *
+     * @return java.util.List<com.luer.storemanager.bean.CheckOut>
+     * @author GavinJiang
+     * @date 2018/8/17 11:47
+     * @params
+     */
+    List<CheckOut> selectCheckOut(String storeId);
+
+    /**
+     * 添加退房记录
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/17 13:18
+     * @params
+     */
+    int insert(CheckOut record);
+
+    /**
+     * 修改退房记录
+     *
+     * @param record
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/17 13:18
+     * @params
+     * @serialData
+     */
+    int updateByPrimaryKeySelective(CheckOut record);
+
+    /**
+     * 根据id删除退房
+     *
+     * @param id
+     * @return int
+     * @author GavinJiang
+     * @date 2018/8/17 13:19
+     * @params
+     */
+    int deleteByPrimaryKey(String id);
+}

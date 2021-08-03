@@ -1,0 +1,52 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.Babywash;
+import com.luer.servicecenter.bean.BabywashExample;
+import com.luer.servicecenter.dao.BabywashMapper;
+import com.luer.servicecenter.service.WashService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+@Transactional
+@Service
+public class WashServiceImpl implements WashService{
+
+    @Autowired
+    BabywashMapper babywashMapper;
+    @Override
+    public List<Babywash> getAll(Babywash babywash) {
+        BabywashExample babywashExample = new BabywashExample();
+        BabywashExample.Criteria criteria = babywashExample.createCriteria();
+        if(!StringUtils.isEmpty(babywash.getStoreid())){
+            criteria.andStoreidEqualTo(babywash.getStoreid());
+        }
+        return babywashMapper.selectByExample(babywashExample);
+    }
+
+    @Override
+    public int add(Babywash babywash) {
+        babywash.setId(UUIDUtils.getUUID());
+        return babywashMapper.insert(babywash);
+    }
+
+    @Override
+    public int delete(Babywash babywash) {
+
+        return babywashMapper.deleteByPrimaryKey(babywash.getId());
+    }
+
+    @Override
+    public int update(Babywash babywash) {
+
+        return babywashMapper.updateByPrimaryKeySelective(babywash);
+    }
+
+    @Override
+    public List<Babywash> getBabywashByMotherId(String motherid) {
+        return babywashMapper.getBabywashByMotherId(motherid);
+    }
+}

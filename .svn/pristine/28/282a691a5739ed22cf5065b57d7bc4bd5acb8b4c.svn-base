@@ -1,0 +1,16 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.Swimming;
+import com.luer.servicecenter.bean.SwimmingExample;
+
+import java.util.List;
+
+public interface SwimmingService {
+    int insert(Swimming record);
+    int deleteByPrimaryKey(String id);
+    int updateByPrimaryKey(Swimming record);
+    List<Swimming> selectByExample(Swimming example);
+    Swimming selectByPrimaryKey(String id);
+
+    List<Swimming> getSwimmingByMotherId(String motherid);
+}

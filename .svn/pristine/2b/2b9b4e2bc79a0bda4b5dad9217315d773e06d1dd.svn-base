@@ -1,0 +1,87 @@
+package com.luer.storesdata.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storesdata.bean.Room;
+import com.luer.storesdata.bean.RoomExample;
+import com.luer.storesdata.bean.RoomResources;
+import com.luer.storesdata.service.RoomService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+/**
+ * @author Yuxin
+ */
+@Controller
+@RequestMapping("/room")
+public class RoomController {
+    @Autowired
+    private RoomService roomService;
+
+    @RequestMapping("/addRoom")
+    @ResponseBody
+    public ResultSet addRoom(Room room, HttpSession session) {
+        room.setStoreId((String) session.getAttribute("storeId"));
+        roomService.insert(room);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/delRoom")
+    @ResponseBody
+    public ResultSet delRoom(@NonNull String id) {
+        roomService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/updateRoom")
+    @ResponseBody
+    public ResultSet updateRoom(Room room, HttpSession session) {
+        room.setStoreId((String) session.getAttribute("storeId"));
+        roomService.updateByPrimaryKey(room);
+        return ResultSet.getSuccess();
+    }
+
+    @RequestMapping("/querySingleRoom")
+    @ResponseBody
+    public Room querySingleRoom(@NonNull String id) {
+        return roomService.selectByPrimaryKey(id);
+    }
+
+    @RequestMapping("/queryAllRoom")
+    @ResponseBody
+    public List<Room> queryAllRoom(RoomExample roomExample) {
+        return roomService.selectByExample(roomExample);
+    }
+
+    @RequestMapping("/getRooms")
+    @ResponseBody
+    public List<Room> getRooms(String storeId) {
+        return roomService.getRooms(storeId);
+    }
+
+    @RequestMapping("/getAllRoom")
+    @ResponseBody
+    public List<RoomResources> getAllRoom(String storeId) {
+        List<RoomResources> roomResources = roomService.getAllRoom(storeId);
+        return roomResources;
+    }
+
+    @ResponseBody
+    @RequestMapping("/selectByStoreId")
+    public List<Room> selectByStoreId() {
+        return roomService.selectByStoreId();
+    }
+    @ResponseBody
+    @RequestMapping("/selectByRoomStyleId")
+    public List<Room> selectByRoomStyleId(String roomStylesId) {
+        return roomService.selectByRoomStyleId(roomStylesId);
+
+    }
+
+}

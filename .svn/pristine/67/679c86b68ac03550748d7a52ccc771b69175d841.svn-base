@@ -1,0 +1,36 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.DoctorCheckout;
+import com.luer.servicecenter.bean.DoctorCheckoutExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@MapperScan
+@Component
+public interface DoctorCheckoutMapper {
+    int countByExample(DoctorCheckoutExample example);
+
+    int deleteByExample(DoctorCheckoutExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(DoctorCheckout record);
+
+    int insertSelective(DoctorCheckout record);
+
+    List<DoctorCheckout> selectByExample(DoctorCheckoutExample example);
+
+    DoctorCheckout selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") DoctorCheckout record, @Param("example") DoctorCheckoutExample example);
+
+    int updateByExample(@Param("record") DoctorCheckout record, @Param("example") DoctorCheckoutExample example);
+
+    int updateByPrimaryKeySelective(DoctorCheckout record);
+
+    int updateByPrimaryKey(DoctorCheckout record);
+
+    List<DoctorCheckout> getDoctorCheckout(@Param("mother_id") String motherId);
+}

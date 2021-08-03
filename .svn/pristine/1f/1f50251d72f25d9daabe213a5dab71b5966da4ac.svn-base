@@ -1,0 +1,54 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.Meetingrecord;
+import com.luer.storemanager.dao.MeetingrecordMapper;
+import com.luer.storemanager.service.MeetingrecordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * 会议记录实现类
+ *
+ * @ClassName MeetingrecordServiceImpl
+ * @Author GavinJiang
+ * @Date 2018/8/13 19:16.
+ */
+@Service
+@Transactional
+public class MeetingrecordServiceImpl implements MeetingrecordService {
+    @Autowired
+    private MeetingrecordMapper meetingrecordMapper;
+
+
+    //查询所有
+    public List<Meetingrecord> selectMeetingrecord() {
+        return meetingrecordMapper.selectMeetingrecord();
+    }
+
+    //添加
+    public int insert(Meetingrecord record) {
+        record.setId(UUIDUtils.getUUID());
+        return meetingrecordMapper.insert(record);
+    }
+
+    //修改
+    public int updateByPrimaryKeySelective(Meetingrecord record) {
+        return meetingrecordMapper.updateByPrimaryKeySelective(record);
+    }
+
+    //删除
+    public int deleteByPrimaryKey(String id) {
+        return meetingrecordMapper.deleteByPrimaryKey(id);
+    }
+
+
+    //根据门店id查询
+    @Override
+    public List<Meetingrecord> selectMeetingrecordAllBystoreId(String storeId) {
+        return meetingrecordMapper.selectMeetingrecordAllBystoreId(storeId);
+    }
+}

@@ -1,0 +1,70 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>订单详情</title>
+</head>
+<body>
+<input style="display: none" type="hidden" id="storeId" value="${storeId}">
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <%--<div class="panel-heading">
+                    <div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li class="active">入库商品详情</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>--%>
+                <div>
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <table id="orderdetails" class="table" data-paging="true" data-filtering="true"
+                                   data-sorting="true">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        var orderdetailsTitle = [
+            {"name": "id", "title": "ID", "breakpoints": "xs sm", "visible": false},
+            {"name": "goodsId", "title": "商品id", "visible": false},
+            {"name": "goodsName", "title": "商品名称"},
+            {"name": "serialnum", "title": "商品编号"},
+            {"name": "goodsNum", "title": "数量"},
+            {"name": "price1", "title": "本店进货单价"},
+            {"name": "price", "title": "门店进货单价"},
+            {"name": "price2", "title": "利润"},
+            {"name": "orderId", "title": "订单id", "visible": false},
+            {"name": "detailstype", "title": "详情类别", "visible": false}
+        ];
+
+        //启动footable
+        var ft = FooTable.init('#orderdetails', {
+            "columns": orderdetailsTitle,
+            "rows": $.get("${ctx}/orderdetails/selectByStoreOrderId?orderId=<%=request.getParameter("orderId")%>&&detailstype=<%=request.getParameter("detailstype")%>"),
+
+
+        });
+        uid = 10;
+    });
+
+
+</script>
+</body>
+</html>

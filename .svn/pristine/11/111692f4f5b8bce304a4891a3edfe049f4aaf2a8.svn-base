@@ -1,0 +1,303 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>月子餐详细</title>
+</head>
+<body>
+<!-- Main Content -->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <%--<div class="panel-heading">
+                    <div class="pull-left">
+                        <ol class="breadcrumb">
+                            <li><a href="${ctx}/index">首页</a></li>
+                            <li><a href="${ctx}/mealmanager/showqueryMealGroupByMotherid">月子餐统计</a></li>
+                            <li class="active">月子餐详细</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>--%>
+                    <div>
+                        <div class="panel-body" >
+                            <div class="table-wrap">
+                                <table id="footable_appointment" class="table" data-paging="true" data-filtering="true" data-sorting="true">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+      <!-- /Row -->
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var appointmentTitle = [
+            {"name":"id","visible":false},
+            {"name":"mothername","title":"姓名"},
+            {"name":"roomnum","title":"房号"},
+            {"name":"breakfast","title":"早餐"},
+            {"name":"lunch","title":"午餐"},
+            {"name":"dinner","title":"晚餐"},
+            {"name":"snack","title":"午点"},
+            {"name":"midnight_snack","title":"夜宵"},
+            {"name":"reveille","title":"早点"},
+            {"name":"familymeal","title":"家属餐"},
+            {"name":"mealdate","title":"时间"},
+        ];
+        //启动footable 查询点餐详细信息
+        var $modal = $('#app-editor-modal'),
+            $editor = $('#editor'),
+            $editorTitle = $('#editor-title')
+        var ft = FooTable.init('#footable_appointment',{
+            "columns": appointmentTitle,
+            "rows": $.get("${ctx}/mealmanager/queryAllMealByMotherid?motherid=<%=request.getParameter("motherid")%>"),
+
+            editing: {
+                enabled: true,
+                addRow: function () {
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\">新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/orderdetails.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getCustomerBasic?type=0&storeId="+'<%=session.getAttribute("storeId")%>'+"&id="+'<%=request.getParameter("motherid")%>',
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        $("#mothername").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                    }
+                                }
+                            });
+                           $.get('${ctx}/preview/getRoomsBymotherId',{'motherid':'<%=request.getParameter("motherid")%>'},function (data) {
+                               $(data).each(function () {
+                                   $('#roomnum').append("<option value='"+this.roomId+"'>"+this.room.num+"</option>")
+                               })
+                           })
+                        },
+                        onhide:function(){
+                            $that.removeAttr("disabled");
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'motherid':"<%=request.getParameter("motherid")%>",
+                                    'mothername':$('#mothername').val(),
+                                    'roomid':$('#roomnum').val(),
+                                    'breakfast':$('#breakfast').val(),
+                                    'lunch':$('#lunch').val(),
+                                    'dinner':$('#dinner').val(),
+                                    'familymealcount':$('#familymeal').val(),
+                                    'midnight_snack':$('#midnight_snack').val(),
+                                    'reveille':$('#reveille').val(),
+                                    'snack':$('#snack').val(),
+                                    'mealdate':$('#mealdate').val(),
+                                    'storeid':'<%=session.getAttribute("storeId")%>'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        mothername:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '姓名不能为空！'
+                                                },
+                                            }
+                                        },
+                                        roomnum: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间号不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                //点餐详细新增提交路径
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                var flag = true;
+                                $.ajax({url:'${ctx}/mealmanager/queryAllMealByMotherid?motherid=<%=request.getParameter("motherid")%>',
+                                async:false,method:'get',success:function (data) {
+                                        $(data).each(function () {
+                                            if(this.mealdate==($('#mealdate').val()+" 00:00:00")){
+                                                flag = false;
+                                            }
+                                        })
+                                    }})
+                                if(flag == false){
+                                    alert("这一天已经有了")
+                                    return false;
+                                }
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/mealmanager/insertMeal", json).done(function (data) {
+                                        getCode(data)
+                                    }).fail(function (data) {
+                                        getCode(data)
+                                    });
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                editRow: function(row){
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\">修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/orderdetails.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown: function(dialogRef){
+                            $.get('${ctx}/preview/getRoomsBymotherId',{'motherid':'<%=request.getParameter("motherid")%>'},function (data) {
+                                $(data).each(function () {
+                                    $('#roomnum').append("<option value='"+this.roomId+"'>"+this.room.num+"</option>")
+                                })
+                            })
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getCustomerBasic?type=0",
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        if(data[i].name==values.mothername){
+                                            $("#mothername").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }else {
+                                            $("#mothername").append("<option  value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }
+                                    }
+                                }
+                            });
+                            $('#id').val(values.id);
+                            $('#mothername').val(values.mothername);
+                            $('#roomid').val(values.roomnum);
+                            $('#breakfast').val(values.breakfast);
+                            $('#lunch').val(values.lunch);
+                            $('#dinner').val(values.dinner);
+                            $('#midnight_snack').val(values.midnight_snack);
+                            $('#reveille').val(values.reveille);
+                            $('#snack').val(values.snack);
+                            $('#familymeal').val(values.familymeal);
+                            $('#mealdate').val(values.mealdate);
+                        },
+                        buttons : [{
+
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'motherid':"<%=request.getParameter("motherid")%>",
+                                    'mothername':$('#mothername').val(),
+                                    'roomid':$('#roomnum').val(),
+                                    'breakfast':$('#breakfast').val(),
+                                    'lunch':$('#lunch').val(),
+                                    'dinner':$('#dinner').val(),
+                                    'midnight_snack':$('#midnight_snack').val(),
+                                    'reveille':$('#reveille').val(),
+                                    'snack':$('#snack').val(),
+                                    'familymealcount':$('#familymeal').val(),
+                                    'mealdate':$('#mealdate').val(),
+                                    'storeid':'<%=session.getAttribute("storeId")%>'
+                                };
+                                console.log(json);
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        mothername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空'
+                                                },
+                                            }
+                                        },
+                                        roomnum: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间号不能为空'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if (bootstrapValidator.isValid()) {
+                                    $.post("${ctx}/mealmanager/updateMeal", json).done(function (data) {
+                                        getCode(data);
+                                    }).fail(function (data) {
+                                        getCode(data)
+                                    });
+                                }
+                            }
+                        }, {
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+
+
+                //删除操作
+                deleteRow: function (row) {
+                    myConfirm("${ctx}/mealmanager/delMeal", row);
+                }
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

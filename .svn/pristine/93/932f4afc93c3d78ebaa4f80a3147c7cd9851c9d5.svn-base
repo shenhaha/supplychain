@@ -1,0 +1,36 @@
+package com.luer.businessmanager.dao;
+
+import com.luer.businessmanager.bean.SendCar;
+import com.luer.businessmanager.bean.SendCarExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+@Component
+@MapperScan
+public interface SendCarMapper {
+    int countByExample(SendCarExample example);
+
+    int deleteByExample(SendCarExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(SendCar record);
+
+    int insertSelective(SendCar record);
+
+    List<SendCar> selectByExample(SendCarExample example);
+
+    SendCar selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") SendCar record, @Param("example") SendCarExample example);
+
+    int updateByExample(@Param("record") SendCar record, @Param("example") SendCarExample example);
+
+    int updateByPrimaryKeySelective(SendCar record);
+
+    int updateByPrimaryKey(SendCar record);
+
+    List<SendCar> getAllList(@Param("store_id") String storeId);
+}

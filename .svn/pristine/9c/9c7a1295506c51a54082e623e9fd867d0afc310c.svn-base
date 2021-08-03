@@ -1,0 +1,267 @@
+package com.luer.servicecenter.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Mothernursingrecorddetail {
+    private String id;
+
+    private String storeId;
+
+    private String motherId;
+
+    private String nursingrecordId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date nursingdate;
+
+    private String content;
+
+    private String note;
+
+    private String customerName;
+
+    private String status;
+
+    private String age;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date intime;
+
+    private String roomnum;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date deliveryDate;
+
+    private String deliveryWay;
+
+    private String feedWay;
+
+    private String mentalState;
+
+    private String breast;
+
+    private String nipple;
+
+    private String uterusHeight;
+
+    private String cesareanWound;
+
+    private String lochia;
+
+    private String color;
+
+    private String taste;
+
+    private String hemorrhoids;
+
+    private String defecation;
+
+    private String other;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public String getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(String motherId) {
+        this.motherId = motherId == null ? null : motherId.trim();
+    }
+
+    public String getNursingrecordId() {
+        return nursingrecordId;
+    }
+
+    public void setNursingrecordId(String nursingrecordId) {
+        this.nursingrecordId = nursingrecordId == null ? null : nursingrecordId.trim();
+    }
+
+    public Date getNursingdate() {
+        return nursingdate;
+    }
+
+    public void setNursingdate(Date nursingdate) {
+        this.nursingdate = nursingdate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName == null ? null : customerName.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age == null ? null : age.trim();
+    }
+
+    public Date getIntime() {
+        return intime;
+    }
+
+    public void setIntime(Date intime) {
+        this.intime = intime;
+    }
+
+    public String getRoomnum() {
+        return roomnum;
+    }
+
+    public void setRoomnum(String roomnum) {
+        this.roomnum = roomnum == null ? null : roomnum.trim();
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public String getDeliveryWay() {
+        return deliveryWay;
+    }
+
+    public void setDeliveryWay(String deliveryWay) {
+        this.deliveryWay = deliveryWay == null ? null : deliveryWay.trim();
+    }
+
+    public String getFeedWay() {
+        return feedWay;
+    }
+
+    public void setFeedWay(String feedWay) {
+        this.feedWay = feedWay == null ? null : feedWay.trim();
+    }
+
+    public String getMentalState() {
+        return mentalState;
+    }
+
+    public void setMentalState(String mentalState) {
+        this.mentalState = mentalState == null ? null : mentalState.trim();
+    }
+
+    public String getBreast() {
+        return breast;
+    }
+
+    public void setBreast(String breast) {
+        this.breast = breast == null ? null : breast.trim();
+    }
+
+    public String getNipple() {
+        return nipple;
+    }
+
+    public void setNipple(String nipple) {
+        this.nipple = nipple == null ? null : nipple.trim();
+    }
+
+    public String getUterusHeight() {
+        return uterusHeight;
+    }
+
+    public void setUterusHeight(String uterusHeight) {
+        this.uterusHeight = uterusHeight == null ? null : uterusHeight.trim();
+    }
+
+    public String getCesareanWound() {
+        return cesareanWound;
+    }
+
+    public void setCesareanWound(String cesareanWound) {
+        this.cesareanWound = cesareanWound == null ? null : cesareanWound.trim();
+    }
+
+    public String getLochia() {
+        return lochia;
+    }
+
+    public void setLochia(String lochia) {
+        this.lochia = lochia == null ? null : lochia.trim();
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color == null ? null : color.trim();
+    }
+
+    public String getTaste() {
+        return taste;
+    }
+
+    public void setTaste(String taste) {
+        this.taste = taste == null ? null : taste.trim();
+    }
+
+    public String getHemorrhoids() {
+        return hemorrhoids;
+    }
+
+    public void setHemorrhoids(String hemorrhoids) {
+        this.hemorrhoids = hemorrhoids == null ? null : hemorrhoids.trim();
+    }
+
+    public String getDefecation() {
+        return defecation;
+    }
+
+    public void setDefecation(String defecation) {
+        this.defecation = defecation == null ? null : defecation.trim();
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other == null ? null : other.trim();
+    }
+}

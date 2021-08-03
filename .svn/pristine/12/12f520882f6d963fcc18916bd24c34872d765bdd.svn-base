@@ -1,0 +1,48 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.SatisfactionSurvey;
+import com.luer.storemanager.bean.SatisfactionSurveyExample;
+import com.luer.storemanager.dao.SatisfactionSurveyMapper;
+import com.luer.storemanager.service.SatisfactionSurveyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+@Service
+public class SatisfactionSurveyServiceImpl implements SatisfactionSurveyService {
+    @Autowired
+    private SatisfactionSurveyMapper satisfactionSurveyMapper;
+
+
+    @Override
+    public void saveSatisfactionSurvey(SatisfactionSurvey satisfactionSurvey,int surveyType) {
+        satisfactionSurvey.setId(UUIDUtils.getUUID());
+        satisfactionSurvey.setSurveyType(surveyType);
+       satisfactionSurveyMapper.insert(satisfactionSurvey);
+    }
+
+    @Override
+    public void deleteSatisfactionSurveyById(String satisfactionSurveyId) {
+      satisfactionSurveyMapper.deleteByPrimaryKey(satisfactionSurveyId);
+    }
+
+    @Override
+    public void updateSatisfactionSurvey(SatisfactionSurvey satisfactionSurvey) {
+
+        satisfactionSurveyMapper.updateByPrimaryKeySelective(satisfactionSurvey);
+    }
+
+
+
+    @Override
+    public List<SatisfactionSurvey> selectSatisfactionSurveys(int type,String storeId) {
+        SatisfactionSurveyExample surveyExample=new SatisfactionSurveyExample();
+        SatisfactionSurveyExample.Criteria criteria=surveyExample.createCriteria();
+        criteria.andSurveyTypeEqualTo(type);
+        criteria.andStoreFileIdEqualTo(storeId);
+        List<SatisfactionSurvey> satisfactionSurveyList=satisfactionSurveyMapper.selectByExample(surveyExample);
+        return satisfactionSurveyList;
+    }
+}

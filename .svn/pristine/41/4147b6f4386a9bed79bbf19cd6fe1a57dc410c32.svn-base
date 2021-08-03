@@ -1,0 +1,50 @@
+package com.luer.storemanager.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storemanager.bean.MemberManager;
+import com.luer.storemanager.service.MemberManagerService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/20.
+ */
+@RestController
+@RequestMapping("/getMemberManager")
+public class MemberManagerController {
+    @Autowired
+    private MemberManagerService memberManagerService;
+
+    @ResponseBody
+    @RequestMapping("/getMember")
+    public List<MemberManager> getMembers(){
+        List<MemberManager> memberManagers=memberManagerService.getMembers();
+        return memberManagers;
+    }
+
+    @RequestMapping("/updateMember")
+    public ResultSet updateMembers(@NonNull MemberManager memberManager){
+        memberManagerService.updateMembers(memberManager);
+        return ResultSet.getSuccess();
+    }
+    @RequestMapping("/deleteMember")
+    public ResultSet deleteMembers(@NonNull String id){
+        memberManagerService.deleteMembers(id);
+        return ResultSet.getSuccess();
+
+    }
+    @RequestMapping("/addMember")
+    public ResultSet addMembers(@NonNull MemberManager memberManager){
+        memberManagerService.addMembers(memberManager);
+        return ResultSet.getSuccess();
+
+    }
+
+
+}

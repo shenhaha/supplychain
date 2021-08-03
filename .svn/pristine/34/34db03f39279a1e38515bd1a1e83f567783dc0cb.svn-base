@@ -1,0 +1,72 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.Pavilioneducation;
+import com.luer.servicecenter.bean.PavilioneducationExample;
+import com.luer.servicecenter.dao.PavilioneducationMapper;
+import com.luer.servicecenter.service.PavilioneducationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * @author EVEA
+ * 离馆卫教service
+ */
+@Transactional
+@Service
+public class PavilioneducationServiceImpl implements PavilioneducationService {
+    @Autowired
+    private PavilioneducationMapper pavilioneducationMapper;
+
+    @Override
+    public int insert(Pavilioneducation record) {
+        record.setId(UUIDUtils.getUUID());
+        return pavilioneducationMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return pavilioneducationMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Pavilioneducation record) {
+        return pavilioneducationMapper.updateByPrimaryKey(record);
+    }
+
+    /**
+     *
+     * @param pavilioneducation 离馆卫教表对象
+     * (可传入并根据Motherid或StoreId查询，都不传则默认查询所有，两者or连接)
+     * @return
+     */
+    @Override
+    public List<Pavilioneducation> selectByExample(Pavilioneducation pavilioneducation) {
+        PavilioneducationExample example = new PavilioneducationExample();
+        if(pavilioneducation.getMotherid()!=null&&pavilioneducation.getMotherid().trim()!=""){
+            PavilioneducationExample.Criteria c1 = example.createCriteria();
+            c1.andMotheridEqualTo(pavilioneducation.getMotherid());
+        }
+        if(pavilioneducation.getStoreId()!=null&&pavilioneducation.getStoreId().trim()!=""){
+            PavilioneducationExample.Criteria c2 = example.createCriteria();
+            c2.andStoreIdEqualTo(pavilioneducation.getStoreId());
+            example.or(c2);
+        }
+        return pavilioneducationMapper.selectByExample(example);
+    }
+
+    @Override
+    public Pavilioneducation selectByPrimaryKey(String id) {
+        return pavilioneducationMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Pavilioneducation> getPavilioneducationByMotherId(String motherid) {
+        return pavilioneducationMapper.getPavilioneducationByMotherId(motherid);
+    }
+}

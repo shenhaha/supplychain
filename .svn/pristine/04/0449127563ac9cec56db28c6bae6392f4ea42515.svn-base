@@ -1,0 +1,78 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.*;
+import com.luer.servicecenter.dao.MealmanagerMapper;
+import com.luer.servicecenter.service.MealmanagerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @author：EVEA
+ * @date：2018/8/21 14:06
+ * 月子餐管理
+ **/
+@Service
+public class MealmanagerServiceImpl implements MealmanagerService {
+    @Autowired
+    private MealmanagerMapper mm;
+
+    @Override
+    public int insert(Mealmanager record) {
+        record.setId(UUIDUtils.getUUID());
+        return mm.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return mm.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Mealmanager record) {
+        return mm.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public Mealmanager selectByPrimaryKey(String id) {
+        return mm.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Mealmanager> selectByExample(Mealmanager mealmanager) {
+        MealmanagerExample mme = new MealmanagerExample();
+        return mm.selectByExample(mme);
+    }
+
+    @Override
+    public List<MealmanagerCount> selectCountByMotherId(String store_id) {
+        return mm.selectCountByMotherId(store_id);
+    }
+
+    @Override
+    public List<MealManagerTable> selectAllbyPage() {
+        return mm.selectAllbyPage();
+    }
+
+    @Override
+    public List<MealManagerTable> selectAllbyMotherid(String motherid) {
+        return mm.selectAllbyMotherid(motherid);
+    }
+
+    @Override
+    public String selectRoomIdByRoomnum(String roomnum){
+        return mm.selectRoomIdByRoomnum(roomnum);
+    }
+
+    @Override
+    public List<MealDayAccount> getmealAccount(String storeId) {
+        return mm.getmealAccount(storeId);
+    }
+
+    @Override
+    public List<MealmanagerCount> getmealAccountByMotherId(String motherId) {
+        return mm.getmealAccountByMotherId(motherId);
+    }
+}

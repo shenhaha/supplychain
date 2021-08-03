@@ -1,0 +1,147 @@
+package com.luer.systemmanager.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class ParameterSet {
+    private String id;
+
+    private String storeId;
+
+    private Integer intParameter;
+
+    private String strParameter;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date dateParameter;
+
+    private String parameterName;
+
+    private String parameterDescripte;
+
+    private String status;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date lastDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date firstDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date secondDate;
+
+    private String one;
+
+    private String two;
+
+    private String three;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public Integer getIntParameter() {
+        return intParameter;
+    }
+
+    public void setIntParameter(Integer intParameter) {
+        this.intParameter = intParameter;
+    }
+
+    public String getStrParameter() {
+        return strParameter;
+    }
+
+    public void setStrParameter(String strParameter) {
+        this.strParameter = strParameter == null ? null : strParameter.trim();
+    }
+
+    public Date getDateParameter() {
+        return dateParameter;
+    }
+
+    public void setDateParameter(Date dateParameter) {
+        this.dateParameter = dateParameter;
+    }
+
+    public String getParameterName() {
+        return parameterName;
+    }
+
+    public void setParameterName(String parameterName) {
+        this.parameterName = parameterName == null ? null : parameterName.trim();
+    }
+
+    public String getParameterDescripte() {
+        return parameterDescripte;
+    }
+
+    public void setParameterDescripte(String parameterDescripte) {
+        this.parameterDescripte = parameterDescripte == null ? null : parameterDescripte.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public Date getLastDate() {
+        return lastDate;
+    }
+
+    public void setLastDate(Date lastDate) {
+        this.lastDate = lastDate;
+    }
+
+    public Date getFirstDate() {
+        return firstDate;
+    }
+
+    public void setFirstDate(Date firstDate) {
+        this.firstDate = firstDate;
+    }
+
+    public Date getSecondDate() {
+        return secondDate;
+    }
+
+    public void setSecondDate(Date secondDate) {
+        this.secondDate = secondDate;
+    }
+
+    public String getOne() {
+        return one;
+    }
+
+    public void setOne(String one) {
+        this.one = one == null ? null : one.trim();
+    }
+
+    public String getTwo() {
+        return two;
+    }
+
+    public void setTwo(String two) {
+        this.two = two == null ? null : two.trim();
+    }
+
+    public String getThree() {
+        return three;
+    }
+
+    public void setThree(String three) {
+        this.three = three == null ? null : three.trim();
+    }
+}

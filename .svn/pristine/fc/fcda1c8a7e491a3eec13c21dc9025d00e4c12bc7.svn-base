@@ -1,0 +1,399 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="motherid" value="${pageContext.request.getParameter('motherid')}" />
+<html>
+<head>
+    <title>宝宝护理记录</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <ul id="myTab" class="nav nav-tabs" style="margin-top: 10px">
+                <li id="babybasic"><a  href="${ctx}/servicecenter/babybasic?motherid=${motherid}">宝宝基本信息</a></li>
+                <li id="babyEvaluate"><a  href="${ctx}/servicecenter/babyEvaluate?motherid=${motherid}">宝宝入住评估</a></li>
+                <li  id="showBabyNursing"><a href="${ctx}/babynursing/showBabyNursing?motherid=${motherid}">宝宝护理记录</a></li>
+                <li id="showGrowth"><a  href="${ctx}/growth/showGrowth?motherid=${motherid}">宝宝成长记录</a></li>
+                <li id="showNeonatalrounds"><a  href="${ctx}/neonatalrounds/showNeonatalrounds?motherid=${motherid}">儿科医生查房</a></li>
+                <li id="doctorcheck"><a  href="${ctx}/doctorcheck?motherid=${motherid}">Physicians's Record Newborn Infant</a></li>
+                <%--    <li id="showSwimming"><a  href="${ctx}/swimming/showSwimming?motherid=${motherid}">宝宝游泳</a></li>
+                    <li id="babywash" ><a href="${ctx}/swimming/babywash?motherid=${motherid}">洗澡记录</a></li>
+                    <li id="showPavilionassessment"><a href="${ctx}/pavilionassessment/showPavilionassessment?motherid=${motherid}">出馆身体评估</a></li>--%>
+                <li id="showPavilioneducation"><a href="${ctx}/pavilioneducation/showPavilioneducation?motherid=${motherid}">宝宝出馆卫教</a></li>
+                <div style="margin-left: 70%">
+                    <input type="button" id="type2" class='btn block btn-outline btn-rounded btn-primary' onclick="find()" value="妈妈信息" >
+                </div>
+            </ul>
+            <!--宝宝护理记录开始-->
+            <div id="repairdiv">
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <table id="nuring" class="table" data-paging="true" data-filtering="true"
+                               data-sorting="true">
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--宝宝护理记录结束-->
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<script >
+    $(function () {
+        $('#showBabyNursing').addClass("active");
+        var ur=location.href;
+        var type=ur.split('/')[4].split("?")[0];
+        switch (type){
+            case 'babybasic':
+                $('#babybasic').addClass("active");
+                break;
+            case 'babyEvaluate':
+                $('#babyEvaluate').addClass("active");
+                break;
+            case 'showBabyNursing':
+                $('#showBabyNursing').addClass("active");
+                break;
+            case 'showGrowth':
+                $('#showGrowth').addClass("active");
+                break;
+            case 'showNeonatalrounds':
+                $('#showNeonatalrounds').addClass("active");
+                break;
+            case 'babywash':
+                $('#babywash').addClass("active");
+                break;
+            case 'showPavilionassessment':
+                $('#showPavilionassessment').addClass("active");
+                break;
+            case 'doctorcheck':
+                $('#doctorcheck').addClass("active");
+                break;
+            case 'showPavilioneducation':
+                $('#showPavilioneducation').addClass("active");
+                break;
+        }
+        var swimmingTitle = [
+            {"name":"id","title":"ID","breakpoints":"xs sm",visible:false},
+            /*{"name":"mothername","title":"妈妈姓名"},
+            {"name":"room","title":"入住房间号"},*/
+            {"name":"bobyname","title":"宝宝姓名"},
+            {"name":"temperature","title":"体温(℃)"},
+            {"name":"pulse","title":"脉搏(次/min)"},
+            {"name":"breathing","title":"呼吸(次/min)"},
+            {"name":"weight","title":"体重(g)"},
+            {"name":"jaundice","title":"黄疸"},
+            {"name":"nursingrecord","title":"护理纪录内容"},
+            {"name":"mothername","title":"护理人"},
+            {"name":"room","title":"备注"},
+            {"name":"updatetime","title":"时间"},
+        ];
+        function find(id) {
+            window.location.href='${ctx}/servicecenter/motherEvaluate?motherType=1&motherid=${motherid}';
+        }
+        window.find = find;
+
+        //启动模态框
+        var $modal = $('#app-editor-modal'),
+                $editor = $('#editor'),
+                $editorTitle = $('#editor-title')
+        //启动footable
+        var ft = FooTable.init('#nuring',{
+            "columns": swimmingTitle,
+            "rows": $.get("${ctx}/babynursing/getBabyNursingRecord?motherId="+'${motherid}'),
+
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/babynursing.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                                $.get("${ctx}/customerBasic/getBabyBasics?motherId="+'<%=request.getParameter("motherid")%>',function (data) {
+                                    $(data).each(function () {
+                                        $("#bobyname").append("<option value='"+this.name+"'>"+this.name+"</option>")
+                                    })
+                                })
+                           /* $.ajax({
+                                url:/customerBasic/getCustomerBasic?type=0&storeId="+
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        $("#mothername").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                    }
+                                }
+                            });
+                            $.ajax({
+                                url:/customerBasic/getCustomerBasic?type=1&storeId="+
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        $("#bobyname").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                    }
+                                }
+                            });*/
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'bobyname':$('#bobyname').val(),
+                                    'room':$('#room').val(),
+                                    'mothername':$('#mothername').val(),
+                                    'updatetime':$('#updatetime').val(),
+                                    'temperature':$('#temperature').val(),
+                                    'pulse':$('#pulse').val(),
+                                    'breathing':$('#breathing').val(),
+                                    'weight':$('#weight').val(),
+                                    'nursingrecord':$('#nursingrecord').val(),
+                                    'jaundice':$('#jaundice').val(),
+                                    'customerBasicId':'${motherid}',
+                                    'storeId':'<%=session.getAttribute("storeId")%>',
+                                    'motherId':'${motherid}'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        /*bobyname: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝宝名不能为空'
+                                                },
+                                            }
+                                        },
+                                        room:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间号不能为空！'
+                                                },
+                                            }
+                                        },mothername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈名不能为空！'
+                                                },
+                                            }
+                                        },*/temperature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '体温不能为空！'
+                                                },
+                                            }
+                                        },pulse: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '脉搏不能为空！'
+                                                },
+                                            }
+                                        },breathing: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '呼吸不能为空！'
+                                                },
+                                            }
+                                        },weight: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '体重不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/babynursing/addnuringdetail",json).
+                                    done(function(data){getCode(data)}).
+                                    fail(function(data){getCode(data)});
+                                    //新增一条记录
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val()
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color: #ab8ce4\"><i></i>修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/servicecenter/babynursing.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onshown:function () {
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getCustomerBasic?type=0",
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        if(data[i].name==values.mothername){
+                                            $("#mothername").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }else {
+                                            $("#mothername").append("<option  value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }
+                                    }
+                                }
+                            });
+                            $.ajax({
+                                url:"${ctx}/customerBasic/getCustomerBasic?type=1",
+                                type:"get",
+                                success:function(data){
+                                    for(var i=0;i<data.length;i++){
+                                        if(data[i].name==values.bobyname){
+                                            $("#bobyname").append("<option selected='selected' value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }else {
+                                            $("#bobyname").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+                                        }
+                                    }
+                                }
+                            });
+                            $('#id').val(values.id);
+                            $('#room').val(values.room);
+                            $('#mothername').val(values.mothername);
+                            $('#temperature').val(values.temperature);
+                            $('#pulse').val(values.pulse);
+                            $('#breathing').val(values.breathing);
+                            $('#weight').val(values.weight);
+                            $('#jaundice').val(values.jaundice);
+                            $('#nursingrecord').val(values.nursingrecord);
+                            $('#updatetime').val(values.updatetime);
+                            $('#bobyname').append("<option>"+values.bobyname+"</option>").attr("disabled","disabled");
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'bobyname':$('#bobyname').val(),
+                                    'room':$('#room').val(),
+                                    'mothername':$('#mothername').val(),
+                                    'updatetime':$('#updatetime').val(),
+                                    'temperature':$('#temperature').val(),
+                                    'pulse':$('#pulse').val(),
+                                    'breathing':$('#breathing').val(),
+                                    'weight':$('#weight').val(),
+                                    'nursingrecord':$('#nursingrecord').val(),
+                                    'jaundice':$('#jaundice').val(),
+                                    'customerBasicId':'${motherid}',
+                                    'storeId':'<%=session.getAttribute("storeId")%>',
+                                    'motherId':'${motherid}'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        /*bobyname: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '宝宝名不能为空'
+                                                },
+                                            }
+                                        },
+                                        room:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间号不能为空！'
+                                                },
+                                            }
+                                        },mothername: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈名不能为空！'
+                                                },
+                                            }
+                                        },*/temperature: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '体温不能为空！'
+                                                },
+                                            }
+                                        },pulse: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '脉搏不能为空！'
+                                                },
+                                            }
+                                        },breathing: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '呼吸不能为空！'
+                                                },
+                                            }
+                                        },weight: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '体重不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/babynursing/updateBabyNursingRecord",json).
+                                    done(function(data){getCode(data)}).
+                                    fail(function(data){getCode(data)});
+                                    //修改一条记录
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作
+                deleteRow: function(row){
+                    myConfirm("${ctx}/babynursing/detelnuringdetail",row);
+                }
+            }
+        });
+        uid = 10;
+    });
+</script>
+</body>
+</html>

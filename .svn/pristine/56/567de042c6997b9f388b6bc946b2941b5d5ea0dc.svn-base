@@ -1,0 +1,148 @@
+package com.luer.storesdata.controller;
+
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storesdata.bean.StoreFile;
+import com.luer.storesdata.service.StoreFileService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/storeFile")
+public class StoreFileController {
+    @Autowired
+    private StoreFileService storeFileService;
+
+    //获取总公司的直营店和加盟店
+    @GetMapping(value = "/getStoreBySort")
+    @ResponseBody
+    public List<StoreFile> getStoreBySort(StoreFile storeFile, HttpServletRequest request) {
+        storeFile.setStoreId((String) request.getSession().getAttribute("storeId"));
+        return storeFileService.getStoreBySort(storeFile);
+    }
+
+    //获取所有分公司和加盟店
+    @RequestMapping(value = "/getAllBranch")
+    @ResponseBody
+    public ResultSet getAllBranch() {
+        return ResultSet.getSuccess(storeFileService.getAllBranch());
+    }
+
+    //添加门店基本资料
+    @RequestMapping(value = "/saveStoreFile")
+    @ResponseBody
+    public ResultSet saveStoreFile(StoreFile storeFile) {
+        storeFileService.saveStoreFile(storeFile);
+        return ResultSet.getSuccess();
+    }
+
+
+    //删除门店基本资料
+    @RequestMapping(value = "/deleteStoreFileById")
+    @ResponseBody
+    public ResultSet deleteStoreFileById(@NonNull String id) {
+        storeFileService.deleteStoreFile(id);
+        return ResultSet.getSuccess();
+
+    }
+
+    //修改门店基本资料
+    @RequestMapping(value = "/updateStoreFileDetail")
+    @ResponseBody
+    public ResultSet updateStoreFileDetail(@NonNull StoreFile storeFile) {
+        storeFileService.updateStoreFile(storeFile);
+        return ResultSet.getSuccess();
+    }
+
+
+    //查询所有门店基本资料
+    @ResponseBody
+    @RequestMapping(value = "/selectStoreFiles")
+    public List<StoreFile> selectStoreFiles() {
+
+        List<StoreFile> storeFileLists = storeFileService.selectStoreFiles();
+
+        return storeFileLists;
+    }
+
+    //查询单个门店资料
+    @ResponseBody
+    @RequestMapping(value = "/selectByStoreFileId")
+    public List<StoreFile> selectByStoreFileId(String storeFileId) {
+        List<StoreFile> storeFileLists = storeFileService.selectByStoreFileId(storeFileId);
+        return storeFileLists;
+    }
+
+
+    /**
+     * 设置查看门店基本资料跳转,根据传入的id,判断其是总公司还是分公司还是门店，并且跳转到对应的页面
+     *
+     * @param id           门店id
+     * @param modelAndView 返回对应的门店页面
+     * @return org.springframework.web.servlet.ModelAndView
+     * @author GavinJiang
+     * @date 2018/9/10 11:15
+     * @params
+     */
+    @RequestMapping(value = "/saveStoreFileJump")
+    public ModelAndView saveStoreFileJump(String id, ModelAndView modelAndView) {
+        System.out.println("AAAAAAAAAAAAAAAAAAAAA:" + id);
+        List<StoreFile> storeFileLists = null;
+        storeFileLists = storeFileService.selectStoreFileBySortIdAndName(id);
+        if (storeFileLists.size() > 0 && "总公司".equals(storeFileLists.get(0).getSort())) {
+            modelAndView.setViewName("storesdata/storefileHeadquarterslist");
+            return modelAndView;
+        }
+        storeFileLists = storeFileService.selectStoreFileBySortIdAndName(id);
+        if (storeFileLists.size() > 0 && "分公司".equals(storeFileLists.get(0).getSort())) {
+            modelAndView.setViewName("storesdata/storefileDivisionlist");
+            return modelAndView;
+        }
+        storeFileLists = storeFileService.selectStoreFileBySortIdAndName(id);
+        if (storeFileLists.size() > 0 && "门店".equals(storeFileLists.get(0).getSort())) {
+            modelAndView.setViewName("storesdata/storefilelist");
+            return modelAndView;
+        }
+        //否则跳到登录页面
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+
+    /**
+     * 查询所有总公司基本资料
+     *
+     * @return
+     * @author GavinJiang
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping(value = "/selectStoreFilesByHeadquarters")
+    public List<StoreFile> selectStoreFilesByHeadquarters() {
+        List<StoreFile> storeFileLists = storeFileService.selectStoreFilesByHeadquarters();
+        return storeFileLists;
+    }
+
+    /**
+     * 根据上级门店id查询当前上级门店id下面所有的门店信息
+     *
+     * @param storeId
+     * @return java.util.List<com.luer.storesdata.bean.StoreFile>
+     * @author GavinJiang
+     * @date 2018/9/11 18:15
+     * @params
+     */
+    @ResponseBody
+    @RequestMapping(value = "/selectByStoreFileIdAll")
+    public List<StoreFile> selectByStoreFileIdAll(String storeId, String sort) {
+        List<StoreFile> storeFileLists = storeFileService.selectByStoreFileIdAll(storeId, sort);
+        return storeFileLists;
+    }
+}

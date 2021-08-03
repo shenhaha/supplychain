@@ -1,0 +1,77 @@
+package com.luer.businessmanager.controller;
+
+
+
+import com.luer.businessmanager.bean.Visit;
+import com.luer.businessmanager.service.VisitService;
+import com.luer.comm.utils.ResultSet;
+import lombok.NonNull;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+
+/**
+ * 参访人员管理
+ */
+@Controller
+@RequestMapping(value = "/businessmanager")
+public class VisitorController {
+
+    @Autowired
+    VisitService visitService;
+
+    /**
+     * 新增参访人员或者维修人员的信息
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/addVisitor")
+    public ResultSet addVisitor(@NonNull Visit visit){
+
+        visitService.insert(visit);
+        return  ResultSet.getSuccess();
+    }
+    /**
+     * 条件查询所有参访人员
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/getVisitor3")
+    public List getVisitor3(String classification, String storeId,@RequestParam("level") String level){
+
+        List<Visit> visits = visitService.getVisitors3(storeId,classification,level);
+
+
+        return visits;
+    }
+    @ResponseBody
+    @GetMapping("/getVisitor")
+    public List getVisitor(String classification, String storeId){
+
+        List<Visit> visits = visitService.getVisitors(storeId,classification);
+        return visits;
+    }
+    /**
+     * 根据id删除一个参访人员
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/deleteVisitor")
+    public ResultSet deleteVisitor(@NonNull  String id){
+        visitService.deleteVisitor(id);
+        return  ResultSet.getSuccess();
+    }
+    @ResponseBody
+    @PostMapping("/updateVisitor")
+    public ResultSet updateVisitor(@NonNull Visit visit){
+        System.out.println(visit);
+        visitService.updateVisitor(visit);
+        return  ResultSet.getSuccess();
+    }
+}

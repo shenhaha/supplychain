@@ -1,0 +1,54 @@
+package com.luer.storemanager.controller;
+
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storemanager.bean.SatisfactionSurvey;
+import com.luer.storemanager.service.SatisfactionSurveyService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/satisfactionSurvey")
+public class SatisfactionSurveyController {
+    @Autowired
+    private SatisfactionSurveyService satisfactionSurveyService;
+
+    //添加满意度信息
+    @RequestMapping("/saveSatisfactionSurvey")
+    @ResponseBody
+    public ResultSet saveSatisfactionSurvey(@NonNull SatisfactionSurvey satisfactionSurvey,int surveyType) {
+        satisfactionSurveyService.saveSatisfactionSurvey(satisfactionSurvey,surveyType);
+        return ResultSet.getSuccess();
+    }
+
+    //删除满意度信息
+    @RequestMapping("/deleteSatisfactionSurvey")
+    @ResponseBody
+    public ResultSet deleteSatisfactionSurveyById(@NonNull String id) {
+        satisfactionSurveyService.deleteSatisfactionSurveyById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //修改满意度资料
+    @RequestMapping("/updateSatisfactionSurvey")
+    @ResponseBody
+    public ResultSet updateSatisfactionSurveyDetail(@NonNull SatisfactionSurvey satisfactionSurvey) {
+        satisfactionSurveyService.updateSatisfactionSurvey(satisfactionSurvey);
+        return ResultSet.getSuccess();
+    }
+
+    //通过门店查询满意度资料
+    @ResponseBody
+    @RequestMapping("/selectSatisfactionSurveys")
+    public List<SatisfactionSurvey> selectSatisfactionSurveys(int surveyType,String storeId) {
+        List<SatisfactionSurvey> satisfactionSurveyList = satisfactionSurveyService.selectSatisfactionSurveys( surveyType,storeId);
+        return satisfactionSurveyList;
+
+    }
+}

@@ -1,0 +1,42 @@
+package com.luer.storemanager.dao;
+
+import com.luer.storemanager.bean.TemperatureRegister;
+import com.luer.storemanager.bean.TemperatureRegisterExample;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+/**
+ * @ClassName TemperatureRegisterMapper
+ * @Author GavinJiang
+ * @Date 2018/8/13 15:48.
+ */
+@MapperScan
+@Component
+public interface TemperatureRegisterMapper {
+    int countByExample(TemperatureRegisterExample example);
+
+    int deleteByExample(TemperatureRegisterExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(TemperatureRegister record);
+
+    int insertSelective(TemperatureRegister record);
+
+    List<TemperatureRegister> selectByExample(TemperatureRegisterExample example);
+
+    TemperatureRegister selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") TemperatureRegister record, @Param("example") TemperatureRegisterExample example);
+
+    int updateByExample(@Param("record") TemperatureRegister record, @Param("example") TemperatureRegisterExample example);
+
+    int updateByPrimaryKeySelective(TemperatureRegister record);
+
+    int updateByPrimaryKey(TemperatureRegister record);
+
+    List<TemperatureRegister> selectTemperatureRegiste(@Param("store_id") String storeId);
+}

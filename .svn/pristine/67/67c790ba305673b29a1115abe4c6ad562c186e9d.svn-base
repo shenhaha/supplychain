@@ -1,0 +1,38 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Patientrounds;
+import com.luer.servicecenter.bean.PatientroundsExample;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+@MapperScan
+@Component
+public interface PatientroundsMapper {
+    int countByExample(PatientroundsExample example);
+
+    int deleteByExample(PatientroundsExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Patientrounds record);
+
+    int insertSelective(Patientrounds record);
+
+    List<Patientrounds> selectByExample(PatientroundsExample example);
+
+    Patientrounds selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Patientrounds record, @Param("example") PatientroundsExample example);
+
+    int updateByExample(@Param("record") Patientrounds record, @Param("example") PatientroundsExample example);
+
+    int updateByPrimaryKeySelective(Patientrounds record);
+
+    int updateByPrimaryKey(Patientrounds record);
+
+    List selectPatientroundsBystoreId(String storeId);
+
+    List<Patientrounds> getPatientRoundsByMotherId(@Param("motherId") String motherid);
+}

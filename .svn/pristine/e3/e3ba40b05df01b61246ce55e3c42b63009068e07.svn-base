@@ -1,0 +1,114 @@
+package com.luer.storemanager.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storemanager.bean.Meetingrecord;
+import com.luer.storemanager.service.MeetingrecordService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+/**
+ * @description 会议记录控制类
+ * @ClassName MeetingrecordController
+ * @Author GavinJiang
+ * @Date 2018/8/14 13:29.
+ */
+@Controller
+@RequestMapping("/meetingrecord")
+public class MeetingrecordController {
+    @Autowired
+    private MeetingrecordService meetingrecordService;
+
+
+    /**
+     * @return
+     * @description 查询所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/14 13:32
+     * @params [request, modelAndView]
+     */
+    @ResponseBody
+    @RequestMapping("selectMeetingrecordAll")
+    public List<Meetingrecord> selectMeetingrecordAll() {
+        List<Meetingrecord> temperatureRegisterAll = meetingrecordService.selectMeetingrecord();
+        return temperatureRegisterAll;
+    }
+
+
+    /**
+     * @return
+     * @description 新增所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/14 13:41
+     * @params [meetingrecord]
+     */
+    @ResponseBody
+    @RequestMapping("addMeetingrecord")
+    public ResultSet addMeetingrecord(Meetingrecord meetingrecord) {
+        meetingrecordService.insert(meetingrecord);
+        return ResultSet.getSuccess();
+    }
+
+
+    /**
+     * @return
+     * @description 修改所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/14 13:42
+     * @params [meetingrecord]
+     */
+    @ResponseBody
+    @RequestMapping("updateMeetingrecord")
+    public ResultSet updateMeetingrecord(Meetingrecord meetingrecord) {
+        meetingrecordService.updateByPrimaryKeySelective(meetingrecord);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * @return
+     * @description 通过id删除所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/14 14:01
+     * @params [id]
+     */
+    @ResponseBody
+    @RequestMapping("daleteMeetingrecord")
+    public ResultSet daleteMeetingrecord(@NonNull String id) {
+        meetingrecordService.deleteByPrimaryKey(id);
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * @return
+     * @description 通过id批量删除所有的会议记录
+     * @author GavinJiang
+     * @date 2018/8/14 14:03
+     * @params [ids]
+     */
+    @ResponseBody
+    @RequestMapping("daleteMeetingrecords")
+    public ResultSet daleteMeetingrecords(@NonNull String ids) {
+        String[] id = ids.split(",");
+        for (int i = 0; i < id.length; i++) {
+            meetingrecordService.deleteByPrimaryKey(id[i]);
+        }
+        return ResultSet.getSuccess();
+    }
+
+    /**
+     * 根据门店id查询会议记录
+     * @param storeId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("selectMeetingrecordAllBystoreId")
+    public List<Meetingrecord> selectMeetingrecordAllBystoreId(String storeId) {
+        System.out.println("进入查询方法"+storeId);
+        List<Meetingrecord> temperatureRegisterAll = meetingrecordService.selectMeetingrecordAllBystoreId(storeId);
+        return temperatureRegisterAll;
+    }
+}

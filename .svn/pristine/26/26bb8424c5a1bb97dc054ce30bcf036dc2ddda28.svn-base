@@ -1,0 +1,30 @@
+package com.luer.comm.utils;
+
+import com.luer.servicecenter.bean.FamilyFunction;
+import com.luer.servicecenter.bean.SocialSupport;
+
+public class CountFamilyFunction {
+/**统计分数工具类
+* @author 张路明
+*/
+    public static String  getScore(FamilyFunction familyFunction){
+        int i = 0;
+        i += count(familyFunction.getAnswerone());
+        i += count(familyFunction.getAnswertwo());
+        i += count(familyFunction.getAnswerthree());
+        i += count(familyFunction.getAnswerfour());
+        i += count(familyFunction.getAnswerfive());
+        return String.valueOf(i);
+    }
+    public static  int count(String question) {
+        switch (question) {
+            case "几乎很少":
+                return 0;
+            case "有时":
+                return 1;
+            case "经常":
+                return 2;
+        }
+        return 0;
+    }
+}

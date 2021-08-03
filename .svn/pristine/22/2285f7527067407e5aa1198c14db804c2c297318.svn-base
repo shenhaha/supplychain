@@ -1,0 +1,37 @@
+package com.luer.storesdata.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storesdata.bean.Hotel;
+import com.luer.storesdata.dao.HotelMapper;
+import com.luer.storesdata.service.HotelService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class HotelServiceImpl implements HotelService{
+
+    @Autowired
+    HotelMapper hotelMapper;
+    @Override
+    public Hotel getByStoreId(String storeId) {
+        return  hotelMapper.getByStoreId(storeId);
+    }
+
+    @Override
+    public int insert(Hotel hotel) {
+        if(hotel.getId()==null){
+            hotel.setId(UUIDUtils.getUUID());
+            hotelMapper.insert(hotel);
+        }else {
+            hotelMapper.updateByPrimaryKeyWithBLOBs(hotel);
+        }
+        return 0;
+    }
+
+    @Override
+    public int update(Hotel hotel) {
+        return 0;
+    }
+}

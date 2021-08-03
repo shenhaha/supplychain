@@ -1,0 +1,37 @@
+package com.luer.servicecenter.service;
+
+import com.luer.comm.utils.CustomerException;
+import com.luer.servicecenter.bean.CustomerBasic;
+import lombok.NonNull;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/8/13.
+ */
+public interface CustomerBasicService {
+    void  addCustomerBasic(CustomerBasic customerBasic)throws CustomerException;
+
+    void deleteCustomerBasic(String id);
+
+    List<CustomerBasic> getList(CustomerBasic customerBasic);
+
+    void updateCustomer(CustomerBasic customerBasic);
+    void updateAvoid(String avoid, String motherid);
+
+    List<CustomerBasic> selectCustomerBasicByStoreId(String storeId,String type);
+
+    List<CustomerBasic> getOneCustomerBasics(String storeId,String type);
+
+    List<CustomerBasic> getTwoCustomerBasics(String storeId, String type, String checkStatus, String motherType);
+
+    List<CustomerBasic> selectByStoreId();
+
+    List<CustomerBasic> getBabyBasics(String motherId);
+
+    List<CustomerBasic> getTwoTypeCustomerBasics(String storeId);
+
+    List<CustomerBasic> selectCustomerBasic(String storeId);
+
+    void addBabyBasic(CustomerBasic customerBasic) throws CustomerException;
+}

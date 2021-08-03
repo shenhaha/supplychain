@@ -1,0 +1,12 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <title>welcome</title>
+</head>
+<body>
+<div style="background-image: url('${ctx}/static/image/homepage.jpg');background-size:100% 100%;height: 100%"><br>
+</div>
+</body>
+</html>

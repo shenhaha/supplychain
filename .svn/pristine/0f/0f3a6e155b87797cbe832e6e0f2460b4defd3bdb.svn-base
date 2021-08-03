@@ -1,0 +1,69 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrapValidator.css"/>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/bootstrapValidator.js"></script>
+    <%--日期时间插件--%>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.js"></script>
+    <script src="${ctx}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<form class="form-horizontal" role="form" id="myform">
+    <div class="form-group required" hidden="hidden">
+        <label for="id" class="col-sm-2 control-label" style="margin: 0 0;padding: 0 0">ID</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="id" name="id">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!--前缀-->
+            <div class="form-group col-md-5">
+                <label for="parameterName" class="col-sm-4 control-label">参数名称：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="parameterName" name="parameterName" readonly>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label for="intParameter" class="col-sm-4 control-label">参数数值：</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="intParameter" name="intParameter">
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="parameterDescripte" class="col-sm-4 control-label">参数描述：</label>
+                <div class="col-sm-5">
+
+                    <textarea type="text" class="form-control" id="parameterDescripte" name="parameterDescripte"></textarea>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+<script>
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+
+</script>
+</body>
+</html>

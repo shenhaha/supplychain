@@ -1,0 +1,367 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<html>
+<head>
+    <title>入住核实详细</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel-heading">
+                <%--<div class="pull-left">
+                    <ol class="breadcrumb">
+                       <li><a href="${ctx}/index">首页</a></li>
+                        <li class="active">入住核实详细</li>
+                    </ol>
+                </div>--%>
+                <div class="clearfix"></div>
+            </div>
+            <!--入住核实详细-->
+            <div id="repairdiv">
+                <form class="form-horizontal" method="post" action="${ctx}/checkIn/addCheckIn">
+                    <h3>日常用品</h3>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1"  name="towel">
+                                毛巾
+                            </label>
+                        </div>
+                        <div class="col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="washcloth">
+                                浴巾
+                            </label>
+                        </div>
+                        <div class="col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="mattowel">
+                                地巾
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="washbasin">
+                                脸盆
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="chairCushion">
+                                椅垫
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="stew">
+                                炖锅
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="chopsticks">
+                                筷子
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="spoon">
+                                勺子
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="glassWatercup">
+                                玻璃水杯
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="blackPorcelaincup">
+                                黑瓷水杯
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="remoteControl">
+                                电视遥控器
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="conditionerControl">
+                                空调遥控器
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="lactationClothes">
+                                哺乳衣
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="lactationPillow">
+                                哺乳枕
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="waterTreasure">
+                                开水宝
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="showerSeats">
+                                浴室凳
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="humidifier">
+                                加湿器
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="soapBox">
+                                香皂盒
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="tabletopFrame">
+                                桌面架
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="paringKnife">
+                                削皮刀
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="hairDrier">
+                                吹风机
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="bathMat">
+                                浴室防滑垫
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="dndSign">
+                                请勿打扰牌
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="wirelessRouter">
+                                无线路由器
+                            </label>
+                        </div>
+                    </div>
+                    <h3>消耗用品</h3>
+                    <div class="row">
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="tissue">
+                                卷纸/抽纸
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="toothpaste">
+                                牙膏/牙刷
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="shampoo">
+                                沐浴/洗发
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="soap">
+                                香皂
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="roomCard">
+                                客房卡
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="downQuilt">
+                                羽绒被
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="parkingPermit">
+                                停车证
+                            </label>
+                        </div>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" value="1" name="entranceCard">
+                                门禁卡
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input name="customerId" hidden id="id"/>
+                        <div class=" col-sm-1">
+                            <label>
+                                <input type="checkbox" id="checkall">
+                                全选
+                            </label>
+                        </div>
+                        <div class="col-sm-1 col-sm-offset-9">
+                            <button type="button" class="btn btn-primary btn-sm">确认修改</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <!--入住核实详细-->
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script src="${ctx}/static/js/jquery.form.js"></script>
+<script >
+    $(function () {
+        $('#checkall').click(function () {
+            if($('#checkall').is(":checked")){
+                $(':input[type="checkbox"]').each(function () {
+                    $(this).attr("checked","checked");
+                })
+            }else {
+                $(':input[type="checkbox"]').each(function () {
+                    $(this).removeAttr("checked","checked");
+                })
+            }
+        })
+        var motherid = '<%=request.getParameter("motherid")%>';
+        $.get('${ctx}/checkIn/selectCheckBymother',{'motherid':motherid},function (data) {
+            if(data!=null||data!=""){
+                if(data.parkingPermit!=null){
+                    $(':input[name="parkingPermit"]').attr("checked","checked");
+                }
+                if(data.entranceCard!=null){
+                    $(':input[name="entranceCard"]').attr("checked","checked");
+                }
+                if(data.hairDrier!=null){
+                    $(':input[name="hairDrier"]').attr("checked","checked");
+                }
+                if(data.bathMat!=null){
+                    $(':input[name="bathMat"]').attr("checked","checked");
+                }
+                if(data.dndSign!=null){
+                    $(':input[name="dndSign"]').attr("checked","checked");
+                }
+                if(data.wirelessRouter!=null){
+                    $(':input[name="wirelessRouter"]').attr("checked","checked");
+                }
+                if(data.tissue!=null){
+                    $(':input[name="tissue"]').attr("checked","checked");
+                }
+                if(data.toothpaste!=null){
+                    $(':input[name="toothpaste"]').attr("checked","checked");
+                }
+                if(data.shampoo!=null){
+                    $(':input[name="shampoo"]').attr("checked","checked");
+                }
+                if(data.soap!=null){
+                    $(':input[name="soap"]').attr("checked","checked");
+                }
+                if(data.roomCard!=null){
+                    $(':input[name="roomCard"]').attr("checked","checked");
+                }
+                if(data.downQuilt!=null){
+                    $(':input[name="downQuilt"]').attr("checked","checked");
+                }
+                if(data.remoteControl!=null){
+                    $(':input[name="remoteControl"]').attr("checked","checked");
+                }
+                if(data.conditionerControl!=null){
+                    $(':input[name="conditionerControl"]').attr("checked","checked");
+                }
+                if(data.lactationClothes!=null){
+                    $(':input[name="lactationClothes"]').attr("checked","checked");
+                }
+                if(data.lactationPillow!=null){
+                    $(':input[name="lactationPillow"]').attr("checked","checked");
+                }
+                if(data.waterTreasure!=null){
+                    $(':input[name="waterTreasure"]').attr("checked","checked");
+                }
+                if(data.showerSeats!=null){
+                    $(':input[name="showerSeats"]').attr("checked","checked");
+                }
+                if(data.humidifier!=null){
+                    $(':input[name="humidifier"]').attr("checked","checked");
+                }
+                if(data.soapBox!=null){
+                    $(':input[name="soapBox"]').attr("checked","checked");
+                }
+                if(data.tabletopFrame!=null){
+                    $(':input[name="tabletopFrame"]').attr("checked","checked");
+                }
+                if(data.towel!=null){
+                    $(':input[name="towel"]').attr("checked","checked");
+                }
+                if(data.washcloth!=null){
+                    $(':input[name="washcloth"]').attr("checked","checked");
+                }
+                if(data.mattowel!=null){
+                    $(':input[name="mattowel"]').attr("checked","checked");
+                }
+                if(data.washbasin!=null){
+                    $(':input[name="washbasin"]').attr("checked","checked");
+                }
+                if(data.chairCushion!=null){
+                    $(':input[name="chairCushion"]').attr("checked","checked");
+                }
+                if(data.stew!=null){
+                    $(':input[name="stew"]').attr("checked","checked");
+                }
+                if(data.chopsticks!=null){
+                    $(':input[name="chopsticks"]').attr("checked","checked");
+                }
+                if(data.spoon!=null){
+                    $(':input[name="spoon"]').attr("checked","checked");
+                }
+                if(data.glassWatercup!=null){
+                    $(':input[name="glassWatercup"]').attr("checked","checked");
+                }if(data.blackPorcelaincup!=null){
+                    $(':input[name="blackPorcelaincup"]').attr("checked","checked");
+                }
+            }
+        })
+        $('button').click(function () {
+            $('#id').val(motherid);
+            $('form').ajaxSubmit(function (data) {
+               getCode(data);
+            });
+        })
+    });
+</script>
+</body>
+</html>

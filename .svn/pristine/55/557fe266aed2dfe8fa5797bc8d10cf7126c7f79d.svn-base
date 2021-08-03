@@ -1,0 +1,20 @@
+package com.luer.stockandsales.service;
+
+import com.luer.stockandsales.bean.OrderDetails;
+
+import java.util.List;
+
+public interface OrderDetailsService {
+    void insertOrderDetails(OrderDetails orderDetails);
+
+    void deleteOrderDetails(String orderDetailsId);
+
+    void updateOrderDetails(OrderDetails orderDetails);
+
+    List<OrderDetails> selectByOrderId(String orderId);
+
+    void updateSum(String orderId, int detailstype);
+
+
+    List<OrderDetails> selectByStoreOrderId( String orderId,Integer detailstype);
+}

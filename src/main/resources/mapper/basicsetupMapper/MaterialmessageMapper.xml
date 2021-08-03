@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.basicsetup.dao.MaterialmessageMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.basicsetup.bean.Materialmessage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="warehouse_time" property="warehouseTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="material_code" property="materialCode" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="default_loss" property="defaultLoss" jdbcType="VARCHAR" />
+    <result column="manufacturer" property="manufacturer" jdbcType="VARCHAR" />
+    <result column="cost_price" property="costPrice" jdbcType="DOUBLE" />
+    <result column="ingredients" property="ingredients" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="unit_price" property="unitPrice" jdbcType="DOUBLE" />
+    <result column="tax_price" property="taxPrice" jdbcType="DOUBLE" />
+    <result column="total_price" property="totalPrice" jdbcType="DOUBLE" />
+    <result column="tax_total_price" property="taxTotalPrice" jdbcType="DOUBLE" />
+    <result column="purchase_number" property="purchaseNumber" jdbcType="VARCHAR" />
+    <result column="spare" property="spare" jdbcType="VARCHAR" />
+    <result column="data_state" property="dataState" jdbcType="VARCHAR" />
+    <result column="item_code" property="itemCode" jdbcType="VARCHAR" />
+    <result column="spare03" property="spare03" jdbcType="VARCHAR" />
+    <result column="spare04" property="spare04" jdbcType="VARCHAR" />
+    <result column="spare05" property="spare05" jdbcType="VARCHAR" />
+    <result column="spare06" property="spare06" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, warehouse_time, name, material_code, type, brand, unit,
+    default_loss, manufacturer, cost_price, ingredients, number, unit_price, tax_price,
+    total_price, tax_total_price, purchase_number, spare, data_state, item_code, spare03,
+    spare04, spare05, spare06, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.basicsetup.bean.MaterialmessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from materialmessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from materialmessage
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from materialmessage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.basicsetup.bean.MaterialmessageExample" >
+    delete from materialmessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.basicsetup.bean.Materialmessage" >
+    insert into materialmessage (id, create_time, update_time,
+      warehouse_time, name, material_code,
+      type, brand, unit,
+      default_loss, manufacturer, cost_price,
+      ingredients, number, unit_price,
+      tax_price, total_price, tax_total_price,
+      purchase_number, spare, data_state,
+      item_code, spare03, spare04,
+      spare05, spare06, remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{warehouseTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, #{materialCode,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR},
+      #{defaultLoss,jdbcType=VARCHAR}, #{manufacturer,jdbcType=VARCHAR}, #{costPrice,jdbcType=DOUBLE},
+      #{ingredients,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{unitPrice,jdbcType=DOUBLE},
+      #{taxPrice,jdbcType=DOUBLE}, #{totalPrice,jdbcType=DOUBLE}, #{taxTotalPrice,jdbcType=DOUBLE},
+      #{purchaseNumber,jdbcType=VARCHAR}, #{spare,jdbcType=VARCHAR}, #{dataState,jdbcType=VARCHAR},
+      #{itemCode,jdbcType=VARCHAR}, #{spare03,jdbcType=VARCHAR}, #{spare04,jdbcType=VARCHAR},
+      #{spare05,jdbcType=VARCHAR}, #{spare06,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.basicsetup.bean.Materialmessage" >
+    insert into materialmessage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="warehouseTime != null" >
+        warehouse_time,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="materialCode != null" >
+        material_code,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="defaultLoss != null" >
+        default_loss,
+      </if>
+      <if test="manufacturer != null" >
+        manufacturer,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="ingredients != null" >
+        ingredients,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+      <if test="taxPrice != null" >
+        tax_price,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="taxTotalPrice != null" >
+        tax_total_price,
+      </if>
+      <if test="purchaseNumber != null" >
+        purchase_number,
+      </if>
+      <if test="spare != null" >
+        spare,
+      </if>
+      <if test="dataState != null" >
+        data_state,
+      </if>
+      <if test="itemCode != null" >
+        item_code,
+      </if>
+      <if test="spare03 != null" >
+        spare03,
+      </if>
+      <if test="spare04 != null" >
+        spare04,
+      </if>
+      <if test="spare05 != null" >
+        spare05,
+      </if>
+      <if test="spare06 != null" >
+        spare06,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="warehouseTime != null" >
+        #{warehouseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="materialCode != null" >
+        #{materialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultLoss != null" >
+        #{defaultLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null" >
+        #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="ingredients != null" >
+        #{ingredients,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxPrice != null" >
+        #{taxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxTotalPrice != null" >
+        #{taxTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="purchaseNumber != null" >
+        #{purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="spare != null" >
+        #{spare,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null" >
+        #{dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null" >
+        #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spare03 != null" >
+        #{spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="spare04 != null" >
+        #{spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="spare05 != null" >
+        #{spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        #{spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.basicsetup.bean.MaterialmessageExample" resultType="java.lang.Integer" >
+    select count(*) from materialmessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update materialmessage
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.warehouseTime != null" >
+        warehouse_time = #{record.warehouseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialCode != null" >
+        material_code = #{record.materialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultLoss != null" >
+        default_loss = #{record.defaultLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufacturer != null" >
+        manufacturer = #{record.manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costPrice != null" >
+        cost_price = #{record.costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ingredients != null" >
+        ingredients = #{record.ingredients,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.unitPrice != null" >
+        unit_price = #{record.unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taxPrice != null" >
+        tax_price = #{record.taxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalPrice != null" >
+        total_price = #{record.totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taxTotalPrice != null" >
+        tax_total_price = #{record.taxTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.purchaseNumber != null" >
+        purchase_number = #{record.purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare != null" >
+        spare = #{record.spare,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataState != null" >
+        data_state = #{record.dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemCode != null" >
+        item_code = #{record.itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare03 != null" >
+        spare03 = #{record.spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare04 != null" >
+        spare04 = #{record.spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare05 != null" >
+        spare05 = #{record.spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spare06 != null" >
+        spare06 = #{record.spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update materialmessage
+    set id = #{record.id,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    warehouse_time = #{record.warehouseTime,jdbcType=TIMESTAMP},
+    name = #{record.name,jdbcType=VARCHAR},
+    material_code = #{record.materialCode,jdbcType=VARCHAR},
+    type = #{record.type,jdbcType=VARCHAR},
+    brand = #{record.brand,jdbcType=VARCHAR},
+    unit = #{record.unit,jdbcType=VARCHAR},
+    default_loss = #{record.defaultLoss,jdbcType=VARCHAR},
+    manufacturer = #{record.manufacturer,jdbcType=VARCHAR},
+    cost_price = #{record.costPrice,jdbcType=DOUBLE},
+    ingredients = #{record.ingredients,jdbcType=VARCHAR},
+    number = #{record.number,jdbcType=INTEGER},
+    unit_price = #{record.unitPrice,jdbcType=DOUBLE},
+    tax_price = #{record.taxPrice,jdbcType=DOUBLE},
+    total_price = #{record.totalPrice,jdbcType=DOUBLE},
+    tax_total_price = #{record.taxTotalPrice,jdbcType=DOUBLE},
+    purchase_number = #{record.purchaseNumber,jdbcType=VARCHAR},
+    spare = #{record.spare,jdbcType=VARCHAR},
+    data_state = #{record.dataState,jdbcType=VARCHAR},
+    item_code = #{record.itemCode,jdbcType=VARCHAR},
+    spare03 = #{record.spare03,jdbcType=VARCHAR},
+    spare04 = #{record.spare04,jdbcType=VARCHAR},
+    spare05 = #{record.spare05,jdbcType=VARCHAR},
+    spare06 = #{record.spare06,jdbcType=VARCHAR},
+    remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.basicsetup.bean.Materialmessage" >
+    update materialmessage
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="warehouseTime != null" >
+        warehouse_time = #{warehouseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="materialCode != null" >
+        material_code = #{materialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultLoss != null" >
+        default_loss = #{defaultLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null" >
+        manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="ingredients != null" >
+        ingredients = #{ingredients,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxPrice != null" >
+        tax_price = #{taxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="taxTotalPrice != null" >
+        tax_total_price = #{taxTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="purchaseNumber != null" >
+        purchase_number = #{purchaseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="spare != null" >
+        spare = #{spare,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null" >
+        data_state = #{dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null" >
+        item_code = #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="spare03 != null" >
+        spare03 = #{spare03,jdbcType=VARCHAR},
+      </if>
+      <if test="spare04 != null" >
+        spare04 = #{spare04,jdbcType=VARCHAR},
+      </if>
+      <if test="spare05 != null" >
+        spare05 = #{spare05,jdbcType=VARCHAR},
+      </if>
+      <if test="spare06 != null" >
+        spare06 = #{spare06,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.basicsetup.bean.Materialmessage" >
+    update materialmessage
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      warehouse_time = #{warehouseTime,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      material_code = #{materialCode,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      default_loss = #{defaultLoss,jdbcType=VARCHAR},
+      manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      cost_price = #{costPrice,jdbcType=DOUBLE},
+      ingredients = #{ingredients,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      unit_price = #{unitPrice,jdbcType=DOUBLE},
+      tax_price = #{taxPrice,jdbcType=DOUBLE},
+      total_price = #{totalPrice,jdbcType=DOUBLE},
+      tax_total_price = #{taxTotalPrice,jdbcType=DOUBLE},
+      purchase_number = #{purchaseNumber,jdbcType=VARCHAR},
+      spare = #{spare,jdbcType=VARCHAR},
+      data_state = #{dataState,jdbcType=VARCHAR},
+      item_code = #{itemCode,jdbcType=VARCHAR},
+      spare03 = #{spare03,jdbcType=VARCHAR},
+      spare04 = #{spare04,jdbcType=VARCHAR},
+      spare05 = #{spare05,jdbcType=VARCHAR},
+      spare06 = #{spare06,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--批量修改状态-->
+  <update id="updateByIdOpen" parameterType="java.lang.String" >
+    update  materialmessage set spare = '01' where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <update id="updateByIdOut" parameterType="java.lang.String" >
+    update  materialmessage set spare = '02' where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <update id="updateByDataStateOpen" parameterType="java.lang.String" >
+    update  materialmessage set data_state = '001' where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <update id="updateByDataStateOut" parameterType="java.lang.String" >
+    update  materialmessage set data_state = '002' where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <select id="count" parameterType="com.luer.basicsetup.bean.Materialmessage" resultType="java.lang.Integer" >
+    select count(*) from materialmessage and data_state = '001'
+  </select>
+
+  <select id="findListDataPage" resultMap="BaseResultMap"  parameterType="com.luer.basicsetup.bean.Materialmessage">
+    /*select * from operator limit 2,5;*/
+    select * from materialmessage limit #{pageNum},#{pageSize};
+  </select>
+
+  <select id="selectById" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage where id = #{id,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" >
+    select * from materialmessage A where data_state = '001'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectYFByName" resultMap="BaseResultMap" >
+    select * from materialmessage A where type = '一般辅料' and data_state = '001'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+  <select id="selectBByName" resultMap="BaseResultMap" >
+    select * from materialmessage A where type = '包装' and data_state = '001'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+
+
+  <select id="selectYByName" resultMap="BaseResultMap" >
+    select * from materialmessage A where type = '原材料' and data_state = '001'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from materialmessage where type = #{type,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+  <select id="selectByManufacturer" resultMap="BaseResultMap">
+    select * from materialmessage A where data_state = '001'
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+  </select>
+
+
+  <select id="selectYFByManufacturer" resultMap="BaseResultMap">
+    select * from materialmessage A where type = '一般辅料' and data_state = '001'
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+  </select>
+
+  <select id="selectBByManufacturer" resultMap="BaseResultMap">
+    select * from materialmessage A where type = '包装' and data_state = '001'
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+  </select>
+
+  <select id="selectByMaterialCode" resultMap="BaseResultMap">
+    select * from materialmessage A where data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+  </select>
+
+
+
+
+  <select id="selectByTypeAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage where type = #{type,jdbcType=VARCHAR} and name = #{name,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+  <select id="selectByTypeAndManufacturer" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage where type = #{type,jdbcType=VARCHAR} and manufacturer = #{manufacturer,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+      /**查询全部可用数据*/
+    select * from materialmessage where data_state = '001'
+  </select>
+
+  <select id="selectRecycle" resultMap="BaseResultMap" >
+     /**查询全部回收站信息*/
+    select * from materialmessage where data_state = '002'
+  </select>
+
+  <select id="selectByTypeAndSpare" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage where type = #{type,jdbcType=VARCHAR} and spare = #{spare,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+
+
+
+  <select id="selectYFByMaterialCode" resultMap="BaseResultMap">
+    select * from materialmessage A where type = '一般辅料' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+  </select>
+
+
+
+
+  <select id="selectBByMaterialCode" resultMap="BaseResultMap">
+    select * from materialmessage A where type = '包装' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+  </select>
+
+
+  <select id="selectYByMaterialCode" resultMap="BaseResultMap">
+    select * from materialmessage A where type = '原材料' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+  <select id="selectByMaterialCodeAll" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage where material_code = #{materialCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectBySpare" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage where spare = #{spare,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+  <select id="selectByTypeAnd" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from materialmessage where type = '一般辅料' or type = '包装' and data_state = '001'
+  </select>
+
+  <select id="selectfuByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from materialmessage where type = '一般辅料' or type = '包装' and name = #{name,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+  <select id="selectfuByManufacturer" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from materialmessage where type = '一般辅料' or type = '包装' and manufacturer = #{manufacturer,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+  <select id="selectfuBySpare" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from materialmessage where type = '一般辅料' or type = '包装' and spare = #{spare,jdbcType=VARCHAR} and data_state = '001'
+  </select>
+
+  <select id="selectByMaterialCodeAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectYFByMaterialCodeAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '一般辅料' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+  <select id="selectBByMaterialCodeAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '包装' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectYByMaterialCodeAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '原材料' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+  <select id="selectBymaterialCodeAndManufacturer" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+  </select>
+
+  <select id="selectYFBymaterialCodeAndManufacturer" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '一般辅料' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.materialCode like CONCAT('%',#{material_code},'%')
+    </if>
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+  </select>
+
+
+
+
+  <select id="selectBBymaterialCodeAndManufacturer" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '包装' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+  </select>
+
+
+
+  <select id="selectYBymaterialCodeAndManufacturer" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '原材料' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+  </select>
+
+  <select id="selectByManufacturerAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where data_state = '001'
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+    <if test="name != null">
+    AND A.name like CONCAT('%',#{name},'%')
+  </if>
+  </select>
+
+
+  <select id="selectYFByManufacturerAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '一般辅料' and data_state = '001'
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+
+  <select id="selectBByManufacturerAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '包装' and data_state = '001'
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+  <select id="selectYByManufacturer" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '原材料' and data_state = '001'
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+  </select>
+
+
+  <select id="selectYByManufacturerAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '原材料' and data_state = '001'
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+  <select id="selectByMaterialCodeAndManufacturerAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectYByMaterialCodeAndManufacturerAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '原材料' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+  <select id="selectYFByMaterialCodeAndManufacturerAndName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select * from materialmessage A where type = '一般辅料' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+  <select id="selectBByMaterialCodeAndManufacturerAndName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from materialmessage A where type = '包装' and data_state = '001'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="manufacturer != null">
+      AND A.manufacturer like CONCAT('%',#{manufacturer},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+    delete from materialmessage where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="selectByMaterialCodeR" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from materialmessage A where data_state = '002'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+  </select>
+
+  <select id="selectByMaterialCodeAndNameR" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from materialmessage A where data_state = '002'
+    <if test="materialCode != null">
+      AND A.material_code like CONCAT('%',#{materialCode},'%')
+    </if>
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectByNameR" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from materialmessage A where data_state = '002'
+    <if test="name != null">
+      AND A.name like CONCAT('%',#{name},'%')
+    </if>
+  </select>
+
+
+
+</mapper>

@@ -1,0 +1,42 @@
+package com.luer.systemmanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.DoctorCheckout;
+import com.luer.servicecenter.dao.DoctorCheckoutMapper;
+import com.luer.servicecenter.service.DoctorCheckoutService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by 87961 on 2018/10/16.
+ */
+@Service
+@Transactional
+public class DoctorCheckoutServiceImpl implements DoctorCheckoutService {
+    @Autowired
+    private DoctorCheckoutMapper doctorCheckoutMapper;
+    @Override
+    public void addDoctorCheckout(DoctorCheckout doctorCheckout) {
+        doctorCheckout.setId(UUIDUtils.getUUID());
+        doctorCheckoutMapper.insert(doctorCheckout);
+    }
+
+    @Override
+    public void updateDoctorCheckout(DoctorCheckout doctorCheckout) {
+        doctorCheckoutMapper.updateByPrimaryKeySelective(doctorCheckout);
+
+    }
+
+    @Override
+    public void deleteDoctorCheckout(String id) {
+        doctorCheckoutMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<DoctorCheckout> getDoctorCheckout(String motherId) {
+        return doctorCheckoutMapper.getDoctorCheckout(motherId);
+    }
+}

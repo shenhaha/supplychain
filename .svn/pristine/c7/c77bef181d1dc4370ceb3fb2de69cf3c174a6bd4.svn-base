@@ -1,0 +1,68 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.CustomerBasic;
+import com.luer.servicecenter.bean.CustomerBasicExample;
+import com.luer.servicecenter.bean.NurseRecord;
+import com.luer.servicecenter.bean.NurseRecordExample;
+import com.luer.servicecenter.dao.CustomerBasicMapper;
+import com.luer.servicecenter.dao.NurseRecordMapper;
+import com.luer.servicecenter.service.NurseRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+
+/**
+* @author 张路明
+*/
+@Service
+@Transactional
+public class NurseRecordServiceImpl implements NurseRecordService {
+
+
+    @Autowired
+    NurseRecordMapper nurseRecordMapper;
+
+    @Autowired
+    private CustomerBasicMapper cb;
+
+    @Override
+    public int updateNurseRecord(NurseRecord nurseRecord) {
+        NurseRecordExample nurseRecordExample = new NurseRecordExample();
+        NurseRecordExample.Criteria criteria = nurseRecordExample.createCriteria();
+        criteria.andIdEqualTo(nurseRecord.getId());
+        int i = nurseRecordMapper.updateByExampleSelective(nurseRecord,nurseRecordExample);
+        return i;
+    }
+
+    @Override
+    public List<NurseRecord> getNurseRecords(NurseRecord nurseRecord) {
+        NurseRecordExample nurseRecordExample = new NurseRecordExample();
+        NurseRecordExample.Criteria criteria = nurseRecordExample.createCriteria();
+        if(nurseRecord.getStoreId()!=null){
+            criteria.andStoreIdLike(nurseRecord.getStoreId());
+        }
+        List<NurseRecord> lists = nurseRecordMapper.selectByExample(nurseRecordExample);
+        return lists;
+    }
+
+    @Override
+    public int deleteNurseRecord(String id) {
+        int i = nurseRecordMapper.deleteByPrimaryKey(id);
+        return i;
+    }
+
+    @Override
+    public int insertNurseRecord(NurseRecord nurseRecord) {
+        nurseRecord.setId(UUIDUtils.getUUID());
+        return nurseRecordMapper.insert(nurseRecord);
+    }
+
+    @Override
+    public List selectNurseRecordsBystoreId(String storeId) {
+        return nurseRecordMapper.selectNurseRecordsBystoreId(storeId);
+    }
+}

@@ -1,0 +1,236 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>加值服务记录</title>
+</head>
+<body>
+<!--Main Content-->
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                    <%--<div class="panel-heading">
+                        <div class="pull-left">
+                            <ol class="breadcrumb">
+                                <li><a href="${ctx}/index">首页</a></li>
+                                <li class="active">加值服务记录</li>
+                            </ol>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>--%>
+                    <!--妈妈护理记录开始-->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                </table>
+                                <table id="motherrec" class="table" data-paging="true" data-filtering="true"
+                                       data-sorting="true">
+                                </table>
+                            </div>
+                        </div>
+                    <!--妈妈护理记录结束-->
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+</div>
+<script>
+    $(function () {
+        $.get("${ctx}/customerBasic/getCustomerBasic?type=0&storeId="+'<%=session.getAttribute("storeId")%>').done(function(data){
+            for(var i=0;i<data.length;i++){
+                $("#mothername").append("<option value='"+data[i].name+"'>"+data[i].name+"</option>");
+            }
+        });
+        $.get("${ctx}/extraService/selectAll?type=0&storeId="+'<%=session.getAttribute("storeId")%>').done(function(data){
+            for(var i=0;i<data.length;i++){
+                var s = data[i].project;
+                $("#servicediv").append("<input style='margin-right: 3px;margin-top: 1px'  type='checkbox' id='checkbox"+(i+1)+"'><label style='margin-right: 5px;padding-bottom: 2px' for='checkbox"+(i+1)+"'>"+s+"</label>");
+                }
+            });
+        var swimmingTitle = [
+            {
+                "name": "motherid",
+                "title": "ID",
+                "breakpoints": "xs sm",
+                visible:false
+            },
+            {"name": "mothername", "title": "妈妈姓名"},
+            {"name": "roomnum", "title": "房间号"},
+            {"name": "price", "title": "总金额(￥)"},
+            {"name": "profit", "title": "总门店抽成(￥)"},
+            {"name": "detail", "title": "查看详细"},
+        ];
+        function detail(values) {
+            window.location.href = "${ctx}/servicecenter/servicedetail?motherid="+values.motherid;
+        }
+        window.detail = detail;
+        //启动footable
+        var ft = FooTable.init('#motherrec',{
+            "columns": swimmingTitle,
+            "rows": $.get("${ctx}/storeservice/getCount?storeId="+'<%=session.getAttribute("storeId")%>',function (data) {
+                $(data).each(function () {
+                    this.detail = "<button class='btn btn-primary btn-sm' onclick='detail("+JSON.stringify(this)+")'>查看详细</button>"
+                })
+            }),
+            //功能操作
+            /*editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog =  BootstrapDialog.show({
+                                type : BootstrapDialog.TYPE_DEFAULT,
+                                title : "<span class='text-success'><i class='fa fa-plus'></i>新增一条数据</span>",
+                                closable: false,
+                                draggable: true,
+                                cssClass: 'api-blacklist-form-add',
+                                message:$('<div></div>').load('${ctx}/template/servicecenter/storeservice.jsp'),//加载弹出页面
+                                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                                onhide:function(){
+                                    $that.removeAttr("disabled");
+                                },
+                        buttons:[{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action:function() {//点击事件
+                                var json = {
+                                    'mothername': $('#mothername').val(),
+                                    'services':$('#services').val(),
+                                    'storeId':'<%=session.getAttribute("storeId")%>'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields:{ //需要验证的字段
+                                        mothername:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空！'
+                                                },
+                                            }
+                                        },
+                                        services:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '所拥有的加值服务不能为空！'
+                                                },
+                                            }
+                                        },
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()) { //新增
+                                    $.post("${ctx}/storeservice/insert",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+                                }
+                            }
+                        },{
+                            label:'关闭',
+                            icon:'fa fa-close',
+                            action:function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                                type : BootstrapDialog.TYPE_DEFAULT,
+                                title : "<span class='text-success'><i class='fa fa-plus'></i>修改一条数据</span>",
+                                closable: false,
+                                draggable: true,
+                                cssClass: 'api-blacklist-form-add',
+                                message:$('<div></div>').load('${ctx}/template/servicecenter/storeservice.jsp'),//加载弹出页面
+                                size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                                //数据回显
+                                onshown:function(dialogRef){
+                                    $('#id').val(values.id);
+                                    $('#mothername').val(values.mothername);
+                                    $('#services').val(values.services);
+                                },
+                        buttons:[{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action:function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'mothername': $('#mothername').val(),
+                                    'services':$('#services').val(),
+                                    'storeId':'<%=session.getAttribute("storeId")%>'
+                                };
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        mothername:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '妈妈姓名不能为空！'
+                                                },
+                                            }
+                                        },
+                                        services:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '所拥有的加值服务不能为空！'
+                                                },
+                                            }
+                                        },
+                                    },
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/storeservice/update",json).done(function(data){getCode(data)}).fail(function(data){getCode(data)});
+                                    setTimeout("window.location.reload();",1000);
+                                    //修改一条记录  url  服务器地址
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        }],
+                    });
+                },
+                //删除操作
+                deleteRow: function(row){
+                    myConfirm("${ctx}/storeservice/delete",row);
+                }
+            }*/
+        });
+        uid = 10;
+    });
+</script>
+<script src="${ctx}/static/js/jquery-1.10.2/jquery.min.js"></script>
+<script src="${ctx}/static/js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
+</body>
+</html>

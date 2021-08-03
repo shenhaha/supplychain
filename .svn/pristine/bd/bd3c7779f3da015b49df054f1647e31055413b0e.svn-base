@@ -1,0 +1,71 @@
+package com.luer.stockandsales.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.stockandsales.bean.Supplier;
+import com.luer.stockandsales.service.SupplierService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/supplier")
+public class SupplierController {
+    //供应商
+    @Autowired
+    private SupplierService supplierService;
+
+    //新增供应商信息
+    @ResponseBody
+    @RequestMapping(value = "/saveSupplier")
+    public ResultSet saveSupplier(@NonNull Supplier supplier) {
+        supplierService.saveSupplier(supplier);
+
+        return  ResultSet.getSuccess();
+
+    }
+
+    //删除供应商信息
+    @ResponseBody
+    @RequestMapping(value = "/deleteSupplierById")
+    public ResultSet deleteSupplierById(@NonNull String id) {
+         supplierService.deleteSupplierById(id);
+        return  ResultSet.getSuccess();
+    }
+
+    //修改供应商信息
+    @ResponseBody
+    @RequestMapping(value = "/updateSupplier")
+    public ResultSet updateSupplier(@NonNull Supplier supplier) {
+       supplierService.updateSupplier(supplier);
+        return  ResultSet.getSuccess();
+    }
+
+    //查询门店id对应供应商信息
+    @ResponseBody
+    @RequestMapping(value = "/selectSupplier")
+    public List<Supplier> selectSupplier() {
+
+        List<Supplier> supplierList = supplierService.selectSupplier();
+
+        return  supplierList;
+    }
+    //查询总部对应供应商信息
+    @ResponseBody
+    @RequestMapping(value = "/selectHeadSupplier")
+    public List<Supplier> selectHeadSupplier() {
+
+        List<Supplier> supplierList = supplierService.selectHeadSupplier();
+
+        return  supplierList;
+    }
+    //查询商品对应供应商信息
+    @ResponseBody
+    @RequestMapping(value = "/selectSupplierByGoodsName")
+    public List<Supplier> selectSupplierByGoodsName(@NonNull String goodsName) {
+        List<Supplier> supplierList = supplierService.selectSupplierByGoodsName(goodsName);
+        return  supplierList;
+    }
+
+}

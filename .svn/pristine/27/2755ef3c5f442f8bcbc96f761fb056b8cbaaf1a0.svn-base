@@ -1,0 +1,95 @@
+package com.luer.stockandsales.service.impl;
+
+import com.luer.comm.utils.GetDate;
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.Shipments;
+import com.luer.stockandsales.dao.OrderDetailsMapper;
+import com.luer.stockandsales.dao.ShipmentsMapper;
+import com.luer.stockandsales.dao.StockMapper;
+import com.luer.stockandsales.service.ShipmentsService;
+import com.luer.storesdata.service.StoreFileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+
+@Transactional
+@Service
+public class ShipmentsServiceImpl implements ShipmentsService {
+    @Autowired
+    private ShipmentsMapper shipmentsMapper;
+    @Autowired
+    private StoreFileService storeFileService;
+    @Autowired
+    private OrderDetailsMapper orderDetailsMapper;
+
+    @Override
+    public void saveShipments(Shipments shipments) {
+
+        shipments.setId(UUIDUtils.getUUID());
+        shipments.setReceivable(0.0);
+        String storeId=storeFileService.getStoreFileId();
+        shipments.setStoreId(storeId);
+        if (shipments.getShippingTime() == null) {
+            shipments.setShippingTime(GetDate.getDate());
+        }
+        shipments.setShippingTime(GetDate.getDate());
+
+        shipmentsMapper.insert(shipments);
+    }
+
+    @Override
+    public void deleteShipmentsById(String shipmentsId) {
+
+        orderDetailsMapper.deleteByOrderId(shipmentsId);
+        shipmentsMapper.deleteByPrimaryKey(shipmentsId);
+    }
+
+    @Override
+    public void updateShipments(Shipments shipments) {
+        shipmentsMapper.updateByPrimaryKey(shipments);
+    }
+
+    @Override
+    public List<Shipments> selectShipmentss() {
+        return shipmentsMapper.selectAll();
+    }
+
+    //查询门店的出货信息
+    @Override
+    public List<Shipments> selectByStoreId() {
+        return shipmentsMapper.selectByStoreId(storeFileService.getStoreFileId());
+    }
+
+    //查询领用信息
+    @Override
+    public List<Shipments> selectCollar() {
+        String storeId=storeFileService.getStoreFileId();
+        List<Shipments> shipmentsList=shipmentsMapper.selectCollar(storeId);
+        return shipmentsList;
+    }
+
+    //查询销售信息
+    @Override
+    public List<Shipments> selectSales() {
+
+        String storeId=storeFileService.getStoreFileId();
+        List<Shipments> shipmentsList=shipmentsMapper.selectSales(storeId);
+
+        return shipmentsList;
+    }
+
+    @Override
+    public List<Shipments> selectHeadCollar() {
+        String storeId=storeFileService.getStoreFileId();
+        List<Shipments> shipmentsList=shipmentsMapper.selectHeadCollar(storeId);
+        return shipmentsList;
+    }
+
+    @Override
+    public List<Shipments> selectSalesByMotherId(String motherId) {
+        return shipmentsMapper.selectByMotherId(motherId);
+    }
+
+
+}

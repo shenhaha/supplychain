@@ -1,0 +1,160 @@
+package com.luer.servicecenter.bean;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+@Data
+public class Nursingeducation {
+    private String id;
+
+    private String customerBasicId;
+
+    private String project;
+
+    private String behaviorobjectives;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date guidedate;
+
+    private String familysignature;
+
+    private String mentorsignature;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date evaluationdate;
+
+    private String evaluationresult;
+
+    private String evaluationsignature;
+
+    private String note;
+
+    private String customername;
+
+    private String storeId;
+
+    private Integer num;
+
+    private String week;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerBasicId() {
+        return customerBasicId;
+    }
+
+    public void setCustomerBasicId(String customerBasicId) {
+        this.customerBasicId = customerBasicId == null ? null : customerBasicId.trim();
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project == null ? null : project.trim();
+    }
+
+    public String getBehaviorobjectives() {
+        return behaviorobjectives;
+    }
+
+    public void setBehaviorobjectives(String behaviorobjectives) {
+        this.behaviorobjectives = behaviorobjectives == null ? null : behaviorobjectives.trim();
+    }
+
+    public Date getGuidedate() {
+        return guidedate;
+    }
+
+    public void setGuidedate(Date guidedate) {
+        this.guidedate = guidedate;
+    }
+
+    public String getFamilysignature() {
+        return familysignature;
+    }
+
+    public void setFamilysignature(String familysignature) {
+        this.familysignature = familysignature == null ? null : familysignature.trim();
+    }
+
+    public String getMentorsignature() {
+        return mentorsignature;
+    }
+
+    public void setMentorsignature(String mentorsignature) {
+        this.mentorsignature = mentorsignature == null ? null : mentorsignature.trim();
+    }
+
+    public Date getEvaluationdate() {
+        return evaluationdate;
+    }
+
+    public void setEvaluationdate(Date evaluationdate) {
+        this.evaluationdate = evaluationdate;
+    }
+
+    public String getEvaluationresult() {
+        return evaluationresult;
+    }
+
+    public void setEvaluationresult(String evaluationresult) {
+        this.evaluationresult = evaluationresult == null ? null : evaluationresult.trim();
+    }
+
+    public String getEvaluationsignature() {
+        return evaluationsignature;
+    }
+
+    public void setEvaluationsignature(String evaluationsignature) {
+        this.evaluationsignature = evaluationsignature == null ? null : evaluationsignature.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getCustomername() {
+        return customername;
+    }
+
+    public void setCustomername(String customername) {
+        this.customername = customername == null ? null : customername.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public String getWeek() {
+        return week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
+    }
+}

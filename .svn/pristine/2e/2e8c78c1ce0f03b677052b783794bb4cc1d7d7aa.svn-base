@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.businessmanager.dao.SendCarMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.businessmanager.bean.SendCar" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="passenger" property="passenger" jdbcType="VARCHAR" />
+    <result column="route" property="route" jdbcType="VARCHAR" />
+    <result column="originator" property="originator" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="getAllList" resultMap="BaseResultMap">
+        SELECT * from send_car WHERE  store_id=#{store_id}
+    </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, store_id, name, department, start_time, passenger, route, originator, time, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.businessmanager.bean.SendCarExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from send_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from send_car
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from send_car
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.businessmanager.bean.SendCarExample" >
+    delete from send_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.businessmanager.bean.SendCar" >
+    insert into send_car (id, store_id, name, 
+      department, start_time, passenger, 
+      route, originator, time, 
+      remark)
+    values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{passenger,jdbcType=VARCHAR}, 
+      #{route,jdbcType=VARCHAR}, #{originator,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.businessmanager.bean.SendCar" >
+    insert into send_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="passenger != null" >
+        passenger,
+      </if>
+      <if test="route != null" >
+        route,
+      </if>
+      <if test="originator != null" >
+        originator,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passenger != null" >
+        #{passenger,jdbcType=VARCHAR},
+      </if>
+      <if test="route != null" >
+        #{route,jdbcType=VARCHAR},
+      </if>
+      <if test="originator != null" >
+        #{originator,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.businessmanager.bean.SendCarExample" resultType="java.lang.Integer" >
+    select count(*) from send_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update send_car
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.passenger != null" >
+        passenger = #{record.passenger,jdbcType=VARCHAR},
+      </if>
+      <if test="record.route != null" >
+        route = #{record.route,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originator != null" >
+        originator = #{record.originator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update send_car
+    set id = #{record.id,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      passenger = #{record.passenger,jdbcType=VARCHAR},
+      route = #{record.route,jdbcType=VARCHAR},
+      originator = #{record.originator,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.businessmanager.bean.SendCar" >
+    update send_car
+    <set >
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passenger != null" >
+        passenger = #{passenger,jdbcType=VARCHAR},
+      </if>
+      <if test="route != null" >
+        route = #{route,jdbcType=VARCHAR},
+      </if>
+      <if test="originator != null" >
+        originator = #{originator,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.businessmanager.bean.SendCar" >
+    update send_car
+    set store_id = #{storeId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      passenger = #{passenger,jdbcType=VARCHAR},
+      route = #{route,jdbcType=VARCHAR},
+      originator = #{originator,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

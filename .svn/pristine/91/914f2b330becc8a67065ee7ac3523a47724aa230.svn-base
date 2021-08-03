@@ -1,0 +1,130 @@
+package com.luer.stockandsales.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.stockandsales.bean.*;
+import com.luer.stockandsales.dao.*;
+import com.luer.stockandsales.service.GoodsOrderService;
+import com.luer.stockandsales.service.OrderDetailsService;
+import com.luer.stockandsales.service.StockService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Transactional
+@Service
+public class OrderDetailsServiceImpl implements OrderDetailsService {
+    @Autowired
+    private OrderDetailsMapper orderDetailsMapper;
+    @Autowired
+    private GoodsOrderMapper orderMapper;
+    @Autowired
+    private PurchaseMapper purchaseMapper;
+    @Autowired
+    private ShipmentsMapper shipmentsMapper;
+
+    @Autowired
+    private StockService stockService;
+    @Autowired
+    private GoodsOrderService goodsOrderService;
+    @Autowired
+    private GoodsMapper goodsMapper;
+    //增加订单详情
+    @Override
+    public void insertOrderDetails(OrderDetails orderDetails) {
+
+        orderDetails.setId(UUIDUtils.getUUID());
+        String goodsId = orderDetails.getGoodsId();
+
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        orderDetails.setSerialnum(goods.getSerialnum());
+        orderDetails.setPrice(goods.getPriceTwo());
+        orderDetailsMapper.insert(orderDetails);
+        String orderId = orderDetails.getOrderId();
+        int detailstype = orderDetails.getDetailstype();
+        //修改库存数量
+        stockService.updateStock(orderId, goodsId, detailstype);
+        //修改总金额
+        updateSum(orderId, detailstype);
+        if (detailstype == 0) {//新增总采订单详情，修改总部订单
+            goodsOrderService.createOrUpdateHeadOrder(orderMapper.selectByPrimaryKey(orderId));
+        }
+
+    }
+
+    //删除订单详情
+    @Override
+    public void deleteOrderDetails(String orderDetailsId) {
+        OrderDetails orderDetails = orderDetailsMapper.selectByPrimaryKey(orderDetailsId);
+        String orderId = orderDetails.getOrderId();
+        int detailstype = orderDetails.getDetailstype();
+        String goodsId = orderDetails.getGoodsId();
+        orderDetailsMapper.deleteByPrimaryKey(orderDetailsId);
+        stockService.updateStock(orderId, goodsId, detailstype);
+        updateSum(orderId, detailstype);
+        if (detailstype == 0) {//如果是总采订单详情删除，修改总订单
+            goodsOrderService.createOrUpdateHeadOrder(orderMapper.selectByPrimaryKey(orderId));
+        }
+    }
+
+    //修改订单详情
+    @Override
+    public void updateOrderDetails(OrderDetails orderDetails) {
+        String orderId = orderDetails.getOrderId();
+        int detailstype = orderDetails.getDetailstype();
+        String goodsId = orderDetails.getGoodsId();
+        //修改订单的详情
+        orderDetailsMapper.updateByPrimaryKey(orderDetails);
+        //修改对应的总价
+        updateSum(orderId, detailstype);
+        //修改对应的库存
+        stockService.updateStock(orderId, goodsId, detailstype);
+        //如果是总采订单详情
+        if (detailstype == 0) {//如果是订单详情修改，修改总订单
+            goodsOrderService.createOrUpdateHeadOrder(orderMapper.selectByPrimaryKey(orderId));
+        }
+    }
+
+    @Override
+    public List<OrderDetails> selectByOrderId(String orderId) {
+        return orderDetailsMapper.selectByOrderId(orderId);
+    }
+
+
+    //订单，入库，出库的金额统计
+    @Override
+    public void updateSum(String orderId, int detailstype) {
+        Double sum = orderDetailsMapper.countMoney(orderId);
+
+        if (detailstype == 0||detailstype == 4) {
+            //修改订单总价
+            GoodsOrder goodsOrder = orderMapper.selectByPrimaryKey(orderId);
+            goodsOrder.setSumprice(sum);
+            orderMapper.updateByPrimaryKey(goodsOrder);
+        } else if (detailstype == 1||detailstype ==5) {
+            //修改入货表的应付金额
+            Purchase purchase = purchaseMapper.selectByPrimaryKey(orderId);
+            purchase.setPayable(sum);
+            purchaseMapper.updateByPrimaryKey(purchase);
+
+        } else if (detailstype == 2||detailstype ==6) {
+            //修改出货表的应收金额
+            Shipments shipments = shipmentsMapper.selectByPrimaryKey(orderId);
+            shipments.setReceivable(sum);
+            shipmentsMapper.updateByPrimaryKey(shipments);
+        }
+    }
+
+    @Override
+    public List<OrderDetails> selectByStoreOrderId(String orderId,Integer detailstype) {
+        List<OrderDetails> orderDetailsList=null;
+        if(detailstype==0||detailstype == 4){
+            orderDetailsList=orderDetailsMapper.selectByStoreOrderId(orderId);
+        }
+
+        return orderDetailsList;
+    }
+
+
+}

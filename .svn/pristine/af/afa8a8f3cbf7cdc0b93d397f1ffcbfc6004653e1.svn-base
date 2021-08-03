@@ -1,0 +1,39 @@
+package com.luer.storemanager.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.storemanager.bean.SatisfactionRecord;
+import com.luer.storemanager.dao.SatisfactionRecordMapper;
+import com.luer.storemanager.service.SatisfactionRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class SatisfactionRecordServiceImpl implements SatisfactionRecordService {
+    @Autowired
+    private SatisfactionRecordMapper satisfactionRecordMapper;
+
+    @Override
+    public void saveSatisfactionRecord(SatisfactionRecord satisfactionRecord) {
+        satisfactionRecord.setId(UUIDUtils.getUUID());
+       satisfactionRecordMapper.insert(satisfactionRecord);
+    }
+
+    @Override
+    public void deleteSatisfactionRecordById(String satisfactionRecordId) {
+      satisfactionRecordMapper.deleteByPrimaryKey(satisfactionRecordId);
+    }
+
+    @Override
+    public void updateSatisfactionRecord(SatisfactionRecord satisfactionRecord) {
+        satisfactionRecordMapper.updateByPrimaryKey(satisfactionRecord);
+    }
+
+    @Override
+    public List<SatisfactionRecord> selectSatisfactionRecords(String storeFileId) {
+        List<SatisfactionRecord> satisfactionRecordList=satisfactionRecordMapper.selectByStoreFileId(storeFileId);
+        return satisfactionRecordList;
+    }
+}

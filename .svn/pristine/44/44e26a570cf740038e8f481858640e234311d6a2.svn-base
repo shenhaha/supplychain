@@ -1,0 +1,202 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<html>
+<head>
+    <title>该类型房间详情</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-sm-12">
+            <%--<div class="panel-heading">
+                <div class="pull-left">
+                    <ol class="breadcrumb">
+                        <li><a href="${ctx}/index">首页</a></li>
+                        <li class="active">该类型房间详情</li>
+                    </ol>
+                </div>
+                <div class="clearfix"></div>
+            </div>--%>
+            <div id="repairdiv">
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <table id="roomLists" class="table" data-paging="true" data-filtering="true" data-sorting="true">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Row -->
+</div>
+
+<script>
+    $(function () {
+        var roomTitle = [
+            {"name":"id","title":"ID",visible:false,},
+            {"name": "roomStylesId", "title": "房间类型id",visible:false,},
+            {"name": "roomStylesName", "title": "房间类型"},
+            {"name": "classify", "title": "房间类型",visible:false,},
+            {"name": "position", "title": "方位"},
+            {"name": "num", "title": "房号"},
+            {"name": "area", "title": "面积/m²"},
+            {"name": "charge", "title": "价钱(元)"}
+        ];
+        //启动footable 查询所有的房间信息
+        var ft = FooTable.init('#roomLists', {
+            "columns": roomTitle,
+            "rows": $.get("${ctx}/room/selectByRoomStyleId?roomStylesId=<%=request.getParameter("roomStylesId")%>"),
+            //功能操作
+            editing: {
+                enabled: true,
+                addRow: function(){
+                    //新增模态框
+                    var $that = $(this);
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color:#ab8ce4\"><i class='fa fa-plus'></i>新增一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storesdata/styleroomlist.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        onhide:function(){
+                            $that.removeAttr("disabled");
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'roomStylesId':"<%=request.getParameter("roomStylesId")%>",
+                                    'position':$('#position').val(),
+                                    'num':$('#num').val(),
+                                    'area':$('#area').val(),
+                                    'charge':$('#charge').val(),
+                                };
+
+                                $("#myform").bootstrapValidator({
+                                    live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+                                    excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+                                    submitButtons: '#btn-test',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+                                    message: '通用的验证失败消息',//好像从来没出现过
+                                    feedbackIcons: {//根据验证结果显示的各种图标
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        classify: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房间类型不能为空！'
+                                                },
+                                            }
+
+                                        },
+                                        num: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '房号不能为空！'
+                                                },
+                                            }
+                                        },
+                                        charge:{
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '价钱不能为空！'
+                                                },
+                                            }
+                                        }
+                                    }
+                                });
+                                var bootstrapValidator = $("#myform").data('bootstrapValidator');
+                                bootstrapValidator.validate();
+                                //新增提交路径
+                                if(bootstrapValidator.isValid()){
+                                    $.post("${ctx}/room/addRoom", json).done(function (data) {
+                                        getCode(data)
+                                    }).fail(function (data) {
+                                        getCode(data)
+                                    });
+                                }
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //这里是修改时绑定数据
+                editRow: function(row){
+                    var values = row.val();
+                    var $that = $(this);
+                    //失效
+                    $that.attr("disabled","disabled");
+                    // 调用add方法
+                    var dialog = BootstrapDialog.show({
+                        type : BootstrapDialog.TYPE_DEFAULT,
+                        title : "<span style=\"color:#ab8ce4\"><i></i>修改一条数据</span>",
+                        closable: false,
+                        draggable: true,
+                        cssClass: 'api-blacklist-form-add',
+                        message:$('<div></div>').load('${ctx}/template/storesdata/styleroomlist.jsp'),//加载弹出页面
+                        size : BootstrapDialog.SIZE_WIDE,//弹出框大小。
+                        //数据回显
+                        onshown: function(dialogRef){
+                            $('#id').val(values.id);
+                            $('#roomStylesId').val(values.roomStylesId);
+                            $('#position').val(values.position);
+                            $('#num').val(values.num);
+                            $('#area').val(values.area);
+                            $('#charge').val(values.charge);
+                        },
+                        buttons : [{
+                            id: 'btn-form-submit',
+                            label: '提交',
+                            icon: 'fa fa-check-circle',
+                            cssClass: 'btn-primary',
+                            action: function(){
+                                var json = {
+                                    'id':$('#id').val(),
+                                    'roomStylesId':$('#roomStylesId').val(),
+                                    'position':$('#position').val(),
+                                    'num':$('#num').val(),
+                                    'area':$('#area').val(),
+                                    'charge':$('#charge').val(),
+                                };
+                                //修改提交路径
+                                $.post("${ctx}/room/updateRoom", json).done(function (data) {
+                                    getCode(data)
+                                }).fail(function (data) {
+                                    getCode(data)
+                                });
+                            }
+                        },{
+                            label : '关闭',
+                            icon: 'fa fa-close',
+                            action : function(dialogItself) {
+                                dialogItself.close();
+                            }
+                        } ]
+                    });
+                },
+                //删除操作
+                deleteRow: function (row) {
+                    myConfirm("${ctx}/room/delRoom", row);
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

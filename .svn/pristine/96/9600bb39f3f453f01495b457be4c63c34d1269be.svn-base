@@ -1,0 +1,43 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.VitalSign;
+import com.luer.servicecenter.service.VitalSignService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.xml.ws.soap.MTOM;
+import java.util.List;
+
+@RestController
+@RequestMapping("/VitalSign")
+public class VitalSignController {
+
+    @Autowired
+    VitalSignService vitalSignService;
+
+    @PostMapping("/addVitalSign")
+    public ResultSet addVitalSign(@NonNull VitalSign vitalSign){
+        vitalSignService.addVitalSign(vitalSign);
+        return ResultSet.getSuccess();
+    }
+    @GetMapping("/getVitalSign")
+    public List<VitalSign> getVitalSign(@NonNull String motherid){
+        List<VitalSign> vitalSign = vitalSignService.getVitalSign(motherid);
+        return vitalSign;
+    }
+    @PostMapping("/updateVitalSign")
+    public ResultSet updateVitalSign(@NonNull VitalSign vitalSign){
+        vitalSignService.updateVitalSign(vitalSign);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/deleteVitalSign")
+    public ResultSet deleteVitalSign(@NonNull String id){
+        vitalSignService.deleteVitalSign(id);
+        return ResultSet.getSuccess();
+    }
+}

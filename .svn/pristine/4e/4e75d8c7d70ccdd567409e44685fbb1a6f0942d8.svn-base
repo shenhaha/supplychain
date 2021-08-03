@@ -1,0 +1,83 @@
+package com.luer.stockandsales.bean;
+
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class Classify {
+    private String id;
+
+    private String classifyName;
+
+    private Integer level;
+
+    private String parentId;
+
+    private String classifyNum;
+
+    private String status;
+
+    private String storeId;
+
+
+    private List<Classify> child;
+
+    private List<Goods> goods;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getClassifyName() {
+        return classifyName;
+    }
+
+    public void setClassifyName(String classifyName) {
+        this.classifyName = classifyName == null ? null : classifyName.trim();
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId == null ? null : parentId.trim();
+    }
+
+    public String getClassifyNum() {
+        return classifyNum;
+    }
+
+    public void setClassifyNum(String classifyNum) {
+        this.classifyNum = classifyNum == null ? null : classifyNum.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId == null ? null : storeId.trim();
+    }
+}

@@ -1,0 +1,23 @@
+package com.luer.springsecurity.bean;
+
+public class UserRole {
+    private String userssId;
+
+    private String roleId;
+
+    public String getUserssId() {
+        return userssId;
+    }
+
+    public void setUserssId(String userssId) {
+        this.userssId = userssId == null ? null : userssId.trim();
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId == null ? null : roleId.trim();
+    }
+}

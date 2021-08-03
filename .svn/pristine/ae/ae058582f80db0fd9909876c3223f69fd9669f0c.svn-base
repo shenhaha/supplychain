@@ -1,0 +1,32 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Mothernursingrecorddetail;
+import com.luer.servicecenter.bean.MothernursingrecorddetailExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface MothernursingrecorddetailMapper {
+    int countByExample(MothernursingrecorddetailExample example);
+
+    int deleteByExample(MothernursingrecorddetailExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Mothernursingrecorddetail record);
+
+    int insertSelective(Mothernursingrecorddetail record);
+
+    List<Mothernursingrecorddetail> selectByExample(MothernursingrecorddetailExample example);
+
+    Mothernursingrecorddetail selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Mothernursingrecorddetail record, @Param("example") MothernursingrecorddetailExample example);
+
+    int updateByExample(@Param("record") Mothernursingrecorddetail record, @Param("example") MothernursingrecorddetailExample example);
+
+    int updateByPrimaryKeySelective(Mothernursingrecorddetail record);
+
+    int updateByPrimaryKey(Mothernursingrecorddetail record);
+    List<Mothernursingrecorddetail> getNursingByMotherId(@Param("mother_id") String motherId);
+}

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.stockandsales.dao.ClassifyMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.stockandsales.bean.Classify" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="classify_name" property="classifyName" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="classify_num" property="classifyNum" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+
+    <sql id="Example_Where_Clause" >
+      <where >
+        <foreach collection="oredCriteria" item="criteria" separator="or" >
+          <if test="criteria.valid" >
+            <trim prefix="(" suffix=")" prefixOverrides="and" >
+              <foreach collection="criteria.criteria" item="criterion" >
+                <choose >
+                  <when test="criterion.noValue" >
+                    and ${criterion.condition}
+                  </when>
+                  <when test="criterion.singleValue" >
+                    and ${criterion.condition} #{criterion.value}
+                  </when>
+                  <when test="criterion.betweenValue" >
+                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                  </when>
+                  <when test="criterion.listValue" >
+                    and ${criterion.condition}
+                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                      #{listItem}
+                    </foreach>
+                  </when>
+                </choose>
+              </foreach>
+            </trim>
+          </if>
+        </foreach>
+      </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+      <where >
+        <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+          <if test="criteria.valid" >
+            <trim prefix="(" suffix=")" prefixOverrides="and" >
+              <foreach collection="criteria.criteria" item="criterion" >
+                <choose >
+                  <when test="criterion.noValue" >
+                    and ${criterion.condition}
+                  </when>
+                  <when test="criterion.singleValue" >
+                    and ${criterion.condition} #{criterion.value}
+                  </when>
+                  <when test="criterion.betweenValue" >
+                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                  </when>
+                  <when test="criterion.listValue" >
+                    and ${criterion.condition}
+                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                      #{listItem}
+                    </foreach>
+                  </when>
+                </choose>
+              </foreach>
+            </trim>
+          </if>
+        </foreach>
+      </where>
+    </sql>
+    <sql id="Base_Column_List" >
+      id, classify_name, level, parent_id, classify_num, status, store_id
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.stockandsales.bean.ClassifyExample" >
+      select
+      <if test="distinct" >
+        distinct
+      </if>
+      <include refid="Base_Column_List" />
+      from classify
+      <if test="_parameter != null" >
+        <include refid="Example_Where_Clause" />
+      </if>
+      <if test="orderByClause != null" >
+        order by ${orderByClause}
+      </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+      select
+      <include refid="Base_Column_List" />
+      from classify
+      where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from classify
+      where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.stockandsales.bean.ClassifyExample" >
+      delete from classify
+      <if test="_parameter != null" >
+        <include refid="Example_Where_Clause" />
+      </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.stockandsales.bean.Classify" >
+      insert into classify (id, classify_name, level,
+      parent_id, classify_num, status,
+      store_id)
+      values (#{id,jdbcType=VARCHAR}, #{classifyName,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER},
+      #{parentId,jdbcType=VARCHAR}, #{classifyNum,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+      #{storeId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.stockandsales.bean.Classify" >
+      insert into classify
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+          id,
+        </if>
+        <if test="classifyName != null" >
+          classify_name,
+        </if>
+        <if test="level != null" >
+          level,
+        </if>
+        <if test="parentId != null" >
+          parent_id,
+        </if>
+        <if test="classifyNum != null" >
+          classify_num,
+        </if>
+        <if test="status != null" >
+          status,
+        </if>
+        <if test="storeId != null" >
+          store_id,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+          #{id,jdbcType=VARCHAR},
+        </if>
+        <if test="classifyName != null" >
+          #{classifyName,jdbcType=VARCHAR},
+        </if>
+        <if test="level != null" >
+          #{level,jdbcType=INTEGER},
+        </if>
+        <if test="parentId != null" >
+          #{parentId,jdbcType=VARCHAR},
+        </if>
+        <if test="classifyNum != null" >
+          #{classifyNum,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null" >
+          #{status,jdbcType=VARCHAR},
+        </if>
+        <if test="storeId != null" >
+          #{storeId,jdbcType=VARCHAR},
+        </if>
+      </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.stockandsales.bean.ClassifyExample" resultType="java.lang.Integer" >
+      select count(*) from classify
+      <if test="_parameter != null" >
+        <include refid="Example_Where_Clause" />
+      </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+      update classify
+      <set >
+        <if test="record.id != null" >
+          id = #{record.id,jdbcType=VARCHAR},
+        </if>
+        <if test="record.classifyName != null" >
+          classify_name = #{record.classifyName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.level != null" >
+          level = #{record.level,jdbcType=INTEGER},
+        </if>
+        <if test="record.parentId != null" >
+          parent_id = #{record.parentId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.classifyNum != null" >
+          classify_num = #{record.classifyNum,jdbcType=VARCHAR},
+        </if>
+        <if test="record.status != null" >
+          status = #{record.status,jdbcType=VARCHAR},
+        </if>
+        <if test="record.storeId != null" >
+          store_id = #{record.storeId,jdbcType=VARCHAR},
+        </if>
+      </set>
+      <if test="_parameter != null" >
+        <include refid="Update_By_Example_Where_Clause" />
+      </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+      update classify
+      set id = #{record.id,jdbcType=VARCHAR},
+      classify_name = #{record.classifyName,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      classify_num = #{record.classifyNum,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=VARCHAR}
+      <if test="_parameter != null" >
+        <include refid="Update_By_Example_Where_Clause" />
+      </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.stockandsales.bean.Classify" >
+      update classify
+      <set >
+        <if test="classifyName != null" >
+          classify_name = #{classifyName,jdbcType=VARCHAR},
+        </if>
+        <if test="level != null" >
+          level = #{level,jdbcType=INTEGER},
+        </if>
+        <if test="parentId != null" >
+          parent_id = #{parentId,jdbcType=VARCHAR},
+        </if>
+        <if test="classifyNum != null" >
+          classify_num = #{classifyNum,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null" >
+          status = #{status,jdbcType=VARCHAR},
+        </if>
+        <if test="storeId != null" >
+          store_id = #{storeId,jdbcType=VARCHAR},
+        </if>
+      </set>
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.stockandsales.bean.Classify" >
+      update classify
+      set classify_name = #{classifyName,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      classify_num = #{classifyNum,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+
+  <select id="selectByStoreId" resultMap="BaseResultMap">
+    select id,classify_name,level,parent_id,classify_num,status ,store_id
+    from classify where store_id=#{storeId} order by level
+  </select>
+
+  <select id="selectByParentId" resultType="java.lang.String">
+    select id from classify where parent_id=#{parentId}
+  </select>
+
+  <select id="selectByParentIdList" resultType="java.lang.String">
+    select id from classify
+    where parent_id
+    in
+    <foreach collection="classifyIdList" item="parentId" open="(" close=")" separator="," index="index">
+      #{parentId}
+    </foreach>
+  </select>
+  <delete id="deleteByPrimaryKeyList" parameterType="java.lang.String" >
+    delete from classify
+    where id in
+    <foreach collection="idList" item="id" open="(" close=")" separator="," index="index">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

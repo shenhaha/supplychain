@@ -1,0 +1,21 @@
+package com.luer.servicecenter.bean;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * 增值服务统计
+* @author 张路明
+*/
+@Data
+@Getter
+@Setter
+public class ServiceAccount {
+
+    private  String motherid;
+    private  String mothername;
+    private String price;
+    private String profit;
+    private String roomnum;
+}

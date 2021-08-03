@@ -1,0 +1,138 @@
+package com.luer.storesdata.controller;
+
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.storesdata.bean.Employer;
+import com.luer.storesdata.service.EmployerService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+@Controller
+@RequestMapping(value = "/employer")
+public class EmployerController {
+    @Autowired
+    private EmployerService employerService;
+
+
+    //添加门店人员基本资料
+    @RequestMapping(value = "/saveEmployer")
+    @ResponseBody
+    public ResultSet saveEmployer(@NonNull Employer employer) {
+        employerService.saveEmployer(employer);
+        return ResultSet.getSuccess();
+    }
+
+    //删除单个门店人员基本资料
+    @RequestMapping(value = "/deleteEmployerById")
+    @ResponseBody
+    public ResultSet deleteEmployerById(@NonNull String id) {
+        employerService.deleteEmployerById(id);
+        return ResultSet.getSuccess();
+    }
+
+    //删除单个门店人员基本资料
+    @RequestMapping(value = "/deleteEmployerByIds")
+    @ResponseBody
+    public ResultSet deleteEmployerByIds(@NonNull String employerIds) {
+        employerService.deleteEmployerByIds(employerIds);
+        return ResultSet.getSuccess();
+    }
+
+    //修改门店人员基本资料
+    @RequestMapping(value = "/updateEmployerDetail")
+    @ResponseBody
+    public ResultSet updateEmployerDetail(@NonNull Employer employer) {
+        employerService.updateEmployer(employer);
+        return ResultSet.getSuccess();
+    }
+
+    //查询门店所有人员资料
+    @ResponseBody
+    @RequestMapping(value = "/selectEmployersByStoreFileId")
+    public List<Employer> selectEmployersByStoreFileId(@NonNull String storeFileId) {
+
+        List<Employer> employerLists = employerService.selectEmployersBystoreFileId(storeFileId);
+
+        return employerLists;
+    }
+    //查询门店所有人员资料
+    @ResponseBody
+    @RequestMapping(value = "/selectEmployersByStoreFileIdandDept")
+    public List<Employer> selectEmployersByStoreFileIdandDept(@NonNull String storeFileId,String dept) {
+
+        List<Employer> employerLists = employerService.selectEmployersByStoreFileIdandDept(storeFileId,dept);
+
+        return employerLists;
+    }
+
+    //查询门店所有人员资料
+    @ResponseBody
+    @RequestMapping(value = "/selectEmployersByStoreId")
+    public List<Employer> selectEmployersByStoreId() {
+
+        List<Employer> employerLists = employerService.selectEmployersBystoreId();
+
+        return employerLists;
+    }
+    //查询一个人员资料
+    @ResponseBody
+    @RequestMapping(value = "/selectEmployersById")
+    public Employer selectEmployersById(String vid) {
+
+        Employer employer = employerService.selectEmployersById(vid);
+
+        return employer;
+    }
+
+    //查询所有员工信息
+    @ResponseBody
+    @RequestMapping(value = "/selectemployers")
+    public List<Employer> selectemployers() {
+        List<Employer> employerList = employerService.selectEmployers();
+        return employerList;
+    }
+
+
+    //查询所有派遣人员信息
+    @ResponseBody
+    @RequestMapping(value = "/selectdispacheds")
+    public List<Employer> selectdispacheds() {
+        List<Employer> dispachedList = employerService.selectDispached();
+        return dispachedList;
+    }
+
+    //查询门店派遣人员信息
+    @ResponseBody
+    @RequestMapping(value = "/selectBydispachedId")
+    public List<Employer> selectBydispachedId(@NonNull String storeFileId) {
+        List<Employer> dispachedList = employerService.selectBydispachedId(storeFileId);
+        return dispachedList;
+    }
+
+    //排班管理根据店铺id查询所有员工信息
+    @ResponseBody
+    @RequestMapping(value = "/selectemployersByScale")
+    public List selectemployersByScale(String storeId) {
+        List resultEmployerList = employerService.selectemployersByScale(storeId);
+        return resultEmployerList;
+    }
+
+    /** 
+     * 根据店铺id和员工类型查询所有员工信息
+     * @author GavinJiang
+     * @date 2018/9/8 18:04 
+     * @params  
+     * @return java.util.List<com.luer.storesdata.bean.Employer>  
+     */
+    @ResponseBody
+    @RequestMapping(value = "/selectemployerBystoreId")
+    public List<Employer> selectemployerBystoreId(String storeId,String type) {
+        List<Employer> employerList = employerService.selectemployerBystoreId(storeId,type);
+        return employerList;
+    }
+}

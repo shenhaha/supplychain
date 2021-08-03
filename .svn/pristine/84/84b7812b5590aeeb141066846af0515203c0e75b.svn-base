@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.businessmanager.dao.OrderCustomerMapper" >
+    <resultMap id="BaseResultMap" type="com.luer.businessmanager.bean.OrderCustomer" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="store_id" property="storeId" jdbcType="VARCHAR" />
+        <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+        <result column="first_party" property="firstParty" jdbcType="VARCHAR" />
+        <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="tell" property="tell" jdbcType="VARCHAR" />
+        <result column="medical_history" property="medicalHistory" jdbcType="VARCHAR" />
+        <result column="borndate" property="borndate" jdbcType="TIMESTAMP" />
+        <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+        <result column="days" property="days" jdbcType="INTEGER" />
+        <result column="born_times" property="bornTimes" jdbcType="VARCHAR" />
+        <result column="room_type" property="roomType" jdbcType="VARCHAR" />
+        <result column="room_number" property="roomNumber" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="DOUBLE" />
+        <result column="bargain_money" property="bargainMoney" jdbcType="DOUBLE" />
+        <result column="pay_way" property="payWay" jdbcType="VARCHAR" />
+        <result column="final_payment" property="finalPayment" jdbcType="DOUBLE" />
+        <result column="final_payment_status" property="finalPaymentStatus" jdbcType="VARCHAR" />
+        <result column="operator" property="operator" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="fathername" property="fathername" jdbcType="VARCHAR" />
+        <result column="fathertell" property="fathertell" jdbcType="VARCHAR" />
+        <result column="timeone" property="timeone" jdbcType="TIMESTAMP" />
+        <result column="strone" property="strone" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectAllOrderCustomer" resultMap="BaseResultMap"  >
+        select *
+        from order_customer
+    </select>
+    <select id="getOrderCustomers" resultMap="BaseResultMap"  >
+        select *
+        from order_customer where store_id=#{store_id} and final_payment ='1'
+    </select>
+    <select id="selectNotice" resultMap="BaseResultMap" parameterType="com.luer.businessmanager.bean.OrderCustomer">
+        select oc.id id, oc.store_id, oc.customer_id, first_party, card_id, address, tell, medical_history, intime,
+        days, born_times, room_type, room_number, price, bargain_money, pay_way, final_payment, final_payment_status, operator,
+        remark, fathername, fathertell
+        from order_customer oc LEFT JOIN  customer_basic cc ON
+        cc.id = oc.customer_id
+        WHERE cc.type = '0' AND intime BETWEEN #{starttime} and #{endtime} and cc.check_status='0'  and oc.store_id = #{orderCustomer.storeId}
+    </select>
+    <update id="updateStatusByMotherid">
+        UPDATE order_customer set order_customer.final_payment = #{status} where order_customer.customer_id = #{motherId}
+    </update>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        id, store_id, customer_id, first_party, card_id, address, tell, medical_history,
+        borndate, intime, days, born_times, room_type, room_number, price, bargain_money,
+        pay_way, final_payment, final_payment_status, operator, remark, fathername, fathertell,
+        timeone, strone
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.businessmanager.bean.OrderCustomerExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from order_customer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from order_customer
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from order_customer
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.businessmanager.bean.OrderCustomerExample" >
+        delete from order_customer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.businessmanager.bean.OrderCustomer" >
+        insert into order_customer (id, store_id, customer_id,
+        first_party, card_id, address,
+        tell, medical_history, borndate,
+        intime, days, born_times,
+        room_type, room_number, price,
+        bargain_money, pay_way, final_payment,
+        final_payment_status, operator, remark,
+        fathername, fathertell, timeone,
+        strone)
+        values (#{id,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR},
+        #{firstParty,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+        #{tell,jdbcType=VARCHAR}, #{medicalHistory,jdbcType=VARCHAR}, #{borndate,jdbcType=TIMESTAMP},
+        #{intime,jdbcType=TIMESTAMP}, #{days,jdbcType=INTEGER}, #{bornTimes,jdbcType=VARCHAR},
+        #{roomType,jdbcType=VARCHAR}, #{roomNumber,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE},
+        #{bargainMoney,jdbcType=DOUBLE}, #{payWay,jdbcType=VARCHAR}, #{finalPayment,jdbcType=DOUBLE},
+        #{finalPaymentStatus,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+        #{fathername,jdbcType=VARCHAR}, #{fathertell,jdbcType=VARCHAR}, #{timeone,jdbcType=TIMESTAMP},
+        #{strone,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.businessmanager.bean.OrderCustomer" >
+        insert into order_customer
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="storeId != null" >
+                store_id,
+            </if>
+            <if test="customerId != null" >
+                customer_id,
+            </if>
+            <if test="firstParty != null" >
+                first_party,
+            </if>
+            <if test="cardId != null" >
+                card_id,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="tell != null" >
+                tell,
+            </if>
+            <if test="medicalHistory != null" >
+                medical_history,
+            </if>
+            <if test="borndate != null" >
+                borndate,
+            </if>
+            <if test="intime != null" >
+                intime,
+            </if>
+            <if test="days != null" >
+                days,
+            </if>
+            <if test="bornTimes != null" >
+                born_times,
+            </if>
+            <if test="roomType != null" >
+                room_type,
+            </if>
+            <if test="roomNumber != null" >
+                room_number,
+            </if>
+            <if test="price != null" >
+                price,
+            </if>
+            <if test="bargainMoney != null" >
+                bargain_money,
+            </if>
+            <if test="payWay != null" >
+                pay_way,
+            </if>
+            <if test="finalPayment != null" >
+                final_payment,
+            </if>
+            <if test="finalPaymentStatus != null" >
+                final_payment_status,
+            </if>
+            <if test="operator != null" >
+                operator,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="fathername != null" >
+                fathername,
+            </if>
+            <if test="fathertell != null" >
+                fathertell,
+            </if>
+            <if test="timeone != null" >
+                timeone,
+            </if>
+            <if test="strone != null" >
+                strone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null" >
+                #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null" >
+                #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="firstParty != null" >
+                #{firstParty,jdbcType=VARCHAR},
+            </if>
+            <if test="cardId != null" >
+                #{cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null" >
+                #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="medicalHistory != null" >
+                #{medicalHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="borndate != null" >
+                #{borndate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="intime != null" >
+                #{intime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="days != null" >
+                #{days,jdbcType=INTEGER},
+            </if>
+            <if test="bornTimes != null" >
+                #{bornTimes,jdbcType=VARCHAR},
+            </if>
+            <if test="roomType != null" >
+                #{roomType,jdbcType=VARCHAR},
+            </if>
+            <if test="roomNumber != null" >
+                #{roomNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null" >
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="bargainMoney != null" >
+                #{bargainMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="payWay != null" >
+                #{payWay,jdbcType=VARCHAR},
+            </if>
+            <if test="finalPayment != null" >
+                #{finalPayment,jdbcType=DOUBLE},
+            </if>
+            <if test="finalPaymentStatus != null" >
+                #{finalPaymentStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null" >
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="fathername != null" >
+                #{fathername,jdbcType=VARCHAR},
+            </if>
+            <if test="fathertell != null" >
+                #{fathertell,jdbcType=VARCHAR},
+            </if>
+            <if test="timeone != null" >
+                #{timeone,jdbcType=TIMESTAMP},
+            </if>
+            <if test="strone != null" >
+                #{strone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.businessmanager.bean.OrderCustomerExample" resultType="java.lang.Integer" >
+        select count(*) from order_customer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update order_customer
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeId != null" >
+                store_id = #{record.storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.customerId != null" >
+                customer_id = #{record.customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.firstParty != null" >
+                first_party = #{record.firstParty,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cardId != null" >
+                card_id = #{record.cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null" >
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tell != null" >
+                tell = #{record.tell,jdbcType=VARCHAR},
+            </if>
+            <if test="record.medicalHistory != null" >
+                medical_history = #{record.medicalHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="record.borndate != null" >
+                borndate = #{record.borndate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.intime != null" >
+                intime = #{record.intime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.days != null" >
+                days = #{record.days,jdbcType=INTEGER},
+            </if>
+            <if test="record.bornTimes != null" >
+                born_times = #{record.bornTimes,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roomType != null" >
+                room_type = #{record.roomType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roomNumber != null" >
+                room_number = #{record.roomNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.price != null" >
+                price = #{record.price,jdbcType=DOUBLE},
+            </if>
+            <if test="record.bargainMoney != null" >
+                bargain_money = #{record.bargainMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="record.payWay != null" >
+                pay_way = #{record.payWay,jdbcType=VARCHAR},
+            </if>
+            <if test="record.finalPayment != null" >
+                final_payment = #{record.finalPayment,jdbcType=DOUBLE},
+            </if>
+            <if test="record.finalPaymentStatus != null" >
+                final_payment_status = #{record.finalPaymentStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="record.operator != null" >
+                operator = #{record.operator,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remark != null" >
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fathername != null" >
+                fathername = #{record.fathername,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fathertell != null" >
+                fathertell = #{record.fathertell,jdbcType=VARCHAR},
+            </if>
+            <if test="record.timeone != null" >
+                timeone = #{record.timeone,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.strone != null" >
+                strone = #{record.strone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update order_customer
+        set id = #{record.id,jdbcType=VARCHAR},
+        store_id = #{record.storeId,jdbcType=VARCHAR},
+        customer_id = #{record.customerId,jdbcType=VARCHAR},
+        first_party = #{record.firstParty,jdbcType=VARCHAR},
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+        address = #{record.address,jdbcType=VARCHAR},
+        tell = #{record.tell,jdbcType=VARCHAR},
+        medical_history = #{record.medicalHistory,jdbcType=VARCHAR},
+        borndate = #{record.borndate,jdbcType=TIMESTAMP},
+        intime = #{record.intime,jdbcType=TIMESTAMP},
+        days = #{record.days,jdbcType=INTEGER},
+        born_times = #{record.bornTimes,jdbcType=VARCHAR},
+        room_type = #{record.roomType,jdbcType=VARCHAR},
+        room_number = #{record.roomNumber,jdbcType=VARCHAR},
+        price = #{record.price,jdbcType=DOUBLE},
+        bargain_money = #{record.bargainMoney,jdbcType=DOUBLE},
+        pay_way = #{record.payWay,jdbcType=VARCHAR},
+        final_payment = #{record.finalPayment,jdbcType=DOUBLE},
+        final_payment_status = #{record.finalPaymentStatus,jdbcType=VARCHAR},
+        operator = #{record.operator,jdbcType=VARCHAR},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        fathername = #{record.fathername,jdbcType=VARCHAR},
+        fathertell = #{record.fathertell,jdbcType=VARCHAR},
+        timeone = #{record.timeone,jdbcType=TIMESTAMP},
+        strone = #{record.strone,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.businessmanager.bean.OrderCustomer" >
+        update order_customer
+        <set >
+            <if test="storeId != null" >
+                store_id = #{storeId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null" >
+                customer_id = #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="firstParty != null" >
+                first_party = #{firstParty,jdbcType=VARCHAR},
+            </if>
+            <if test="cardId != null" >
+                card_id = #{cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null" >
+                tell = #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="medicalHistory != null" >
+                medical_history = #{medicalHistory,jdbcType=VARCHAR},
+            </if>
+            <if test="borndate != null" >
+                borndate = #{borndate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="intime != null" >
+                intime = #{intime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="days != null" >
+                days = #{days,jdbcType=INTEGER},
+            </if>
+            <if test="bornTimes != null" >
+                born_times = #{bornTimes,jdbcType=VARCHAR},
+            </if>
+            <if test="roomType != null" >
+                room_type = #{roomType,jdbcType=VARCHAR},
+            </if>
+            <if test="roomNumber != null" >
+                room_number = #{roomNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null" >
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="bargainMoney != null" >
+                bargain_money = #{bargainMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="payWay != null" >
+                pay_way = #{payWay,jdbcType=VARCHAR},
+            </if>
+            <if test="finalPayment != null" >
+                final_payment = #{finalPayment,jdbcType=DOUBLE},
+            </if>
+            <if test="finalPaymentStatus != null" >
+                final_payment_status = #{finalPaymentStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null" >
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="fathername != null" >
+                fathername = #{fathername,jdbcType=VARCHAR},
+            </if>
+            <if test="fathertell != null" >
+                fathertell = #{fathertell,jdbcType=VARCHAR},
+            </if>
+            <if test="timeone != null" >
+                timeone = #{timeone,jdbcType=TIMESTAMP},
+            </if>
+            <if test="strone != null" >
+                strone = #{strone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.businessmanager.bean.OrderCustomer" >
+    update order_customer
+    set store_id = #{storeId,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      first_party = #{firstParty,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      tell = #{tell,jdbcType=VARCHAR},
+      medical_history = #{medicalHistory,jdbcType=VARCHAR},
+      borndate = #{borndate,jdbcType=TIMESTAMP},
+      intime = #{intime,jdbcType=TIMESTAMP},
+      days = #{days,jdbcType=INTEGER},
+      born_times = #{bornTimes,jdbcType=VARCHAR},
+      room_type = #{roomType,jdbcType=VARCHAR},
+      room_number = #{roomNumber,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      bargain_money = #{bargainMoney,jdbcType=DOUBLE},
+      pay_way = #{payWay,jdbcType=VARCHAR},
+      final_payment = #{finalPayment,jdbcType=DOUBLE},
+      final_payment_status = #{finalPaymentStatus,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      fathername = #{fathername,jdbcType=VARCHAR},
+      fathertell = #{fathertell,jdbcType=VARCHAR},
+      timeone = #{timeone,jdbcType=TIMESTAMP},
+      strone = #{strone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

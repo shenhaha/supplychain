@@ -1,0 +1,72 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.Swimming;
+import com.luer.servicecenter.bean.SwimmingExample;
+import com.luer.servicecenter.dao.SwimmingMapper;
+import com.luer.servicecenter.service.SwimmingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * @author EVEA
+ * 游泳/洗澡记录表service
+ */
+@Transactional
+@Service
+public class SwimmingServiceImpl implements SwimmingService {
+    @Autowired
+    private SwimmingMapper swimmingMapper;
+
+    @Override
+    public int insert(Swimming record) {
+        record.setId(UUIDUtils.getUUID());
+        return swimmingMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return swimmingMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Swimming record) {
+        return swimmingMapper.updateByPrimaryKey(record);
+    }
+
+    /**
+     *
+     * @param swimming 游泳/洗澡记录表对象
+     * (可传入并根据Motherid或StoreId查询，都不传则默认查询所有，两者or连接)
+     * @return
+     */
+    @Override
+    public List<Swimming> selectByExample(Swimming swimming) {
+        SwimmingExample example = new SwimmingExample();
+        if(swimming.getMotherid()!=null&&swimming.getMotherid().trim()!=""){
+            SwimmingExample.Criteria c1 = example.createCriteria();
+            c1.andMotheridEqualTo(swimming.getMotherid());
+        }
+        if(swimming.getStoreId()!=null&&swimming.getStoreId().trim()!=""){
+            SwimmingExample.Criteria c2 = example.createCriteria();
+            c2.andStoreIdEqualTo(swimming.getStoreId());
+            example.or(c2);
+        }
+        return swimmingMapper.selectByExample(example);
+    }
+
+    @Override
+    public Swimming selectByPrimaryKey(String id) {
+        return swimmingMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Swimming> getSwimmingByMotherId(String motherid) {
+        return swimmingMapper.getSwimmingByMotherId(motherid);
+    }
+}

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storemanager.dao.OrderRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.storemanager.bean.OrderRoom" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="creater_id" property="createrId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, room_id, begin_time, create_time, end_time, price, creater_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storemanager.bean.OrderRoomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_room
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_room
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.storemanager.bean.OrderRoomExample" >
+    delete from order_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.storemanager.bean.OrderRoom" >
+    insert into order_room (id, room_id, begin_time, 
+      create_time, end_time, price, 
+      creater_id)
+    values (#{id,jdbcType=VARCHAR}, #{roomId,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{price,jdbcType=VARCHAR}, 
+      #{createrId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.storemanager.bean.OrderRoom" >
+    insert into order_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="createrId != null" >
+        creater_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="createrId != null" >
+        #{createrId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.storemanager.bean.OrderRoomExample" resultType="java.lang.Integer" >
+    select count(*) from order_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_room
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginTime != null" >
+        begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createrId != null" >
+        creater_id = #{record.createrId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_room
+    set id = #{record.id,jdbcType=VARCHAR},
+      room_id = #{record.roomId,jdbcType=VARCHAR},
+      begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      price = #{record.price,jdbcType=VARCHAR},
+      creater_id = #{record.createrId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.storemanager.bean.OrderRoom" >
+    update order_room
+    <set >
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="createrId != null" >
+        creater_id = #{createrId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.storemanager.bean.OrderRoom" >
+    update order_room
+    set room_id = #{roomId,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=VARCHAR},
+      creater_id = #{createrId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 查询所有的订房信息 -->
+  <select id="selectOrderRoom" resultMap="BaseResultMap">
+    select id, room_id, begin_time,create_time, end_time, price,creater_id from order_room
+  </select>
+</mapper>

@@ -1,0 +1,70 @@
+package com.luer.servicecenter.service.impl;
+
+import com.luer.comm.utils.UUIDUtils;
+import com.luer.servicecenter.bean.Neonatalrounds;
+import com.luer.servicecenter.bean.NeonatalroundsExample;
+import com.luer.servicecenter.dao.NeonatalroundsMapper;
+import com.luer.servicecenter.service.NeonatalroundsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * @author EVEA
+ * 宝宝查房资料表service
+ */
+@Service
+@Transactional
+public class NeonatalroundsServiceImpl implements NeonatalroundsService {
+
+    @Autowired
+    private NeonatalroundsMapper neonatalroundsMapper;
+
+    @Override
+    public int insert(Neonatalrounds record) {
+        record.setId(UUIDUtils.getUUID());
+        return neonatalroundsMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(String id) {
+        return neonatalroundsMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Neonatalrounds record) {
+        return neonatalroundsMapper.updateByPrimaryKey(record);
+    }
+
+    /**
+     * @param neonatalrounds 宝宝查房表对象
+     *  (可传入并根据Motherid或StoreId查询，都不传则默认查询所有，两者or连接)
+     * @return
+     */
+    @Override
+    public List<Neonatalrounds> selectByExample(Neonatalrounds neonatalrounds) {
+        NeonatalroundsExample example = new NeonatalroundsExample();
+        if(neonatalrounds.getMotherId()!=null&&neonatalrounds.getMotherId().trim()!=""){
+            NeonatalroundsExample.Criteria c1 = example.createCriteria();
+            c1.andMotherIdEqualTo(neonatalrounds.getMotherId());
+        }
+        if(neonatalrounds.getStoreId()!=null&&neonatalrounds.getStoreId().trim()!=""){
+            NeonatalroundsExample.Criteria c2 = example.createCriteria();
+            c2.andStoreIdEqualTo(neonatalrounds.getStoreId());
+            example.or(c2);
+        }
+        return neonatalroundsMapper.selectByExample(example);
+    }
+
+    @Override
+    public Neonatalrounds selectByPrimaryKey(String id) {
+        return neonatalroundsMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Neonatalrounds> getNeonatalroundsByMotherId(String motherId) {
+        return neonatalroundsMapper.getNeonatalroundsByMotherId(motherId) ;
+    }
+}

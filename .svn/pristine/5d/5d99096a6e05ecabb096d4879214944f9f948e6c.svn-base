@@ -1,0 +1,77 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Mothernursingrecorddetail;
+import com.luer.servicecenter.service.MothernursingrecorddetailService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+* @author 张路明
+*/
+@RestController
+@RequestMapping("/servicecenter")
+public class MothernursingrecorddetailController {
+
+    @Autowired
+    MothernursingrecorddetailService mothernursingrecorddetailService;
+
+    //根据妈妈ID获取信息
+    @RequestMapping(value = "/getNursingByMotherId")
+    @ResponseBody
+    public List<Mothernursingrecorddetail>  getNursingByMotherId(@NonNull String  motherId){
+        List<Mothernursingrecorddetail> list =mothernursingrecorddetailService.getNursingByMotherId(motherId);
+        return list;
+    }
+
+
+
+
+    /**
+     * 新增一条妈妈护理明细记录
+    * @author 张路明
+    * @param
+    * @return
+    */
+    @PostMapping("/insertMothernursingrecorddetail")
+    public ResultSet insertMothernursingrecorddetail(@NonNull Mothernursingrecorddetail mothernursingrecorddetail){
+        mothernursingrecorddetailService.insertMothernursingrecorddetail(mothernursingrecorddetail);
+        return ResultSet.getSuccess();
+    }
+    /**
+     * 更新一条妈妈护理明细记录
+    * @author 张路明
+    * @param
+    * @return
+    */
+    @PostMapping("/updateMothernursingrecorddetail")
+    public ResultSet updateMothernursingrecorddetail(@NonNull Mothernursingrecorddetail mothernursingrecorddetail){
+        mothernursingrecorddetailService.updateMothernursingrecorddetail(mothernursingrecorddetail);
+        return ResultSet.getSuccess();
+    }
+    /**
+     * 删除一条妈妈护理明细记录
+    * @author 张路明
+    * @param
+    * @return
+    */
+    @PostMapping("/deleteMothernursingrecorddetail")
+    public ResultSet deleteMothernursingrecorddetail(@NonNull Mothernursingrecorddetail mothernursingrecorddetail){
+        mothernursingrecorddetailService.deleteMothernursingrecorddetail(mothernursingrecorddetail.getId());
+        return ResultSet.getSuccess();
+    }
+    /**
+     * 获取妈妈护理明细记录
+    * @author 张路明
+    * @param
+    * @return
+    */
+    @GetMapping("/getMothernursingrecorddetail")
+    public List getMothernursingrecorddetail(@NonNull Mothernursingrecorddetail mothernursingrecorddetail){
+        List<Mothernursingrecorddetail> list =mothernursingrecorddetailService.getMothernursingrecorddetailby(mothernursingrecorddetail);
+        return list;
+    }
+}

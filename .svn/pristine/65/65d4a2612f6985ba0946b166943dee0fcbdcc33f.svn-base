@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.storesdata.dao.EmployerMapper" >
+    <resultMap id="BaseResultMap" type="com.luer.storesdata.bean.Employer" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="institution" property="institution" jdbcType="VARCHAR" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="position" property="position" jdbcType="VARCHAR" />
+        <result column="position_num" property="positionNum" jdbcType="VARCHAR" />
+        <result column="tell" property="tell" jdbcType="VARCHAR" />
+        <result column="permission" property="permission" jdbcType="VARCHAR" />
+        <result column="birthplace" property="birthplace" jdbcType="VARCHAR" />
+        <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+        <result column="work_id" property="workId" jdbcType="VARCHAR" />
+        <result column="banknum" property="banknum" jdbcType="VARCHAR" />
+        <result column="critical_person" property="criticalPerson" jdbcType="VARCHAR" />
+        <result column="critical_tell" property="criticalTell" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="store_file_id" property="storeFileId" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <update id="updateEmployersDepartment">
+        UPDATE employer SET department=#{department} where department=#{departmentOld} and store_file_id=#{store_file_id}
+    </update>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        id, institution, department, name, sex, position, position_num, tell, permission,
+        birthplace, card_id, work_id, banknum, critical_person, critical_tell, email, store_file_id,
+        type
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.storesdata.bean.EmployerExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from employer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from employer
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from employer
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.luer.storesdata.bean.EmployerExample" >
+        delete from employer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.luer.storesdata.bean.Employer" >
+        insert into employer (id, institution, department,
+        name, sex, position,
+        position_num, tell, permission,
+        birthplace, card_id, work_id,
+        banknum, critical_person, critical_tell,
+        email, store_file_id, type
+        )
+        values (#{id,jdbcType=VARCHAR}, #{institution,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR},
+        #{positionNum,jdbcType=VARCHAR}, #{tell,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR},
+        #{birthplace,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR}, #{workId,jdbcType=VARCHAR},
+        #{banknum,jdbcType=VARCHAR}, #{criticalPerson,jdbcType=VARCHAR}, #{criticalTell,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{storeFileId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.luer.storesdata.bean.Employer" >
+        insert into employer
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="institution != null" >
+                institution,
+            </if>
+            <if test="department != null" >
+                department,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="sex != null" >
+                sex,
+            </if>
+            <if test="position != null" >
+                position,
+            </if>
+            <if test="positionNum != null" >
+                position_num,
+            </if>
+            <if test="tell != null" >
+                tell,
+            </if>
+            <if test="permission != null" >
+                permission,
+            </if>
+            <if test="birthplace != null" >
+                birthplace,
+            </if>
+            <if test="cardId != null" >
+                card_id,
+            </if>
+            <if test="workId != null" >
+                work_id,
+            </if>
+            <if test="banknum != null" >
+                banknum,
+            </if>
+            <if test="criticalPerson != null" >
+                critical_person,
+            </if>
+            <if test="criticalTell != null" >
+                critical_tell,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="storeFileId != null" >
+                store_file_id,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="institution != null" >
+                #{institution,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="positionNum != null" >
+                #{positionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null" >
+                #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="permission != null" >
+                #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="birthplace != null" >
+                #{birthplace,jdbcType=VARCHAR},
+            </if>
+            <if test="cardId != null" >
+                #{cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="workId != null" >
+                #{workId,jdbcType=VARCHAR},
+            </if>
+            <if test="banknum != null" >
+                #{banknum,jdbcType=VARCHAR},
+            </if>
+            <if test="criticalPerson != null" >
+                #{criticalPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="criticalTell != null" >
+                #{criticalTell,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="storeFileId != null" >
+                #{storeFileId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.luer.storesdata.bean.EmployerExample" resultType="java.lang.Integer" >
+        select count(*) from employer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update employer
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.institution != null" >
+                institution = #{record.institution,jdbcType=VARCHAR},
+            </if>
+            <if test="record.department != null" >
+                department = #{record.department,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null" >
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sex != null" >
+                sex = #{record.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="record.position != null" >
+                position = #{record.position,jdbcType=VARCHAR},
+            </if>
+            <if test="record.positionNum != null" >
+                position_num = #{record.positionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tell != null" >
+                tell = #{record.tell,jdbcType=VARCHAR},
+            </if>
+            <if test="record.permission != null" >
+                permission = #{record.permission,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birthplace != null" >
+                birthplace = #{record.birthplace,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cardId != null" >
+                card_id = #{record.cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.workId != null" >
+                work_id = #{record.workId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.banknum != null" >
+                banknum = #{record.banknum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.criticalPerson != null" >
+                critical_person = #{record.criticalPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="record.criticalTell != null" >
+                critical_tell = #{record.criticalTell,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null" >
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storeFileId != null" >
+                store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null" >
+                type = #{record.type,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update employer
+        set id = #{record.id,jdbcType=VARCHAR},
+        institution = #{record.institution,jdbcType=VARCHAR},
+        department = #{record.department,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
+        sex = #{record.sex,jdbcType=VARCHAR},
+        position = #{record.position,jdbcType=VARCHAR},
+        position_num = #{record.positionNum,jdbcType=VARCHAR},
+        tell = #{record.tell,jdbcType=VARCHAR},
+        permission = #{record.permission,jdbcType=VARCHAR},
+        birthplace = #{record.birthplace,jdbcType=VARCHAR},
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+        work_id = #{record.workId,jdbcType=VARCHAR},
+        banknum = #{record.banknum,jdbcType=VARCHAR},
+        critical_person = #{record.criticalPerson,jdbcType=VARCHAR},
+        critical_tell = #{record.criticalTell,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        store_file_id = #{record.storeFileId,jdbcType=VARCHAR},
+        type = #{record.type,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.luer.storesdata.bean.Employer" >
+        update employer
+        <set >
+            <if test="institution != null" >
+                institution = #{institution,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="positionNum != null" >
+                position_num = #{positionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="tell != null" >
+                tell = #{tell,jdbcType=VARCHAR},
+            </if>
+            <if test="permission != null" >
+                permission = #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="birthplace != null" >
+                birthplace = #{birthplace,jdbcType=VARCHAR},
+            </if>
+            <if test="cardId != null" >
+                card_id = #{cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="workId != null" >
+                work_id = #{workId,jdbcType=VARCHAR},
+            </if>
+            <if test="banknum != null" >
+                banknum = #{banknum,jdbcType=VARCHAR},
+            </if>
+            <if test="criticalPerson != null" >
+                critical_person = #{criticalPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="criticalTell != null" >
+                critical_tell = #{criticalTell,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="storeFileId != null" >
+                store_file_id = #{storeFileId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.luer.storesdata.bean.Employer" >
+    update employer
+    set institution = #{institution,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      position_num = #{positionNum,jdbcType=VARCHAR},
+      tell = #{tell,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      birthplace = #{birthplace,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      work_id = #{workId,jdbcType=VARCHAR},
+      banknum = #{banknum,jdbcType=VARCHAR},
+      critical_person = #{criticalPerson,jdbcType=VARCHAR},
+      critical_tell = #{criticalTell,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      store_file_id = #{storeFileId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <!--查询门店人员基本信息-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT id, institution, department, name, sex, position, position_num, tell, permission,
+        birthplace, card_id, work_id, banknum, critical_person, critical_tell, email, store_file_id,
+        type from employer where type='普通员工'
+    </select>
+    <!--通过门店id查询门店人员基本信息-->
+    <select id="selectEmployersBystoreFileId" resultMap="BaseResultMap">
+        SELECT id, institution, department, name, sex, position, position_num, tell, permission,
+        birthplace, card_id, work_id, banknum, critical_person, critical_tell, email, store_file_id,
+        type from employer where store_file_id=#{storeFileId}
+    </select>
+    <select id="selectEmployersByStoreFileIdandDept" resultMap="BaseResultMap">
+        SELECT id, institution, department, name, sex, position, position_num, tell, permission,
+        birthplace, card_id, work_id, banknum, critical_person, critical_tell, email, store_file_id,
+        type from employer where store_file_id=#{storeFileId} and department = #{dept}
+    </select>
+    <!--查询所有派遣人员信息-->
+    <select id="selectDispached" resultMap="BaseResultMap">
+        SELECT id, institution, department, name, sex, position, position_num, tell, permission,
+        birthplace, card_id, work_id, banknum, critical_person, critical_tell, email, store_file_id,
+        type from employer where type='派遣员工'
+    </select>
+    <!--查询所有派遣人员信息-->
+    <select id="selectBydispachedId" resultMap="BaseResultMap">
+        SELECT id, institution, department, name, sex, position, position_num, tell, permission,
+        birthplace, card_id, work_id, banknum, critical_person, critical_tell, email, store_file_id,
+        type from employer where type='普通员工' and store_file_id=#{storeFileId}
+    </select>
+    <!--通过部门名称查询门店人员基本信息-->
+    <select id="selectEmployersByDepartment" resultMap="BaseResultMap">
+        SELECT id, institution, department, name, sex, position, position_num, tell, permission,
+        birthplace, card_id, work_id, banknum, critical_person, critical_tell, email, store_file_id,
+        type from employer where  department=#{department} and store_file_id=#{store_file_id}
+    </select>
+
+    <!--根据店铺id和员工类型查询所有员工信息-->
+    <select id="selectemployerBystoreId" resultMap="BaseResultMap">
+        SELECT id, institution, department, name, sex, position, position_num, tell, permission,
+        birthplace, card_id, work_id, banknum, critical_person, critical_tell, email, store_file_id,
+        type from employer where store_file_id=#{storeFileId} and type=#{type}
+    </select>
+
+</mapper>

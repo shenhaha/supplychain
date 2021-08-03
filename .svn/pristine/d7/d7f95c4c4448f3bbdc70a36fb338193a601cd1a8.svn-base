@@ -1,0 +1,28 @@
+package com.luer.servicecenter.service;
+
+import com.luer.servicecenter.bean.MealDayAccount;
+import com.luer.servicecenter.bean.MealManagerTable;
+import com.luer.servicecenter.bean.Mealmanager;
+import com.luer.servicecenter.bean.MealmanagerCount;
+
+import java.util.List;
+
+/**
+ * @author：EVEA
+ * @date：2018/8/21 13:46
+ **/
+public interface MealmanagerService {
+    int insert(Mealmanager record);
+    int deleteByPrimaryKey(String id);
+    int updateByPrimaryKey(Mealmanager record);
+    Mealmanager selectByPrimaryKey(String id);
+    List<Mealmanager> selectByExample(Mealmanager mealmanager);
+    List<MealmanagerCount> selectCountByMotherId(String store_id);
+    List<MealManagerTable> selectAllbyPage();
+    List<MealManagerTable> selectAllbyMotherid(String motherid);
+    String selectRoomIdByRoomnum(String roomnum);
+
+    List<MealDayAccount> getmealAccount(String storeId);
+    //获取妈妈的月子餐统计
+    List<MealmanagerCount> getmealAccountByMotherId(String motherId);
+}

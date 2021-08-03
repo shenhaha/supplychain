@@ -1,0 +1,90 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.Patientrounds;
+import com.luer.servicecenter.service.PatientRoundsService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/servicecenter")
+public class PatientRoundsController {
+
+    @Autowired
+    PatientRoundsService patientRoundsService;
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getPatientRoundsByMotherId")
+    @ResponseBody
+    public List<Patientrounds> getPatientRoundsByMotherId(@NonNull String motherid){
+        List<Patientrounds> list = patientRoundsService.getPatientRoundsByMotherId(motherid);
+        return  list;
+    }
+
+
+
+
+    /**
+     * @author 张路明
+     * 新增一条医生查房记录
+     * @param patientRounds
+     * @return
+     */
+    @PostMapping("/insertPatientRounds")
+    public ResultSet insertPatientRounds(@NonNull Patientrounds patientRounds){
+        patientRoundsService.insertPatientRounds(patientRounds);
+        return  ResultSet.getSuccess();
+
+    }
+
+
+    /**
+     * @author 张路明
+     * 查询医生查房记录
+     * @return
+     */
+    @GetMapping("/getPatientRounds")
+    public List getPatientRounds(Patientrounds patientrounds){
+        List<Patientrounds> list = patientRoundsService.getPatientrounds(patientrounds);
+        return  list;
+    }
+
+    /**
+     * @author 张路明
+     * 更新医生查房记录
+     * @param patientRounds
+     * @return
+     */
+    @PostMapping("/updatePatientRounds")
+    public ResultSet updatePatientRounds(@NonNull Patientrounds patientRounds){
+        patientRoundsService.updatePatientrounds(patientRounds);
+
+        return  ResultSet.getSuccess();
+
+    }
+
+    /**
+     * @author 张路明
+     * 删除医生查房记录
+     * @param
+     * @return
+     */
+    @PostMapping("/detelePatientrounds")
+    public ResultSet detelePatientrounds(@NonNull String id){
+
+        patientRoundsService.deletePatientrounds(id);
+        return  ResultSet.getSuccess();
+
+    }
+
+    @RequestMapping(value = "/selectPatientroundsBystoreId")
+    @ResponseBody
+    public List selectPatientroundsBystoreId(@NonNull String storeId){
+
+        List<Patientrounds> list = patientRoundsService.selectPatientroundsBystoreId(storeId);
+        return  list;
+    }
+}

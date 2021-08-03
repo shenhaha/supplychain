@@ -1,0 +1,162 @@
+package com.luer.storemanager.bean;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+public class Meetingrecord {
+    private String id;
+
+    private String storeFileId;
+
+    private String department;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date meetingtime;
+
+    private String place;
+
+    private String attendees;
+
+    private String absencepersonnel;
+
+    private String host;
+
+    private String recorder;
+
+    private String meetingcontent;
+
+    private String note;
+
+    private String signature;
+
+    //增加一个店铺名称,只是用来查询显示
+    private String storeFileName;
+
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endtime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date nexttime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getStoreFileId() {
+        return storeFileId;
+    }
+
+    public void setStoreFileId(String storeFileId) {
+        this.storeFileId = storeFileId == null ? null : storeFileId.trim();
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department == null ? null : department.trim();
+    }
+
+    public Date getMeetingtime() {
+        return meetingtime;
+    }
+
+    public void setMeetingtime(Date meetingtime) {
+        this.meetingtime = meetingtime;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place == null ? null : place.trim();
+    }
+
+    public String getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(String attendees) {
+        this.attendees = attendees == null ? null : attendees.trim();
+    }
+
+    public String getAbsencepersonnel() {
+        return absencepersonnel;
+    }
+
+    public void setAbsencepersonnel(String absencepersonnel) {
+        this.absencepersonnel = absencepersonnel == null ? null : absencepersonnel.trim();
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host == null ? null : host.trim();
+    }
+
+    public String getRecorder() {
+        return recorder;
+    }
+
+    public void setRecorder(String recorder) {
+        this.recorder = recorder == null ? null : recorder.trim();
+    }
+
+    public String getMeetingcontent() {
+        return meetingcontent;
+    }
+
+    public void setMeetingcontent(String meetingcontent) {
+        this.meetingcontent = meetingcontent == null ? null : meetingcontent.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
+    }
+
+    public Date getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(Date endtime) {
+        this.endtime = endtime;
+    }
+
+    public Date getNexttime() {
+        return nexttime;
+    }
+
+    public void setNexttime(Date nexttime) {
+        this.nexttime = nexttime;
+    }
+
+    public String getStoreFileName() {
+        return storeFileName;
+    }
+
+    public void setStoreFileName(String storeFileName) {
+        this.storeFileName = storeFileName;
+    }
+}

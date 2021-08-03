@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.luer.servicecenter.dao.MealmanagerMapper" >
+  <resultMap id="BaseResultMap" type="com.luer.servicecenter.bean.Mealmanager" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="motherid" property="motherid" jdbcType="VARCHAR" />
+    <result column="familymealcount" property="familymealcount" jdbcType="INTEGER" />
+    <result column="breakfast" property="breakfast" jdbcType="INTEGER" />
+    <result column="lunch" property="lunch" jdbcType="INTEGER" />
+    <result column="dinner" property="dinner" jdbcType="INTEGER" />
+    <result column="mealdate" property="mealdate" jdbcType="TIMESTAMP" />
+    <result column="roomid" property="roomid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, motherid, familymealcount, breakfast, lunch, dinner, mealdate, roomid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.luer.servicecenter.bean.MealmanagerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mealmanager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mealmanager
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mealmanager
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.luer.servicecenter.bean.MealmanagerExample" >
+    delete from mealmanager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.luer.servicecenter.bean.Mealmanager" >
+    insert into mealmanager (id, motherid, familymealcount,
+      breakfast, lunch, dinner,
+      mealdate, roomid,reveille,snack,midnight_snack,storeid)
+    values (#{id,jdbcType=VARCHAR}, #{motherid,jdbcType=VARCHAR}, #{familymealcount,jdbcType=INTEGER},
+      #{breakfast,jdbcType=INTEGER}, #{lunch,jdbcType=INTEGER}, #{dinner,jdbcType=INTEGER},
+      #{mealdate,jdbcType=TIMESTAMP}, #{roomid,jdbcType=VARCHAR},#{reveille,jdbcType=INTEGER},#{snack,jdbcType=INTEGER},
+      #{midnight_snack,jdbcType=INTEGER},#{storeid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luer.servicecenter.bean.Mealmanager" >
+    insert into mealmanager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="motherid != null" >
+        motherid,
+      </if>
+      <if test="familymealcount != null" >
+        familymealcount,
+      </if>
+      <if test="breakfast != null" >
+        breakfast,
+      </if>
+      <if test="lunch != null" >
+        lunch,
+      </if>
+      <if test="dinner != null" >
+        dinner,
+      </if>
+      <if test="mealdate != null" >
+        mealdate,
+      </if>
+      <if test="roomid != null" >
+        roomid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="motherid != null" >
+        #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="familymealcount != null" >
+        #{familymealcount,jdbcType=INTEGER},
+      </if>
+      <if test="breakfast != null" >
+        #{breakfast,jdbcType=INTEGER},
+      </if>
+      <if test="lunch != null" >
+        #{lunch,jdbcType=INTEGER},
+      </if>
+      <if test="dinner != null" >
+        #{dinner,jdbcType=INTEGER},
+      </if>
+      <if test="mealdate != null" >
+        #{mealdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomid != null" >
+        #{roomid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.luer.servicecenter.bean.MealmanagerExample" resultType="java.lang.Integer" >
+    select count(*) from mealmanager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mealmanager
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherid != null" >
+        motherid = #{record.motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.familymealcount != null" >
+        familymealcount = #{record.familymealcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.breakfast != null" >
+        breakfast = #{record.breakfast,jdbcType=INTEGER},
+      </if>
+      <if test="record.lunch != null" >
+        lunch = #{record.lunch,jdbcType=INTEGER},
+      </if>
+      <if test="record.dinner != null" >
+        dinner = #{record.dinner,jdbcType=INTEGER},
+      </if>
+      <if test="record.mealdate != null" >
+        mealdate = #{record.mealdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.roomid != null" >
+        roomid = #{record.roomid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mealmanager
+    set id = #{record.id,jdbcType=VARCHAR},
+    motherid = #{record.motherid,jdbcType=VARCHAR},
+    familymealcount = #{record.familymealcount,jdbcType=INTEGER},
+    breakfast = #{record.breakfast,jdbcType=INTEGER},
+    lunch = #{record.lunch,jdbcType=INTEGER},
+    dinner = #{record.dinner,jdbcType=INTEGER},
+    mealdate = #{record.mealdate,jdbcType=TIMESTAMP},
+    roomid = #{record.roomid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luer.servicecenter.bean.Mealmanager" >
+    update mealmanager
+    <set >
+      <if test="motherid != null" >
+        motherid = #{motherid,jdbcType=VARCHAR},
+      </if>
+      <if test="familymealcount != null" >
+        familymealcount = #{familymealcount,jdbcType=INTEGER},
+      </if>
+      <if test="breakfast != null" >
+        breakfast = #{breakfast,jdbcType=INTEGER},
+      </if>
+      <if test="lunch != null" >
+        lunch = #{lunch,jdbcType=INTEGER},
+      </if>
+      <if test="dinner != null" >
+        dinner = #{dinner,jdbcType=INTEGER},
+      </if>
+      <if test="mealdate != null" >
+        mealdate = #{mealdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomid != null" >
+        roomid = #{roomid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luer.servicecenter.bean.Mealmanager" >
+    update mealmanager
+    set motherid = #{motherid,jdbcType=VARCHAR},
+      familymealcount = #{familymealcount,jdbcType=INTEGER},
+      breakfast = #{breakfast,jdbcType=INTEGER},
+      lunch = #{lunch,jdbcType=INTEGER},
+      dinner = #{dinner,jdbcType=INTEGER},
+      mealdate = #{mealdate,jdbcType=TIMESTAMP},
+      roomid = #{roomid,jdbcType=VARCHAR},
+      midnight_snack = #{midnight_snack,jdbcType=INTEGER},
+      reveille = #{reveille,jdbcType=INTEGER},
+      snack = #{snack,jdbcType=INTEGER},
+      storeid = #{storeid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--按妈妈id分组查询统计早餐，中餐，晚餐，家属餐总数-->
+  <select id="selectCountByMotherId" parameterType="string" resultType="com.luer.servicecenter.bean.MealmanagerCount">
+            select store_id, id as motherid,name as mothername,avoid,COALESCE(breakfastSum,0) breakfastSum,COALESCE(lunchSum,0) lunchSum,COALESCE(dinner,0) dinner,
+COALESCE(familymealcount,0) familymealcount,COALESCE(reveille,0) reveille,COALESCE(snack,0) snack,COALESCE(midnight_snack,0) midnight_snack,roomnum
+              from customer_basic left join
+                 ( select mealmanager.motherid motherid ,sum(breakfast) as breakfastSum,
+COALESCE(SUM(familymealcount),0) familymealcount,COALESCE(SUM(lunch),0) lunchSum,
+COALESCE(SUM(reveille),0) reveille,COALESCE(SUM(dinner),0) dinner,COALESCE(SUM(snack),0) snack,
+COALESCE(SUM(midnight_snack),0) midnight_snack ,room.num roomnum
+
+                  from mealmanager ,room WHERE room.id = roomid GROUP BY motherid) mealcount
+ON mealcount.motherid = customer_basic.id
+WHERE customer_basic.type=0 and customer_basic.store_id = #{store_id} and customer_basic.check_status = 1;
+    </select>
+
+  <!-- 查询所有妈妈，所有天的早中晚家属餐和房号记录-->
+  <select id="selectAllbyPage" resultType="com.luer.servicecenter.bean.MealManagerTable">
+    select mealmanager.id as id,
+(CASE WHEN breakfast = 1 THEN '已定' WHEN breakfast = 0 THEN '未定' END)AS breakfast,
+(CASE WHEN lunch = 1 THEN '已定' WHEN lunch = 0 THEN '未定' END)AS lunch,
+(CASE WHEN dinner = 1 THEN '已定' WHEN dinner = 0 THEN '未定' END)AS dinner,
+familymealcount as familymeal,mealdate,
+    num as roomnum,`name` as mothername from mealmanager,customer_basic,room where motherid = customer_basic.id
+    and roomid = room.id;
+  </select>
+
+  <!--根据妈妈id查询该妈妈所有28天的早中晚家属餐和房号记录-->
+  <select id="selectAllbyMotherid" parameterType="string" resultType="com.luer.servicecenter.bean.MealManagerTable">
+    select mealmanager.id as id,
+ breakfast,
+ lunch,
+dinner,
+ reveille,
+ snack,
+ midnight_snack,
+familymealcount as familymeal,mealdate,
+    num as roomnum,`name` as mothername from mealmanager,customer_basic,room where motherid = customer_basic.id and roomid = room.id
+and motherid = #{motherid};
+  </select>
+
+  <select id="selectRoomIdByRoomnum" parameterType="java.lang.String" resultType="java.lang.String">
+    select id from room where num = #{roomnum};
+  </select>
+  <select id="getmealAccount" resultType="com.luer.servicecenter.bean.MealDayAccount">
+    SELECT
+COUNT(breakfast) breakfast,
+COUNT(lunch) lunch ,
+COUNT(reveille)reveille,
+COUNT(dinner) dinner,
+COUNT(snack) snack,
+COUNT(midnight_snack) midnight_snack,
+sum(familymealcount) familymealcount,
+mealdate  mealdate
+FROM mealmanager LEFT JOIN customer_basic ON customer_basic.id = motherid
+WHERE storeid = #{storeId}
+GROUP BY mealdate
+ORDER BY mealdate DESC
+  </select>
+  <select id="getmealAccountByMotherId" parameterType="string" resultType="com.luer.servicecenter.bean.MealmanagerCount">
+   select store_id, id as motherid,name as mothername,avoid,COALESCE(breakfastSum,0) breakfastSum,COALESCE(lunchSum,0) lunchSum,COALESCE(dinner,0) dinner,
+    COALESCE(familymealcount,0) familymealcount,COALESCE(reveille,0) reveille,COALESCE(snack,0) snack,COALESCE(midnight_snack,0) midnight_snack,roomnum
+    from customer_basic left join
+    ( select mealmanager.motherid motherid ,sum(breakfast) as breakfastSum,
+    COALESCE(SUM(familymealcount),0) familymealcount,COALESCE(SUM(lunch),0) lunchSum,
+    COALESCE(SUM(reveille),0) reveille,COALESCE(SUM(dinner),0) dinner,COALESCE(SUM(snack),0) snack,
+    COALESCE(SUM(midnight_snack),0) midnight_snack ,room.num roomnum
+
+    from mealmanager ,room WHERE room.id = roomid GROUP BY motherid) mealcount
+    ON mealcount.motherid = customer_basic.id
+    WHERE customer_basic.type=0 and customer_basic.id = #{motherId};
+
+  </select>
+
+<select id="selectRefundByMotherId" resultType="java.lang.Double">
+
+select (28-a.num)*b.int_parameter from
+  (select count(*) as num  from mealmanager  where motherid=#{motherId}) a
+  , (
+  select
+   COALESCE(
+  (select int_parameter from parameter_set p, customer_basic c
+   where c.id=#{motherId}  and c.store_id=p.store_id and p.parameter_name="mealprice")
+  ,120)  as int_parameter
+  ) b
+
+
+
+</select>
+
+</mapper>

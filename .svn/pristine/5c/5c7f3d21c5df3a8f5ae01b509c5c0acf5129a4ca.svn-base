@@ -1,0 +1,33 @@
+package com.luer.stockandsales.bean;
+
+public class GoodsTwo {
+    private String id;
+
+    private String goodsOneId;
+
+    private String classifyTwo;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getGoodsOneId() {
+        return goodsOneId;
+    }
+
+    public void setGoodsOneId(String goodsOneId) {
+        this.goodsOneId = goodsOneId == null ? null : goodsOneId.trim();
+    }
+
+    public String getClassifyTwo() {
+        return classifyTwo;
+    }
+
+    public void setClassifyTwo(String classifyTwo) {
+        this.classifyTwo = classifyTwo == null ? null : classifyTwo.trim();
+    }
+}

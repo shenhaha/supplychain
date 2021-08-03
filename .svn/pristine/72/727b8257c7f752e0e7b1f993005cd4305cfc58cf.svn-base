@@ -1,0 +1,38 @@
+package com.luer.servicecenter.dao;
+
+import com.luer.servicecenter.bean.Nursingeducation;
+import com.luer.servicecenter.bean.NursingeducationExample;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+@MapperScan
+@Component
+public interface NursingeducationMapper {
+    int countByExample(NursingeducationExample example);
+
+    int deleteByExample(NursingeducationExample example);
+
+    int deleteByPrimaryKey(String id);
+
+    int insert(Nursingeducation record);
+
+    int insertSelective(Nursingeducation record);
+
+    List<Nursingeducation> selectByExample(NursingeducationExample example);
+
+    Nursingeducation selectByPrimaryKey(String id);
+
+    int updateByExampleSelective(@Param("record") Nursingeducation record, @Param("example") NursingeducationExample example);
+
+    int updateByExample(@Param("record") Nursingeducation record, @Param("example") NursingeducationExample example);
+
+    int updateByPrimaryKeySelective(Nursingeducation record);
+
+    int updateByPrimaryKey(Nursingeducation record);
+
+    List<Nursingeducation> getEducationByMotherId(@Param("customer_basic_id") String customerBasicId);
+
+    void insertNursingeducationList(@Param("nursingeducationList")List<Nursingeducation> nursingeducationList);
+}

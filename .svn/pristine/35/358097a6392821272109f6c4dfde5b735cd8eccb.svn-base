@@ -1,0 +1,415 @@
+package com.luer.storemanager.bean;
+
+import java.util.Date;
+
+public class CheckIn {
+    private String id;
+
+    private String customerId;
+
+    private String contractId;
+
+    private String status;
+
+    private String roomId;
+
+    private Date beginTime;
+
+    private Date endTime;
+
+    private String createId;
+
+    private String towel;
+
+    private String washcloth;
+
+    private String mattowel;
+
+    private String washbasin;
+
+    private String chairCushion;
+
+    private String stew;
+
+    private String chopsticks;
+
+    private String spoon;
+
+    private String glassWatercup;
+
+    private String blackPorcelaincup;
+
+    private String remoteControl;
+
+    private String conditionerControl;
+
+    private String lactationClothes;
+
+    private String lactationPillow;
+
+    private String waterTreasure;
+
+    private String showerSeats;
+
+    private String humidifier;
+
+    private String soapBox;
+
+    private String tabletopFrame;
+
+    private String paringKnife;
+
+    private String hairDrier;
+
+    private String bathMat;
+
+    private String dndSign;
+
+    private String wirelessRouter;
+
+    private String tissue;
+
+    private String toothpaste;
+
+    private String shampoo;
+
+    private String soap;
+
+    private String roomCard;
+
+    private String downQuilt;
+
+    private String parkingPermit;
+
+    private String entranceCard;
+
+    private String storeid;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId == null ? null : customerId.trim();
+    }
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId == null ? null : contractId.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId == null ? null : roomId.trim();
+    }
+
+    public Date getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(String createId) {
+        this.createId = createId == null ? null : createId.trim();
+    }
+
+    public String getTowel() {
+        return towel;
+    }
+
+    public void setTowel(String towel) {
+        this.towel = towel == null ? null : towel.trim();
+    }
+
+    public String getWashcloth() {
+        return washcloth;
+    }
+
+    public void setWashcloth(String washcloth) {
+        this.washcloth = washcloth == null ? null : washcloth.trim();
+    }
+
+    public String getMattowel() {
+        return mattowel;
+    }
+
+    public void setMattowel(String mattowel) {
+        this.mattowel = mattowel == null ? null : mattowel.trim();
+    }
+
+    public String getWashbasin() {
+        return washbasin;
+    }
+
+    public void setWashbasin(String washbasin) {
+        this.washbasin = washbasin == null ? null : washbasin.trim();
+    }
+
+    public String getChairCushion() {
+        return chairCushion;
+    }
+
+    public void setChairCushion(String chairCushion) {
+        this.chairCushion = chairCushion == null ? null : chairCushion.trim();
+    }
+
+    public String getStew() {
+        return stew;
+    }
+
+    public void setStew(String stew) {
+        this.stew = stew == null ? null : stew.trim();
+    }
+
+    public String getChopsticks() {
+        return chopsticks;
+    }
+
+    public void setChopsticks(String chopsticks) {
+        this.chopsticks = chopsticks == null ? null : chopsticks.trim();
+    }
+
+    public String getSpoon() {
+        return spoon;
+    }
+
+    public void setSpoon(String spoon) {
+        this.spoon = spoon == null ? null : spoon.trim();
+    }
+
+    public String getGlassWatercup() {
+        return glassWatercup;
+    }
+
+    public void setGlassWatercup(String glassWatercup) {
+        this.glassWatercup = glassWatercup == null ? null : glassWatercup.trim();
+    }
+
+    public String getBlackPorcelaincup() {
+        return blackPorcelaincup;
+    }
+
+    public void setBlackPorcelaincup(String blackPorcelaincup) {
+        this.blackPorcelaincup = blackPorcelaincup == null ? null : blackPorcelaincup.trim();
+    }
+
+    public String getRemoteControl() {
+        return remoteControl;
+    }
+
+    public void setRemoteControl(String remoteControl) {
+        this.remoteControl = remoteControl == null ? null : remoteControl.trim();
+    }
+
+    public String getConditionerControl() {
+        return conditionerControl;
+    }
+
+    public void setConditionerControl(String conditionerControl) {
+        this.conditionerControl = conditionerControl == null ? null : conditionerControl.trim();
+    }
+
+    public String getLactationClothes() {
+        return lactationClothes;
+    }
+
+    public void setLactationClothes(String lactationClothes) {
+        this.lactationClothes = lactationClothes == null ? null : lactationClothes.trim();
+    }
+
+    public String getLactationPillow() {
+        return lactationPillow;
+    }
+
+    public void setLactationPillow(String lactationPillow) {
+        this.lactationPillow = lactationPillow == null ? null : lactationPillow.trim();
+    }
+
+    public String getWaterTreasure() {
+        return waterTreasure;
+    }
+
+    public void setWaterTreasure(String waterTreasure) {
+        this.waterTreasure = waterTreasure == null ? null : waterTreasure.trim();
+    }
+
+    public String getShowerSeats() {
+        return showerSeats;
+    }
+
+    public void setShowerSeats(String showerSeats) {
+        this.showerSeats = showerSeats == null ? null : showerSeats.trim();
+    }
+
+    public String getHumidifier() {
+        return humidifier;
+    }
+
+    public void setHumidifier(String humidifier) {
+        this.humidifier = humidifier == null ? null : humidifier.trim();
+    }
+
+    public String getSoapBox() {
+        return soapBox;
+    }
+
+    public void setSoapBox(String soapBox) {
+        this.soapBox = soapBox == null ? null : soapBox.trim();
+    }
+
+    public String getTabletopFrame() {
+        return tabletopFrame;
+    }
+
+    public void setTabletopFrame(String tabletopFrame) {
+        this.tabletopFrame = tabletopFrame == null ? null : tabletopFrame.trim();
+    }
+
+    public String getParingKnife() {
+        return paringKnife;
+    }
+
+    public void setParingKnife(String paringKnife) {
+        this.paringKnife = paringKnife == null ? null : paringKnife.trim();
+    }
+
+    public String getHairDrier() {
+        return hairDrier;
+    }
+
+    public void setHairDrier(String hairDrier) {
+        this.hairDrier = hairDrier == null ? null : hairDrier.trim();
+    }
+
+    public String getBathMat() {
+        return bathMat;
+    }
+
+    public void setBathMat(String bathMat) {
+        this.bathMat = bathMat == null ? null : bathMat.trim();
+    }
+
+    public String getDndSign() {
+        return dndSign;
+    }
+
+    public void setDndSign(String dndSign) {
+        this.dndSign = dndSign == null ? null : dndSign.trim();
+    }
+
+    public String getWirelessRouter() {
+        return wirelessRouter;
+    }
+
+    public void setWirelessRouter(String wirelessRouter) {
+        this.wirelessRouter = wirelessRouter == null ? null : wirelessRouter.trim();
+    }
+
+    public String getTissue() {
+        return tissue;
+    }
+
+    public void setTissue(String tissue) {
+        this.tissue = tissue == null ? null : tissue.trim();
+    }
+
+    public String getToothpaste() {
+        return toothpaste;
+    }
+
+    public void setToothpaste(String toothpaste) {
+        this.toothpaste = toothpaste == null ? null : toothpaste.trim();
+    }
+
+    public String getShampoo() {
+        return shampoo;
+    }
+
+    public void setShampoo(String shampoo) {
+        this.shampoo = shampoo == null ? null : shampoo.trim();
+    }
+
+    public String getSoap() {
+        return soap;
+    }
+
+    public void setSoap(String soap) {
+        this.soap = soap == null ? null : soap.trim();
+    }
+
+    public String getRoomCard() {
+        return roomCard;
+    }
+
+    public void setRoomCard(String roomCard) {
+        this.roomCard = roomCard == null ? null : roomCard.trim();
+    }
+
+    public String getDownQuilt() {
+        return downQuilt;
+    }
+
+    public void setDownQuilt(String downQuilt) {
+        this.downQuilt = downQuilt == null ? null : downQuilt.trim();
+    }
+
+    public String getParkingPermit() {
+        return parkingPermit;
+    }
+
+    public void setParkingPermit(String parkingPermit) {
+        this.parkingPermit = parkingPermit == null ? null : parkingPermit.trim();
+    }
+
+    public String getEntranceCard() {
+        return entranceCard;
+    }
+
+    public void setEntranceCard(String entranceCard) {
+        this.entranceCard = entranceCard == null ? null : entranceCard.trim();
+    }
+
+    public String getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(String storeid) {
+        this.storeid = storeid == null ? null : storeid.trim();
+    }
+}

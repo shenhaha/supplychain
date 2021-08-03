@@ -1,0 +1,83 @@
+package com.luer.servicecenter.controller;
+
+import com.luer.comm.utils.CustomerException;
+import com.luer.comm.utils.ResultSet;
+import com.luer.servicecenter.bean.ServiceAccount;
+import com.luer.servicecenter.bean.ServiceDetail;
+import com.luer.servicecenter.bean.Storeservice;
+import com.luer.servicecenter.service.StoreServiceService;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/storeservice")
+public class StoreServiceController {
+
+    @Autowired
+    StoreServiceService storeServiceService;
+
+    //根据妈妈ID获取数据
+    @RequestMapping("/getAllByMotherId")
+    @ResponseBody
+    public List<Storeservice> getAllByMotherId(@NonNull String motherid){
+
+        return storeServiceService.getAllByMotherId(motherid);
+    }
+    @GetMapping("/getCount")
+    public List<ServiceAccount> getCount(@NonNull String storeId){
+        List<ServiceAccount> account = storeServiceService.getAccount(storeId);
+        return account;
+    }
+
+    @GetMapping("/getCountByMotherId")
+    public List<ServiceAccount> getCountByMotherId(@NonNull String motherId){
+        System.out.println("========motherId========="+motherId);
+        List<ServiceAccount> account = new ArrayList<ServiceAccount>();
+        account.add(storeServiceService.getCountByMotherId(motherId));
+        System.out.println("================="+storeServiceService.getCountByMotherId(motherId));
+        System.out.println("=================");
+        System.out.println("=================");
+        System.out.println("=================");
+        System.out.println("=================");
+        for (ServiceAccount serviceAccount:account
+             ) {
+
+            System.out.println(serviceAccount);
+        }
+        return account;
+    }
+    @GetMapping("/getServiceDetail")
+    public List<ServiceDetail> getServiceDetail(@NonNull String motherId){
+        List<ServiceDetail> serviceDetail = storeServiceService.getServiceDetail(motherId);
+        return serviceDetail;
+    }
+
+
+    @GetMapping("/getall")
+    public List<Storeservice> getAll(@NonNull Storeservice storeservice){
+
+        return storeServiceService.selectall(storeservice);
+    }
+
+    @PostMapping("/insert")
+    public ResultSet insert(@NonNull Storeservice storeservice) throws CustomerException {
+        storeServiceService.insert(storeservice);
+        return ResultSet.getSuccess();
+    }
+
+    @PostMapping("/update")
+    public ResultSet update(@NonNull Storeservice storeservice){
+        storeServiceService.update(storeservice);
+        return ResultSet.getSuccess();
+    }
+    @PostMapping("/delete")
+    public ResultSet delete(@NonNull Storeservice storeservice){
+        storeServiceService.delete(storeservice);
+        return ResultSet.getSuccess();
+    }
+}
